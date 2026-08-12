@@ -1,0 +1,29 @@
+aid: ahrefs
+name: Ahrefs
+description: Ahrefs is a company surfaced via the API Evangelist marketing integration graph — named as
+  an integration by 3 members of the programmable-marketing cohort — and added to the network as a stub
+  for full-pipeline profiling.
+url: https://raw.githubusercontent.com/api-evangelist/ahrefs/refs/heads/main/apis.yml
+x-type: company
+x-source: harvest:marketing-integration-graph
+x-tier: stub
+x-tier-reason: harvest
+specificationVersion: '0.20'
+created: '2026-08-12'
+modified: '2026-08-12'
+tags:
+- Company
+apis: []
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+common:
+- type: Website
+  url: https://ahrefs.com/
+x-vouched-by:
+- Improvado
+- Nexad
+- Supermetrics
+x-vouch-count: 3
