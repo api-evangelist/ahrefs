@@ -1,0 +1,92 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ahrefs.com/api/docs/free-test-queries.md
+docs:
+- https://docs.ahrefs.com/api/docs/free-test-queries.md
+- https://docs.ahrefs.com/ahrefs-connect/docs/api-guide.md
+model: magic-test-values
+note: >-
+  Ahrefs has no separate sandbox host, no test-mode key prefix and no fixture/trigger tooling. What it
+  publishes instead is a set of magic targets and keywords that make an otherwise ordinary production
+  request free: the call hits the live API against real data, but consumes zero API units. This is the
+  comms/analytics shape of a sandbox (magic identifiers) rather than the payments shape (test cards).
+  A paid plan and a real API key are still required — there is no anonymous or unkeyed test path
+  beyond the `Public` tool.
+separation:
+  test_host: null
+  live_host: https://api.ahrefs.com/v3
+  key_prefixes: []
+  modes: []
+  note: >-
+    One host, one key namespace. Requests are billable or free based on the parameter values, not on
+    which credential or endpoint was used, so a misconfigured test can silently spend production units.
+free_targets:
+  applies_to:
+  - Site Explorer
+  parameter: target
+  values:
+  - ahrefs.com
+  - yep.com
+  - firehose.com
+  note: Any URL on these domains also qualifies.
+  examples:
+  - https://api.ahrefs.com/v3/site-explorer/domain-rating?date=2023-05-18&target=firehose.com
+  - https://api.ahrefs.com/v3/site-explorer/all-backlinks?limit=3&mode=prefix&target=ahrefs.com/blog&select=url_from,url_rating_source,traffic,url_to
+free_keywords:
+  applies_to:
+  - Keywords Explorer
+  - SERP Overview
+  parameters:
+  - keywords
+  - keyword
+  values:
+  - ahrefs
+  - yep
+  - firehose
+  examples:
+  - https://api.ahrefs.com/v3/keywords-explorer/overview?country=us&keywords=ahrefs&select=keyword,volume,traffic_potential,difficulty
+  - https://api.ahrefs.com/v3/serp-overview/serp-overview?country=us&date=2023-05-16&keyword=yep&select=url,position,url_rating,backlinks,traffic&top_positions=3
+constraints:
+- '`limit` is capped at 100 on free test requests regardless of the value sent.'
+- Mixing any other keyword into the same request makes the whole request billable.
+- Passing `keyword_list_id` makes the request billable regardless of the keywords used.
+- An API key is still required; free test queries are available to users on any paid plan.
+free_endpoint_families:
+  note: Separately from the magic values, whole tool families are documented as free of unit cost.
+  families:
+  - Rank Tracker
+  - Management
+  - Public
+  - 'plus individual endpoints marked free on their own reference page'
+  public_tool:
+    spec: openapi/ahrefs-public-openapi.json
+    operations:
+    - public.crawler-ips
+    - public.crawler-ip-ranges
+    - public.domain-rating-free
+    - public.domain-rating-top-domains
+    note: >-
+      Documented as usable without an Ahrefs subscription (a free/public APIv3 key may still be
+      required). This is the closest thing Ahrefs has to an unauthenticated try-it surface.
+partner_development:
+  program: Ahrefs Connect
+  note: >-
+    A newly created Connect app sits in `Inactive` status, in which OAuth flows can be exercised and
+    free test requests sent from a staging setup without consuming units. Once approved and activated,
+    production requests bill normally.
+  source: https://docs.ahrefs.com/ahrefs-connect/docs/api-guide.md
+cost_estimation:
+  technique: >-
+    Run the intended request against a free target and read the `x-api-units-cost-total` response
+    header to learn what the billable version would cost before spending anything.
+  headers:
+  - x-api-rows
+  - x-api-units-cost-row
+  - x-api-units-cost-total
+  - x-api-units-cost-total-actual
+  - x-api-cache
+  source: https://docs.ahrefs.com/api/docs/limits-consumption.md
+warnings:
+- Consumed API units are non-refundable; Ahrefs explicitly recommends free test queries for all
+  development and testing.
+- Per-key monthly unit caps should be set during development at https://app.ahrefs.com/account/api-keys.

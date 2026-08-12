@@ -1,0 +1,88 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ahrefs.com/api/docs/api-keys-creation-and-management.md
+docs:
+- https://docs.ahrefs.com/api/docs/api-keys-creation-and-management.md
+- https://docs.ahrefs.com/ahrefs-connect/docs/oauth-guide.md
+- https://docs.ahrefs.com/mcp/docs/introduction.md
+summary:
+  types:
+  - http
+  - oauth2
+  http_schemes:
+  - bearer
+  oauth2_flows:
+  - authorizationCode
+  oauth2_pkce: S256
+  note: >-
+    The OpenAPI declares a single `http` bearer scheme. The docs additionally describe two OAuth 2.0
+    surfaces that the spec does not model: Ahrefs Connect (partner apps, scope `apiv3-integration-apps`)
+    and the hosted MCP server (scope `apiv3-mcp`, advertised in the RFC 8414 metadata at
+    https://api.ahrefs.com/.well-known/oauth-authorization-server).
+schemes:
+- name: http
+  type: http
+  scheme: bearer
+  in: header
+  parameter: Authorization
+  format: 'Authorization: Bearer <API_KEY>'
+  source: openapi
+  applied_globally: true
+  sources:
+  - openapi/_original/ahrefs-openapi-original.json
+  - openapi/ahrefs-site-explorer-openapi.json
+  - openapi/ahrefs-keywords-explorer-openapi.json
+  - openapi/ahrefs-site-audit-openapi.json
+  - openapi/ahrefs-rank-tracker-openapi.json
+  - openapi/ahrefs-serp-overview-openapi.json
+  - openapi/ahrefs-batch-analysis-openapi.json
+  - openapi/ahrefs-subscription-info-openapi.json
+  - openapi/ahrefs-management-openapi.json
+  - openapi/ahrefs-brand-radar-openapi.json
+  - openapi/ahrefs-web-analytics-openapi.json
+  - openapi/ahrefs-gsc-openapi.json
+  - openapi/ahrefs-social-media-openapi.json
+- name: ahrefs-connect-oauth2
+  type: oauth2
+  source: docs
+  docs: https://docs.ahrefs.com/ahrefs-connect/docs/oauth-guide.md
+  flows:
+  - flow: authorizationCode
+    pkce: required
+    code_challenge_method: S256
+    authorizationUrl: https://app.ahrefs.com/web/oauth/authorize
+    tokenUrl: https://ahrefs.com/oauth/token
+    scopes:
+    - apiv3-integration-apps
+  client_secret: web apps only; omitted for desktop apps
+  refresh_tokens: false
+  token_lifetime: 1 year (no refresh token; user must re-authorize on expiry)
+- name: ahrefs-mcp-oauth2
+  type: oauth2
+  source: probed
+  discovery: well-known/ahrefs-oauth-authorization-server.json
+  flows:
+  - flow: authorizationCode
+    pkce: supported
+    code_challenge_method: S256
+    authorizationUrl: https://app.ahrefs.com/web/oauth/authorize
+    tokenUrl: https://ahrefs.com/oauth/token
+    registrationUrl: https://api.ahrefs.com/mcp/register
+    scopes:
+    - apiv3-mcp
+  grant_types:
+  - implicit
+  - authorization_code
+  - authorization_code_with_pkce
+api_keys:
+  create_at: https://app.ahrefs.com/account/api-keys
+  who_can_create: workspace owners and admins only
+  max_keys: 1000
+  key_lifetime: 1 year, after which the key expires and becomes inactive
+  revocation: a key is invalidated when the user who created it is removed from the workspace
+  usage_controls: per-key monthly API-unit limits, plus a workspace-level pay-as-you-go cap
+public_endpoints:
+  note: >-
+    The `Public` tool (crawler IP addresses/ranges and free domain rating) is documented as usable
+    without an Ahrefs subscription; a free/public APIv3 key may still be required for some of them.
+  spec: openapi/ahrefs-public-openapi.json

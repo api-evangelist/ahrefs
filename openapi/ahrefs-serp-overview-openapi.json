@@ -1,0 +1,340 @@
+{
+  "openapi": "3.2.0",
+  "info": {
+    "title": "SERP Overview",
+    "description": "Fetch data from SERP Overview report",
+    "termsOfService": "https://ahrefs.com/terms",
+    "contact": {
+      "name": "Ahrefs",
+      "url": "https://ahrefs.com/",
+      "email": "support@ahrefs.com"
+    },
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.ahrefs.com/v3/serp-overview",
+      "description": "Ahrefs SERP Overview"
+    }
+  ],
+  "paths": {
+    "/serp-overview": {
+      "get": {
+        "tags": [ "SERP Overview", "MCP" ],
+        "summary": "SERP Overview",
+        "description": "",
+        "operationId": "serp-overview",
+        "parameters": [
+          {
+            "description": "A comma-separated list of columns to return. See response schema for valid column identifiers.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "select",
+            "in": "query"
+          },
+          {
+            "description": "A comma-separated list of SERP feature types to filter by. Only positions whose `type` includes at least one of the given values are returned. If not specified, positions of all types are returned.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "paid_top", "paid_bottom", "paid_right", "paid_sitelink",
+                "organic", "sitelink", "snippet", "image", "article",
+                "knowledge_card", "knowledge_panel", "local_pack",
+                "local_teaser", "news", "question", "review", "shopping",
+                "tweet", "spelling", "video", "discussion", "ai_overview",
+                "ai_overview_sitelink", "organic_shopping", "image_th",
+                "video_th", "ai_overview_found"
+              ],
+              "default": ""
+            },
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "description": "The number of top organic SERP positions to return. If not specified, all available positions will be returned.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "top_positions",
+            "in": "query"
+          },
+          {
+            "description": "A timestamp on which the last available SERP Overview is returned in YYYY-MM-DDThh:mm:ss format. If it is not specified, the most recent SERP Overview is returned.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date-time" },
+            "name": "date",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "The keyword to return SERP Overview for.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "keyword",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output_json_php_xml" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/serp-overview" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/serp-overview" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error response": {
+        "properties": { "error": { "type": "string" } },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "serp-overview": {
+        "properties": {
+          "positions": {
+            "items": {
+              "properties": {
+                "ahrefs_rank": {
+                  "type": [ "integer", "null" ],
+                  "title": "ahrefs_rank",
+                  "description": "The strength of a domain's backlink profile compared to the other websites in our database, with rank #1 being the strongest."
+                },
+                "backlinks": {
+                  "type": [ "integer", "null" ],
+                  "title": "backlinks",
+                  "description": "The total number of links from other websites pointing to a search result."
+                },
+                "domain_rating": {
+                  "type": [ "number", "null" ],
+                  "format": "float",
+                  "title": "domain_rating",
+                  "description": "The strength of a domain’s backlink profile compared to the others in our database on a 100-point scale."
+                },
+                "keywords": {
+                  "type": [ "integer", "null" ],
+                  "title": "keywords",
+                  "description": "The total number of keywords that a search result ranks for in the top 100 organic positions."
+                },
+                "page_type": {
+                  "type": [ "string", "null" ],
+                  "title": "page_type",
+                  "description": "Comma-separated list of AI-predicted hierarchical page type paths for the ranking page. Each value is a slash-prefixed path (e.g. /Article/How_to)."
+                },
+                "position": {
+                  "type": "integer",
+                  "title": "position",
+                  "description": "The position of the search result in SERP."
+                },
+                "refdomains": {
+                  "type": [ "integer", "null" ],
+                  "title": "refdomains",
+                  "description": "(5 units) The total number of unique domains linking to a search result."
+                },
+                "title": {
+                  "type": [ "string", "null" ],
+                  "title": "title",
+                  "description": "The title of a ranking page."
+                },
+                "top_keyword": {
+                  "type": [ "string", "null" ],
+                  "title": "top_keyword",
+                  "description": "The keyword that brings the most organic traffic to a search result."
+                },
+                "top_keyword_volume": {
+                  "type": [ "integer", "null" ],
+                  "title": "top_keyword_volume",
+                  "description": "(10 units) An estimation of the average monthly number of searches for the top keyword over the latest known 12 months of data."
+                },
+                "traffic": {
+                  "type": [ "integer", "null" ],
+                  "title": "traffic",
+                  "description": "(10 units) An estimation of the monthly organic search traffic that a result gets from all the keywords that it ranks for."
+                },
+                "type": {
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "paid_top", "paid_bottom", "paid_right",
+                      "paid_sitelink", "organic", "sitelink", "snippet",
+                      "image", "article", "knowledge_card",
+                      "knowledge_panel", "local_pack", "local_teaser",
+                      "news", "question", "review", "shopping", "tweet",
+                      "spelling", "video", "discussion", "ai_overview",
+                      "ai_overview_sitelink", "organic_shopping", "image_th",
+                      "video_th", "ai_overview_found"
+                    ],
+                    "title": "type",
+                    "description": "The kind of the position: organic, paid, or a SERP feature."
+                  },
+                  "type": "array",
+                  "title": "type",
+                  "description": "The kind of the position: organic, paid, or a SERP feature."
+                },
+                "update_date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "update_date",
+                  "description": "The date when we checked search engine results for a keyword."
+                },
+                "url": {
+                  "type": [ "string", "null" ],
+                  "title": "url",
+                  "description": "The URL of a ranking page."
+                },
+                "url_rating": {
+                  "type": [ "number", "null" ],
+                  "format": "float",
+                  "title": "url_rating",
+                  "description": "The strength of a page's backlink profile on a 100-point logarithmic scale."
+                },
+                "value": {
+                  "type": [ "integer", "null" ],
+                  "title": "value",
+                  "description": "(10 units) The estimated value of a page’s monthly organic search traffic, in USD cents."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      }
+    },
+    "responses": {
+      "error_400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_403": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_429": {
+        "description": "Too Many Requests",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_500": {
+        "description": "Internal Error",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "output_json_php_xml": {
+        "description": "The output format.",
+        "required": false,
+        "explode": false,
+        "schema": { "type": "string", "enum": [ "json", "php", "xml" ] },
+        "name": "output",
+        "in": "query"
+      }
+    },
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": { "http": { "type": "http", "scheme": "bearer" } },
+    "links": {},
+    "callbacks": {},
+    "pathItems": {},
+    "mediaTypes": {}
+  },
+  "security": [ { "http": [ "read" ] } ],
+  "tags": [
+    { "name": "SERP Overview", "description": "SERP Overview data" }
+  ],
+  "externalDocs": {
+    "description": "",
+    "url": "https://docs.ahrefs.com/docs/api/v3/"
+  }
+}

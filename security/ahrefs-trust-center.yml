@@ -1,0 +1,64 @@
+generated: '2026-08-12'
+method: probed
+probe: true
+url: https://trust.ahrefs.com/
+canonical: https://trust.ahrefs.com/en
+evidence:
+- source: https://trust.ahrefs.com/
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  title: Compliance at Ahrefs.
+  og_title: Compliance at Ahrefs.
+  fetched: '2026-08-12'
+- source: https://trust.ahrefs.com/ Content-Security-Policy header
+  observation: 'connect-src and img-src allow https://eu.probo.com and a Probo S3 bucket'
+  inference: the trust center is hosted on Probo (getprobo.com)
+certifications: []
+certifications_note: >-
+  NONE ENUMERATED — not "none held". The trust center is a client-rendered single-page app: the served
+  HTML contains only the document head and a skeleton, and every content path (including the GraphQL
+  endpoints tried) returns the same SPA shell with content-type text/html. No certification names could
+  be read from the page anonymously, so none are recorded here. Third-party sources report SOC 2 Type 2
+  and ISO 27001 for Ahrefs Pte. Ltd., but they are not the provider's own published surface and are
+  deliberately not asserted as evidence in this artifact.
+localized: true
+locales:
+- en
+- de
+- es
+- fr
+- id
+- it
+- ja
+- ko
+- nl
+- pl
+- pt
+- tr
+- uk
+- zh
+document_access: >-
+  Probo trust centers gate audit reports behind an access request; no document could be listed or
+  downloaded anonymously.
+related:
+  privacy_policy: https://ahrefs.com/privacy-policy
+  terms: https://ahrefs.com/terms
+  legal_entity: Ahrefs Pte. Ltd. (201227417H), 16 Raffles Quay #33-03, Hong Leong Building, Singapore
+security_txt:
+  present: false
+  probed:
+  - url: https://ahrefs.com/.well-known/security.txt
+    status: 404
+  - url: https://api.ahrefs.com/.well-known/security.txt
+    status: 404
+  - url: https://docs.ahrefs.com/.well-known/security.txt
+    status: 404
+  - url: https://app.ahrefs.com/.well-known/security.txt
+    status: 404
+vulnerability_disclosure:
+  present: false
+  note: >-
+    No security.txt, no /security or /responsible-disclosure page (https://ahrefs.com/security 404s),
+    and no HackerOne/Bugcrowd/Intigriti program found. probe-security-programs.py returned
+    vdp=none. No VulnerabilityDisclosure or Security pointer is emitted — a security-disclosure
+    channel could not be verified.

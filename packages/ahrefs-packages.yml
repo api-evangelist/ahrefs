@@ -1,0 +1,89 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, repo.packagist.org, api.github.com/orgs/ahrefs and
+  https://docs.ahrefs.com/llms.txt
+note: >-
+  Ahrefs ships first-party client code, but almost none of it reaches a package registry. The official
+  Python SDK is distributed only from GitHub (`pip install git+https://github.com/ahrefs/ahrefs-python.git`)
+  and is still tagged `-alpha`; there is no `ahrefs` project on PyPI. The npm package `ahrefs` is a
+  third-party 2015 client, not Ahrefs'. The only first-party registry artifacts are `@ahrefs/mcp` on
+  npm — which Ahrefs' own README now marks unmaintained and outdated — and a PHP wrapper on Packagist
+  that still targets the retired API v2.
+packages:
+- language: python
+  registry: github
+  name: ahrefs-python
+  url: https://github.com/ahrefs/ahrefs-python
+  install: pip install git+https://github.com/ahrefs/ahrefs-python.git
+  official: true
+  version: v0.9.0-alpha
+  published: '2026-03-22'
+  version_source: https://api.github.com/repos/ahrefs/ahrefs-python/releases
+  note: >-
+    The official Python SDK, auto-generated from the OpenAPI spec — 105 methods across 11 API
+    sections, sync `AhrefsClient` and async `AsyncAhrefsClient`, typed pydantic request/response
+    models, built-in retry on 429/5xx, requires Python 3.11+ (httpx + pydantic). Not published to
+    PyPI: the only distribution channel is a git install, so there is no registry metadata endpoint
+    and no immutable version a consumer can pin by name. Still on alpha tags after nine releases.
+- language: javascript
+  registry: npm
+  name: '@ahrefs/mcp'
+  url: https://www.npmjs.com/package/@ahrefs/mcp
+  install: npm install -g @ahrefs/mcp
+  official: true
+  version: 0.0.11
+  published: '2025-05-27'
+  version_source: https://registry.npmjs.org/@ahrefs/mcp
+  repo: https://github.com/ahrefs/ahrefs-mcp-server
+  note: >-
+    The local (stdio) Ahrefs MCP server, exposing 41 tools over API v3 keys. Ahrefs' own repository
+    README states it is no longer maintained and directs users to the hosted remote server at
+    https://api.ahrefs.com/mcp/mcp. Last publish 2025-05-27 — 14 months before this check, and before
+    the Brand Radar, GSC Insights, Social Media and Web Analytics tools were added to API v3.
+- language: php
+  registry: packagist
+  name: ahrefs/ahrefs-api-php
+  url: https://packagist.org/packages/ahrefs/ahrefs-api-php
+  install: composer require ahrefs/ahrefs-api-php
+  official: true
+  version: v1.2
+  published: '2022-08-08'
+  version_source: https://repo.packagist.org/p2/ahrefs/ahrefs-api-php.json
+  repo: https://github.com/ahrefs/ahrefs-api-php
+  status: obsolete
+  note: >-
+    Wrapper for Ahrefs API **V2**, which Ahrefs deprecated on 2025-11-01. Last release 2022-08-08.
+    Does not target the current v3 surface; recorded for completeness, not as a usable client.
+absent:
+- registry: pypi
+  queried:
+  - ahrefs
+  - ahrefs-python
+  - ahrefs-sdk
+  - ahrefs-client
+  result: 404 for every first-party name; the only `ahrefs-api-python` project is a 2019 third-party
+    package by `sp.remotely` (v0.0.1, 2019-08-05) targeting API v2.
+- registry: maven-central
+  result: no first-party Ahrefs artifact found
+- registry: nuget
+  result: no first-party Ahrefs artifact found
+- registry: rubygems
+  result: no first-party Ahrefs artifact found
+- registry: crates.io
+  result: no first-party Ahrefs artifact found
+- registry: pkg.go.dev
+  result: no first-party Ahrefs client module found
+third_party_seen:
+- name: ahrefs
+  registry: npm
+  version: 0.1.0
+  published: '2015-09-05'
+  official: false
+  note: unrelated community client published by ybonnefond; occupies the obvious name on npm.
+- name: ahrefs-v3
+  registry: npm
+  version: 1.1.0
+  published: '2026-07-16'
+  official: false
+  note: community TypeScript client for API v3.

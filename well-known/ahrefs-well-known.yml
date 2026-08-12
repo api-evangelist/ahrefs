@@ -1,0 +1,95 @@
+generated: '2026-08-12'
+method: probed
+source: live GET of /.well-known/* on every Ahrefs host in apis.yml and the OpenAPI servers[]
+note: >-
+  Two real documents are served, both on the API host: RFC 8414 OAuth 2.0 Authorization Server Metadata
+  and RFC 9728 OAuth 2.0 Protected Resource Metadata. They are the discovery surface behind the hosted
+  MCP server — an unauthenticated tools/list call to https://api.ahrefs.com/mcp/mcp returns 401 with
+  `WWW-Authenticate: Bearer resource_metadata="https://api.ahrefs.com/.well-known/oauth-protected-resource"`.
+  No security.txt (RFC 9116) is served on any host. The website, docs and app hosts return HTML 404
+  shells for every /.well-known/ path probed; those are recorded as misses, not documents.
+hosts:
+- host: https://api.ahrefs.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: ahrefs-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    file: ahrefs-oauth-protected-resource.json
+    spec: RFC 9728
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://ahrefs.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://docs.ahrefs.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://app.ahrefs.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+agent_card:
+  found: false
+  note: >-
+    Probed /.well-known/agent-card.json and the legacy /.well-known/agent.json on ahrefs.com,
+    api.ahrefs.com, docs.ahrefs.com and app.ahrefs.com. Every path 404d, so no a2a/ artifact was
+    written — an agent card is search-only and is never authored on a provider's behalf.

@@ -1,0 +1,2127 @@
+{
+  "openapi": "3.2.0",
+  "info": {
+    "title": "GSC Insights",
+    "description": "Fetch data from GSC Insights reports",
+    "termsOfService": "https://ahrefs.com/terms",
+    "contact": {
+      "name": "Ahrefs",
+      "url": "https://ahrefs.com/",
+      "email": "support@ahrefs.com"
+    },
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.ahrefs.com/v3/gsc",
+      "description": "Ahrefs GSC Insights"
+    }
+  ],
+  "paths": {
+    "/performance-history": {
+      "get": {
+        "tags": [ "Overview", "MCP" ],
+        "summary": "Performance history",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "performance-history",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The time interval used to group historical data.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "daily", "weekly", "monthly" ],
+              "default": "monthly"
+            },
+            "name": "history_grouping",
+            "in": "query"
+          },
+          {
+            "description": "The type of search results to return (web, image, video, news).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "web", "image", "video", "news" ],
+              "default": "web"
+            },
+            "name": "search_type",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/performance-history"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/performance-history"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/positions-history": {
+      "get": {
+        "tags": [ "Overview", "MCP" ],
+        "summary": "Positions history",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "positions-history",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The time interval used to group historical data.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "daily", "weekly", "monthly" ],
+              "default": "monthly"
+            },
+            "name": "history_grouping",
+            "in": "query"
+          },
+          {
+            "description": "The type of search results to return (web, image, video, news).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "web", "image", "video", "news" ],
+              "default": "web"
+            },
+            "name": "search_type",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/positions-history"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/positions-history"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/pages-history": {
+      "get": {
+        "tags": [ "Overview", "MCP" ],
+        "summary": "Pages history",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "pages-history",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The time interval used to group historical data.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "daily", "weekly", "monthly" ],
+              "default": "monthly"
+            },
+            "name": "history_grouping",
+            "in": "query"
+          },
+          {
+            "description": "The type of search results to return (web, image, video, news).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "web", "image", "video", "news" ],
+              "default": "web"
+            },
+            "name": "search_type",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/pages-history" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/pages-history" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/performance-by-device": {
+      "get": {
+        "tags": [ "Overview", "MCP" ],
+        "summary": "Performance by device",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "performance-by-device",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The type of search results to return (web, image, video, news).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "web", "image", "video", "news" ],
+              "default": "web"
+            },
+            "name": "search_type",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/performance-by-device"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/performance-by-device"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/metrics-by-country": {
+      "get": {
+        "tags": [ "Overview", "MCP" ],
+        "summary": "Metrics by country",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "metrics-by-country",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The time interval used to group historical data.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "daily", "weekly", "monthly" ],
+              "default": "monthly"
+            },
+            "name": "history_grouping",
+            "in": "query"
+          },
+          {
+            "description": "The type of search results to return (web, image, video, news).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "web", "image", "video", "news" ],
+              "default": "web"
+            },
+            "name": "search_type",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/metrics-by-country"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/metrics-by-country"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/ctr-by-position": {
+      "get": {
+        "tags": [ "Overview", "MCP" ],
+        "summary": "CTR by position",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "ctr-by-position",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ctr-by-position" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/ctr-by-position" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/performance-by-position": {
+      "get": {
+        "tags": [ "Overview", "MCP" ],
+        "summary": "Performance by position",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "performance-by-position",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The type of search results to return (web, image, video, news).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "web", "image", "video", "news" ],
+              "default": "web"
+            },
+            "name": "search_type",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/performance-by-position"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/performance-by-position"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/keyword-history": {
+      "get": {
+        "tags": [ "Keywords", "MCP" ],
+        "summary": "Keyword history",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "keyword-history",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The time interval used to group historical data.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "daily", "weekly", "monthly" ],
+              "default": "monthly"
+            },
+            "name": "history_grouping",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "A comma-separated list of keywords to get history data for.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "default": "" },
+            "name": "keywords",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/keyword-history" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/keyword-history" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/keywords": {
+      "get": {
+        "tags": [ "Keywords", "MCP" ],
+        "summary": "Keywords",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "keywords",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The type of search results to return (web, image, video, news).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "web", "image", "video", "news" ],
+              "default": "web"
+            },
+            "name": "search_type",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "The number of results to return.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer", "default": 1000 },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- keyword\n- top_url\n- url\n- clicks\n- impressions\n- ctr\n- position\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          {
+            "description": "The id of an existing keyword list to show metrics for.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "keyword_list_id",
+            "in": "query"
+          },
+          {
+            "description": "Keyword lists filter (JSON string). Supports include (is), exclude (is_not), empty (not in any list), and not_empty (in any list).",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "keyword_lists",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output_json_php_xml" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/keywords" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/keywords" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/page-history": {
+      "get": {
+        "tags": [ "Pages", "MCP" ],
+        "summary": "Page history",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "page-history",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The time interval used to group historical data.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "daily", "weekly", "monthly" ],
+              "default": "monthly"
+            },
+            "name": "history_grouping",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "A comma-separated list of page URLs to get history data for.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "default": "" },
+            "name": "pages",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/page-history" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/page-history" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/pages": {
+      "get": {
+        "tags": [ "Pages", "MCP" ],
+        "summary": "Pages",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "pages",
+        "parameters": [
+          {
+            "description": "Project ID. Required when portfolio_id is not provided.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "portfolio_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "The end date of the historical period in YYYY-MM-DD format.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_to",
+            "in": "query"
+          },
+          {
+            "description": "The type of search results to return (web, image, video, news).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "web", "image", "video", "news" ],
+              "default": "web"
+            },
+            "name": "search_type",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          {
+            "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [ "desktop", "mobile", "tablet" ]
+            },
+            "name": "device",
+            "in": "query"
+          },
+          {
+            "description": "The number of results to return.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer", "default": 1000 },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "description": "Supported fields:\n- url\n- clicks\n- impressions\n- ctr\n- position\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/pages" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/pages" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/anonymous-queries": {
+      "get": {
+        "tags": [ "Anonymous queries", "MCP" ],
+        "summary": "Anonymous queries",
+        "operationId": "anonymous-queries",
+        "parameters": [
+          {
+            "description": "A manual timeout duration in seconds.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "description": "The number of results to return.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer", "default": 1000 },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "description": "A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "examples": [ "field_a,field_b:asc,field_c:desc" ]
+            },
+            "name": "order_by",
+            "in": "query"
+          },
+          {
+            "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**keyword**  \ntype: string\n\n**url**  \ntype: string",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "where",
+            "in": "query"
+          },
+          {
+            "description": "A comma-separated list of columns to return. See response schema for valid column identifiers.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "select",
+            "in": "query"
+          },
+          {
+            "description": "Project ID",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "The start date of the historical period in YYYY-MM-DD format.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string", "format": "date" },
+            "name": "date_from",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/anonymous-queries"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/anonymous-queries"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error response": {
+        "properties": { "error": { "type": "string" } },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "performance-history": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "clicks": { "type": "integer", "title": "clicks" },
+                "ctr": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "ctr"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "date"
+                },
+                "impressions": { "type": "integer", "title": "impressions" },
+                "position": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "position",
+                  "description": "Average position (decimal, e.g. 4.7)"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "positions-history": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "date"
+                },
+                "position_11_to_20": {
+                  "type": "integer",
+                  "title": "position_11_to_20"
+                },
+                "position_1_to_3": {
+                  "type": "integer",
+                  "title": "position_1_to_3"
+                },
+                "position_21_to_50": {
+                  "type": "integer",
+                  "title": "position_21_to_50"
+                },
+                "position_4_to_10": {
+                  "type": "integer",
+                  "title": "position_4_to_10"
+                },
+                "position_51_plus": {
+                  "type": "integer",
+                  "title": "position_51_plus"
+                },
+                "total": { "type": "integer", "title": "total" }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "pages-history": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "date"
+                },
+                "total_pages": { "type": "integer", "title": "total_pages" }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "performance-by-device": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "clicks": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "clicks"
+                },
+                "ctr": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "ctr"
+                },
+                "device": { "type": "string", "title": "device" },
+                "impressions": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "impressions"
+                },
+                "position": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "position",
+                  "description": "Average position (decimal, e.g. 4.7)"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "metrics-by-country": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "clicks": { "type": "integer", "title": "clicks" },
+                "country": { "type": "string", "title": "country" }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "ctr-by-position": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "average_ctr_percent": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "average_ctr_percent"
+                },
+                "keyword_count": {
+                  "type": "integer",
+                  "title": "keyword_count"
+                },
+                "position": { "type": "integer", "title": "position" }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "performance-by-position": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "clicks": { "type": "integer", "title": "clicks" },
+                "clicks_percent": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "clicks_percent"
+                },
+                "impressions": { "type": "integer", "title": "impressions" },
+                "impressions_percent": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "impressions_percent"
+                },
+                "keyword_count": {
+                  "type": "integer",
+                  "title": "keyword_count"
+                },
+                "keyword_count_percent": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "keyword_count_percent"
+                },
+                "position_range": {
+                  "type": "string",
+                  "title": "position_range"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "keyword-history": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "clicks": { "type": "integer", "title": "clicks" },
+                "ctr": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "ctr"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "date"
+                },
+                "impressions": { "type": "integer", "title": "impressions" },
+                "keyword": { "type": "string", "title": "keyword" },
+                "position": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "position",
+                  "description": "Average position (decimal, e.g. 4.7)"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "keywords": {
+        "properties": {
+          "keywords": {
+            "items": {
+              "properties": {
+                "clicks": {
+                  "type": [ "integer", "null" ],
+                  "title": "clicks"
+                },
+                "ctr": {
+                  "type": [ "number", "null" ],
+                  "format": "float",
+                  "title": "ctr"
+                },
+                "impressions": {
+                  "type": [ "integer", "null" ],
+                  "title": "impressions"
+                },
+                "keyword": { "type": "string", "title": "keyword" },
+                "keyword_list_labels": {
+                  "items": { "type": "string" },
+                  "type": "array",
+                  "title": "keyword_list_labels"
+                },
+                "position": {
+                  "type": [ "number", "null" ],
+                  "format": "float",
+                  "title": "position",
+                  "description": "Average position (decimal, e.g. 4.7)"
+                },
+                "top_url": {
+                  "type": [ "string", "null" ],
+                  "format": "url",
+                  "title": "top_url"
+                },
+                "urls_count": { "type": "integer", "title": "urls_count" }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "page-history": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "properties": {
+                "clicks": { "type": "integer", "title": "clicks" },
+                "ctr": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "ctr"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "date"
+                },
+                "impressions": { "type": "integer", "title": "impressions" },
+                "page": {
+                  "type": "string",
+                  "format": "url",
+                  "title": "page"
+                },
+                "position": {
+                  "type": "number",
+                  "format": "float",
+                  "title": "position",
+                  "description": "Average position (decimal, e.g. 4.7)"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "pages": {
+        "properties": {
+          "pages": {
+            "items": {
+              "properties": {
+                "clicks": {
+                  "type": [ "integer", "null" ],
+                  "title": "clicks"
+                },
+                "ctr": {
+                  "type": [ "number", "null" ],
+                  "format": "float",
+                  "title": "ctr"
+                },
+                "impressions": {
+                  "type": [ "integer", "null" ],
+                  "title": "impressions"
+                },
+                "keywords_count": {
+                  "type": "integer",
+                  "title": "keywords_count"
+                },
+                "page": {
+                  "type": "string",
+                  "format": "url",
+                  "title": "page"
+                },
+                "position": {
+                  "type": [ "number", "null" ],
+                  "format": "float",
+                  "title": "position",
+                  "description": "Average position (decimal, e.g. 4.7)"
+                },
+                "top_keyword": {
+                  "type": [ "string", "null" ],
+                  "title": "top_keyword"
+                },
+                "traffic_value": {
+                  "type": [ "number", "null" ],
+                  "format": "float",
+                  "title": "traffic_value",
+                  "description": "Estimated traffic value in USD"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "anonymous-queries": {
+        "properties": {
+          "keywords": {
+            "items": {
+              "properties": {
+                "cpc": { "type": [ "integer", "null" ], "title": "cpc" },
+                "keyword": { "type": "string", "title": "keyword" },
+                "keyword_country": {
+                  "type": "string",
+                  "enum": [
+                    "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO", "AQ",
+                    "AR", "AS", "AT", "AU", "AW", "AX", "AZ", "BA", "BB",
+                    "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BM",
+                    "BN", "BO", "BQ", "BR", "BS", "BT", "BV", "BW", "BY",
+                    "BZ", "CA", "CC", "CD", "CF", "CG", "CH", "CI", "CK",
+                    "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CW", "CX",
+                    "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC",
+                    "EE", "EG", "EH", "ER", "ES", "ET", "FI", "FJ", "FK",
+                    "FM", "FO", "FR", "GA", "GB", "GD", "GE", "GF", "GG",
+                    "GH", "GI", "GL", "GM", "GN", "GP", "GQ", "GR", "GS",
+                    "GT", "GU", "GW", "GY", "HK", "HM", "HN", "HR", "HT",
+                    "HU", "ID", "IE", "IL", "IM", "IN", "IO", "IQ", "IR",
+                    "IS", "IT", "JE", "JM", "JO", "JP", "KE", "KG", "KH",
+                    "KI", "KM", "KN", "KP", "KR", "KW", "KY", "KZ", "LA",
+                    "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV",
+                    "LY", "MA", "MC", "MD", "ME", "MF", "MG", "MH", "MK",
+                    "ML", "MM", "MN", "MO", "MP", "MQ", "MR", "MS", "MT",
+                    "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NC", "NE",
+                    "NF", "NG", "NI", "NL", "NO", "NP", "NR", "NU", "NZ",
+                    "OM", "OTHER", "PA", "PE", "PF", "PG", "PH", "PK", "PL",
+                    "PM", "PN", "PR", "PS", "PT", "PW", "PY", "QA", "RE",
+                    "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SD", "SE",
+                    "SG", "SH", "SI", "SJ", "SK", "SL", "SM", "SN", "SO",
+                    "SR", "SS", "ST", "SV", "SX", "SY", "SZ", "TC", "TD",
+                    "TF", "TG", "TH", "TJ", "TK", "TL", "TM", "TN", "TO",
+                    "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US",
+                    "UY", "UZ", "VA", "VC", "VE", "VG", "VI", "VN", "VU",
+                    "WF", "WS", "YE", "YT", "ZA", "ZM", "ZW"
+                  ],
+                  "title": "keyword_country"
+                },
+                "keyword_difficulty": {
+                  "type": [ "integer", "null" ],
+                  "title": "keyword_difficulty",
+                  "description": "(10 units)"
+                },
+                "position": { "type": "integer", "title": "position" },
+                "position_kind": {
+                  "type": "string",
+                  "enum": [
+                    "paid_top", "paid_bottom", "paid_right", "paid_sitelink",
+                    "organic", "sitelink", "snippet", "image", "article",
+                    "knowledge_card", "knowledge_panel", "local_pack",
+                    "local_teaser", "news", "question", "review", "shopping",
+                    "tweet", "spelling", "video", "discussion",
+                    "ai_overview", "ai_overview_sitelink", "organic_shopping"
+                  ],
+                  "title": "position_kind"
+                },
+                "traffic": {
+                  "type": "integer",
+                  "title": "traffic",
+                  "description": "(10 units)"
+                },
+                "url": { "type": "string", "format": "url", "title": "url" },
+                "volume": {
+                  "type": [ "integer", "null" ],
+                  "title": "volume",
+                  "description": "(10 units)"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      }
+    },
+    "responses": {
+      "error_400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_403": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_429": {
+        "description": "Too Many Requests",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_500": {
+        "description": "Internal Error",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "output": {
+        "description": "The output format.",
+        "required": false,
+        "explode": false,
+        "schema": {
+          "type": "string",
+          "enum": [ "json", "csv", "xml", "php" ]
+        },
+        "name": "output",
+        "in": "query"
+      },
+      "output_json_php_xml": {
+        "description": "The output format.",
+        "required": false,
+        "explode": false,
+        "schema": { "type": "string", "enum": [ "json", "php", "xml" ] },
+        "name": "output",
+        "in": "query"
+      }
+    },
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": { "http": { "type": "http", "scheme": "bearer" } },
+    "links": {},
+    "callbacks": {},
+    "pathItems": {},
+    "mediaTypes": {}
+  },
+  "security": [ { "http": [ "read" ] } ],
+  "tags": [
+    { "name": "Overview", "description": "GSC overview data" },
+    { "name": "Keywords", "description": "GSC keywords data" },
+    { "name": "Pages", "description": "GSC pages data" },
+    {
+      "name": "Anonymous queries",
+      "description": "GSC anonymous queries data"
+    }
+  ],
+  "externalDocs": {
+    "description": "",
+    "url": "https://docs.ahrefs.com/docs/api/v3/"
+  }
+}

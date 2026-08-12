@@ -1,19 +1,105 @@
 aid: ahrefs
 name: Ahrefs
-description: Ahrefs is a company surfaced via the API Evangelist marketing integration graph — named as
-  an integration by 3 members of the programmable-marketing cohort — and added to the network as a stub
-  for full-pipeline profiling.
+description: Ahrefs is a Singapore-based SEO and marketing intelligence platform built on its own web
+  crawler and index, offering Site Explorer, Keywords Explorer, Site Audit, Rank Tracker, SERP Overview,
+  Brand Radar, Web Analytics and Social Media Management. The Ahrefs API v3 exposes that data set as a
+  REST API at https://api.ahrefs.com/v3 with 148 operations across 13 tools, documented by a single
+  OpenAPI 3.2.0 specification plus one machine-readable spec per tool. Access is metered in API units
+  with a 50-unit request floor, authenticated with a bearer API key, and additionally reachable through
+  a hosted MCP server and the OAuth-based Ahrefs Connect partner program.
 url: https://raw.githubusercontent.com/api-evangelist/ahrefs/refs/heads/main/apis.yml
+image: https://static.ahrefs.com/assets/img/og/ahrefs.png?v=2
 x-type: company
 x-source: harvest:marketing-integration-graph
-x-tier: stub
-x-tier-reason: harvest
+x-tier: full
+x-tier-reason: enrichment-pass-found-openapi-and-mcp
 specificationVersion: '0.20'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
 - Company
-apis: []
+- SEO
+- Marketing
+- Search
+- Analytics
+- Backlinks
+- Keywords
+- Web Analytics
+- Rank Tracking
+- Site Audit
+- Brand Monitoring
+- Social Media
+apis:
+- aid: ahrefs:api-v3
+  name: Ahrefs API v3
+  description: REST API over the Ahrefs data set — Site Explorer, Keywords Explorer, Site Audit, Rank
+    Tracker, SERP Overview, Batch Analysis, Brand Radar, Web Analytics, GSC Insights, Social Media
+    Management, Management, Subscription Information and free Public endpoints. 148 operations, bearer
+    API key auth, JSON or XML responses, metered in API units.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - SEO
+  - Backlinks
+  - Keywords
+  - Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/_original/ahrefs-openapi-original.json
+  - type: OpenAPI
+    url: openapi/ahrefs-site-explorer-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-keywords-explorer-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-site-audit-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-rank-tracker-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-serp-overview-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-batch-analysis-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-subscription-info-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-management-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-brand-radar-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-web-analytics-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-gsc-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-social-media-openapi.json
+  - type: OpenAPI
+    url: openapi/ahrefs-public-openapi.json
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: Overlay
+    url: overlays/ahrefs-api-v3-overlay.yaml
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:mcp
+  name: Ahrefs MCP Server
+  description: Ahrefs' hosted, remote Model Context Protocol server, which lets AI agents query the
+    Ahrefs API on behalf of a signed-in Ahrefs account. Streamable HTTP transport, OAuth 2.0 with PKCE
+    (scope apiv3-mcp), tool groups selectable via a tools query parameter. Available on Lite plans and
+    above; requests consume the account's API units.
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - MCP
+  - Agents
+  properties:
+  - type: MCPServer
+    url: mcp/ahrefs-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/ahrefs-tool-crosswalk.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/mcp/docs/introduction
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -22,6 +108,88 @@ maintainers:
 common:
 - type: Website
   url: https://ahrefs.com/
+- type: DeveloperPortal
+  url: https://docs.ahrefs.com/
+- type: Documentation
+  url: https://docs.ahrefs.com/docs/api/reference/introduction
+- type: APIReference
+  url: https://docs.ahrefs.com/en/api/reference/site-explorer
+- type: GettingStarted
+  url: https://docs.ahrefs.com/docs/api/reference/introduction
+- type: Support
+  url: https://help.ahrefs.com/en/
+- type: Blog
+  url: https://ahrefs.com/blog
+- type: GitHubOrganization
+  url: https://github.com/ahrefs
+- type: Pricing
+  url: https://ahrefs.com/pricing
+- type: SignUp
+  url: https://ahrefs.com/signup
+- type: TermsOfService
+  url: https://ahrefs.com/terms
+- type: PrivacyPolicy
+  url: https://ahrefs.com/privacy-policy
+- type: ChangeLog
+  url: changelog/ahrefs-changelog.yml
+- type: Authentication
+  url: authentication/ahrefs-authentication.yml
+- type: OAuthScopes
+  url: scopes/ahrefs-scopes.yml
+- type: RateLimits
+  url: rate-limits/ahrefs-rate-limits.yml
+- type: Plans
+  url: plans/ahrefs-plans-pricing.yml
+- type: Packages
+  url: packages/ahrefs-packages.yml
+- type: SDKs
+  url: packages/ahrefs-packages.yml
+- type: WellKnown
+  url: well-known/ahrefs-well-known.yml
+- type: LLMsTxt
+  url: llms/ahrefs-llms.txt
+- type: Conformance
+  url: conformance/ahrefs-conformance.yml
+- type: Compliance
+  url: https://trust.ahrefs.com/
+- type: TrustCenter
+  url: security/ahrefs-trust-center.yml
+- type: DomainSecurity
+  url: security/ahrefs-domain-security.yml
+- type: Lifecycle
+  url: lifecycle/ahrefs-lifecycle.yml
+- type: Deprecation
+  url: https://docs.ahrefs.com/ahrefs-connect/docs/legacy-developers
+- type: Conventions
+  url: conventions/ahrefs-conventions.yml
+- type: Sandbox
+  url: sandbox/ahrefs-sandbox.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Components
+  url: components/ahrefs-components.yml
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 43
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: openapi-and-mcp-found
+  detail: >-
+    Ahrefs publishes a complete OpenAPI 3.2.0 (148 operations) plus 13 per-tool specs and a spec index
+    on its DOCS host at https://docs.ahrefs.com/openapi.json; the API host api.ahrefs.com 404s on every
+    spec path, so the contract is only found by probing the docs host.
+  evidence:
+  - url: https://docs.ahrefs.com/openapi.json
+    status: 200
+  - url: https://docs.ahrefs.com/llms.txt
+    status: 200
+  - url: https://api.ahrefs.com/.well-known/oauth-protected-resource
+    status: 200
+  - url: https://api.ahrefs.com/openapi.json
+    status: 404
+  checked: '2026-08-12'
 x-vouched-by:
 - Improvado
 - Nexad

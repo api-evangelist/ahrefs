@@ -1,0 +1,114 @@
+generated: '2026-08-12'
+method: searched
+status: published
+source: https://docs.ahrefs.com/mcp/docs/introduction.md
+server:
+  name: ahrefs
+  transport: http
+  url: https://api.ahrefs.com/mcp/mcp
+  sse_url: https://api.ahrefs.com/mcp/mcpSse
+  sse_status: legacy, deprecated in many clients
+  hosted_by: Ahrefs
+  docs: https://docs.ahrefs.com/mcp/docs/introduction
+authentication:
+  methods:
+  - type: oauth2
+    flow: authorizationCode
+    pkce: S256
+    scope: apiv3-mcp
+    authorization_endpoint: https://app.ahrefs.com/web/oauth/authorize
+    token_endpoint: https://ahrefs.com/oauth/token
+    registration_endpoint: https://api.ahrefs.com/mcp/register
+    discovery:
+    - well-known/ahrefs-oauth-authorization-server.json
+    - well-known/ahrefs-oauth-protected-resource.json
+  - type: apiKey
+    note: >-
+      An MCP-scoped API key generated in Account settings / API keys. Enterprise customers may also
+      connect with regular API keys.
+  consent: >-
+    Connecting an AI client shows an Ahrefs authorization consent screen; on approval the connection
+    appears in the account with a dedicated API key tagged with `MCP` scope. Workspace admins can set
+    a monthly API-unit limit per key.
+introspection:
+  tools_list: gated
+  probe:
+    url: https://api.ahrefs.com/mcp/mcp
+    method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 401
+    body: api token is required
+    www_authenticate: Bearer resource_metadata="https://api.ahrefs.com/.well-known/oauth-protected-resource"
+    fetched: '2026-08-12'
+  note: >-
+    The live tool set and per-tool inputSchemas require authenticated introspection. What is recorded
+    below is the provider-documented capability-group surface plus the verbatim tool list from the
+    official local server source; see mcp/ahrefs-tool-crosswalk.yml for the operation-level binding.
+tool_selection:
+  parameter: tools
+  example: https://api.ahrefs.com/mcp/mcp?tools=site-explorer-overview,brand-radar-entities
+  default: all tools advertised when the parameter is omitted
+  preset: essentials
+  preset_note: standalone value; cannot be combined with group names
+  invalid_group_behaviour: connection rejected with an `invalid tool category` error
+  always_included: documentation and rendering helper tools
+tool_groups:
+- site-explorer-overview
+- site-explorer-reports
+- keywords-explorer
+- serp-overview
+- rank-tracker
+- site-audit
+- brand-radar-simple
+- brand-radar-entities
+- web-analytics-overview
+- web-analytics-sources
+- web-analytics-geo
+- web-analytics-user-agents
+- web-analytics-pages
+- gsc
+- social-media
+- batch-analysis
+- management
+- public
+- subscription-info
+availability:
+  plans: paid plans from Lite upward
+  metering: >-
+    Calls made by a connected AI client consume API units from the account's monthly allowance, the
+    same way direct API usage does. Each plan also caps the maximum rows an agent can retrieve per
+    request.
+  usage_report: https://app.ahrefs.com/account/limits-and-usage/web
+clients_documented:
+- Claude Web / Desktop
+- Claude Mobile
+- Claude Code
+- Copilot Studio
+- ChatGPT Web
+- Lovable
+- n8n
+- Manus
+- Mistral Le Chat
+- OpenClaw
+terms:
+  note: >-
+    Ahrefs states that using the external MCP endpoint via custom scripts, bridges, or standalone
+    HTTP/JSON-RPC clients is unsupported and not permitted, and that the external MCP server is not a
+    general-purpose programmatic API. Programmatic access should use the Ahrefs API v3.
+  source: https://docs.ahrefs.com/mcp/docs/introduction.md
+local_server:
+  status: deprecated
+  package: '@ahrefs/mcp'
+  registry: npm
+  repo: https://github.com/ahrefs/ahrefs-mcp-server
+  transport: stdio
+  auth: API v3 key via the API_KEY environment variable (does not accept MCP keys)
+  tools: 41
+  note: >-
+    The repository README states the local server is no longer maintained and is outdated; Ahrefs
+    directs users to the remote server. Its tool list is still the only publicly readable, verbatim
+    enumeration of Ahrefs MCP tools and is used as the basis of the tool crosswalk.
+tools:
+  source: https://github.com/ahrefs/ahrefs-mcp-server/blob/main/src/server.ts
+  scope: local (deprecated) server
+  count: 41
+  detail: mcp/ahrefs-tool-crosswalk.yml

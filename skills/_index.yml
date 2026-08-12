@@ -1,0 +1,55 @@
+generated: '2026-08-12'
+method: searched
+source: https://github.com/ahrefs/ahrefs-api-skills
+note: >-
+  Ahrefs publishes its own Agent Skill for the API — github.com/ahrefs/ahrefs-api-skills, installable
+  with `npx skills add ahrefs/ahrefs-api-skills --skill ahrefs-python --global`. That skill and its two
+  reference files are saved here verbatim. The two API Evangelist skills below are generated flow
+  skills grounded in operationIds verified against
+  openapi/_original/ahrefs-openapi-original.json; they complement rather than replace the vendor skill.
+skills:
+- file: ahrefs-python.md
+  name: ahrefs-python
+  method: searched
+  source: https://github.com/ahrefs/ahrefs-api-skills/blob/main/skills/ahrefs-python/SKILL.md
+  publisher: Ahrefs
+  api: openapi/_original/ahrefs-openapi-original.json
+  sdk: https://github.com/ahrefs/ahrefs-python
+  summary: >-
+    Vendor-published Claude Code skill teaching the official Python SDK — AhrefsClient /
+    AsyncAhrefsClient, typed request/response models, the built-in method search tool, error handling
+    and all 105 SDK methods across 11 API sections.
+  references:
+  - file: ahrefs-python-api-methods.md
+    source: https://github.com/ahrefs/ahrefs-api-skills/blob/main/skills/ahrefs-python/references/api-methods.md
+    summary: Full signature reference for every SDK method.
+  - file: ahrefs-python-filter-syntax.md
+    source: https://github.com/ahrefs/ahrefs-api-skills/blob/main/skills/ahrefs-python/references/filter-syntax.md
+    summary: BNF grammar and examples for the `where` filter expression.
+- file: ahrefs-backlink-audit.md
+  name: ahrefs-backlink-audit
+  method: generated
+  api: openapi/_original/ahrefs-openapi-original.json
+  operations:
+  - site-explorer.domain-rating
+  - site-explorer.backlinks-stats
+  - site-explorer.refdomains
+  - site-explorer.all-backlinks
+  - site-explorer.broken-backlinks
+  - site-explorer.anchors
+  - subscription-info.limits-and-usage
+  summary: Audit a domain's backlink profile while keeping API-unit spend bounded.
+- file: ahrefs-keyword-and-serp-research.md
+  name: ahrefs-keyword-and-serp-research
+  method: generated
+  api: openapi/_original/ahrefs-openapi-original.json
+  operations:
+  - keywords-explorer.overview
+  - keywords-explorer.matching-terms
+  - keywords-explorer.related-terms
+  - keywords-explorer.volume-by-country
+  - serp-overview.serp-overview
+  - site-explorer.organic-keywords
+  - site-explorer.organic-competitors
+  - batch-analysis.batch-analysis
+  summary: Size a keyword opportunity, expand a keyword list, and read the SERP behind it.

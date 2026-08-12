@@ -1,0 +1,145 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ahrefs.com/api/docs/changelog.md
+url: https://docs.ahrefs.com/docs/api/reference/changelog
+scheme:
+  versioning: uri-path major version (v3); no minor/patch version in the URL or headers
+  spec_info_version: 3.0.0
+  changelog_style: dated entries, newest first, no version numbers
+  entries_visible: 76 dated entries from 2023-05-08 through 2026-07-14
+current_version: v3
+last_entry: '2026-07-14'
+cadence: >-
+  Roughly weekly. 21 dated entries in 2026 through mid-July, including three in the first two weeks
+  of July 2026 alone. This is an actively shipped API, not a frozen one.
+note: >-
+  The changelog documents removals in the same stream as additions, with no separate deprecation
+  notice, no advance-warning window and no Deprecation/Sunset headers — the `protocol` parameter was
+  removed from SE Domain Rating on 2026-06-25 and `search_engine` from four Keywords Explorer
+  endpoints on 2026-05-18, each announced on the day. A client cannot detect either change from the
+  API itself.
+entries:
+- date: '2026-07-14'
+  type: addition
+  breaking: false
+  highlights:
+  - Management Delete projects endpoint released, deleting projects via a project_ids parameter.
+- date: '2026-07-13'
+  type: addition
+  breaking: false
+  highlights:
+  - Claude added as a data source across all Brand Radar endpoints.
+  - SERP Overview gained a `type` parameter to filter results by SERP feature.
+- date: '2026-07-08'
+  type: addition
+  breaking: false
+  highlights:
+  - Brand Radar AI responses / Cited domains / Cited pages gained a `brand_filter` filter matching brands
+    found but not cited.
+  - Site Audit Page Explorer now returns allowed/blocked AI search and training-bot fields.
+- date: '2026-06-26'
+  type: addition
+  breaking: false
+  highlights:
+  - Social Media Post metrics endpoint now includes TikTok metrics.
+- date: '2026-06-25'
+  type: removal
+  breaking: true
+  highlights:
+  - The `protocol` parameter was removed from the Site Explorer Domain Rating endpoint.
+- date: '2026-06-23'
+  type: addition
+  breaking: false
+  highlights:
+  - Management Projects returns a `folder` field; Create project accepts `folder_id`.
+- date: '2026-06-22'
+  type: addition
+  breaking: false
+  highlights:
+  - Site Explorer AI responses count endpoint released, returning the number of AI responses mentioning
+    a target.
+- date: '2026-06-08'
+  type: addition
+  breaking: false
+  highlights:
+  - Free public Domain Rating endpoint released, returning DR without a subscription.
+- date: '2026-05-29'
+  type: addition
+  breaking: false
+  highlights:
+  - Management PUT project-keywords-tags and PUT project-keywords-tags-delete released.
+- date: '2026-05-27'
+  type: limits
+  breaking: false
+  highlights:
+  - API and MCP usage limits increased across plans.
+- date: '2026-05-25'
+  type: addition
+  breaking: false
+  highlights:
+  - Brand Radar gained google_ai_mode_keywords and google_ai_overviews_keywords data sources.
+- date: '2026-05-22'
+  type: addition
+  breaking: false
+  highlights:
+  - Rank Tracker Competitors Domains endpoint released.
+- date: '2026-05-18'
+  type: removal
+  breaking: true
+  highlights:
+  - The `search_engine` parameter was removed from four Keywords Explorer endpoints (Overview, Matching
+    terms, Search suggestions, Volume by country).
+  - Site Audit Page content now returns `page_text_md`.
+- date: '2026-05-13'
+  type: access
+  breaking: false
+  highlights:
+  - Direct API access opened to Lite and higher plans.
+  - Management Projects returns a `verified` field; Create report supports brands/competitors by name
+    and URL groups.
+- date: '2026-05-11'
+  type: addition
+  breaking: false
+  highlights:
+  - Social Media post write endpoints released (POST / PATCH / DELETE post).
+- date: '2026-05-06'
+  type: addition
+  breaking: false
+  highlights:
+  - Brand Radar POST endpoints gained a `tags_filter` request-body filter.
+- date: '2026-04-27'
+  type: addition
+  breaking: false
+  highlights:
+  - GSC Keywords supports keyword_lists / keyword_list_id filtering and returns keyword_list_labels.
+- date: '2026-04-24'
+  type: addition
+  breaking: false
+  highlights:
+  - Grok added as a Brand Radar data source.
+- date: '2026-04-20'
+  type: release
+  breaking: false
+  highlights:
+  - Social Media API released — Channels, Channel metrics, Posts, Post metrics, Authors, Activity history.
+- date: '2026-04-17'
+  type: addition
+  breaking: false
+  highlights:
+  - Brand Radar endpoints support brand variations and brand websites via POST versions of the GET
+    endpoints.
+- date: '2026-04-13'
+  type: addition
+  breaking: false
+  highlights:
+  - Site Explorer Crawled pages endpoint released.
+- date: '2026-03-31'
+  type: addition
+  breaking: false
+  highlights:
+  - Management endpoints for Brand Radar reports released (GET / POST / PATCH brand-radar-reports).
+- date: '2026-03-19'
+  type: release
+  breaking: false
+  highlights:
+  - GSC Insights API released — 12 endpoints over Google Search Console data.

@@ -1,0 +1,33 @@
+generated: '2026-08-12'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: ahrefs.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 20 05:44:45 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: docs.ahrefs.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 20 05:44:45 2026 GMT
+  hsts: false
+- host: api.ahrefs.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 20 05:44:45 2026 GMT
+  hsts: null
+domains:
+- domain: ahrefs.com
+  dnssec: false
+  caa:
+  - 0 issuewild "ssl.com"
+  - 0 issue "comodoca.com"
+  - 0 issue "digicert.com; cansignhttpexchanges=yes"
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog; cansignhttpexchanges=yes"
+  - 0 issue "ssl.com"
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

@@ -1,0 +1,91 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/_original/ahrefs-openapi-original.json
+format: ahrefs-flat-error
+rfc9457: false
+envelope:
+  media_types:
+  - application/json
+  - application/xml
+  json_shape: '{"error": "<message>"}'
+  xml_root: AhrefsApiResponse
+  schema_refs:
+  - '#/components/schemas/site-explorer.Error response'
+  - '#/components/schemas/keywords-explorer.Error response'
+  - '#/components/schemas/site-audit.Error response'
+  - '#/components/schemas/rank-tracker.Error response'
+  - '#/components/schemas/serp-overview.Error response'
+  - '#/components/schemas/batch-analysis.Error response'
+  - '#/components/schemas/subscription-info.Error response'
+  - '#/components/schemas/management.Error response'
+  - '#/components/schemas/brand-radar.Error response'
+  - '#/components/schemas/web-analytics.Error response'
+  - '#/components/schemas/gsc.Error response'
+  - '#/components/schemas/social-media.Error response'
+  - '#/components/schemas/public.Error response'
+  note: >-
+    One error shape per tool, all structurally identical: a single free-text `error` string. There is
+    no machine-readable error code, no type URI, no field-level detail and no retry hint. An agent can
+    branch on the HTTP status but must parse English prose to learn anything more specific. Ahrefs
+    publishes no error-code reference page.
+coverage:
+  operations_total: 148
+  operations_declaring_400: 148
+  operations_declaring_401: 148
+  operations_declaring_403: 148
+  operations_declaring_429: 148
+  operations_declaring_500: 148
+  note: Every operation in the spec declares the same five error statuses — uniform and complete.
+problems:
+- status: 400
+  title: Bad Request
+  schema: '<tool>.Error response'
+  causes:
+  - malformed or missing required query parameter
+  - a field name in `select`, `where` or `order_by` that the endpoint does not accept
+  - an invalid `where` filter expression
+  - a date not in YYYY-MM-DD form
+  remediation: >-
+    Check the operation's parameter list in the spec; the field names valid in `where` may differ from
+    those valid in `select`. All parameter values must be percent-encoded.
+- status: 401
+  title: Unauthorized
+  schema: '<tool>.Error response'
+  causes:
+  - missing Authorization header
+  - expired API key (keys have a one-year lifetime)
+  - key invalidated because its creator was removed from the workspace
+  - an MCP key used against the local server, or an API v3 key used where an MCP key is required
+  remediation: Re-issue the key at https://app.ahrefs.com/account/api-keys.
+- status: 403
+  title: Forbidden
+  schema: '<tool>.Error response'
+  causes:
+  - endpoint or tool not included in the subscription plan
+  - API-unit allowance exhausted with pay-as-you-go disabled or capped
+  - per-key monthly unit limit reached
+  remediation: >-
+    Call subscription-info.limits-and-usage to read remaining allowance; check per-key caps in Account
+    settings / API keys.
+- status: 429
+  title: Too Many Requests
+  schema: '<tool>.Error response'
+  causes:
+  - more than 60 requests in a minute
+  - dynamic throttling based on real-time system load and request cost
+  remediation: >-
+    Back off and retry. No Retry-After or RateLimit-* header is returned, so the delay must be chosen
+    by the client. The official Python SDK retries 429 and 5xx automatically.
+  detail: rate-limits/ahrefs-rate-limits.yml
+- status: 500
+  title: Internal Error
+  schema: '<tool>.Error response'
+  causes:
+  - server-side failure
+  remediation: Retry with backoff; contact support@ahrefs.com if persistent.
+gaps:
+- no published error-code registry or catalog page
+- no stable machine-readable code in the envelope, only a free-text message
+- not RFC 9457 (no application/problem+json, no type/title/detail/instance)
+- no 404 declared on any operation, including the id-addressed Management resources
+- no 422 for semantic validation failures; everything non-auth collapses into 400

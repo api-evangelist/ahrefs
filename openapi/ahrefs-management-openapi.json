@@ -1,0 +1,2370 @@
+{
+  "openapi": "3.2.0",
+  "info": {
+    "title": "Management",
+    "description": "Project management.",
+    "termsOfService": "https://ahrefs.com/terms",
+    "contact": {
+      "name": "Ahrefs",
+      "url": "https://ahrefs.com/",
+      "email": "support@ahrefs.com"
+    },
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.ahrefs.com/v3/management",
+      "description": "Ahrefs Management"
+    }
+  ],
+  "paths": {
+    "/projects": {
+      "get": {
+        "tags": [ "Projects", "MCP" ],
+        "summary": "Projects",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "projects",
+        "parameters": [
+          {
+            "description": "The access type of the project.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string", "enum": [ "private", "shared" ] },
+            "name": "access",
+            "in": "query"
+          },
+          {
+            "description": "The email of the project owner",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "owned_by",
+            "in": "query"
+          },
+          {
+            "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          {
+            "description": "Has Rank Tracker keywords.",
+            "required": false,
+            "explode": false,
+            "schema": { "type": "boolean" },
+            "name": "has_keywords",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/projects" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/projects" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      },
+      "post": {
+        "tags": [ "Projects" ],
+        "summary": "Projects",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "projects",
+        "parameters": [ { "$ref": "#/components/parameters/output" } ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "access": {
+                    "type": "string",
+                    "enum": [ "private", "shared" ],
+                    "description": "The access type of the project.",
+                    "default": "private"
+                  },
+                  "owned_by": {
+                    "type": "string",
+                    "description": "The email of the project owner. If not provided, the project is assigned to the Workspace owner."
+                  },
+                  "project_name": {
+                    "type": "string",
+                    "description": "The name of the project."
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [ "exact", "prefix", "domain", "subdomains" ],
+                    "description": "The scope of the target."
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "The URL of your target."
+                  },
+                  "protocol": {
+                    "type": "string",
+                    "enum": [ "both", "http", "https" ],
+                    "description": "The protocol of your target."
+                  },
+                  "folder_id": {
+                    "type": "integer",
+                    "description": "The folder id to assign to the project. You can find the id of a folder in `https://app.ahrefs.com/dashboard/folders/#folder_id#`."
+                  }
+                },
+                "type": "object",
+                "required": [ "project_name", "mode", "url", "protocol" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/projects" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/projects" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      },
+      "delete": {
+        "tags": [ "Projects" ],
+        "summary": "Projects",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "projects",
+        "parameters": [
+          {
+            "description": "A comma-separated list of the IDs of the projects you want to delete.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "project_ids",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/projects" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/projects" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/update-project": {
+      "patch": {
+        "tags": [ "Projects" ],
+        "summary": "Update Project",
+        "description": ">Requests to this endpoint are free and do not consume any API units.\n\nAt least one of `access` or `folder` must be set.\n",
+        "operationId": "update-project",
+        "parameters": [ { "$ref": "#/components/parameters/output" } ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "project_id": {
+                    "type": "integer",
+                    "description": "The ID of the project whose access setting you want to update. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+                  },
+                  "folder": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "operation": {
+                            "type": "string",
+                            "enum": [ "remove" ]
+                          }
+                        },
+                        "type": "object",
+                        "required": [ "operation" ],
+                        "title": "remove",
+                        "description": "Remove project from its folder tree entirely."
+                      },
+                      {
+                        "properties": {
+                          "operation": {
+                            "type": "string",
+                            "enum": [ "move" ]
+                          },
+                          "folder_id": {
+                            "type": "integer",
+                            "description": "The folder id to move the project to. You can find the id of a folder in `https://app.ahrefs.com/dashboard/folders/#folder_id#`."
+                          }
+                        },
+                        "type": "object",
+                        "required": [ "operation", "folder_id" ],
+                        "title": "move",
+                        "description": "Move a project to a folder."
+                      }
+                    ],
+                    "description": "A folder operation, applied before the access change.\nKeep in mind that moving a project to another folder may make it visible to members of the destination folder.",
+                    "discriminator": { "propertyName": "operation" }
+                  },
+                  "access": {
+                    "type": "string",
+                    "enum": [ "private", "shared" ],
+                    "description": "The new access setting for the project."
+                  }
+                },
+                "type": "object",
+                "required": [ "project_id" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/update-project" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/update-project" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/project-keywords": {
+      "get": {
+        "tags": [ "Keywords", "MCP" ],
+        "summary": "Keywords",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "project-keywords",
+        "parameters": [
+          {
+            "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output_json_php_xml" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/project-keywords" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/project-keywords" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      },
+      "put": {
+        "tags": [ "Keywords" ],
+        "summary": "Keywords",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "project-keywords",
+        "parameters": [
+          {
+            "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output_json_php_xml" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "keywords": {
+                    "items": {
+                      "properties": {
+                        "keyword": {
+                          "type": "string",
+                          "description": "The keyword to add."
+                        },
+                        "tags": {
+                          "items": { "type": "string" },
+                          "type": "array",
+                          "description": "A list of tags to assign to a given keyword."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "keyword" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of keywords to add."
+                  },
+                  "locations": {
+                    "items": {
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "enum": [
+                            "ad", "ae", "af", "ag", "ai", "al", "am", "ao",
+                            "ar", "as", "at", "au", "aw", "az", "ba", "bb",
+                            "bd", "be", "bf", "bg", "bh", "bi", "bj", "bn",
+                            "bo", "br", "bs", "bt", "bw", "by", "bz", "ca",
+                            "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                            "cn", "co", "cr", "cu", "cv", "cy", "cz", "de",
+                            "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg",
+                            "es", "et", "fi", "fj", "fm", "fo", "fr", "ga",
+                            "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl",
+                            "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                            "hk", "hn", "hr", "ht", "hu", "id", "ie", "il",
+                            "im", "in", "iq", "is", "it", "je", "jm", "jo",
+                            "jp", "ke", "kg", "kh", "ki", "kn", "kr", "kw",
+                            "ky", "kz", "la", "lb", "lc", "li", "lk", "ls",
+                            "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                            "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms",
+                            "mt", "mu", "mv", "mw", "mx", "my", "mz", "na",
+                            "nc", "ne", "ng", "ni", "nl", "no", "np", "nr",
+                            "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph",
+                            "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                            "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc",
+                            "se", "sg", "sh", "si", "sk", "sl", "sm", "sn",
+                            "so", "sr", "st", "sv", "td", "tg", "th", "tj",
+                            "tk", "tl", "tm", "tn", "to", "tr", "tt", "tw",
+                            "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                            "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za",
+                            "zm", "zw"
+                          ],
+                          "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+                        },
+                        "location_id": {
+                          "type": "integer",
+                          "description": "The location ID."
+                        },
+                        "language": {
+                          "type": "string",
+                          "description": "The location code."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "country" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of locations to assign to given keywords. You can use the 'Locations and languages' endpoint to get country codes, language codes and location IDs."
+                  }
+                },
+                "type": "object",
+                "required": [ "keywords", "locations" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/project-keywords" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/project-keywords" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/project-keywords-delete": {
+      "put": {
+        "tags": [ "Keywords" ],
+        "summary": "Delete Keywords",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "project-keywords-delete",
+        "parameters": [
+          {
+            "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output_json_php_xml" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "keywords": {
+                    "items": {
+                      "properties": {
+                        "keyword": {
+                          "type": "string",
+                          "description": "The keyword to delete."
+                        },
+                        "country": {
+                          "type": "string",
+                          "enum": [
+                            "ad", "ae", "af", "ag", "ai", "al", "am", "ao",
+                            "ar", "as", "at", "au", "aw", "az", "ba", "bb",
+                            "bd", "be", "bf", "bg", "bh", "bi", "bj", "bn",
+                            "bo", "br", "bs", "bt", "bw", "by", "bz", "ca",
+                            "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                            "cn", "co", "cr", "cu", "cv", "cy", "cz", "de",
+                            "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg",
+                            "es", "et", "fi", "fj", "fm", "fo", "fr", "ga",
+                            "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl",
+                            "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                            "hk", "hn", "hr", "ht", "hu", "id", "ie", "il",
+                            "im", "in", "iq", "is", "it", "je", "jm", "jo",
+                            "jp", "ke", "kg", "kh", "ki", "kn", "kr", "kw",
+                            "ky", "kz", "la", "lb", "lc", "li", "lk", "ls",
+                            "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                            "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms",
+                            "mt", "mu", "mv", "mw", "mx", "my", "mz", "na",
+                            "nc", "ne", "ng", "ni", "nl", "no", "np", "nr",
+                            "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph",
+                            "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                            "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc",
+                            "se", "sg", "sh", "si", "sk", "sl", "sm", "sn",
+                            "so", "sr", "st", "sv", "td", "tg", "th", "tj",
+                            "tk", "tl", "tm", "tn", "to", "tr", "tt", "tw",
+                            "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                            "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za",
+                            "zm", "zw"
+                          ],
+                          "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+                        },
+                        "location_id": {
+                          "type": "integer",
+                          "description": "The location ID."
+                        },
+                        "language": {
+                          "type": "string",
+                          "description": "The location code."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "keyword" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of keywords to delete. You can use the 'Locations and languages' endpoint to get country codes, language codes and location IDs."
+                  }
+                },
+                "type": "object",
+                "required": [ "keywords" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-keywords-delete"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-keywords-delete"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/project-keywords-tags": {
+      "put": {
+        "tags": [ "Keywords" ],
+        "summary": "Add Keywords Tags",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "project-keywords-tags",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "project_id": {
+                    "type": "integer",
+                    "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+                  },
+                  "keywords": {
+                    "items": {
+                      "properties": {
+                        "keyword": {
+                          "type": "string",
+                          "description": "The keyword to add."
+                        },
+                        "country": {
+                          "type": "string",
+                          "enum": [
+                            "ad", "ae", "af", "ag", "ai", "al", "am", "ao",
+                            "ar", "as", "at", "au", "aw", "az", "ba", "bb",
+                            "bd", "be", "bf", "bg", "bh", "bi", "bj", "bn",
+                            "bo", "br", "bs", "bt", "bw", "by", "bz", "ca",
+                            "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                            "cn", "co", "cr", "cu", "cv", "cy", "cz", "de",
+                            "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg",
+                            "es", "et", "fi", "fj", "fm", "fo", "fr", "ga",
+                            "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl",
+                            "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                            "hk", "hn", "hr", "ht", "hu", "id", "ie", "il",
+                            "im", "in", "iq", "is", "it", "je", "jm", "jo",
+                            "jp", "ke", "kg", "kh", "ki", "kn", "kr", "kw",
+                            "ky", "kz", "la", "lb", "lc", "li", "lk", "ls",
+                            "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                            "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms",
+                            "mt", "mu", "mv", "mw", "mx", "my", "mz", "na",
+                            "nc", "ne", "ng", "ni", "nl", "no", "np", "nr",
+                            "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph",
+                            "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                            "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc",
+                            "se", "sg", "sh", "si", "sk", "sl", "sm", "sn",
+                            "so", "sr", "st", "sv", "td", "tg", "th", "tj",
+                            "tk", "tl", "tm", "tn", "to", "tr", "tt", "tw",
+                            "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                            "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za",
+                            "zm", "zw"
+                          ],
+                          "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+                        },
+                        "location_id": {
+                          "type": "integer",
+                          "description": "The location ID."
+                        },
+                        "language": {
+                          "type": "string",
+                          "description": "The location code."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "keyword" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of keywords to add. You can use the 'Locations and languages' endpoint to get country codes, language codes and location IDs."
+                  },
+                  "tags": {
+                    "items": { "type": "string" },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of tags to add to the keywords. Empty string is not a valid tag."
+                  },
+                  "update_mode": {
+                    "type": "string",
+                    "enum": [ "add", "replace" ],
+                    "description": "`add` appends tags to existing ones; `replace` overwrites all existing tags entirely.",
+                    "default": "add"
+                  },
+                  "output": {
+                    "type": "string",
+                    "enum": [ "json", "php" ],
+                    "description": "The output format."
+                  }
+                },
+                "type": "object",
+                "required": [ "project_id", "keywords", "tags" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-keywords-tags"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-keywords-tags"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/project-keywords-tags-delete": {
+      "put": {
+        "tags": [ "Keywords" ],
+        "summary": "Delete Keywords Tags",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "project-keywords-tags-delete",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "project_id": {
+                    "type": "integer",
+                    "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+                  },
+                  "keywords": {
+                    "items": {
+                      "properties": {
+                        "keyword": {
+                          "type": "string",
+                          "description": "The keyword to delete."
+                        },
+                        "country": {
+                          "type": "string",
+                          "enum": [
+                            "ad", "ae", "af", "ag", "ai", "al", "am", "ao",
+                            "ar", "as", "at", "au", "aw", "az", "ba", "bb",
+                            "bd", "be", "bf", "bg", "bh", "bi", "bj", "bn",
+                            "bo", "br", "bs", "bt", "bw", "by", "bz", "ca",
+                            "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                            "cn", "co", "cr", "cu", "cv", "cy", "cz", "de",
+                            "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg",
+                            "es", "et", "fi", "fj", "fm", "fo", "fr", "ga",
+                            "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl",
+                            "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                            "hk", "hn", "hr", "ht", "hu", "id", "ie", "il",
+                            "im", "in", "iq", "is", "it", "je", "jm", "jo",
+                            "jp", "ke", "kg", "kh", "ki", "kn", "kr", "kw",
+                            "ky", "kz", "la", "lb", "lc", "li", "lk", "ls",
+                            "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                            "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms",
+                            "mt", "mu", "mv", "mw", "mx", "my", "mz", "na",
+                            "nc", "ne", "ng", "ni", "nl", "no", "np", "nr",
+                            "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph",
+                            "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                            "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc",
+                            "se", "sg", "sh", "si", "sk", "sl", "sm", "sn",
+                            "so", "sr", "st", "sv", "td", "tg", "th", "tj",
+                            "tk", "tl", "tm", "tn", "to", "tr", "tt", "tw",
+                            "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                            "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za",
+                            "zm", "zw"
+                          ],
+                          "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+                        },
+                        "location_id": {
+                          "type": "integer",
+                          "description": "The location ID."
+                        },
+                        "language": {
+                          "type": "string",
+                          "description": "The location code."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "keyword" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of keywords to delete. You can use the 'Locations and languages' endpoint to get country codes, language codes and location IDs."
+                  },
+                  "tags": {
+                    "items": { "type": "string" },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of tags to remove from the keywords."
+                  },
+                  "output": {
+                    "type": "string",
+                    "enum": [ "json", "php" ],
+                    "description": "The output format."
+                  }
+                },
+                "type": "object",
+                "required": [ "project_id", "keywords", "tags" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-keywords-tags-delete"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-keywords-tags-delete"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/keyword-list-keywords": {
+      "get": {
+        "tags": [ "Keyword lists", "MCP" ],
+        "summary": "Keywords list",
+        "description": "**Requests to this endpoint are free and do not consume any API units.**",
+        "operationId": "keyword-list-keywords",
+        "parameters": [
+          {
+            "description": "The id of an existing keyword list.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "keyword_list_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/keyword-list-keywords"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/keyword-list-keywords"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      },
+      "put": {
+        "tags": [ "Keyword lists" ],
+        "summary": "Keywords list",
+        "description": "**Requests to this endpoint are free and do not consume any API units.**",
+        "operationId": "keyword-list-keywords",
+        "parameters": [
+          {
+            "description": "The id of an existing keyword list.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "keyword_list_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "keywords": {
+                    "items": { "type": "string", "title": "keyword" },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of keywords to add."
+                  }
+                },
+                "type": "object",
+                "required": [ "keywords" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/keyword-list-keywords"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/keyword-list-keywords"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/keyword-list-keywords-delete": {
+      "put": {
+        "tags": [ "Keyword lists" ],
+        "summary": "Keywords list",
+        "description": "**Requests to this endpoint are free and do not consume any API units.**",
+        "operationId": "keyword-list-keywords-delete",
+        "parameters": [
+          {
+            "description": "The id of an existing keyword list.",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "keyword_list_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "keywords": {
+                    "items": { "type": "string", "title": "keyword" },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of keywords to delete."
+                  }
+                },
+                "type": "object",
+                "required": [ "keywords" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/keyword-list-keywords-delete"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/keyword-list-keywords-delete"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/project-competitors": {
+      "get": {
+        "tags": [ "Competitors", "MCP" ],
+        "summary": "Competitors",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "project-competitors",
+        "parameters": [
+          {
+            "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-competitors"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-competitors"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      },
+      "post": {
+        "tags": [ "Competitors" ],
+        "summary": "Competitors",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "project-competitors",
+        "parameters": [
+          {
+            "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "competitors": {
+                    "items": {
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "The URL of the project's target."
+                        },
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "exact", "prefix", "domain", "subdomains"
+                          ],
+                          "description": "The scope of the target."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "url", "mode" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of competitors to add."
+                  }
+                },
+                "type": "object",
+                "required": [ "competitors" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-competitors"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-competitors"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/project-competitors-delete": {
+      "post": {
+        "tags": [ "Competitors" ],
+        "summary": "Delete competitors",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "project-competitors-delete",
+        "parameters": [
+          {
+            "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "integer" },
+            "name": "project_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "competitors": {
+                    "items": {
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "The URL of the project's target."
+                        },
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "exact", "prefix", "domain", "subdomains"
+                          ],
+                          "description": "The scope of the target."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "url", "mode" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of competitors to delete."
+                  }
+                },
+                "type": "object",
+                "required": [ "competitors" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-competitors-delete"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/project-competitors-delete"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/locations": {
+      "get": {
+        "tags": [ "Locations and languages", "MCP" ],
+        "summary": "Locations and languages",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "locations",
+        "parameters": [
+          {
+            "description": "A two-letter country code (ISO 3166-1 alpha-2).",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as",
+                "at", "au", "aw", "az", "ba", "bb", "bd", "be", "bf", "bg",
+                "bh", "bi", "bj", "bn", "bo", "br", "bs", "bt", "bw", "by",
+                "bz", "ca", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm",
+                "cn", "co", "cr", "cu", "cv", "cy", "cz", "de", "dj", "dk",
+                "dm", "do", "dz", "ec", "ee", "eg", "es", "et", "fi", "fj",
+                "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh",
+                "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy",
+                "hk", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh",
+                "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li",
+                "lk", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me",
+                "mg", "mk", "ml", "mm", "mn", "mq", "mr", "ms", "mt", "mu",
+                "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "ng", "ni",
+                "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf",
+                "pg", "ph", "pk", "pl", "pn", "pr", "ps", "pt", "py", "qa",
+                "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg",
+                "sh", "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr",
+                "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz", "vc", "ve",
+                "vg", "vi", "vn", "vu", "ws", "ye", "yt", "za", "zm", "zw"
+              ]
+            },
+            "name": "country_code",
+            "in": "query"
+          },
+          {
+            "description": "A two-letter US state code (ISO 3166-2:US). Required only if `country_code` is set to `us`",
+            "required": false,
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "al", "ak", "az", "ar", "ca", "co", "ct", "de", "dc", "fl",
+                "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me",
+                "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh",
+                "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri",
+                "sc", "sd", "tn", "tx", "ut", "va", "wa", "wv", "wi", "wy"
+              ]
+            },
+            "name": "us_state",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output_json_php" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/locations" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/locations" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/brand-radar-prompts": {
+      "get": {
+        "tags": [ "Brand Radar prompts", "MCP" ],
+        "summary": "Brand Radar prompts",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "brand-radar-prompts",
+        "parameters": [
+          {
+            "description": "The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "report_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-prompts"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-prompts"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      },
+      "post": {
+        "tags": [ "Brand Radar prompts" ],
+        "summary": "Brand Radar prompts",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "brand-radar-prompts",
+        "parameters": [
+          {
+            "description": "The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "report_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "countries": {
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar",
+                        "as", "at", "au", "aw", "az", "ba", "bb", "bd", "be",
+                        "bf", "bg", "bh", "bi", "bj", "bn", "bo", "br", "bs",
+                        "bt", "bw", "by", "bz", "ca", "cd", "cf", "cg", "ch",
+                        "ci", "ck", "cl", "cm", "cn", "co", "cr", "cu", "cv",
+                        "cy", "cz", "de", "dj", "dk", "dm", "do", "dz", "ec",
+                        "ee", "eg", "es", "et", "fi", "fj", "fm", "fo", "fr",
+                        "ga", "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl",
+                        "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy", "hk",
+                        "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                        "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg",
+                        "kh", "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb",
+                        "lc", "li", "lk", "ls", "lt", "lu", "lv", "ly", "ma",
+                        "mc", "md", "me", "mg", "mk", "ml", "mm", "mn", "mq",
+                        "mr", "ms", "mt", "mu", "mv", "mw", "mx", "my", "mz",
+                        "na", "nc", "ne", "ng", "ni", "nl", "no", "np", "nr",
+                        "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph", "pk",
+                        "pl", "pn", "pr", "ps", "pt", "py", "qa", "re", "ro",
+                        "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg", "sh",
+                        "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                        "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to",
+                        "tr", "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz",
+                        "vc", "ve", "vg", "vi", "vn", "vu", "ws", "ye", "yt",
+                        "za", "zm", "zw"
+                      ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of two-letter country codes (ISO 3166-1 alpha-2)."
+                  },
+                  "prompts": {
+                    "items": { "type": "string" },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of custom prompts. They must be valid utf8 and less than 400 characters."
+                  }
+                },
+                "type": "object",
+                "required": [ "countries", "prompts" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-prompts"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-prompts"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/brand-radar-prompts-delete": {
+      "put": {
+        "tags": [ "Brand Radar prompts" ],
+        "summary": "Delete Brand Radar prompts",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "brand-radar-prompts-delete",
+        "parameters": [
+          {
+            "description": "The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`",
+            "required": true,
+            "explode": false,
+            "schema": { "type": "string" },
+            "name": "report_id",
+            "in": "query"
+          },
+          { "$ref": "#/components/parameters/output" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "countries": {
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar",
+                        "as", "at", "au", "aw", "az", "ba", "bb", "bd", "be",
+                        "bf", "bg", "bh", "bi", "bj", "bn", "bo", "br", "bs",
+                        "bt", "bw", "by", "bz", "ca", "cd", "cf", "cg", "ch",
+                        "ci", "ck", "cl", "cm", "cn", "co", "cr", "cu", "cv",
+                        "cy", "cz", "de", "dj", "dk", "dm", "do", "dz", "ec",
+                        "ee", "eg", "es", "et", "fi", "fj", "fm", "fo", "fr",
+                        "ga", "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl",
+                        "gm", "gn", "gp", "gq", "gr", "gt", "gu", "gy", "hk",
+                        "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in",
+                        "iq", "is", "it", "je", "jm", "jo", "jp", "ke", "kg",
+                        "kh", "ki", "kn", "kr", "kw", "ky", "kz", "la", "lb",
+                        "lc", "li", "lk", "ls", "lt", "lu", "lv", "ly", "ma",
+                        "mc", "md", "me", "mg", "mk", "ml", "mm", "mn", "mq",
+                        "mr", "ms", "mt", "mu", "mv", "mw", "mx", "my", "mz",
+                        "na", "nc", "ne", "ng", "ni", "nl", "no", "np", "nr",
+                        "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph", "pk",
+                        "pl", "pn", "pr", "ps", "pt", "py", "qa", "re", "ro",
+                        "rs", "ru", "rw", "sa", "sb", "sc", "se", "sg", "sh",
+                        "si", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv",
+                        "td", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to",
+                        "tr", "tt", "tw", "tz", "ua", "ug", "us", "uy", "uz",
+                        "vc", "ve", "vg", "vi", "vn", "vu", "ws", "ye", "yt",
+                        "za", "zm", "zw"
+                      ]
+                    },
+                    "type": "array",
+                    "description": "A list of two-letter country codes (ISO 3166-1 alpha-2).",
+                    "default": []
+                  },
+                  "prompts": {
+                    "items": { "type": "string" },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of custom prompts. They must be valid utf8 and less than 400 characters."
+                  }
+                },
+                "type": "object",
+                "required": [ "prompts" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-prompts-delete"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-prompts-delete"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    },
+    "/brand-radar-reports": {
+      "get": {
+        "tags": [ "Brand radar reports", "MCP" ],
+        "summary": "Brand Radar Reports",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "brand-radar-reports",
+        "parameters": [
+          { "$ref": "#/components/parameters/output_json_php" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-reports"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-reports"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      },
+      "post": {
+        "tags": [ "Brand radar reports" ],
+        "summary": "Brand Radar Reports",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "brand-radar-reports",
+        "parameters": [
+          { "$ref": "#/components/parameters/output_json_php" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "prompts_frequency": {
+                    "items": {
+                      "properties": {
+                        "data_source": {
+                          "type": "string",
+                          "enum": [
+                            "chatgpt", "google_ai_overviews",
+                            "google_ai_mode", "gemini", "perplexity",
+                            "copilot", "claude", "grok"
+                          ],
+                          "description": "The data source to use."
+                        },
+                        "frequency": {
+                          "type": "string",
+                          "enum": [ "daily", "weekly", "monthly", "off" ],
+                          "description": "The update interval to use."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "data_source", "frequency" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "The prompts frequency to use."
+                  },
+                  "project_id": {
+                    "type": "integer",
+                    "description": "The ID of the project to use."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the report."
+                  },
+                  "market": {
+                    "items": { "type": "string", "title": "markets" },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "A list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+                  },
+                  "competitors": {
+                    "oneOf": [
+                      {
+                        "items": {
+                          "anyOf": [
+                            { "required": [ "names" ] },
+                            { "required": [ "url_groups" ] }
+                          ],
+                          "properties": {
+                            "names": {
+                              "items": { "type": "string" },
+                              "type": "array",
+                              "description": "The names of the brand/competitor",
+                              "examples": [ [ "ahrefs", "ahrefs seo" ] ]
+                            },
+                            "url_groups": {
+                              "items": {
+                                "properties": {
+                                  "target": {
+                                    "type": "string",
+                                    "format": "domain",
+                                    "description": "The domain of the target",
+                                    "examples": [ "ahrefs.com" ]
+                                  },
+                                  "scope": {
+                                    "type": "string",
+                                    "enum": [
+                                      "url", "path", "domain", "subdomains"
+                                    ],
+                                    "description": "Scope of the target."
+                                  }
+                                },
+                                "type": "object",
+                                "required": [ "target", "scope" ]
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array",
+                        "description": "Recommended. Can specify brand names and URL groups for precise targeting."
+                      },
+                      {
+                        "items": { "type": "string" },
+                        "type": "array",
+                        "description": "A list of competitor names to search for."
+                      }
+                    ],
+                    "description": "At least one of `brand`, `competitors` or `market` is required to be non-empty."
+                  },
+                  "brand": {
+                    "oneOf": [
+                      {
+                        "items": {
+                          "anyOf": [
+                            { "required": [ "names" ] },
+                            { "required": [ "url_groups" ] }
+                          ],
+                          "properties": {
+                            "names": {
+                              "items": { "type": "string" },
+                              "type": "array",
+                              "description": "The names of the brand/competitor",
+                              "examples": [ [ "ahrefs", "ahrefs seo" ] ]
+                            },
+                            "url_groups": {
+                              "items": {
+                                "properties": {
+                                  "target": {
+                                    "type": "string",
+                                    "format": "domain",
+                                    "description": "The domain of the target",
+                                    "examples": [ "ahrefs.com" ]
+                                  },
+                                  "scope": {
+                                    "type": "string",
+                                    "enum": [
+                                      "url", "path", "domain", "subdomains"
+                                    ],
+                                    "description": "Scope of the target."
+                                  }
+                                },
+                                "type": "object",
+                                "required": [ "target", "scope" ]
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array",
+                        "description": "Recommended. Can specify brand names and URL groups for precise targeting."
+                      },
+                      {
+                        "items": { "type": "string" },
+                        "type": "array",
+                        "description": "A list of brand names to search for."
+                      }
+                    ],
+                    "description": "At least one of `brand`, `competitors` or `market` is required to be non-empty."
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-reports"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-reports"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      },
+      "patch": {
+        "tags": [ "Brand radar reports" ],
+        "summary": "Brand Radar Reports",
+        "description": ">Requests to this endpoint are free and do not consume any API units.",
+        "operationId": "brand-radar-reports",
+        "parameters": [
+          { "$ref": "#/components/parameters/output_json_php" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "prompts_frequency": {
+                    "items": {
+                      "properties": {
+                        "data_source": {
+                          "type": "string",
+                          "enum": [
+                            "chatgpt", "google_ai_overviews",
+                            "google_ai_mode", "gemini", "perplexity",
+                            "copilot", "claude", "grok"
+                          ],
+                          "description": "The data source to use."
+                        },
+                        "frequency": {
+                          "type": "string",
+                          "enum": [ "daily", "weekly", "monthly", "off" ],
+                          "description": "The update interval to use."
+                        }
+                      },
+                      "type": "object",
+                      "required": [ "data_source", "frequency" ]
+                    },
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "The prompts frequency to use."
+                  },
+                  "report_id": {
+                    "type": "string",
+                    "description": "The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+                  }
+                },
+                "type": "object",
+                "required": [ "prompts_frequency", "report_id" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-reports"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/brand-radar-reports"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/error_400" },
+          "401": { "$ref": "#/components/responses/error_401" },
+          "403": { "$ref": "#/components/responses/error_403" },
+          "429": { "$ref": "#/components/responses/error_429" },
+          "500": { "$ref": "#/components/responses/error_500" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error response": {
+        "properties": { "error": { "type": "string" } },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "projects": {
+        "properties": {
+          "projects": {
+            "items": {
+              "properties": {
+                "access": {
+                  "type": "string",
+                  "title": "access",
+                  "description": "The access level of the project. Possible values: `private`, `shared`."
+                },
+                "folder": {
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "name": { "type": [ "string", "null" ] }
+                  },
+                  "type": [ "object", "null" ],
+                  "title": "folder",
+                  "description": "Innermost folder that the project is in."
+                },
+                "keyword_count": {
+                  "type": "integer",
+                  "title": "keyword_count",
+                  "description": "The number of keywords in the project."
+                },
+                "mode": {
+                  "type": "string",
+                  "title": "mode",
+                  "description": "The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`."
+                },
+                "owned_by": {
+                  "type": [ "string", "null" ],
+                  "title": "owned_by",
+                  "description": "The email of the project owner."
+                },
+                "project_id": {
+                  "type": "string",
+                  "title": "project_id",
+                  "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`."
+                },
+                "project_name": {
+                  "type": "string",
+                  "title": "project_name",
+                  "description": "The project name."
+                },
+                "protocol": {
+                  "type": "string",
+                  "title": "protocol",
+                  "description": "The protocol of the target. Possible values: `both`, `http`, `https`."
+                },
+                "url": {
+                  "type": "string",
+                  "format": "url",
+                  "title": "url",
+                  "description": "The URL of the project's target."
+                },
+                "verified": {
+                  "type": "boolean",
+                  "title": "verified",
+                  "description": "Whether the project is verified."
+                },
+                "web_analytics_data_key": {
+                  "type": "string",
+                  "title": "web_analytics_data_key",
+                  "description": "Web Analytics Data Key."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "update-project": {
+        "properties": {
+          "project": {
+            "properties": {
+              "access": {
+                "type": "string",
+                "title": "access",
+                "description": "The access level of the project. Possible values: `private`, `shared`."
+              },
+              "folder": {
+                "properties": {
+                  "id": { "type": "integer" },
+                  "name": { "type": [ "string", "null" ] }
+                },
+                "type": [ "object", "null" ],
+                "title": "folder",
+                "description": "Innermost folder that the project is in."
+              },
+              "mode": {
+                "type": "string",
+                "title": "mode",
+                "description": "The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`."
+              },
+              "project_id": {
+                "type": "string",
+                "title": "project_id",
+                "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`."
+              },
+              "project_name": {
+                "type": "string",
+                "title": "project_name",
+                "description": "The project name."
+              },
+              "protocol": {
+                "type": "string",
+                "title": "protocol",
+                "description": "The protocol of the target. Possible values: `both`, `http`, `https`."
+              },
+              "url": {
+                "type": "string",
+                "format": "url",
+                "title": "url",
+                "description": "The URL of the project's target."
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "project-keywords": {
+        "properties": {
+          "keywords": {
+            "items": {
+              "properties": {
+                "keyword": {
+                  "type": "string",
+                  "title": "keyword",
+                  "description": "The keyword added to the project."
+                },
+                "language": {
+                  "type": "string",
+                  "title": "language",
+                  "description": "The name of the language assigned to a given keyword."
+                },
+                "language_code": {
+                  "type": "string",
+                  "title": "language_code",
+                  "description": "The code of the language assigned to a given keyword."
+                },
+                "location": {
+                  "type": "string",
+                  "title": "location",
+                  "description": "The name of the location assigned to a given keyword."
+                },
+                "location_id": {
+                  "type": "integer",
+                  "title": "location_id",
+                  "description": "The ID of the location assigned to a given keyword."
+                },
+                "tags": {
+                  "items": { "type": "string" },
+                  "type": "array",
+                  "title": "tags",
+                  "description": "A list of tags assigned to a given keyword."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "project-keywords-delete": {
+        "properties": {
+          "keywords": {
+            "items": {
+              "properties": {
+                "keyword": {
+                  "type": "string",
+                  "title": "keyword",
+                  "description": "The keyword added to the project."
+                },
+                "language": {
+                  "type": "string",
+                  "title": "language",
+                  "description": "The name of the language assigned to a given keyword."
+                },
+                "language_code": {
+                  "type": "string",
+                  "title": "language_code",
+                  "description": "The code of the language assigned to a given keyword."
+                },
+                "location": {
+                  "type": "string",
+                  "title": "location",
+                  "description": "The name of the location assigned to a given keyword."
+                },
+                "location_id": {
+                  "type": "integer",
+                  "title": "location_id",
+                  "description": "The ID of the location assigned to a given keyword."
+                },
+                "tags": {
+                  "items": { "type": "string" },
+                  "type": "array",
+                  "title": "tags",
+                  "description": "A list of tags assigned to a given keyword."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "project-keywords-tags": {
+        "properties": {
+          "keywords": {
+            "items": {
+              "properties": {
+                "keyword": {
+                  "type": "string",
+                  "title": "keyword",
+                  "description": "The keyword added to the project."
+                },
+                "language": {
+                  "type": "string",
+                  "title": "language",
+                  "description": "The name of the language assigned to a given keyword."
+                },
+                "language_code": {
+                  "type": "string",
+                  "title": "language_code",
+                  "description": "The code of the language assigned to a given keyword."
+                },
+                "location": {
+                  "type": "string",
+                  "title": "location",
+                  "description": "The name of the location assigned to a given keyword."
+                },
+                "location_id": {
+                  "type": "integer",
+                  "title": "location_id",
+                  "description": "The ID of the location assigned to a given keyword."
+                },
+                "tags": {
+                  "items": { "type": "string" },
+                  "type": "array",
+                  "title": "tags",
+                  "description": "A list of tags assigned to a given keyword."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "project-keywords-tags-delete": {
+        "properties": {
+          "keywords": {
+            "items": {
+              "properties": {
+                "keyword": {
+                  "type": "string",
+                  "title": "keyword",
+                  "description": "The keyword added to the project."
+                },
+                "language": {
+                  "type": "string",
+                  "title": "language",
+                  "description": "The name of the language assigned to a given keyword."
+                },
+                "language_code": {
+                  "type": "string",
+                  "title": "language_code",
+                  "description": "The code of the language assigned to a given keyword."
+                },
+                "location": {
+                  "type": "string",
+                  "title": "location",
+                  "description": "The name of the location assigned to a given keyword."
+                },
+                "location_id": {
+                  "type": "integer",
+                  "title": "location_id",
+                  "description": "The ID of the location assigned to a given keyword."
+                },
+                "tags": {
+                  "items": { "type": "string" },
+                  "type": "array",
+                  "title": "tags",
+                  "description": "A list of tags assigned to a given keyword."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "keyword-list-keywords": {
+        "properties": {
+          "keywords": {
+            "items": {
+              "properties": {
+                "keyword": {
+                  "type": "string",
+                  "title": "keyword",
+                  "description": "The keyword added to the project."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "keyword-list-keywords-delete": {
+        "properties": {
+          "keywords": {
+            "items": {
+              "properties": {
+                "keyword": {
+                  "type": "string",
+                  "title": "keyword",
+                  "description": "The keyword added to the project."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "project-competitors": {
+        "properties": {
+          "competitors": {
+            "items": {
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "title": "mode",
+                  "description": "The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`."
+                },
+                "url": {
+                  "type": "string",
+                  "format": "url",
+                  "title": "url",
+                  "description": "The URL of the project's target."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "project-competitors-delete": {
+        "properties": {
+          "competitors": {
+            "items": {
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "title": "mode",
+                  "description": "The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`."
+                },
+                "url": {
+                  "type": "string",
+                  "format": "url",
+                  "title": "url",
+                  "description": "The URL of the project's target."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "locations": {
+        "properties": {
+          "location": {
+            "properties": {
+              "country_code": {
+                "type": "string",
+                "title": "country_code",
+                "description": "The country code of the location."
+              },
+              "languages": {
+                "items": {
+                  "items": false,
+                  "prefixItems": [
+                    { "type": "string" }, { "type": "string" }
+                  ],
+                  "type": "array",
+                  "maxItems": 2,
+                  "minItems": 2
+                },
+                "type": "array",
+                "title": "languages",
+                "description": "A list of language codes and names for the specified country code."
+              },
+              "locations": {
+                "items": {
+                  "items": false,
+                  "prefixItems": [
+                    { "type": "integer" }, { "type": "string" }
+                  ],
+                  "type": "array",
+                  "maxItems": 2,
+                  "minItems": 2
+                },
+                "type": "array",
+                "title": "locations",
+                "description": "A list of location IDs and names for the specified country code."
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "brand-radar-prompts": {
+        "properties": {
+          "prompts": {
+            "items": {
+              "properties": {
+                "country": {
+                  "type": "string",
+                  "title": "country",
+                  "description": "The country of the prompt."
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date",
+                  "title": "created_at",
+                  "description": "The date the prompt was created."
+                },
+                "prompt": {
+                  "type": "string",
+                  "title": "prompt",
+                  "description": "The text of the prompt."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "brand-radar-prompts-delete": {
+        "properties": {
+          "prompts": {
+            "items": {
+              "properties": {
+                "country": {
+                  "type": "string",
+                  "title": "country",
+                  "description": "The country of the prompt."
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date",
+                  "title": "created_at",
+                  "description": "The date the prompt was created."
+                },
+                "prompt": {
+                  "type": "string",
+                  "title": "prompt",
+                  "description": "The text of the prompt."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      },
+      "brand-radar-reports": {
+        "properties": {
+          "reports": {
+            "items": {
+              "properties": {
+                "created_at": {
+                  "type": "string",
+                  "format": "date",
+                  "title": "created_at",
+                  "description": "The date the report was created."
+                },
+                "project_id": {
+                  "type": [ "integer", "null" ],
+                  "title": "project_id",
+                  "description": "The ID of the project the report is linked to."
+                },
+                "prompts_frequency": {
+                  "items": {
+                    "properties": {
+                      "data_source": { "type": "string" },
+                      "frequency": { "type": "string" }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "prompts_frequency",
+                  "description": "A record with fields `data_source` (possible values: `chatgpt`, `copilot`, `gemini`, `google_ai_mode`, `claude`, `google_ai_overviews`, `grok`, `perplexity`) and `frequency` (possible values: `daily`, `weekly`, `monthly`, `off`)."
+                },
+                "report_id": {
+                  "type": "string",
+                  "title": "report_id",
+                  "description": "The unique identifier of the report."
+                },
+                "report_name": {
+                  "type": "string",
+                  "title": "report_name",
+                  "description": "The name of the report."
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "xml": { "name": "AhrefsApiResponse" }
+      }
+    },
+    "responses": {
+      "error_400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_403": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_429": {
+        "description": "Too Many Requests",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      },
+      "error_500": {
+        "description": "Internal Error",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          },
+          "application/xml": {
+            "schema": { "$ref": "#/components/schemas/Error response" }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "output": {
+        "description": "The output format.",
+        "required": false,
+        "explode": false,
+        "schema": {
+          "type": "string",
+          "enum": [ "json", "csv", "xml", "php" ]
+        },
+        "name": "output",
+        "in": "query"
+      },
+      "output_json_php_xml": {
+        "description": "The output format.",
+        "required": false,
+        "explode": false,
+        "schema": { "type": "string", "enum": [ "json", "php", "xml" ] },
+        "name": "output",
+        "in": "query"
+      },
+      "output_json_php": {
+        "description": "The output format.",
+        "required": false,
+        "explode": false,
+        "schema": { "type": "string", "enum": [ "json", "php" ] },
+        "name": "output",
+        "in": "query"
+      }
+    },
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": { "http": { "type": "http", "scheme": "bearer" } },
+    "links": {},
+    "callbacks": {},
+    "pathItems": {},
+    "mediaTypes": {}
+  },
+  "security": [ { "http": [ "read" ] } ],
+  "tags": [
+    { "name": "Projects" },
+    { "name": "Keywords" },
+    { "name": "Competitors" },
+    { "name": "Locations and languages" },
+    { "name": "Keyword lists" },
+    { "name": "Brand Radar prompts" },
+    { "name": "Brand radar reports" }
+  ],
+  "externalDocs": {
+    "description": "",
+    "url": "https://docs.ahrefs.com/docs/api/v3/"
+  }
+}

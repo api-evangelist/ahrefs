@@ -1,0 +1,122 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Ahrefs API v3
+  version: 1.0.0
+extends: openapi/_original/ahrefs-openapi-original.json
+x-generated: '2026-08-12'
+x-method: generated
+x-source: >-
+  Derived from the harvested spec plus the Ahrefs docs. Records API Evangelist observations as
+  x- extensions only; the harvested spec is never mutated. Everything asserted here is evidenced in
+  the sibling artifacts named in each action.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/ahrefs
+    x-apievangelist-harvested: '2026-08-12'
+    x-apievangelist-spec-source: https://docs.ahrefs.com/openapi.json
+    x-apievangelist-spec-index: https://docs.ahrefs.com/reference/index.json
+    x-apievangelist-per-tool-specs: 13
+    x-apievangelist-operations: 148
+- target: $.info
+  description: >-
+    NOTE (API Evangelist): the ahrefs.com marketing site publishes no /openapi.json and api.ahrefs.com
+    404s on every spec path. The authoritative machine-readable contract is served from the DOCS host
+    at https://docs.ahrefs.com/openapi.json, with one spec per tool under /reference/ and an index at
+    /reference/index.json. Consumers looking on the API host will not find it.
+  update:
+    x-apievangelist-spec-discovery: docs-host-only
+- target: $.servers
+  update:
+  - url: https://api.ahrefs.com/v3
+    description: Ahrefs API v3
+    x-apievangelist-note: >-
+      Single production host. No sandbox host exists; free testing is done against the live host using
+      the magic targets/keywords recorded in sandbox/ahrefs-sandbox.yml.
+- target: $.components.securitySchemes.http
+  update:
+    x-apievangelist-note: >-
+      The spec models only the static bearer API key. Two OAuth 2.0 surfaces exist outside the spec —
+      Ahrefs Connect (scope apiv3-integration-apps) and the hosted MCP server (scope apiv3-mcp,
+      discoverable at /.well-known/oauth-authorization-server). See authentication/ and scopes/.
+    x-apievangelist-key-lifetime: 1 year
+    x-apievangelist-key-max: 1000
+- target: $.info
+  update:
+    x-apievangelist-metering:
+      unit: API unit
+      formula: max(50, per_row_cost * rows)
+      cost_driver: unique field names across select, where and order_by
+      response_headers:
+      - x-api-rows
+      - x-api-units-cost-row
+      - x-api-units-cost-total
+      - x-api-units-cost-total-actual
+      - x-api-cache
+      note: >-
+        Cost is a first-class part of this contract and is not expressed anywhere in the spec. Any
+        client that omits `select` or `limit` pays for it.
+      detail: rate-limits/ahrefs-rate-limits.yml
+- target: $.info
+  update:
+    x-apievangelist-rate-limit:
+      requests_per_minute: 60
+      dynamic_throttling: true
+      status: 429
+      retry_after_header: false
+      ratelimit_headers: false
+      note: >-
+        GAP — no Retry-After and no RateLimit-* headers on 429, so a client has no runtime signal for
+        when to retry.
+- target: $.info
+  update:
+    x-apievangelist-error-model:
+      shape: '{"error": "<string>"}'
+      rfc9457: false
+      codes_registry: false
+      statuses:
+      - 400
+      - 401
+      - 403
+      - 429
+      - 500
+      note: >-
+        Uniform across all 148 operations, which is good, but the payload carries only free-text prose
+        — there is no stable machine-readable error code to branch on. detail: errors/ahrefs-problem-types.yml
+- target: $.info
+  update:
+    x-apievangelist-conventions:
+      pagination: offset+limit, no cursor, no total count
+      content_negotiation: '`output` query parameter (json|xml), not the Accept header'
+      dates: YYYY-MM-DD strings
+      money: USD cents — divide by 100
+      filtering: JSON `where` expression, URL-encoded
+      idempotency: not supported
+      detail: conventions/ahrefs-conventions.yml
+- target: $.info
+  update:
+    x-apievangelist-lifecycle:
+      current_version: v3
+      previous_version_sunset: '2025-11-01'
+      sunset_header: false
+      deprecation_header: false
+      deprecated_operations_in_spec: 0
+      status_page: null
+      note: >-
+        Ahrefs executed a genuine dated deprecation of API v2 but publishes none of it in-band, and
+        removes v3 parameters with same-day changelog notice only. detail: lifecycle/ahrefs-lifecycle.yml
+- target: $.info
+  update:
+    x-apievangelist-agent-surface:
+      mcp_server: https://api.ahrefs.com/mcp/mcp
+      mcp_tools_list: gated
+      llms_txt: https://docs.ahrefs.com/llms.txt
+      agent_skill: https://github.com/ahrefs/ahrefs-api-skills
+      agent_card: null
+      crosswalk: mcp/ahrefs-tool-crosswalk.yml
+- target: $.tags
+  update:
+  - name: Public
+    x-apievangelist-note: >-
+      The only tool documented as usable without an Ahrefs subscription — crawler IPs/ranges and a free
+      Domain Rating endpoint. The de facto anonymous entry point to the API.

@@ -1,0 +1,94 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ahrefs.com/ahrefs-connect/docs/legacy-developers.md
+docs:
+- https://docs.ahrefs.com/api/docs/changelog.md
+- https://docs.ahrefs.com/ahrefs-connect/docs/legacy-developers.md
+- https://docs.ahrefs.com/ahrefs-connect/docs/introduction.md
+versioning:
+  scheme: uri-path
+  current: v3
+  base: https://api.ahrefs.com/v3
+  spec_info_version: 3.0.0
+  header_versioning: false
+  date_versioning: false
+  note: >-
+    One major version in the path. Minor changes — new endpoints, new fields, removed parameters —
+    ship inside v3 without any version identifier a client can pin or detect.
+deprecation:
+  policy_url: https://docs.ahrefs.com/ahrefs-connect/docs/legacy-developers
+  policy_published: true
+  sunset_header: false
+  deprecation_header: false
+  advance_notice_channel: email to registered integration developers
+  note: >-
+    Ahrefs has executed a real, dated API deprecation: API v2 and the legacy Integrations program
+    were retired on 2025-11-01 and lost access to Ahrefs data on that date, with Ahrefs Connect on
+    API v3 as the named replacement and a documented migration path (new PKCE OAuth flow, v3 endpoint
+    mapping, re-approval). Legacy developers were notified in advance by email. What is missing is the
+    machine-readable half: no RFC 8594 `Sunset` or `Deprecation` response headers, no `deprecated:
+    true` flags in the OpenAPI, and no separate deprecation feed — parameter removals inside v3 appear
+    only as ordinary dated changelog lines.
+  events:
+  - date: '2025-11-01'
+    what: API v2 and the legacy Integrations program deprecated; access to Ahrefs data withdrawn.
+    replacement: Ahrefs Connect on API v3
+    migration: https://docs.ahrefs.com/ahrefs-connect/docs/legacy-developers
+  - date: '2026-06-25'
+    what: '`protocol` parameter removed from site-explorer.domain-rating'
+    breaking: true
+    notice: same-day changelog entry only
+  - date: '2026-05-18'
+    what: '`search_engine` parameter removed from four Keywords Explorer operations'
+    breaking: true
+    notice: same-day changelog entry only
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in openapi/_original/ahrefs-openapi-original.json carries `deprecated: true`. Ahrefs
+  removes rather than marks: the 2026-06-25 and 2026-05-18 parameter removals are simply absent from
+  the current spec, so a diff against an older copy is the only way to detect them.
+deprecated_products:
+- name: '@ahrefs/mcp (local MCP server)'
+  status: unmaintained
+  evidence: >-
+    'This repository is no longer maintained! ... It IS NOT maintained. It is OUTDATED. And we do not
+    recommend using it.' — https://github.com/ahrefs/ahrefs-mcp-server README
+  replacement: hosted remote MCP server at https://api.ahrefs.com/mcp/mcp
+  last_release: '2025-05-27'
+- name: ahrefs/ahrefs-api-php
+  status: obsolete
+  reason: wraps API v2, which was retired 2025-11-01
+  last_release: '2022-08-08'
+status_page:
+  url: null
+  present: false
+  probe:
+    url: https://status.ahrefs.com/
+    http_status: 404
+    checked: '2026-08-12'
+  note: >-
+    Ahrefs publishes no status page. status.ahrefs.com 404s and no status/uptime page is linked from
+    the docs, the footer or the help center. Third-party monitors exist but are not the provider's
+    own signal, so no StatusPage pointer is emitted.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No published SLA or uptime commitment. The Enterprise tier advertises "enterprise-grade security"
+    and "personalized higher limits" but no availability guarantee is stated publicly.
+roadmap:
+  url: null
+  present: false
+  probe:
+    url: https://ahrefs.com/roadmap
+    http_status: 404
+    checked: '2026-08-12'
+  note: >-
+    No public API roadmap. The changelog is retrospective only; the docs say "we regularly add new
+    endpoints" and "more data sources are coming soon" without a dated plan.
+key_lifecycle:
+  api_key_lifetime: 1 year
+  oauth_token_lifetime: 1 year, no refresh token issued — the user must re-authorize
+  revocation: a key is invalidated when the user who created it leaves the workspace
+  max_keys: 1000
+  source: https://docs.ahrefs.com/api/docs/api-keys-creation-and-management.md

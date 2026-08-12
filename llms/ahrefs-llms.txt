@@ -1,0 +1,106 @@
+# Ahrefs API
+
+> Ahrefs API v3 gives programmatic access to Ahrefs' SEO, marketing, and AI-search data — backlinks, organic and paid traffic, keywords, SERPs, rank tracking, site audits, brand/AI-search visibility, web and social analytics, and account management.
+
+The Ahrefs API is organized into **tools**, each a self-contained group of REST endpoints. The complete OpenAPI specification for every tool is at [/openapi.json](/openapi.json). Each tool also has its own spec — a machine-readable index of them is at [/reference/index.json](/reference/index.json).
+
+## Basics
+
+- **Base URL:** `https://api.ahrefs.com/v3/{tool}/{endpoint}` (for example `https://api.ahrefs.com/v3/site-explorer/domain-rating`).
+- **Authentication:** send your API key as a bearer token in the `Authorization: Bearer <API_KEY>` header. Free "public" endpoints do not require a key. See [API keys creation and management](/api/docs/api-keys-creation-and-management.md).
+- **Requests:** all data endpoints are `GET` with query-string parameters.
+- **Responses:** JSON by default (`application/json`); most endpoints also support XML. Use the `output` parameter to choose the format.
+- **Selecting fields:** most reports take a `select` parameter listing the columns to return; response cost depends on the rows and fields requested. See [Parameters](/api/docs/parameters.md).
+- **Filtering:** rows can be filtered with a JSON filter expression via the `where` parameter. See [Filter syntax](/api/docs/filter-syntax.md).
+
+## Units and limits
+
+Most requests consume **API units**; the minimum cost of any billable request is 50 units. Rank Tracker, Management, Public, and some other endpoints are free, and each tool's documentation marks free endpoints. During development, prefer the [free test queries](/api/docs/free-test-queries.md) to avoid spending units. See [Limits consumption](/api/docs/limits-consumption.md).
+
+## Monetary values
+
+Monetary values across all endpoints (for example `value`, `org_cost`, `paid_cost`, `traffic_value`) are returned in **USD cents**. Divide by 100 to display dollars.
+
+## OpenAPI specification
+
+- [Ahrefs API (complete OpenAPI spec)](https://docs.ahrefs.com/openapi.json): Every endpoint for every tool in one document
+
+## Per-tool OpenAPI specifications
+
+- [Site Explorer](https://docs.ahrefs.com/reference/site-explorer.json): Fetch data from Site Explorer reports
+- [Keywords Explorer](https://docs.ahrefs.com/reference/keywords-explorer.json): Fetch data from Keywords Explorer reports
+- [Site Audit](https://docs.ahrefs.com/reference/site-audit.json): Site audit.
+- [Rank Tracker](https://docs.ahrefs.com/reference/rank-tracker.json): Rank tracker.
+- [SERP Overview](https://docs.ahrefs.com/reference/serp-overview.json): Fetch data from SERP Overview report
+- [Batch Analysis](https://docs.ahrefs.com/reference/batch-analysis.json): Batch analysis.
+- [Subscription Information](https://docs.ahrefs.com/reference/subscription-info.json): Subscription information.
+- [Management](https://docs.ahrefs.com/reference/management.json): Project management.
+- [Brand Radar](https://docs.ahrefs.com/reference/brand-radar.json): Brand radar.
+- [Web Analytics](https://docs.ahrefs.com/reference/web-analytics.json): Web_analytics.
+- [GSC Insights](https://docs.ahrefs.com/reference/gsc.json): Fetch data from GSC Insights reports
+- [Social Media](https://docs.ahrefs.com/reference/social-media.json): Social Media Management.
+- [Public](https://docs.ahrefs.com/reference/public.json): Free endpoints that don't require an Ahrefs subscription, or require a free/public APIv3 key
+
+## API guides
+
+- [Introduction](https://docs.ahrefs.com/api/docs/introduction.md)
+- [Limits consumption](https://docs.ahrefs.com/api/docs/limits-consumption.md)
+- [Free test queries](https://docs.ahrefs.com/api/docs/free-test-queries.md)
+- [API keys creation and management](https://docs.ahrefs.com/api/docs/api-keys-creation-and-management.md)
+- [Parameters](https://docs.ahrefs.com/api/docs/parameters.md)
+- [Filter syntax](https://docs.ahrefs.com/api/docs/filter-syntax.md)
+- [Changelog](https://docs.ahrefs.com/api/docs/changelog.md)
+
+## Other Ahrefs developer tools
+
+- [MCP server: What is Ahrefs MCP](https://docs.ahrefs.com/mcp/docs/introduction.md)
+- [MCP server: Tool Categories](https://docs.ahrefs.com/mcp/docs/tool-categories.md)
+- [MCP server: Claude Desktop/Web](https://docs.ahrefs.com/mcp/docs/claude-desktop-web.md)
+- [MCP server: Claude Mobile](https://docs.ahrefs.com/mcp/docs/claude-mobile.md)
+- [MCP server: Claude Code](https://docs.ahrefs.com/mcp/docs/claude-code.md)
+- [MCP server: Copilot Studio](https://docs.ahrefs.com/mcp/docs/copilot-studio.md)
+- [MCP server: ChatGPT Web](https://docs.ahrefs.com/mcp/docs/chatgpt-web.md)
+- [MCP server: Lovable](https://docs.ahrefs.com/mcp/docs/lovable.md)
+- [MCP server: n8n](https://docs.ahrefs.com/mcp/docs/n8n.md)
+- [MCP server: Manus](https://docs.ahrefs.com/mcp/docs/manus.md)
+- [MCP server: Mistral's Le Chat](https://docs.ahrefs.com/mcp/docs/mistral-le-chat.md)
+- [MCP server: OpenClaw](https://docs.ahrefs.com/mcp/docs/openclaw.md)
+- [Looker Studio connector: Introduction](https://docs.ahrefs.com/looker-studio/docs/introduction.md)
+- [Looker Studio connector: Create a data source using an Ahrefs connector](https://docs.ahrefs.com/looker-studio/docs/create-a-data-source.md)
+- [Looker Studio connector: Reauthorize the Ahrefs connector](https://docs.ahrefs.com/looker-studio/docs/reauthorize-the-connector.md)
+- [Looker Studio connector: Refresh the project/report list in the configuration menu](https://docs.ahrefs.com/looker-studio/docs/refresh-config-project-list.md)
+- [Looker Studio connector: Brand Radar configuration](https://docs.ahrefs.com/looker-studio/docs/brand-radar-configuration.md)
+- [Looker Studio connector: Rank Tracker configuration](https://docs.ahrefs.com/looker-studio/docs/rank-tracker-configuration.md)
+- [Looker Studio connector: Site Audit configuration](https://docs.ahrefs.com/looker-studio/docs/site-audit-configuration.md)
+- [Looker Studio connector: Site Explorer configuration](https://docs.ahrefs.com/looker-studio/docs/site-explorer-configuration.md)
+- [Looker Studio connector: Brand Radar fields](https://docs.ahrefs.com/looker-studio/docs/brand-radar-fields.md)
+- [Looker Studio connector: Rank Tracker fields](https://docs.ahrefs.com/looker-studio/docs/rank-tracker-fields.md)
+- [Looker Studio connector: Site Audit fields](https://docs.ahrefs.com/looker-studio/docs/site-audit-fields.md)
+- [Looker Studio connector: Site Explorer fields](https://docs.ahrefs.com/looker-studio/docs/site-explorer-fields.md)
+- [Looker Studio connector: Access and sharing](https://docs.ahrefs.com/looker-studio/docs/access-and-sharing.md)
+- [Looker Studio connector: Aggregation](https://docs.ahrefs.com/looker-studio/docs/aggregation.md)
+- [Looker Studio connector: Ahrefs report types](https://docs.ahrefs.com/looker-studio/docs/ahrefs-report-types.md)
+- [Looker Studio connector: Categorization of fields](https://docs.ahrefs.com/looker-studio/docs/categorization-of-fields.md)
+- [Looker Studio connector: Data size restrictions](https://docs.ahrefs.com/looker-studio/docs/data-size-restrictions.md)
+- [Looker Studio connector: Date range usage in Site Audit reports](https://docs.ahrefs.com/looker-studio/docs/date-range-usage-site-audit.md)
+- [Looker Studio connector: Date range usage](https://docs.ahrefs.com/looker-studio/docs/date-range-usage.md)
+- [Looker Studio connector: Errors](https://docs.ahrefs.com/looker-studio/docs/errors.md)
+- [Looker Studio connector: Limits consumption](https://docs.ahrefs.com/looker-studio/docs/limits-consumption.md)
+- [Looker Studio connector: Report templates](https://docs.ahrefs.com/looker-studio/docs/report-templates.md)
+- [Bot Analytics: What is Bot Analytics](https://docs.ahrefs.com/bot-analytics/docs/introduction.md)
+- [Bot Analytics: Cloudflare Logpush](https://docs.ahrefs.com/bot-analytics/docs/cloudflare-logpush.md)
+- [Bot Analytics: Cloudflare Worker](https://docs.ahrefs.com/bot-analytics/docs/cloudflare-worker.md)
+- [Ahrefs Connect: Introduction](https://docs.ahrefs.com/ahrefs-connect/docs/introduction.md)
+- [Ahrefs Connect: How it works](https://docs.ahrefs.com/ahrefs-connect/docs/how-it-works.md)
+- [Ahrefs Connect: How to apply](https://docs.ahrefs.com/ahrefs-connect/docs/how-to-apply.md)
+- [Ahrefs Connect: OAuth guide](https://docs.ahrefs.com/ahrefs-connect/docs/oauth-guide.md)
+- [Ahrefs Connect: API guide](https://docs.ahrefs.com/ahrefs-connect/docs/api-guide.md)
+- [Ahrefs Connect: Approval process](https://docs.ahrefs.com/ahrefs-connect/docs/approval-process.md)
+- [Ahrefs Connect: Apps gallery](https://docs.ahrefs.com/ahrefs-connect/docs/apps-gallery.md)
+- [Ahrefs Connect: For legacy app developers](https://docs.ahrefs.com/ahrefs-connect/docs/legacy-developers.md)
+- [Ahrefs Connect: Terms of service](https://docs.ahrefs.com/ahrefs-connect/docs/terms-of-service.md)
+- [Ahrefs Connect: How to manage your integrations](https://docs.ahrefs.com/ahrefs-connect/docs/how-to-manage.md)
+
+## Machine-readable index
+
+- [Spec index (JSON)](https://docs.ahrefs.com/reference/index.json): All OpenAPI specs

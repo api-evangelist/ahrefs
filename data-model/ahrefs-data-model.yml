@@ -1,0 +1,219 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/_original/ahrefs-openapi-original.json
+note: >-
+  Ahrefs' API is a reporting surface, not a CRUD resource graph. 144 component schemas exist but 118 of
+  the 148 operations are report readers whose "schema" is a row shape for one report, not a persistent
+  entity — there is no `GET /backlinks/{id}`, no self link, and no id on a backlink row. Only the
+  Management, Site Audit and Social Media families expose durable, id-addressed objects. The graph
+  below therefore separates PROJECT-SCOPED ENTITIES (real objects with ids and lifecycles) from
+  ANALYTICAL SUBJECTS (targets, keywords, brands — addressed by value, never by id) and REPORT ROW
+  SHAPES (per-report projections).
+entities:
+- name: project
+  id_field: project_id
+  id_referenced_by_operations: 63
+  domain: Management / Rank Tracker / Site Audit / Web Analytics / GSC Insights / Bot Analytics
+  lifecycle: create, read, update, delete
+  operations:
+  - management.projects
+  - management.post-projects
+  - management.delete-projects
+  fields_seen:
+  - project_id
+  - verified
+  - folder
+  note: >-
+    The single most-referenced identifier in the API and the spine of everything account-scoped. A
+    project can be placed in a folder (`folder_id` on create, `folder` returned on read) and carries a
+    `verified` flag.
+- name: project_keyword
+  id_field: null
+  parent: project
+  domain: Rank Tracker
+  operations:
+  - management.project-keywords
+  - management.project-keywords-delete
+  - management.project-keywords-tags
+  - management.project-keywords-tags-delete
+  note: Keywords tracked inside a project; addressed by project_id + keyword, and tagged via PUT operations.
+- name: project_competitor
+  id_field: null
+  parent: project
+  domain: Rank Tracker
+  operations:
+  - management.project-competitors
+  - management.project-competitors-delete
+- name: keyword_list
+  id_field: keyword_list_id
+  id_referenced_by_operations: 8
+  domain: Keywords Explorer / Management / GSC Insights
+  operations:
+  - management.keyword-list-keywords
+  - management.keyword-list-keywords-delete
+  note: >-
+    Referencing a keyword_list_id in a Keywords Explorer request always makes that request billable,
+    even when the keywords themselves are free test values.
+- name: brand_radar_report
+  id_field: report_id
+  id_referenced_by_operations: 12
+  domain: Brand Radar
+  lifecycle: create, read, update
+  operations:
+  - management.brand-radar-reports
+  - management.post-brand-radar-reports
+  - management.patch-brand-radar-reports
+  note: Saved Brand Radar report configuration, including brands, competitors and URL groups.
+- name: brand_radar_prompt
+  id_field: null
+  parent: brand_radar_report
+  domain: Brand Radar
+  operations:
+  - management.brand-radar-prompts
+  - management.brand-radar-prompts-delete
+- name: portfolio
+  id_field: portfolio_id
+  id_referenced_by_operations: 11
+  domain: Site Explorer
+  note: A saved collection of targets used as an alternative to `target` on Site Explorer reports.
+- name: location
+  id_field: null
+  domain: Management
+  operations:
+  - management.locations
+  note: Reference data — the geo/language locations a Rank Tracker project can track.
+- name: social_channel
+  id_field: channel
+  domain: Social Media
+  operations:
+  - social-media.channels
+  - social-media.channel-metrics
+- name: social_post
+  id_field: post
+  parent: social_channel
+  domain: Social Media
+  lifecycle: create, read, update, delete
+  operations:
+  - social-media.posts
+  - social-media.post
+  - social-media.post-metrics
+  - social-media.patch-post
+  - social-media.delete-post
+  note: The only fully CRUD-able content object in the API.
+- name: audited_page
+  id_field: null
+  parent: project
+  domain: Site Audit
+  operations:
+  - site-audit.page-explorer
+  - site-audit.page-content
+  - site-audit.issues
+  note: >-
+    Addressed by project + URL. page-content returns page text, now also as Markdown (`page_text_md`);
+    page-explorer returns crawl and AI-bot allow/block fields.
+analytical_subjects:
+- name: target
+  addressed_by: value
+  parameter: target
+  used_by_operations: 30
+  modifiers:
+  - mode (exact | prefix | domain | subdomains)
+  - protocol
+  - date
+  - date_compared
+  domain: Site Explorer, Batch Analysis
+  note: A domain or URL. No id, no persistent record — the unit of analysis, not an entity.
+- name: keyword
+  addressed_by: value
+  parameters:
+  - keyword
+  - keywords
+  modifiers:
+  - country
+  - search_volume_type
+  - volume_mode
+  domain: Keywords Explorer, SERP Overview, Rank Tracker, GSC Insights
+- name: brand
+  addressed_by: value
+  parameters:
+  - brand
+  - prompts
+  - data_source
+  - market
+  domain: Brand Radar
+  note: >-
+    Brand Radar's data_source enumerates AI engines (Claude and Grok were added in 2026, alongside
+    google_ai_mode_keywords and google_ai_overviews_keywords).
+relationships:
+- from: project
+  to: project_keyword
+  type: has_many
+  via: project_id
+- from: project
+  to: project_competitor
+  type: has_many
+  via: project_id
+- from: project
+  to: audited_page
+  type: has_many
+  via: project_id
+- from: project_keyword
+  to: project
+  type: belongs_to
+  via: project_id
+- from: brand_radar_report
+  to: brand_radar_prompt
+  type: has_many
+  via: report_id
+- from: brand_radar_prompt
+  to: brand_radar_report
+  type: belongs_to
+  via: report_id
+- from: keyword_list
+  to: keyword
+  type: has_many
+  via: keyword_list_id
+- from: portfolio
+  to: target
+  type: has_many
+  via: portfolio_id
+- from: social_channel
+  to: social_post
+  type: has_many
+  via: channel
+- from: social_post
+  to: social_channel
+  type: belongs_to
+  via: channel
+- from: subscription
+  to: project
+  type: has_many
+  via: workspace
+  note: >-
+    Implicit. subscription-info.limits-and-usage reports the workspace's API-unit allowance and usage;
+    everything else is scoped inside that workspace.
+report_row_shapes:
+  count: 131
+  note: >-
+    Per-report projections such as site-explorer.all-backlinks, web-analytics.countries-chart and
+    gsc.ctr-by-position. They share no common base schema, carry no id, and are not $ref'd by one
+    another — components.schemas reuse across tools is effectively zero, which is why the spec is 2 MB.
+  by_tool:
+    site-explorer: 28
+    web-analytics: 34
+    brand-radar: 12
+    gsc: 12
+    management: 14
+    social-media: 7
+    keywords-explorer: 6
+    rank-tracker: 6
+    site-audit: 4
+    public: 4
+    batch-analysis: 2
+    serp-overview: 1
+    subscription-info: 1
+id_conventions:
+  prefixes: none
+  format: 'no documented id format; ids are opaque and per-family (project_id, report_id, keyword_list_id,
+    portfolio_id)'
+  note: Ahrefs publishes no object-reference page documenting id shapes or prefixes.

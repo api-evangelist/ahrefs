@@ -1,0 +1,129 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ahrefs.com/api/docs/parameters.md
+docs:
+- https://docs.ahrefs.com/api/docs/parameters.md
+- https://docs.ahrefs.com/api/docs/filter-syntax.md
+- https://docs.ahrefs.com/api/docs/limits-consumption.md
+- https://docs.ahrefs.com/api/docs/introduction.md
+derived_from: openapi/_original/ahrefs-openapi-original.json
+authentication:
+  style: bearer API key
+  header: 'Authorization: Bearer <API_KEY>'
+  detail: authentication/ahrefs-authentication.yml
+  note: >-
+    OAuth 2.0 + PKCE exists for partner apps (Ahrefs Connect) and the hosted MCP server, but the
+    direct REST API is a static bearer key with a one-year lifetime.
+request_shape:
+  transport: HTTPS
+  methods:
+    get: 118
+    post: 18
+    put: 7
+    patch: 3
+    delete: 2
+  note: >-
+    Every data-read endpoint is a GET with query-string parameters; POST/PUT/PATCH/DELETE appear only
+    in Management, Brand Radar and Batch Analysis. All parameter values must be percent-encoded.
+  content_negotiation:
+    parameter: output
+    formats:
+    - json
+    - xml
+    default: json
+    note: >-
+      Format is chosen by a query parameter rather than the Accept header. Every operation declares
+      both application/json and application/xml response bodies.
+field_selection:
+  parameter: select
+  form: comma-separated field names
+  required_on: most list reports
+  note: >-
+    `select` is the cost lever, not just a payload lever — per-row cost is the sum of the costs of the
+    unique fields named across `select`, `where` and `order_by`. Omitting it on reports that permit
+    that returns every column and multiplies unit spend.
+filtering:
+  parameter: where
+  form: JSON filter expression, URL-encoded
+  example: '{"and":[{"field":"traffic","is":["gt",1000]},{"field":"refdomains_source","is":["gt",10]}]}'
+  grammar: https://docs.ahrefs.com/api/docs/filter-syntax.md
+  caveat: >-
+    The set of field names valid in `where` may differ from the set valid in `select`; the per-endpoint
+    parameter description in the spec is authoritative.
+sorting:
+  parameter: order_by
+  form: 'field:desc,field2:asc'
+  note: valid field names match the `select` list
+pagination:
+  style: offset
+  params:
+  - offset
+  - limit
+  cursor: false
+  total_count_field: null
+  note: >-
+    Classic offset/limit. No cursor, no next-page link, and no total-count field in the envelope — a
+    client cannot tell whether more rows exist except by requesting another page. `limit` is capped at
+    100 on free test queries, and at a per-plan maximum (100/250/500/unlimited) on billed requests.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Ahrefs documents no idempotency key and the OpenAPI declares no Idempotency-Key parameter. The
+    read surface is overwhelmingly GET (and therefore naturally idempotent), but the Management write
+    operations — create/update/delete projects, keyword lists, competitors, Brand Radar prompts — have
+    no replay-safety contract. No Idempotency pointer is emitted for this provider.
+expansion:
+  supported: false
+  note: no field-expansion or sparse-fieldset mechanism beyond `select`
+metadata:
+  supported: false
+  note: no customer-defined metadata field on Ahrefs objects
+request_tracing:
+  request_id_header: null
+  observed_response_headers:
+  - x-request-id
+  - x-trace-id
+  - x-request-trace-id
+  note: >-
+    Not documented, but the API edge returns x-request-id / x-trace-id / x-request-trace-id (observed
+    on a 401 from https://api.ahrefs.com/mcp/mcp on 2026-08-12). Treat them as undocumented support
+    correlators, not a contract.
+versioning:
+  scheme: uri-path
+  current: v3
+  base: https://api.ahrefs.com/v3
+  spec_info_version: 3.0.0
+  detail: lifecycle/ahrefs-lifecycle.yml
+error_envelope:
+  format: flat json object
+  shape: '{"error": "<message>"}'
+  rfc9457: false
+  media_type: application/json
+  xml_root: AhrefsApiResponse
+  statuses:
+  - 400
+  - 401
+  - 403
+  - 429
+  - 500
+  declared_on: all 148 operations
+  detail: errors/ahrefs-problem-types.yml
+rate_limit_signalling:
+  headers: []
+  note: >-
+    No RateLimit-*/X-RateLimit-*/Retry-After headers. The runtime signal Ahrefs does return is a
+    metering one — x-api-rows, x-api-units-cost-row, x-api-units-cost-total,
+    x-api-units-cost-total-actual, x-api-cache.
+  detail: rate-limits/ahrefs-rate-limits.yml
+data_conventions:
+  dates: 'YYYY-MM-DD strings (schema format: date)'
+  money: >-
+    All monetary values (value, org_cost, paid_cost, traffic_value) are returned in USD cents; divide
+    by 100 to display dollars.
+  targets: 'Site Explorer accepts a domain or URL in `target`, with a `mode` selecting exact / prefix
+    / domain / subdomains matching.'
+caching:
+  note: >-
+    Responses may be served from cache; `x-api-cache` reports hit | miss | no_cache, and cache hits
+    consume no API units. No Cache-Control/ETag contract is documented.

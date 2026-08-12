@@ -1,0 +1,138 @@
+generated: '2026-08-12'
+method: searched
+source: https://ahrefs.com/pricing
+docs:
+- https://ahrefs.com/pricing
+- https://docs.ahrefs.com/api/docs/limits-consumption.md
+plan_count: 6
+currency: USD
+billing_period: monthly (annual prepay available at a discount; Enterprise requires an annual commitment)
+note: >-
+  Ahrefs publishes full self-serve pricing including the API rows, which is rare. What it does NOT
+  publish anywhere on the pricing page or in the API docs is the monthly **API unit** allowance per
+  plan — the number that actually governs how much API you can use. The pricing table exposes
+  "Max rows per request" for direct API and MCP, and a separate "Ahrefs Connect API integration units
+  /mo" figure for partner apps, but the direct-API unit allowance is only visible inside the account
+  at Account settings / Limits & usage. Prices captured 2026-08-12.
+plans:
+- name: Ahrefs Free
+  price: 0
+  currency: USD
+  period: month
+  api_access: false
+  note: >-
+    Site-owner tier — Ahrefs data about your own verified site. Free test queries against the API
+    require a paid plan and an API key.
+- name: Starter
+  price: 29
+  currency: USD
+  period: month
+  api_access: false
+  note: Keyword and competitor research entry tier; no direct API access row on the comparison table.
+- name: Lite
+  price: 129
+  currency: USD
+  period: month
+  api_access: true
+  included_users: 1
+  additional_users: up to 2 at $40/mo per user
+  credits_per_user_month: 1000
+  api_max_rows_per_request: 100
+  mcp_access: true
+  mcp_max_rows_per_request: 100
+  ahrefs_connect_integration_units_month: 100000
+  keyword_lists: 50
+  api_units_month: null
+  api_units_note: not published on the pricing page; visible only in Account settings / Limits & usage
+- name: Standard
+  price: 249
+  currency: USD
+  period: month
+  api_access: true
+  included_users: 1
+  additional_users: up to 5 at $60/mo per user
+  credits_per_user_month: unlimited
+  api_max_rows_per_request: 250
+  mcp_access: true
+  mcp_max_rows_per_request: 250
+  ahrefs_connect_integration_units_month: 400000
+  keyword_lists: 100
+  batch_analysis_target_urls_per_report: 200
+  api_units_month: null
+  api_units_note: not published on the pricing page
+- name: Advanced
+  price: 449
+  currency: USD
+  period: month
+  api_access: true
+  included_users: 1
+  additional_users: up to 10 at $80/mo per user
+  credits_per_user_month: unlimited
+  api_max_rows_per_request: 500
+  mcp_access: true
+  mcp_max_rows_per_request: 500
+  ahrefs_connect_integration_units_month: 1000000
+  keyword_lists: 200
+  batch_analysis_target_urls_per_report: 500
+  api_units_month: null
+  api_units_note: not published on the pricing page
+- name: Enterprise
+  price: 1499
+  currency: USD
+  period: month
+  commitment: annual commitment required
+  api_access: true
+  api_access_label: Uncapped API access
+  included_users: from 3
+  additional_users: unlimited at $100/mo per user
+  credits_per_user_month: unlimited
+  api_max_rows_per_request: unlimited
+  mcp_access: true
+  mcp_max_rows_per_request: unlimited
+  ahrefs_connect_integration_units_month: 2000000
+  keyword_lists: 500
+  batch_analysis_target_urls_per_report: 1000
+  extras:
+  - SSO and enterprise-grade security
+  - access management and audit log
+  - unlimited historical data
+  - personalized higher limits and data exports
+  - additional API unit add-ons purchasable
+add_ons:
+- name: Brand Radar AI
+  price_from: 199
+  currency: USD
+  period: month
+  note: Standalone AI-visibility product priced separately from the core plans.
+- name: Custom prompt packages
+  tiers:
+  - name: Basic
+    price: 50
+    currency: USD
+    period: month
+    included: 2500 checks/mo
+  - name: Growth
+    price: 100
+    currency: USD
+    period: month
+    included: 7000 checks/mo
+  - name: Scale
+    price: 250
+    currency: USD
+    period: month
+    included: 25000 checks/mo
+  overage: '$0.010-$0.020 per check depending on tier'
+metering:
+  unit: API unit
+  base_cost_per_request: 50
+  formula: max(50, per_row_cost * num_rows)
+  overage: >-
+    On plans that support it, additional units are automatically charged pay-as-you-go once the
+    included allowance is exceeded; workspace admins can cap or disable PAYG.
+  payg_expiry: PAYG credits (including API units) last three billing months including the current one
+  refundable: false
+  free_endpoints:
+  - Rank Tracker
+  - Management
+  - Public
+  free_test_queries: https://docs.ahrefs.com/api/docs/free-test-queries.md

@@ -1,0 +1,92 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ahrefs.com/api/docs/introduction.md
+docs:
+- https://docs.ahrefs.com/api/docs/introduction.md
+- https://docs.ahrefs.com/api/docs/limits-consumption.md
+limit_count: 1
+note: >-
+  Ahrefs publishes exactly one hard request-rate limit and one metering system. The rate limit is a
+  flat 60 requests per minute; on top of it Ahrefs applies undisclosed dynamic throttling based on
+  real-time system load and the computational cost of the request, which surfaces as the same 429.
+  The economically binding constraint is not the rate limit but the API-unit budget, which is a
+  monthly quota attached to the subscription rather than a per-window rate.
+rate_limits:
+- id: default-request-rate
+  scope: per-key
+  window: 1 minute
+  limit: 60
+  burst: null
+  status_on_exhaustion: 429
+  status_text: Too Many Requests
+  source: https://docs.ahrefs.com/api/docs/introduction.md
+  note: Documented as the default; Ahrefs does not publish per-plan variations of this number.
+- id: dynamic-throttling
+  scope: per-account
+  window: null
+  limit: null
+  status_on_exhaustion: 429
+  source: https://docs.ahrefs.com/api/docs/introduction.md
+  note: >-
+    "API requests may occasionally be rejected with the same HTTP 429 status code due to throttling.
+    Throttling occurs dynamically based on real-time system load, resource availability, and the
+    computational demands of your requests." No threshold, window or signalling header is published,
+    so a client cannot distinguish it from the 60/min ceiling except by retrying.
+- id: free-test-query-row-cap
+  scope: per-request
+  window: null
+  limit: 100
+  applies_to: free test queries (targets ahrefs.com / yep.com / firehose.com, keywords ahrefs / yep / firehose)
+  source: https://docs.ahrefs.com/api/docs/free-test-queries.md
+  note: '`limit` is capped at 100 on free requests regardless of what is requested.'
+- id: mcp-row-cap
+  scope: per-plan
+  applies_to: hosted MCP server
+  limit: null
+  source: https://docs.ahrefs.com/mcp/docs/introduction.md
+  note: >-
+    "Each plan has a maximum number of rows per request that an AI agent can access." The per-plan
+    numbers are not published in the docs.
+response_headers:
+  rate_limit_headers: []
+  rate_limit_headers_note: >-
+    Ahrefs publishes NO RateLimit-*/X-RateLimit-*/Retry-After headers. There is no documented runtime
+    signal telling a client how much request budget remains or when to retry after a 429 — an agent
+    can only observe the failure and back off blindly. This is the significant gap in an otherwise
+    well-documented metering story.
+  metering_headers:
+  - header: x-api-rows
+    meaning: number of rows returned
+  - header: x-api-units-cost-row
+    meaning: per-row unit cost of this request
+  - header: x-api-units-cost-total
+    meaning: units the request should consume, from rows x per-row cost
+  - header: x-api-units-cost-total-actual
+    meaning: units the request actually consumed
+  - header: x-api-cache
+    meaning: 'whether the response was served from cache: hit | miss | no_cache (cache hits consume no units)'
+  metering_headers_source: https://docs.ahrefs.com/api/docs/limits-consumption.md
+quota:
+  unit: API unit
+  formula: max(base_cost, per_row_cost * num_rows)
+  base_cost: 50
+  default_field_cost: 1
+  expensive_field_costs:
+  - 5
+  - 10
+  per_row_cost_definition: >-
+    Sum of the cost of each unique field appearing in the returned result or in the `where` /
+    `order_by` parameters; a field counted once even if it appears in several parameters.
+  cache: requests served from cache consume no units
+  free_endpoint_families:
+  - Rank Tracker
+  - Management
+  - Public
+  refundable: false
+  allowance: monthly, attached to the subscription plan; pay-as-you-go overage on plans that allow it
+  per_key_controls: workspace admins can cap monthly units per API key
+  usage_report: https://app.ahrefs.com/account/limits-and-usage/web
+spec_evidence:
+  responses_429_declared: 148
+  of_operations: 148
+  source: openapi/_original/ahrefs-openapi-original.json

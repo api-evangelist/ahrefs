@@ -1,0 +1,113 @@
+{
+  "name": "Ahrefs API",
+  "description": "Index of Ahrefs API v3 OpenAPI specifications. The complete merged spec for all tools is at openapi_url; each tool also has its own spec listed below.",
+  "documentation": "https://docs.ahrefs.com",
+  "openapi_url": "https://docs.ahrefs.com/openapi.json",
+  "openapi_version": "3.2.0",
+  "specs": [
+    {
+      "name": "site-explorer",
+      "title": "Site Explorer",
+      "description": "Fetch data from Site Explorer reports",
+      "spec_url": "https://docs.ahrefs.com/reference/site-explorer.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/site-explorer",
+      "api_server": "https://api.ahrefs.com/v3/site-explorer"
+    },
+    {
+      "name": "keywords-explorer",
+      "title": "Keywords Explorer",
+      "description": "Fetch data from Keywords Explorer reports",
+      "spec_url": "https://docs.ahrefs.com/reference/keywords-explorer.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/keywords-explorer",
+      "api_server": "https://api.ahrefs.com/v3/keywords-explorer"
+    },
+    {
+      "name": "site-audit",
+      "title": "Site Audit",
+      "description": "Site audit.",
+      "spec_url": "https://docs.ahrefs.com/reference/site-audit.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/site-audit",
+      "api_server": "https://api.ahrefs.com/v3/site-audit"
+    },
+    {
+      "name": "rank-tracker",
+      "title": "Rank Tracker",
+      "description": "Rank tracker.",
+      "spec_url": "https://docs.ahrefs.com/reference/rank-tracker.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/rank-tracker",
+      "api_server": "https://api.ahrefs.com/v3/rank-tracker"
+    },
+    {
+      "name": "serp-overview",
+      "title": "SERP Overview",
+      "description": "Fetch data from SERP Overview report",
+      "spec_url": "https://docs.ahrefs.com/reference/serp-overview.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/serp-overview",
+      "api_server": "https://api.ahrefs.com/v3/serp-overview"
+    },
+    {
+      "name": "batch-analysis",
+      "title": "Batch Analysis",
+      "description": "Batch analysis.",
+      "spec_url": "https://docs.ahrefs.com/reference/batch-analysis.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/batch-analysis",
+      "api_server": "https://api.ahrefs.com/v3/batch-analysis"
+    },
+    {
+      "name": "subscription-info",
+      "title": "Subscription Information",
+      "description": "Subscription information.",
+      "spec_url": "https://docs.ahrefs.com/reference/subscription-info.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/subscription-info",
+      "api_server": "https://api.ahrefs.com/v3/subscription-info"
+    },
+    {
+      "name": "management",
+      "title": "Management",
+      "description": "Project management.",
+      "spec_url": "https://docs.ahrefs.com/reference/management.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/management",
+      "api_server": "https://api.ahrefs.com/v3/management"
+    },
+    {
+      "name": "brand-radar",
+      "title": "Brand Radar",
+      "description": "Brand radar.",
+      "spec_url": "https://docs.ahrefs.com/reference/brand-radar.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/brand-radar",
+      "api_server": "https://api.ahrefs.com/v3/brand-radar"
+    },
+    {
+      "name": "web-analytics",
+      "title": "Web Analytics",
+      "description": "Web_analytics.",
+      "spec_url": "https://docs.ahrefs.com/reference/web-analytics.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/web-analytics",
+      "api_server": "https://api.ahrefs.com/v3/web-analytics"
+    },
+    {
+      "name": "gsc",
+      "title": "GSC Insights",
+      "description": "Fetch data from GSC Insights reports",
+      "spec_url": "https://docs.ahrefs.com/reference/gsc.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/gsc",
+      "api_server": "https://api.ahrefs.com/v3/gsc"
+    },
+    {
+      "name": "social-media",
+      "title": "Social Media",
+      "description": "Social Media Management.",
+      "spec_url": "https://docs.ahrefs.com/reference/social-media.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/social-media",
+      "api_server": "https://api.ahrefs.com/v3/social-media"
+    },
+    {
+      "name": "public",
+      "title": "Public",
+      "description": "Free endpoints that don't require an Ahrefs subscription, or require a free/public APIv3 key",
+      "spec_url": "https://docs.ahrefs.com/reference/public.json",
+      "reference_url": "https://docs.ahrefs.com/en/api/reference/public",
+      "api_server": "https://api.ahrefs.com/v3/public"
+    }
+  ]
+}

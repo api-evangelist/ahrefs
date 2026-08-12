@@ -1,0 +1,47 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ahrefs.com/ahrefs-connect/docs/oauth-guide.md
+docs: https://docs.ahrefs.com/ahrefs-connect/docs/oauth-guide.md
+note: >-
+  The Ahrefs OpenAPI declares only an `http` bearer scheme, so derive-oauth-scopes.py found no oauth2
+  flows in the spec. The scope surface is real but lives outside the spec: it is documented in the
+  Ahrefs Connect OAuth guide and advertised anonymously in the RFC 8414 authorization-server metadata
+  at https://api.ahrefs.com/.well-known/oauth-authorization-server. Ahrefs does not publish a
+  fine-grained permission catalog — access is coarse (one scope per program), and what a token can
+  reach is governed by the connected account's plan and API-unit allowance rather than by scopes.
+schemes:
+- name: ahrefs-connect-oauth2
+  source: docs
+  flows:
+  - flow: authorizationCode
+    pkce: required (S256)
+    authorizationUrl: https://app.ahrefs.com/web/oauth/authorize
+    tokenUrl: https://ahrefs.com/oauth/token
+- name: ahrefs-mcp-oauth2
+  source: well-known/ahrefs-oauth-authorization-server.json
+  flows:
+  - flow: authorizationCode
+    pkce: supported (S256)
+    authorizationUrl: https://app.ahrefs.com/web/oauth/authorize
+    tokenUrl: https://ahrefs.com/oauth/token
+    registrationUrl: https://api.ahrefs.com/mcp/register
+scopes:
+- scope: apiv3-integration-apps
+  description: >-
+    Granted to an approved Ahrefs Connect partner application. Lets the app call Ahrefs API v3 on
+    behalf of the authorizing user, spending that user's API units.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ahrefs.com/ahrefs-connect/docs/oauth-guide.md
+- scope: apiv3-mcp
+  description: >-
+    Granted to an AI client connecting to the hosted Ahrefs MCP server. Advertised as
+    `scopes_supported` by the authorization-server metadata and `scopes_provided` by the
+    protected-resource metadata. Produces an API key tagged with `MCP` scope in the user's account.
+  flows:
+  - authorizationCode
+  sources:
+  - well-known/ahrefs-oauth-authorization-server.json
+  - well-known/ahrefs-oauth-protected-resource.json
+  - https://docs.ahrefs.com/mcp/docs/introduction.md

@@ -1,0 +1,105 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/_original/ahrefs-openapi-original.json
+searched:
+- https://docs.ahrefs.com/api/docs/introduction.md
+- https://docs.ahrefs.com/ahrefs-connect/docs/oauth-guide.md
+- https://api.ahrefs.com/.well-known/oauth-authorization-server
+- https://trust.ahrefs.com/
+standards:
+- id: openapi-3.2
+  conforms: true
+  evidence: >-
+    openapi/_original/ahrefs-openapi-original.json declares `"openapi": "3.2.0"` with 129 paths, 148
+    operations, 144 component schemas, and 13 per-tool specs published alongside it plus a
+    machine-readable spec index at https://docs.ahrefs.com/reference/index.json. Ahrefs is an early
+    adopter of 3.2.0.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Ahrefs Connect and the hosted MCP server both use OAuth 2.0 Authorization Code; scopes
+    apiv3-integration-apps and apiv3-mcp. The OpenAPI itself declares only http bearer.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: >-
+    Authorization Code with PKCE, S256 required for Ahrefs Connect; `code_challenge_methods_supported:
+    ["S256"]` in the authorization-server metadata.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: 200 at https://api.ahrefs.com/.well-known/oauth-authorization-server (well-known/ahrefs-oauth-authorization-server.json)
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: >-
+    200 at https://api.ahrefs.com/.well-known/oauth-protected-resource, and the 401 from the MCP
+    endpoint returns the matching `WWW-Authenticate: Bearer resource_metadata=...` challenge.
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: '`registration_endpoint: https://api.ahrefs.com/mcp/register` advertised in the authorization-server
+    metadata.'
+- id: mcp
+  conforms: true
+  evidence: >-
+    Hosted remote MCP server at https://api.ahrefs.com/mcp/mcp (streamable HTTP) plus a legacy SSE
+    endpoint; official local server package @ahrefs/mcp. tools/list is auth-gated.
+- id: llmstxt
+  conforms: true
+  evidence: 200 at https://docs.ahrefs.com/llms.txt — a real, hand-authored index, not a docs dump.
+- id: agent-skills
+  conforms: true
+  evidence: >-
+    Provider-published Agent Skill at https://github.com/ahrefs/ahrefs-api-skills with SKILL.md
+    frontmatter and reference files.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are a flat `{"error": "<string>"}` object served as application/json; no
+    application/problem+json, no type/title/detail/instance.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on ahrefs.com, api.ahrefs.com, docs.ahrefs.com and app.ahrefs.com.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: >-
+    No Sunset or Deprecation headers and no `deprecated: true` in the spec, despite executing a real
+    API v2 deprecation on 2025-11-01 and removing parameters from v3 in 2026.
+- id: ietf-ratelimit-headers
+  conforms: false
+  evidence: >-
+    No RateLimit-*/X-RateLimit-*/Retry-After headers; 429 is returned with no retry guidance. Ahrefs
+    returns metering headers (x-api-units-cost-*) instead.
+- id: idempotency-key
+  conforms: false
+  evidence: No Idempotency-Key parameter in the spec and no idempotency contract in the docs.
+- id: a2a-agent-card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and the legacy /.well-known/agent.json both 404 on every Ahrefs host
+    probed 2026-08-12.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No event, streaming or webhook surface. The word "webhook" appears zero times in the OpenAPI and
+    in llms.txt; no callbacks or webhooks object in the spec. Not applicable rather than missing.
+- id: openid-connect
+  conforms: false
+  evidence: /.well-known/openid-configuration 404s on every host; the OAuth surface is plain OAuth 2.0.
+- id: json-api
+  conforms: false
+  evidence: bespoke JSON envelopes per report; no JSON:API document structure.
+- id: odata
+  conforms: false
+  evidence: filtering uses a bespoke JSON `where` expression, not $filter.
+- id: graphql
+  conforms: false
+  evidence: no /graphql surface found on any Ahrefs host.
+- id: grpc
+  conforms: false
+  evidence: no published .proto in the ahrefs GitHub organization or on buf.build.
+compliance_program:
+  published: true
+  url: https://trust.ahrefs.com/
+  detail: security/ahrefs-trust-center.yml
+  note: >-
+    A dedicated compliance/trust subdomain is served (HTTP 200, canonical https://trust.ahrefs.com/en,
+    title "Compliance at Ahrefs.", hosted on Probo). Its contents render client-side, so named
+    certifications could not be enumerated anonymously and none are asserted here.

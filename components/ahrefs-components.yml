@@ -1,0 +1,51 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ahrefs.com/llms.txt
+note: >-
+  Ahrefs ships no UI component library or embeddable widget set. What it does distribute client-side
+  are two data-collection surfaces (a hosted analytics script and a Cloudflare Worker for bot log
+  ingestion) and one hosted BI connector. They are recorded here because they are the only
+  client-installed Ahrefs code a developer integrates, but none of them renders Ahrefs UI in a host
+  application.
+families:
+- family: web-analytics-script
+  kind: hosted tag / data collection
+  loader: https://analytics.ahrefs.com/analytics.js
+  distribution: cdn
+  version: null
+  version_note: >-
+    Unpinned. The documented install is a bare `<script src="https://analytics.ahrefs.com/analytics.js"
+    data-key="..." async>` — no version is present in the URL and no CDN metadata endpoint exists, so
+    neither we nor a consumer can tell which build is being served.
+  http_status: 200
+  docs: https://ahrefs.com/web-analytics
+  note: >-
+    First-party page-view/visitor collection script. Its data is read back through the Web Analytics
+    tool of API v3 (34 operations, openapi/ahrefs-web-analytics-openapi.json).
+- family: bot-analytics-cloudflare-worker
+  kind: edge worker / log ingestion
+  distribution: source, installed into the customer's Cloudflare account
+  version: null
+  version_note: >-
+    Distributed through Ahrefs project settings (automatic setup with a Cloudflare API token, or
+    manual instructions) rather than a registry; no published version identifier.
+  docs: https://docs.ahrefs.com/bot-analytics/docs/cloudflare-worker.md
+  alternative: https://docs.ahrefs.com/bot-analytics/docs/cloudflare-logpush.md
+  note: >-
+    Ships HTTP request logs to Ahrefs so Bot Analytics can report crawler/AI-bot behaviour. Logpush is
+    Cloudflare-Enterprise-only; the Worker works on any plan. Cloudflare is currently the only
+    supported data source.
+- family: looker-studio-connector
+  kind: hosted BI connector
+  distribution: Google Looker Studio connector gallery
+  version: null
+  version_note: hosted by Ahrefs and Google; no consumer-visible version
+  docs: https://docs.ahrefs.com/looker-studio/docs/introduction.md
+  reports:
+  - Site Explorer
+  - Site Audit
+  - Rank Tracker
+  - Brand Radar
+  note: >-
+    OAuth-authorized connector that surfaces Ahrefs report data as Looker Studio data sources. Consumes
+    the same API-unit allowance as direct API usage.

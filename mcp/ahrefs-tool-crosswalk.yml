@@ -1,0 +1,628 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  MCP tool list read verbatim from the official (now-deprecated) local server source at
+  https://github.com/ahrefs/ahrefs-mcp-server/blob/main/src/server.ts, bound to operationIds verified
+  in openapi/_original/ahrefs-openapi-original.json. The hosted remote server at
+  https://api.ahrefs.com/mcp/mcp answers an unauthenticated tools/list with HTTP 401
+  ("api token is required"), so its live tool set could not be introspected; its capability groups are
+  taken from https://docs.ahrefs.com/mcp/docs/tool-categories.md.
+surfaces:
+  openapi:
+    file: openapi/_original/ahrefs-openapi-original.json
+    version: 3.2.0
+    server: https://api.ahrefs.com/v3
+    operations: 148
+    gated: false
+  mcp:
+    url: https://api.ahrefs.com/mcp/mcp
+    transport: streamable-http
+    legacy_sse: https://api.ahrefs.com/mcp/mcpSse
+    tools_list: gated
+    tools_list_status: 401
+    auth: OAuth 2.0 (scope apiv3-mcp) or an MCP-scoped API key
+  mcp_local:
+    package: '@ahrefs/mcp'
+    repo: https://github.com/ahrefs/ahrefs-mcp-server
+    status: deprecated-by-provider
+    tools: 41
+    gated: false
+  graphql:
+    present: false
+note: >-
+  Ahrefs' REST and MCP surfaces are not equal projections. The verifiable MCP tool list covers the
+  read-heavy research core (Site Explorer, Keywords Explorer, SERP Overview, Batch Analysis) and a
+  read-only slice of Management/Site Audit, while 109 REST operations — every Web Analytics, Brand
+  Radar, GSC Insights and Social Media report, all Management writes, and the Public endpoints — have
+  no tool in that list. The hosted remote server advertises groups for several of those families
+  (web-analytics-*, brand-radar-*, gsc, social-media, public, subscription-info), so the remote tool
+  set is materially larger than the local one; the exact names and inputSchemas require authenticated
+  introspection.
+remote_tool_groups:
+  source: https://docs.ahrefs.com/mcp/docs/tool-categories.md
+  selection: 'URL query parameter, e.g. https://api.ahrefs.com/mcp/mcp?tools=site-explorer-overview,brand-radar-entities'
+  curated_preset: essentials
+  groups:
+  - group: site-explorer-overview
+    description: "Core Site Explorer metrics — domain rating, backlink and outlink stats, organic/paid overview, metrics history."
+  - group: site-explorer-reports
+    description: "Detailed Site Explorer reports — backlinks, referring domains, anchors, organic keywords and competitors, top pages, linked domains."
+  - group: keywords-explorer
+    description: "Keyword research — overview, volume by country and history, matching/related terms, search suggestions."
+  - group: serp-overview
+    description: "SERP overview for a keyword."
+  - group: rank-tracker
+    description: "Rank Tracker — overview and competitor reports."
+  - group: site-audit
+    description: "Site Audit — projects, issues, page explorer, page content."
+  - group: brand-radar-simple
+    description: "Brand Radar reports (domain/URL level)."
+  - group: brand-radar-entities
+    description: "Brand Radar reports (entity level)."
+  - group: web-analytics-overview
+    description: "Web Analytics stats and charts."
+  - group: web-analytics-sources
+    description: "Web Analytics traffic sources, source channels, and referrers."
+  - group: web-analytics-geo
+    description: "Web Analytics geographic breakdowns — continents, countries, cities."
+  - group: web-analytics-user-agents
+    description: "Web Analytics device, browser, operating system, and language breakdowns."
+  - group: web-analytics-pages
+    description: "Web Analytics top pages, entry pages, and exit pages."
+  - group: gsc
+    description: "Google Search Console — keywords, pages, positions, and performance history."
+  - group: social-media
+    description: "Social media — channels, posts, authors, and their metrics."
+  - group: batch-analysis
+    description: "Batch analysis of multiple targets in a single request."
+  - group: management
+    description: "Account management — projects, keyword lists, locations, and Brand Radar configuration."
+  - group: public
+    description: "Public/free endpoints — crawler IP ranges and free domain rating."
+  - group: subscription-info
+    description: "Your subscription limits and usage."
+crosswalk:
+- tool: rank-tracker-overview
+  category: "Rank Tracker"
+  rest:
+  - rank-tracker.overview
+  method: GET
+  path: "/v3/rank-tracker/overview"
+  spec: openapi/ahrefs-rank-tracker-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: rank-tracker-competitors-overview
+  category: "Rank Tracker"
+  rest:
+  - rank-tracker.competitors-overview
+  method: GET
+  path: "/v3/rank-tracker/competitors-overview"
+  spec: openapi/ahrefs-rank-tracker-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: batch-analysis-batch-analysis
+  category: "Batch Analysis"
+  rest:
+  - batch-analysis.batch-analysis
+  method: POST
+  path: "/v3/batch-analysis/batch-analysis"
+  spec: openapi/ahrefs-batch-analysis-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: keywords-explorer-overview
+  category: "Keywords Explorer"
+  rest:
+  - keywords-explorer.overview
+  method: GET
+  path: "/v3/keywords-explorer/overview"
+  spec: openapi/ahrefs-keywords-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: keywords-explorer-volume-history
+  category: "Keywords Explorer"
+  rest:
+  - keywords-explorer.volume-history
+  method: GET
+  path: "/v3/keywords-explorer/volume-history"
+  spec: openapi/ahrefs-keywords-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: keywords-explorer-volume-by-country
+  category: "Keywords Explorer"
+  rest:
+  - keywords-explorer.volume-by-country
+  method: GET
+  path: "/v3/keywords-explorer/volume-by-country"
+  spec: openapi/ahrefs-keywords-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: keywords-explorer-matching-terms
+  category: "Keywords Explorer"
+  rest:
+  - keywords-explorer.matching-terms
+  method: GET
+  path: "/v3/keywords-explorer/matching-terms"
+  spec: openapi/ahrefs-keywords-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: keywords-explorer-related-terms
+  category: "Keywords Explorer"
+  rest:
+  - keywords-explorer.related-terms
+  method: GET
+  path: "/v3/keywords-explorer/related-terms"
+  spec: openapi/ahrefs-keywords-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: keywords-explorer-search-suggestions
+  category: "Keywords Explorer"
+  rest:
+  - keywords-explorer.search-suggestions
+  method: GET
+  path: "/v3/keywords-explorer/search-suggestions"
+  spec: openapi/ahrefs-keywords-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-audit-projects
+  category: "Site Audit"
+  rest:
+  - site-audit.projects
+  method: GET
+  path: "/v3/site-audit/projects"
+  spec: openapi/ahrefs-site-audit-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: management-projects
+  category: "Management"
+  rest:
+  - management.projects
+  method: GET
+  path: "/v3/management/projects"
+  spec: openapi/ahrefs-management-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: management-project-keywords
+  category: "Management"
+  rest:
+  - management.project-keywords
+  method: GET
+  path: "/v3/management/project-keywords"
+  spec: openapi/ahrefs-management-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: management-locations
+  category: "Management"
+  rest:
+  - management.locations
+  method: GET
+  path: "/v3/management/locations"
+  spec: openapi/ahrefs-management-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: management-project-competitors
+  category: "Management"
+  rest:
+  - management.project-competitors
+  method: GET
+  path: "/v3/management/project-competitors"
+  spec: openapi/ahrefs-management-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: serp-overview-serp-overview
+  category: "SERP Overview"
+  rest:
+  - serp-overview.serp-overview
+  method: GET
+  path: "/v3/serp-overview/serp-overview"
+  spec: openapi/ahrefs-serp-overview-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-domain-rating
+  category: "Site Explorer"
+  rest:
+  - site-explorer.domain-rating
+  method: GET
+  path: "/v3/site-explorer/domain-rating"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-backlinks-stats
+  category: "Site Explorer"
+  rest:
+  - site-explorer.backlinks-stats
+  method: GET
+  path: "/v3/site-explorer/backlinks-stats"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-outlinks-stats
+  category: "Site Explorer"
+  rest:
+  - site-explorer.outlinks-stats
+  method: GET
+  path: "/v3/site-explorer/outlinks-stats"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-metrics
+  category: "Site Explorer"
+  rest:
+  - site-explorer.metrics
+  method: GET
+  path: "/v3/site-explorer/metrics"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-refdomains-history
+  category: "Site Explorer"
+  rest:
+  - site-explorer.refdomains-history
+  method: GET
+  path: "/v3/site-explorer/refdomains-history"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-domain-rating-history
+  category: "Site Explorer"
+  rest:
+  - site-explorer.domain-rating-history
+  method: GET
+  path: "/v3/site-explorer/domain-rating-history"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-url-rating-history
+  category: "Site Explorer"
+  rest:
+  - site-explorer.url-rating-history
+  method: GET
+  path: "/v3/site-explorer/url-rating-history"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-pages-history
+  category: "Site Explorer"
+  rest:
+  - site-explorer.pages-history
+  method: GET
+  path: "/v3/site-explorer/pages-history"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-metrics-history
+  category: "Site Explorer"
+  rest:
+  - site-explorer.metrics-history
+  method: GET
+  path: "/v3/site-explorer/metrics-history"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-keywords-history
+  category: "Site Explorer"
+  rest:
+  - site-explorer.keywords-history
+  method: GET
+  path: "/v3/site-explorer/keywords-history"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-metrics-by-country
+  category: "Site Explorer"
+  rest:
+  - site-explorer.metrics-by-country
+  method: GET
+  path: "/v3/site-explorer/metrics-by-country"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-pages-by-traffic
+  category: "Site Explorer"
+  rest:
+  - site-explorer.pages-by-traffic
+  method: GET
+  path: "/v3/site-explorer/pages-by-traffic"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-all-backlinks
+  category: "Site Explorer"
+  rest:
+  - site-explorer.all-backlinks
+  method: GET
+  path: "/v3/site-explorer/all-backlinks"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-broken-backlinks
+  category: "Site Explorer"
+  rest:
+  - site-explorer.broken-backlinks
+  method: GET
+  path: "/v3/site-explorer/broken-backlinks"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-refdomains
+  category: "Site Explorer"
+  rest:
+  - site-explorer.refdomains
+  method: GET
+  path: "/v3/site-explorer/refdomains"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-anchors
+  category: "Site Explorer"
+  rest:
+  - site-explorer.anchors
+  method: GET
+  path: "/v3/site-explorer/anchors"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-linkeddomains
+  category: "Site Explorer"
+  rest:
+  - site-explorer.linkeddomains
+  method: GET
+  path: "/v3/site-explorer/linkeddomains"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-linked-anchors-external
+  category: "Site Explorer"
+  rest:
+  - site-explorer.linked-anchors-external
+  method: GET
+  path: "/v3/site-explorer/linked-anchors-external"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-linked-anchors-internal
+  category: "Site Explorer"
+  rest:
+  - site-explorer.linked-anchors-internal
+  method: GET
+  path: "/v3/site-explorer/linked-anchors-internal"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-organic-keywords
+  category: "Site Explorer"
+  rest:
+  - site-explorer.organic-keywords
+  method: GET
+  path: "/v3/site-explorer/organic-keywords"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-organic-competitors
+  category: "Site Explorer"
+  rest:
+  - site-explorer.organic-competitors
+  method: GET
+  path: "/v3/site-explorer/organic-competitors"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-top-pages
+  category: "Site Explorer"
+  rest:
+  - site-explorer.top-pages
+  method: GET
+  path: "/v3/site-explorer/top-pages"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-paid-pages
+  category: "Site Explorer"
+  rest:
+  - site-explorer.paid-pages
+  method: GET
+  path: "/v3/site-explorer/paid-pages"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+- tool: site-explorer-total-search-volume-history
+  category: "Site Explorer"
+  rest:
+  - site-explorer.total-search-volume-history
+  method: GET
+  path: "/v3/site-explorer/total-search-volume-history"
+  spec: openapi/ahrefs-site-explorer-openapi.json
+  binding: rest
+  confidence: high
+  note: "tool name is the REST path with '/' replaced by '-'; the operationId is the same path with '.'; inputSchema is that operation's query parameters"
+mcp_only:
+- tool: site-explorer-best-by-external-links
+  reason: "exposed by the deprecated local MCP server but no longer present in the current API v3 OpenAPI (no operationId site-explorer.best-by-external-links); a stale tool, not a hidden capability"
+- tool: site-explorer-best-by-internal-links
+  reason: "exposed by the deprecated local MCP server but no longer present in the current API v3 OpenAPI (no operationId site-explorer.best-by-internal-links); a stale tool, not a hidden capability"
+rest_only:
+- capability: "Brand Radar"
+  count: 20
+  operations:
+  - brand-radar.ai-responses
+  - brand-radar.ai-responses.post
+  - brand-radar.citations-history
+  - brand-radar.citations-overview
+  - brand-radar.cited-domains
+  - brand-radar.cited-domains.post
+  - brand-radar.cited-pages
+  - brand-radar.cited-pages.post
+  - brand-radar.impressions-history
+  - brand-radar.impressions-history.post
+  - brand-radar.impressions-overview
+  - brand-radar.impressions-overview.post
+  - brand-radar.mentions-history
+  - brand-radar.mentions-history.post
+  - brand-radar.mentions-overview
+  - brand-radar.mentions-overview.post
+  - brand-radar.sov-history
+  - brand-radar.sov-history.post
+  - brand-radar.sov-overview
+  - brand-radar.sov-overview.post
+- capability: "GSC Insights"
+  count: 12
+  operations:
+  - gsc.anonymous-queries
+  - gsc.ctr-by-position
+  - gsc.keyword-history
+  - gsc.keywords
+  - gsc.metrics-by-country
+  - gsc.page-history
+  - gsc.pages
+  - gsc.pages-history
+  - gsc.performance-by-device
+  - gsc.performance-by-position
+  - gsc.performance-history
+  - gsc.positions-history
+- capability: "Management"
+  count: 18
+  operations:
+  - management.brand-radar-prompts
+  - management.brand-radar-prompts-delete
+  - management.brand-radar-prompts.post
+  - management.brand-radar-reports
+  - management.brand-radar-reports.patch
+  - management.brand-radar-reports.post
+  - management.keyword-list-keywords
+  - management.keyword-list-keywords-delete
+  - management.keyword-list-keywords.put
+  - management.project-competitors-delete
+  - management.project-competitors.post
+  - management.project-keywords-delete
+  - management.project-keywords-tags
+  - management.project-keywords-tags-delete
+  - management.project-keywords.put
+  - management.projects.delete
+  - management.projects.post
+  - management.update-project
+- capability: "Public"
+  count: 4
+  operations:
+  - public.crawler-ip-ranges
+  - public.crawler-ips
+  - public.domain-rating-free
+  - public.domain-rating-top-domains
+- capability: "Rank Tracker"
+  count: 4
+  operations:
+  - rank-tracker.competitors-domains
+  - rank-tracker.competitors-pages
+  - rank-tracker.competitors-stats
+  - rank-tracker.serp-overview
+- capability: "Site Audit"
+  count: 3
+  operations:
+  - site-audit.issues
+  - site-audit.page-content
+  - site-audit.page-explorer
+- capability: "Site Explorer"
+  count: 4
+  operations:
+  - site-explorer.ai-responses-count
+  - site-explorer.crawled-pages
+  - site-explorer.pages-by-backlinks
+  - site-explorer.pages-by-internal-links
+- capability: "Social Media"
+  count: 9
+  operations:
+  - social-media.activity-history
+  - social-media.authors
+  - social-media.channel-metrics
+  - social-media.channels
+  - social-media.post
+  - social-media.post-metrics
+  - social-media.post.delete
+  - social-media.post.patch
+  - social-media.posts
+- capability: "Subscription Information"
+  count: 1
+  operations:
+  - subscription-info.limits-and-usage
+- capability: "Web Analytics"
+  count: 34
+  operations:
+  - web-analytics.browser-versions
+  - web-analytics.browser-versions-chart
+  - web-analytics.browsers
+  - web-analytics.browsers-chart
+  - web-analytics.chart
+  - web-analytics.cities
+  - web-analytics.cities-chart
+  - web-analytics.continents
+  - web-analytics.continents-chart
+  - web-analytics.countries
+  - web-analytics.countries-chart
+  - web-analytics.devices
+  - web-analytics.devices-chart
+  - web-analytics.entry-pages
+  - web-analytics.entry-pages-chart
+  - web-analytics.exit-pages
+  - web-analytics.exit-pages-chart
+  - web-analytics.languages
+  - web-analytics.languages-chart
+  - web-analytics.operating-systems
+  - web-analytics.operating-systems-chart
+  - web-analytics.operating-systems-versions
+  - web-analytics.operating-systems-versions-chart
+  - web-analytics.referrers
+  - web-analytics.referrers-chart
+  - web-analytics.source-channels
+  - web-analytics.source-channels-chart
+  - web-analytics.sources
+  - web-analytics.sources-chart
+  - web-analytics.stats
+  - web-analytics.top-pages
+  - web-analytics.top-pages-chart
+  - web-analytics.utm-params
+  - web-analytics.utm-params-chart
+coverage:
+  rest_operations_total: 148
+  mcp_tools_named: 41
+  mcp_tools_bound_to_rest: 39
+  mcp_only: 2
+  rest_operations_with_a_tool: 39
+  rest_operations_without_a_tool: 109
+  remote_tool_groups_documented: 19
+  remote_tool_names_resolved: 0
