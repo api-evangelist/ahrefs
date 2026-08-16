@@ -1,0 +1,14 @@
+{
+  "repo": "ahrefs",
+  "feeds": [
+    {
+      "source": "https://help.ahrefs.com/en/",
+      "feed_url": "https://help.ahrefs.com/en/feed.xml",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 1,
+  "fetched": "2026-08-15T12:22:01Z"
+}
