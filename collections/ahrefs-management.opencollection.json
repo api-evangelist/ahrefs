@@ -1,0 +1,644 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Management",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/management/projects",
+            "params": [
+              {
+                "name": "access",
+                "value": "",
+                "type": "query",
+                "description": "The access type of the project."
+              },
+              {
+                "name": "owned_by",
+                "value": "",
+                "type": "query",
+                "description": "The email of the project owner"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+              },
+              {
+                "name": "has_keywords",
+                "value": "",
+                "type": "query",
+                "description": "Has Rank Tracker keywords."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/management/projects",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.ahrefs.com/v3/management/projects",
+            "params": [
+              {
+                "name": "project_ids",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the IDs of the projects you want to delete."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Update Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.ahrefs.com/v3/management/update-project",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units.\n\nAt least one of `access` or `folder` must be set.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Keywords",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Keywords",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/management/project-keywords",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Keywords",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.ahrefs.com/v3/management/project-keywords",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Delete Keywords",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.ahrefs.com/v3/management/project-keywords-delete",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Add Keywords Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.ahrefs.com/v3/management/project-keywords-tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Delete Keywords Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.ahrefs.com/v3/management/project-keywords-tags-delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Keyword lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Keywords list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/management/keyword-list-keywords",
+            "params": [
+              {
+                "name": "keyword_list_id",
+                "value": "",
+                "type": "query",
+                "description": "The id of an existing keyword list."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": "**Requests to this endpoint are free and do not consume any API units.**"
+        },
+        {
+          "info": {
+            "name": "Keywords list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.ahrefs.com/v3/management/keyword-list-keywords",
+            "params": [
+              {
+                "name": "keyword_list_id",
+                "value": "",
+                "type": "query",
+                "description": "The id of an existing keyword list."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**Requests to this endpoint are free and do not consume any API units.**"
+        },
+        {
+          "info": {
+            "name": "Keywords list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.ahrefs.com/v3/management/keyword-list-keywords-delete",
+            "params": [
+              {
+                "name": "keyword_list_id",
+                "value": "",
+                "type": "query",
+                "description": "The id of an existing keyword list."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**Requests to this endpoint are free and do not consume any API units.**"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Competitors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Competitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/management/project-competitors",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Competitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/management/project-competitors",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Delete competitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/management/project-competitors-delete",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Locations and languages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Locations and languages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/management/locations",
+            "params": [
+              {
+                "name": "country_code",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "us_state",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter US state code (ISO 3166-2:US). Required only if `country_code` is set to `us`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Brand Radar prompts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Brand Radar prompts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/management/brand-radar-prompts",
+            "params": [
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Brand Radar prompts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/management/brand-radar-prompts",
+            "params": [
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Delete Brand Radar prompts",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.ahrefs.com/v3/management/brand-radar-prompts-delete",
+            "params": [
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Brand radar reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Brand Radar Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/management/brand-radar-reports",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Brand Radar Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/management/brand-radar-reports",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Brand Radar Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.ahrefs.com/v3/management/brand-radar-reports",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

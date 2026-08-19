@@ -1,0 +1,882 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GSC Insights",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Overview",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Performance history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/performance-history",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "history_grouping",
+                "value": "",
+                "type": "query",
+                "description": "The time interval used to group historical data."
+              },
+              {
+                "name": "search_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of search results to return (web, image, video, news)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Positions history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/positions-history",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "history_grouping",
+                "value": "",
+                "type": "query",
+                "description": "The time interval used to group historical data."
+              },
+              {
+                "name": "search_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of search results to return (web, image, video, news)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Pages history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/pages-history",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "history_grouping",
+                "value": "",
+                "type": "query",
+                "description": "The time interval used to group historical data."
+              },
+              {
+                "name": "search_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of search results to return (web, image, video, news)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Performance by device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/performance-by-device",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of search results to return (web, image, video, news)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Metrics by country",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/metrics-by-country",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "history_grouping",
+                "value": "",
+                "type": "query",
+                "description": "The time interval used to group historical data."
+              },
+              {
+                "name": "search_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of search results to return (web, image, video, news)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "CTR by position",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/ctr-by-position",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Performance by position",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/performance-by-position",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of search results to return (web, image, video, news)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Keywords",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Keyword history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/keyword-history",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "history_grouping",
+                "value": "",
+                "type": "query",
+                "description": "The time interval used to group historical data."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "keywords",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of keywords to get history data for."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Keywords",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/keywords",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of search results to return (web, image, video, news)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- keyword\n- top_url\n- url\n- clicks\n- impressions\n- ctr\n- position\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "keyword_list_id",
+                "value": "",
+                "type": "query",
+                "description": "The id of an existing keyword list to show metrics for."
+              },
+              {
+                "name": "keyword_lists",
+                "value": "",
+                "type": "query",
+                "description": "Keyword lists filter (JSON string). Supports include (is), exclude (is_not), empty (not in any list), and not_empty (in any list)."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Page history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/page-history",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "history_grouping",
+                "value": "",
+                "type": "query",
+                "description": "The time interval used to group historical data."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "pages",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of page URLs to get history data for."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/pages",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID. Required when portfolio_id is not provided."
+              },
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "query",
+                "description": "Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of search results to return (web, image, video, news)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Supported fields:\n- url\n- clicks\n- impressions\n- ctr\n- position\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Anonymous queries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Anonymous queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/gsc/anonymous-queries",
+            "params": [
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "A manual timeout duration in seconds."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**keyword**  \ntype: string\n\n**url**  \ntype: string"
+              },
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of columns to return. See response schema for valid column identifiers."
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": "Anonymous queries"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

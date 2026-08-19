@@ -1,0 +1,1932 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Web Analytics",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Overview",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/stats",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/chart",
+            "params": [
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User Agents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Browsers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/browsers",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Browsers Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/browsers-chart",
+            "params": [
+              {
+                "name": "browser_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Browser Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/browser-versions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Browser Versions Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/browser-versions-chart",
+            "params": [
+              {
+                "name": "browser_version_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/devices",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Devices Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/devices-chart",
+            "params": [
+              {
+                "name": "devices_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Operating Systems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/operating-systems",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Operating Systems Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/operating-systems-chart",
+            "params": [
+              {
+                "name": "os_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Operating Systems Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/operating-systems-versions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Operating Systems Versions Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/operating-systems-versions-chart",
+            "params": [
+              {
+                "name": "os_versions_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Geography",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Cities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/cities",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Cities Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/cities-chart",
+            "params": [
+              {
+                "name": "cities_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Continents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/continents",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Continents Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/continents-chart",
+            "params": [
+              {
+                "name": "continents_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/countries",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Countries Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/countries-chart",
+            "params": [
+              {
+                "name": "countries_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Languages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/languages",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Languages Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/languages-chart",
+            "params": [
+              {
+                "name": "browser_language_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Entry Pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/entry-pages",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Entry Pages Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/entry-pages-chart",
+            "params": [
+              {
+                "name": "entry_pages_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Exit Pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/exit-pages",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Exit Pages Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/exit-pages-chart",
+            "params": [
+              {
+                "name": "exit_pages_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Top Pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/top-pages",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Top Pages Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/top-pages-chart",
+            "params": [
+              {
+                "name": "pages_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Traffic Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Source Channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/source-channels",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Source Channels Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/source-channels-chart",
+            "params": [
+              {
+                "name": "source_channels_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/sources",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Sources Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/sources-chart",
+            "params": [
+              {
+                "name": "sources_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Referrers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/referrers",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Referrers Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/referrers-chart",
+            "params": [
+              {
+                "name": "source_referers_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "UTM Parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/utm-params",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "utm_param",
+                "value": "",
+                "type": "query",
+                "description": "Specify a UTM parameter to use as dimension."
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "UTM Parameters Chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/web-analytics/utm-params-chart",
+            "params": [
+              {
+                "name": "utm_params_to_chart",
+                "value": "",
+                "type": "query",
+                "description": "Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count)."
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+              },
+              {
+                "name": "granularity",
+                "value": "",
+                "type": "query",
+                "description": "Time granularity for chart data points."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "end datetime for the data query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "start datetime for the data query"
+              },
+              {
+                "name": "utm_param",
+                "value": "",
+                "type": "query",
+                "description": "Specify a UTM parameter to use as dimension."
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

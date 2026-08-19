@@ -1,0 +1,323 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Social Media",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/social-media/channels",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Channel metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/social-media/channel-metrics",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "query",
+                "description": "Unique identifier for the social media channel."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/social-media/authors",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Activity history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/social-media/activity-history",
+            "params": [
+              {
+                "name": "post_id",
+                "value": "",
+                "type": "query",
+                "description": "Unique identifier for the post."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Posts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/social-media/posts",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The publishing lifecycle stage of the post."
+              },
+              {
+                "name": "channel_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of channel IDs to filter by."
+              },
+              {
+                "name": "author_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of author user IDs to filter by."
+              },
+              {
+                "name": "search_query",
+                "value": "",
+                "type": "query",
+                "description": "Text search query to filter posts by content."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort field for posts. Metric-based sorting only applies to published posts."
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "The order in which results are returned, ascending or descending."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to skip."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Post metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/social-media/post-metrics",
+            "params": [
+              {
+                "name": "external_post_id",
+                "value": "",
+                "type": "query",
+                "description": "Platform-specific post identifier."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "query",
+                "description": "Unique identifier for the social media channel."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Create post",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/social-media/post",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Update post",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.ahrefs.com/v3/social-media/post",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        },
+        {
+          "info": {
+            "name": "Delete post",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.ahrefs.com/v3/social-media/post",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint are free and do not consume any API units."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

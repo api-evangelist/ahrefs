@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Public",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Crawler",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crawler IP addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/public/crawler-ips",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not require an API key."
+        },
+        {
+          "info": {
+            "name": "Crawler IP ranges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/public/crawler-ip-ranges",
+            "params": [
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free and do not require an API key."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Domain Rating",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Domain rating free",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/public/domain-rating-free",
+            "params": [
+              {
+                "name": "target",
+                "value": "",
+                "type": "query",
+                "description": "The target of the search: a domain or a URL."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free, yet require an APIv3 key.\n\n>APIv3 keys are free to generate and use. If you don't have an Ahrefs account, here's how to get the key for free:\n>1. [Sign up](https://ahrefs.com/) for a free Ahrefs account (if you don't have one)\n>2. Generate an API key in [Account settings → API keys](https://app.ahrefs.com/account/api-keys)\n>3. Add it to your requests: `Authorization: Bearer <token>`\n\nUse of this data is subject to the Domain Rating License at http://ahrefs.co"
+        },
+        {
+          "info": {
+            "name": "Domain rating top domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/public/domain-rating-top-domains",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Rank position to start from."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Rank position to end at. You can request up to 250k rows at a time."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint are free, yet require an APIv3 key.\n\n>APIv3 keys are free to generate and use. If you don't have an Ahrefs account, here's how to get the key for free:\n>1. [Sign up](https://ahrefs.com/) for a free Ahrefs account (if you don't have one)\n>2. Generate an API key in [Account settings → API keys](https://app.ahrefs.com/account/api-keys)\n>3. Add it to your requests: `Authorization: Bearer <token>`\n\nReturns the top 1M domains ranked by Ahrefs Domain Rating, together with eac"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -23,26 +23,23 @@ authentication:
     - well-known/ahrefs-oauth-authorization-server.json
     - well-known/ahrefs-oauth-protected-resource.json
   - type: apiKey
-    note: >-
-      An MCP-scoped API key generated in Account settings / API keys. Enterprise customers may also
+    note: An MCP-scoped API key generated in Account settings / API keys. Enterprise customers may also
       connect with regular API keys.
-  consent: >-
-    Connecting an AI client shows an Ahrefs authorization consent screen; on approval the connection
+  consent: Connecting an AI client shows an Ahrefs authorization consent screen; on approval the connection
     appears in the account with a dedicated API key tagged with `MCP` scope. Workspace admins can set
     a monthly API-unit limit per key.
 introspection:
   tools_list: gated
   probe:
     url: https://api.ahrefs.com/mcp/mcp
-    method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    method: POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}
     http_status: 401
     body: api token is required
     www_authenticate: Bearer resource_metadata="https://api.ahrefs.com/.well-known/oauth-protected-resource"
     fetched: '2026-08-12'
-  note: >-
-    The live tool set and per-tool inputSchemas require authenticated introspection. What is recorded
-    below is the provider-documented capability-group surface plus the verbatim tool list from the
-    official local server source; see mcp/ahrefs-tool-crosswalk.yml for the operation-level binding.
+  note: The live tool set and per-tool inputSchemas require authenticated introspection. What is recorded
+    below is the provider-documented capability-group surface plus the verbatim tool list from the official
+    local server source; see mcp/ahrefs-tool-crosswalk.yml for the operation-level binding.
 tool_selection:
   parameter: tools
   example: https://api.ahrefs.com/mcp/mcp?tools=site-explorer-overview,brand-radar-entities
@@ -73,9 +70,8 @@ tool_groups:
 - subscription-info
 availability:
   plans: paid plans from Lite upward
-  metering: >-
-    Calls made by a connected AI client consume API units from the account's monthly allowance, the
-    same way direct API usage does. Each plan also caps the maximum rows an agent can retrieve per
+  metering: Calls made by a connected AI client consume API units from the account's monthly allowance,
+    the same way direct API usage does. Each plan also caps the maximum rows an agent can retrieve per
     request.
   usage_report: https://app.ahrefs.com/account/limits-and-usage/web
 clients_documented:
@@ -90,8 +86,7 @@ clients_documented:
 - Mistral Le Chat
 - OpenClaw
 terms:
-  note: >-
-    Ahrefs states that using the external MCP endpoint via custom scripts, bridges, or standalone
+  note: Ahrefs states that using the external MCP endpoint via custom scripts, bridges, or standalone
     HTTP/JSON-RPC clients is unsupported and not permitted, and that the external MCP server is not a
     general-purpose programmatic API. Programmatic access should use the Ahrefs API v3.
   source: https://docs.ahrefs.com/mcp/docs/introduction.md
@@ -103,12 +98,18 @@ local_server:
   transport: stdio
   auth: API v3 key via the API_KEY environment variable (does not accept MCP keys)
   tools: 41
-  note: >-
-    The repository README states the local server is no longer maintained and is outdated; Ahrefs
-    directs users to the remote server. Its tool list is still the only publicly readable, verbatim
-    enumeration of Ahrefs MCP tools and is used as the basis of the tool crosswalk.
+  note: The repository README states the local server is no longer maintained and is outdated; Ahrefs
+    directs users to the remote server. Its tool list is still the only publicly readable, verbatim enumeration
+    of Ahrefs MCP tools and is used as the basis of the tool crosswalk.
 tools:
   source: https://github.com/ahrefs/ahrefs-mcp-server/blob/main/src/server.ts
   scope: local (deprecated) server
   count: 41
   detail: mcp/ahrefs-tool-crosswalk.yml
+deployment:
+  mode: remote
+  endpoint: https://api.ahrefs.com/mcp/mcp
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census

@@ -1,0 +1,964 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brand Radar",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI visibility",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "AI Responses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/ai-responses",
+            "params": [
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of fields to return.\n\n- `country`\n- `data_source`\n- `last_updated`\n- `links` (10 units)\n- `question`\n- `response`\n- `search_queries`\n- `tags`\n- `volume` (10 units)"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The date to search for in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "A column to order the results by."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "competitors",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of competitors of your brands."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "AI Responses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/ai-responses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Cited Pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/cited-pages",
+            "params": [
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of fields to return.\n\n- `responses`\n- `url`"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The date to search for in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "tracked_urls",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of tracked page URLs. When provided, the response includes rows with zero citations for any tracked URLs that have no data."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "competitors",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of competitors of your brands."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Cited Pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/cited-pages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Cited Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/cited-domains",
+            "params": [
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of fields to return.\n\n- `domain`\n- `pages`\n- `responses`"
+              },
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The date to search for in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "competitors",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of competitors of your brands."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Cited Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/cited-domains",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Overview",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Overview - Impressions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/impressions-overview",
+            "params": [
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of fields to return.\n\n- `brand`\n- `no_tracked_brands`\n- `only_competitors_brands`\n- `only_target_brand`\n- `target_and_competitors_brands`\n- `total`"
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "competitors",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of competitors of your brands."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Overview - Impressions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/impressions-overview",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Overview - Citations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/citations-overview",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.\n\nEvery entity provided in `brands` (and `competitors`, when applicable) must include at least one value in `url_groups`. Entities consisting only of `names` are not supported here because citations are matched against URL groups."
+        },
+        {
+          "info": {
+            "name": "Overview - Mentions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/mentions-overview",
+            "params": [
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of fields to return.\n\n- `brand`\n- `no_tracked_brands`\n- `only_competitors_brands`\n- `only_target_brand`\n- `target_and_competitors_brands`\n- `total`"
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "competitors",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of competitors of your brands."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Overview - Mentions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/mentions-overview",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.\n\nEvery entity provided in `brands` (and `competitors`, when applicable) must include at least one value in `names`. Entities consisting only of `url_groups` are not supported here because mentions are matched against brand names."
+        },
+        {
+          "info": {
+            "name": "Overview - Share of Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/sov-overview",
+            "params": [
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "competitors",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of competitors of your brands."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Overview - Share of Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/sov-overview",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Overview history",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Overview history - Impressions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/impressions-history",
+            "params": [
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "The brand to search for."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Overview history - Impressions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/impressions-history",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Overview history - Citations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/citations-history",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.\n\nEvery entity provided in `brands` (and `competitors`, when applicable) must include at least one value in `url_groups`. Entities consisting only of `names` are not supported here because citations are matched against URL groups."
+        },
+        {
+          "info": {
+            "name": "Overview history - Mentions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/mentions-history",
+            "params": [
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "The brand to search for."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Overview history - Mentions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/mentions-history",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.\n\nEvery entity provided in `brands` (and `competitors`, when applicable) must include at least one value in `names`. Entities consisting only of `url_groups` are not supported here because mentions are matched against brand names."
+        },
+        {
+          "info": {
+            "name": "Overview history - Share of Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/brand-radar/sov-history",
+            "params": [
+              {
+                "name": "where",
+                "value": "",
+                "type": "query",
+                "description": "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the historical period in YYYY-MM-DD format."
+              },
+              {
+                "name": "search_volume_type",
+                "value": "",
+                "type": "query",
+                "description": "AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.\n\n`ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.\n\n`keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "report_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`"
+              },
+              {
+                "name": "prompts",
+                "value": "",
+                "type": "query",
+                "description": "The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided."
+              },
+              {
+                "name": "data_source",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.\nThe `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts."
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date."
+              },
+              {
+                "name": "competitors",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of competitors of your brands."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        },
+        {
+          "info": {
+            "name": "Overview history - Share of Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ahrefs.com/v3/brand-radar/sov-history",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ">Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

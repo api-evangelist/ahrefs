@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SERP Overview",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SERP Overview",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "SERP Overview",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ahrefs.com/v3/serp-overview/serp-overview",
+            "params": [
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of columns to return. See response schema for valid column identifiers."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of SERP feature types to filter by. Only positions whose `type` includes at least one of the given values are returned. If not specified, positions of all types are returned."
+              },
+              {
+                "name": "top_positions",
+                "value": "",
+                "type": "query",
+                "description": "The number of top organic SERP positions to return. If not specified, all available positions will be returned."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "A timestamp on which the last available SERP Overview is returned in YYYY-MM-DDThh:mm:ss format. If it is not specified, the most recent SERP Overview is returned."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A two-letter country code (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "keyword",
+                "value": "",
+                "type": "query",
+                "description": "The keyword to return SERP Overview for."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The output format."
+              }
+            ]
+          },
+          "docs": "SERP Overview"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
