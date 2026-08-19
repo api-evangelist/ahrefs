@@ -13,7 +13,7 @@ x-type: company
 x-source: harvest:marketing-integration-graph
 x-tier: full
 x-tier-reason: enrichment-pass-found-openapi-and-mcp
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
