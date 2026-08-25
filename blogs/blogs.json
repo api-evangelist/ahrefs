@@ -2,13 +2,20 @@
   "repo": "ahrefs",
   "feeds": [
     {
+      "source": "https://help.ahrefs.com/en/feed.xml",
+      "feed_url": "https://help.ahrefs.com/en/feed.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://help.ahrefs.com/en/",
       "feed_url": "https://help.ahrefs.com/en/feed.xml",
       "title": "",
-      "saved": 1,
+      "saved": 0,
       "method": "discovered"
     }
   ],
-  "post_count": 1,
-  "fetched": "2026-08-15T12:22:01Z"
+  "post_count": 25,
+  "fetched": "2026-08-22T20:20:02Z"
 }
