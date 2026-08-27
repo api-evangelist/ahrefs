@@ -43,64 +43,13 @@ tags_raw:
 - Brand Monitoring
 - Social Media
 apis:
-- aid: ahrefs:api-v3
-  name: Ahrefs API v3
-  description: REST API over the Ahrefs data set — Site Explorer, Keywords Explorer, Site Audit, Rank
-    Tracker, SERP Overview, Batch Analysis, Brand Radar, Web Analytics, GSC Insights, Social Media
-    Management, Management, Subscription Information and free Public endpoints. 148 operations, bearer
-    API key auth, JSON or XML responses, metered in API units.
-  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
-  baseURL: https://api.ahrefs.com/v3
-  tags:
-  - SEO
-  - Backlinks
-  - Keywords
-  - Analytics
-  properties:
-  - type: OpenAPI
-    url: openapi/_original/ahrefs-openapi-original.json
-  - type: OpenAPI
-    url: openapi/ahrefs-site-explorer-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-keywords-explorer-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-site-audit-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-rank-tracker-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-serp-overview-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-batch-analysis-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-subscription-info-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-management-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-brand-radar-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-web-analytics-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-gsc-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-social-media-openapi.json
-  - type: OpenAPI
-    url: openapi/ahrefs-public-openapi.json
-  - type: Documentation
-    url: https://docs.ahrefs.com/docs/api/reference/introduction
-  - type: APIReference
-    url: https://docs.ahrefs.com/en/api/reference/site-explorer
-  - type: Overlay
-    url: overlays/ahrefs-api-v3-overlay.yaml
-  - type: ErrorCatalog
-    url: errors/ahrefs-problem-types.yml
-  - type: DataModel
-    url: data-model/ahrefs-data-model.yml
 - aid: ahrefs:mcp
   name: Ahrefs MCP Server
-  description: Ahrefs' hosted, remote Model Context Protocol server, which lets AI agents query the
-    Ahrefs API on behalf of a signed-in Ahrefs account. Streamable HTTP transport, OAuth 2.0 with PKCE
-    (scope apiv3-mcp), tool groups selectable via a tools query parameter. Available on Lite plans and
-    above; requests consume the account's API units.
+  description: >-
+    Ahrefs' hosted, remote Model Context Protocol server, which lets AI agents query the Ahrefs API on
+    behalf of a signed-in Ahrefs account. Streamable HTTP transport, OAuth 2.0 with PKCE (scope apiv3-mcp),
+    tool groups selectable via a tools query parameter. Available on Lite plans and above; requests consume
+    the account's API units.
   humanURL: https://docs.ahrefs.com/mcp/docs/introduction
   baseURL: https://api.ahrefs.com/mcp/mcp
   tags:
@@ -113,12 +62,573 @@ apis:
     url: mcp/ahrefs-tool-crosswalk.yml
   - type: Documentation
     url: https://docs.ahrefs.com/mcp/docs/introduction
+- aid: ahrefs:ahrefs-ai-visibility-api
+  name: Ahrefs AI visibility API
+  description: The AI visibility API from Ahrefs — 3 operation(s) for ai visibility.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - AI visibility
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-ai-visibility-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-anonymous-queries-api
+  name: Ahrefs Anonymous queries API
+  description: GSC anonymous queries data
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Anonymous queries
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-anonymous-queries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-backlinks-profile-api
+  name: Ahrefs Backlinks profile API
+  description: Backlinks data
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Backlinks profile
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-backlinks-profile-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-batch-analysis-api
+  name: Ahrefs Batch Analysis API
+  description: Batch Analysis table
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Batch Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-batch-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-brand-radar-prompts-api
+  name: Ahrefs Brand Radar prompts API
+  description: The Brand Radar prompts API from Ahrefs — 2 operation(s) for brand radar prompts.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Brand Radar prompts
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-brand-radar-prompts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-brand-radar-reports-api
+  name: Ahrefs Brand radar reports API
+  description: The Brand radar reports API from Ahrefs — 1 operation(s) for brand radar reports.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Brand radar reports
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-brand-radar-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-channels-api
+  name: Ahrefs Channels API
+  description: The Channels API from Ahrefs — 2 operation(s) for channels.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-channels-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-competitors-api
+  name: Ahrefs Competitors API
+  description: The Competitors API from Ahrefs — 2 operation(s) for competitors.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Competitors
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-competitors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-competitors-overview-api
+  name: Ahrefs Competitors Overview API
+  description: Data from competitors
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Competitors Overview
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-competitors-overview-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-crawler-api
+  name: Ahrefs Crawler API
+  description: The Crawler API from Ahrefs — 2 operation(s) for crawler.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Crawler
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-crawler-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-domain-rating-api
+  name: Ahrefs Domain Rating API
+  description: The Domain Rating API from Ahrefs — 2 operation(s) for domain rating.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Domain Rating
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-domain-rating-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-geography-api
+  name: Ahrefs Geography API
+  description: The Geography API from Ahrefs — 8 operation(s) for geography.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Geography
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-geography-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-keyword-ideas-api
+  name: Ahrefs Keyword ideas API
+  description: Keyword ideas reports
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Keyword ideas
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-keyword-ideas-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-keyword-lists-api
+  name: Ahrefs Keyword lists API
+  description: The Keyword lists API from Ahrefs — 2 operation(s) for keyword lists.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Keyword lists
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-keyword-lists-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-keywords-api
+  name: Ahrefs Keywords API
+  description: GSC keywords data
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Keywords
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-keywords-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-limits-and-usage-api
+  name: Ahrefs Limits and usage API
+  description: The Limits and usage API from Ahrefs — 1 operation(s) for limits and usage.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Limits and usage
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-limits-and-usage-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-locations-and-languages-api
+  name: Ahrefs Locations and languages API
+  description: >-
+    The Locations and languages API from Ahrefs — 1 operation(s) for locations and languages.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Locations and languages
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-locations-and-languages-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-mcp-api
+  name: Ahrefs MCP API
+  description: The MCP API from Ahrefs — 7 operation(s) for mcp.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - MCP
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-mcp-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-organic-search-api
+  name: Ahrefs Organic search API
+  description: Organic search data
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Organic search
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-organic-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-outgoing-links-api
+  name: Ahrefs Outgoing links API
+  description: Outgoing links data
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Outgoing links
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-outgoing-links-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-overview-api
+  name: Ahrefs Overview API
+  description: The Overview API from Ahrefs — 29 operation(s) for overview.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Overview
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-overview-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-overview-history-api
+  name: Ahrefs Overview history API
+  description: The Overview history API from Ahrefs — 4 operation(s) for overview history.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Overview history
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-overview-history-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-page-content-api
+  name: Ahrefs Page content API
+  description: The Page content API from Ahrefs — 1 operation(s) for page content.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Page content
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-page-content-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-page-explorer-api
+  name: Ahrefs Page explorer API
+  description: The Page explorer API from Ahrefs — 1 operation(s) for page explorer.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Page explorer
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-page-explorer-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-pages-api
+  name: Ahrefs Pages API
+  description: GSC pages data
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-pages-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-paid-search-api
+  name: Ahrefs Paid search API
+  description: Paid search data
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Paid search
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-paid-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-posts-api
+  name: Ahrefs Posts API
+  description: The Posts API from Ahrefs — 5 operation(s) for posts.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-posts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-projects-api
+  name: Ahrefs Projects API
+  description: The Projects API from Ahrefs — 3 operation(s) for projects.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-serp-overview-api
+  name: Ahrefs SERP Overview API
+  description: SERP Overview data
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - SERP Overview
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-serp-overview-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-traffic-sources-api
+  name: Ahrefs Traffic Sources API
+  description: The Traffic Sources API from Ahrefs — 8 operation(s) for traffic sources.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - Traffic Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-traffic-sources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-user-agents-api
+  name: Ahrefs User Agents API
+  description: The User Agents API from Ahrefs — 10 operation(s) for user agents.
+  humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
+  baseURL: https://api.ahrefs.com/v3
+  tags:
+  - User Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-user-agents-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ahrefs.com/docs/api/reference/introduction
+  - type: APIReference
+    url: https://docs.ahrefs.com/en/api/reference/site-explorer
+  - type: ErrorCatalog
+    url: errors/ahrefs-problem-types.yml
+  - type: DataModel
+    url: data-model/ahrefs-data-model.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/ahrefs-api-v3-overlay.yaml
 - type: Website
   url: https://ahrefs.com/
 - type: DeveloperPortal

@@ -1,0 +1,106 @@
+---
+kin_checks:
+  slug: ahrefs
+  schema_version: 0.15.1
+  scored_at: '2026-08-27'
+  run_ts: 2026-08-27T103455
+  note: Actionable checks only (missed + partial). earned/na are every other check
+    in rubric/scoring-0.15.1.yml; counts below let you verify that.
+  counts:
+    total: 130
+    earned: 47
+    partial: 5
+    missed: 36
+    na: 42
+  checks:
+  - id: multiple_apis
+    status: missed
+  - id: apis_json_self_hosted
+    status: missed
+  - id: examples_present
+    status: missed
+  - id: asyncapi_present
+    status: missed
+  - id: json_schema_present
+    status: missed
+  - id: json_schema_per_resource
+    status: missed
+  - id: json_ld_present
+    status: missed
+  - id: json_ld_class_depth
+    status: missed
+  - id: json_ld_property_depth
+    status: missed
+  - id: lifecycle_documented
+    status: missed
+  - id: domain_standard_conformance
+    status: missed
+  - id: rules_present
+    status: missed
+  - id: rules_substantial
+    status: missed
+  - id: balanced_severities
+    status: missed
+  - id: vocabulary_published
+    status: missed
+  - id: status_page_present
+    status: missed
+  - id: rate_limits_rich
+    status: missed
+  - id: security_disclosure
+    status: missed
+  - id: webhooks_advertised
+    status: missed
+  - id: roadmap_present
+    status: missed
+  - id: examples_published
+    status: missed
+  - id: sdk_count_3
+    status: missed
+  - id: cli_present
+    status: missed
+  - id: postman_present
+    status: missed
+  - id: finops_mapped
+    status: missed
+  - id: reg_vulnerability_disclosure
+    status: missed
+  - id: agentic_access
+    status: missed
+  - id: reversibility_documented
+    status: missed
+  - id: idempotency
+    status: missed
+  - id: openapi_examples
+    status: missed
+  - id: event_surface_described
+    status: missed
+  - id: well_known_catalog
+    status: missed
+  - id: consent_identity
+    status: missed
+  - id: agent_card
+    status: missed
+  - id: dry_run_mode
+    status: missed
+  - id: agentic_commerce
+    status: missed
+  - id: conformance_declared
+    status: partial
+    earned: 1.5
+  - id: github_org_present
+    status: partial
+    earned: 1.0
+    detail: pointer liveness 0.5
+  - id: auth_clarity
+    status: partial
+    earned: 9.0
+    detail: 'grade: served'
+  - id: error_semantics
+    status: partial
+    earned: 4.0
+    detail: 'grade: documented'
+  - id: rate_limit_signal
+    status: partial
+    earned: 3.5
+    detail: 'grade: documented'
