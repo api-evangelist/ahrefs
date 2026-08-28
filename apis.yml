@@ -8,6 +8,18 @@ description: Ahrefs is a Singapore-based SEO and marketing intelligence platform
   with a 50-unit request floor, authenticated with a bearer API key, and additionally reachable through
   a hosted MCP server and the OAuth-based Ahrefs Connect partner program.
 url: https://raw.githubusercontent.com/api-evangelist/ahrefs/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://static.ahrefs.com/assets/img/og/ahrefs.png?v=2
 x-type: company
 x-source: harvest:marketing-integration-graph
