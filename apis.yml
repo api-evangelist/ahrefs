@@ -750,6 +750,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/ahrefs-capability-edges.yml
+  name: Ahrefs Business Capability Map
 - type: Overlay
   url: overlays/ahrefs-api-v3-overlay.yaml
 - type: Website

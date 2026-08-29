@@ -1,0 +1,218 @@
+slug: ahrefs
+provider: Ahrefs
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Media, Entertainment & Telecom Content
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 20
+edges:
+- tag: Keywords Explorer
+  spec_file: ahrefs-keywords-explorer-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.85
+  evidence: GET /keywords-explorer/volume-history "Volume history", /keywords-explorer/volume-by-country
+    "Volume by country", /keywords-explorer/search-suggestions
+  reason: Search volume and keyword idea reporting is core SEO research, a Digital Marketing Management
+    activity.
+- tag: Organic search
+  spec_file: ahrefs-organic-search-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.85
+  evidence: GET /organic-keywords "Organic keywords", GET /organic-competitors "Organic competitors",
+    GET /top-pages "Top pages"
+  reason: Organic search performance reporting from Site Explorer is SEO analysis, a Digital Marketing
+    Management capability.
+- tag: Keyword ideas
+  spec_file: ahrefs-keyword-ideas-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.8
+  evidence: '"Fetch data from Keywords Explorer reports"; GET /matching-terms "Matching terms", GET /search-suggestions
+    "Search suggestions"'
+  reason: Keyword research operations (matching/related terms, search suggestions) are SEO keyword discovery
+    data, squarely within Digital Marketing Management (web, SEO) for whoever consumes it.
+- tag: Site Explorer
+  spec_file: ahrefs-site-explorer-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.8
+  evidence: GET /site-explorer/domain-rating "Domain rating", GET /site-explorer/backlinks-stats "Backlinks
+    stats", schema site-explorer.organic-keywords
+  reason: Backlink profile, domain rating, organic keyword and traffic metrics — the core SEO/web intelligence
+    surface, realising Digital Marketing Management.
+- tag: Social Media
+  spec_file: ahrefs-social-media-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.8
+  evidence: GET /social-media/channels "Channels", GET /social-media/channel-metrics, POST /social-media/post
+    "Create post"
+  reason: Social channel management, post publishing and engagement metrics — social media within Digital
+    Marketing Management. Explicitly the vendor's Social Media Management tool.
+- tag: GSC Insights
+  spec_file: ahrefs-gsc-insights-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.78
+  evidence: GET /gsc/performance-history  Performance history; GET /gsc/ctr-by-position  CTR by position;
+    GET /gsc/keywords  Keywords
+  reason: Search Console derived keyword, position, page and CTR performance analytics — organic search
+    performance measurement, i.e. SEO within Digital Marketing Management.
+- tag: Pages
+  spec_file: ahrefs-pages-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.78
+  evidence: GET /pages-by-backlinks "Best pages by backlinks", GET /entry-pages "Entry Pages", GET /top-pages
+    "Top Pages"
+  reason: Backlink and web-analytics page reporting (entry/exit/top pages) is SEO and web analytics data
+    — Digital Marketing Management. Not a content-production or media-asset capability.
+- tag: Posts
+  spec_file: ahrefs-posts-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.78
+  evidence: POST /post "Create post", GET /post-metrics "Post metrics", description "Social Media Management."
+  reason: Social media publishing and post performance metrics — social channel management within Digital
+    Marketing Management. Not editorial/media content production.
+- tag: Backlinks profile
+  spec_file: ahrefs-backlinks-profile-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: GET /all-backlinks  Backlinks; GET /refdomains  Refdomains; GET /anchors  Anchors — "Fetch
+    data from Site Explorer reports"
+  reason: Backlink, referring-domain and anchor reports are core SEO analysis data, which sits under Digital
+    Marketing Management (web, SEO). No industry-specific media capability applies — this is an SEO intelligence
+    vendor.
+- tag: Keywords
+  spec_file: ahrefs-keywords-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: GET /keyword-history "Keyword history", GET /project-keywords "Keywords", PUT /project-keywords-tags
+    "Add Keywords Tags"
+  reason: Keyword metrics history plus management/tagging of tracked keywords for SEO projects — SEO/search
+    marketing work, not a homograph of another domain.
+- tag: Outgoing links
+  spec_file: ahrefs-outgoing-links-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: GET /linkeddomains "Linked Domains", GET /linked-anchors-external "Outgoing external anchors"
+  reason: Link-profile (backlink/outbound link) analysis of a site is an SEO discipline within digital
+    marketing; no other reading fits the operations.
+- tag: Paid search
+  spec_file: ahrefs-paid-search-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: '"Fetch data from Site Explorer reports", GET /paid-pages "Paid pages"'
+  reason: Paid-search visibility data for a domain supports paid media analysis, part of Digital Marketing
+    Management. Not advertising sales/inventory (BC-3760), since this is buy-side competitive data, not
+    inventory operations.
+- tag: Site Audit
+  spec_file: ahrefs-site-audit-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: GET /site-audit/projects "Project Health Scores", GET /site-audit/issues "Project Issues",
+    GET /site-audit/page-explorer
+  reason: Technical SEO site auditing (health scores, crawl issues) is web/SEO management within Digital
+    Marketing Management, not IT service management or software quality engineering.
+- tag: Rank Tracker
+  spec_file: ahrefs-rank-tracker-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: GET /rank-tracker/overview "Overview", GET /rank-tracker/competitors-overview "Competitors
+    overview", GET /rank-tracker/serp-overview
+  reason: Keyword rank tracking and competitor SERP position reporting is SEO performance measurement
+    under Digital Marketing Management; competitive-intelligence reading (BC-400.30) is a plausible alternative,
+    hence moderate confidence.
+- tag: Channels
+  spec_file: ahrefs-channels-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: 'openapi description: "Social Media Management."; GET /channels  Channels; GET /channel-metrics  Channel
+    metrics'
+  reason: Lists connected social media channels and their performance metrics — social media measurement,
+    which falls under Digital Marketing Management.
+- tag: Competitors Overview
+  spec_file: ahrefs-competitors-overview-api-openapi.yml
+  capability_id: BC-400.30
+  capability_id_l1: BC-400
+  capability_name: Market Intelligence Management
+  confidence: 0.7
+  evidence: GET /competitors-overview  Competitors overview; GET /competitors-domains  Competitors domains;
+    GET /competitors-stats  Competitors metrics
+  reason: Delivers comparative competitor ranking metrics, domains and pages — competitive intelligence
+    within Market Intelligence Management.
+- tag: Overview
+  spec_file: ahrefs-overview-api-openapi.yml
+  capability_id: BC-400
+  capability_id_l1: BC-400
+  capability_name: Marketing Management
+  confidence: 0.7
+  evidence: GET /sov-overview "Overview - Share of Voice", GET /performance-history "Performance history",
+    GET /positions-history "Positions history"
+  reason: Aggregated marketing performance reporting (share of voice, mentions, SERP positions, web analytics)
+    spans SEO analytics and brand/market intelligence, so only the L1 Marketing Management level is safely
+    supported.
+- tag: Overview history
+  spec_file: ahrefs-overview-history-api-openapi.yml
+  capability_id: BC-400
+  capability_id_l1: BC-400
+  capability_name: Marketing Management
+  confidence: 0.7
+  evidence: description "Brand radar."; GET /mentions-history "Overview history - Mentions", GET /sov-history
+    "Overview history - Share of Voice"
+  reason: Brand Radar historical mentions, citations and share-of-voice tracking is brand/market visibility
+    measurement under Marketing Management; the split between brand management and market intelligence
+    is ambiguous so no L2 is asserted.
+- tag: Traffic Sources
+  spec_file: ahrefs-traffic-sources-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: GET /source-channels, GET /referrers, GET /utm-params 'UTM Parameters' under 'Web Analytics
+    Traffic Sources API'
+  reason: Operations return site traffic by channel, referrer and UTM campaign parameter — web/digital
+    marketing analytics for a site owner, which sits under Digital Marketing Management (web, SEO, paid
+    media). Not an audience-measurement/broadcast capability.
+- tag: Web Analytics
+  spec_file: ahrefs-web-analytics-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: GET /web-analytics/stats  Stats; GET /web-analytics/countries; schema web-analytics.top-pages
+  reason: Site traffic statistics, charts, geography and top/entry/exit pages — a website analytics reporting
+    surface used for digital marketing measurement. Maps to Digital Marketing Management rather than any
+    media audience-measurement capability.
