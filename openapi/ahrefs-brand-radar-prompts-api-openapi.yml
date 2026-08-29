@@ -1,0 +1,711 @@
+openapi: 3.2.0
+info:
+  title: Management Brand Radar prompts API
+  description: Project management.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/management
+  description: Ahrefs Management
+security:
+- http:
+  - read
+tags:
+- name: Brand Radar prompts
+paths:
+  /brand-radar-prompts:
+    get:
+      tags:
+      - Brand Radar prompts
+      summary: Brand Radar prompts
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: brand-radar-prompts
+      parameters:
+      - description: 'The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: report_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/brand-radar-prompts'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/brand-radar-prompts'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    post:
+      tags:
+      - Brand Radar prompts
+      summary: Brand Radar prompts
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: brand-radar-prompts
+      parameters:
+      - description: 'The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: report_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                countries:
+                  items:
+                    type: string
+                    enum:
+                    - ad
+                    - ae
+                    - af
+                    - ag
+                    - ai
+                    - al
+                    - am
+                    - ao
+                    - ar
+                    - as
+                    - at
+                    - au
+                    - aw
+                    - az
+                    - ba
+                    - bb
+                    - bd
+                    - be
+                    - bf
+                    - bg
+                    - bh
+                    - bi
+                    - bj
+                    - bn
+                    - bo
+                    - br
+                    - bs
+                    - bt
+                    - bw
+                    - by
+                    - bz
+                    - ca
+                    - cd
+                    - cf
+                    - cg
+                    - ch
+                    - ci
+                    - ck
+                    - cl
+                    - cm
+                    - cn
+                    - co
+                    - cr
+                    - cu
+                    - cv
+                    - cy
+                    - cz
+                    - de
+                    - dj
+                    - dk
+                    - dm
+                    - do
+                    - dz
+                    - ec
+                    - ee
+                    - eg
+                    - es
+                    - et
+                    - fi
+                    - fj
+                    - fm
+                    - fo
+                    - fr
+                    - ga
+                    - gb
+                    - gd
+                    - ge
+                    - gf
+                    - gg
+                    - gh
+                    - gi
+                    - gl
+                    - gm
+                    - gn
+                    - gp
+                    - gq
+                    - gr
+                    - gt
+                    - gu
+                    - gy
+                    - hk
+                    - hn
+                    - hr
+                    - ht
+                    - hu
+                    - id
+                    - ie
+                    - il
+                    - im
+                    - in
+                    - iq
+                    - is
+                    - it
+                    - je
+                    - jm
+                    - jo
+                    - jp
+                    - ke
+                    - kg
+                    - kh
+                    - ki
+                    - kn
+                    - kr
+                    - kw
+                    - ky
+                    - kz
+                    - la
+                    - lb
+                    - lc
+                    - li
+                    - lk
+                    - ls
+                    - lt
+                    - lu
+                    - lv
+                    - ly
+                    - ma
+                    - mc
+                    - md
+                    - me
+                    - mg
+                    - mk
+                    - ml
+                    - mm
+                    - mn
+                    - mq
+                    - mr
+                    - ms
+                    - mt
+                    - mu
+                    - mv
+                    - mw
+                    - mx
+                    - my
+                    - mz
+                    - na
+                    - nc
+                    - ne
+                    - ng
+                    - ni
+                    - nl
+                    - 'no'
+                    - np
+                    - nr
+                    - nu
+                    - nz
+                    - om
+                    - pa
+                    - pe
+                    - pf
+                    - pg
+                    - ph
+                    - pk
+                    - pl
+                    - pn
+                    - pr
+                    - ps
+                    - pt
+                    - py
+                    - qa
+                    - re
+                    - ro
+                    - rs
+                    - ru
+                    - rw
+                    - sa
+                    - sb
+                    - sc
+                    - se
+                    - sg
+                    - sh
+                    - si
+                    - sk
+                    - sl
+                    - sm
+                    - sn
+                    - so
+                    - sr
+                    - st
+                    - sv
+                    - td
+                    - tg
+                    - th
+                    - tj
+                    - tk
+                    - tl
+                    - tm
+                    - tn
+                    - to
+                    - tr
+                    - tt
+                    - tw
+                    - tz
+                    - ua
+                    - ug
+                    - us
+                    - uy
+                    - uz
+                    - vc
+                    - ve
+                    - vg
+                    - vi
+                    - vn
+                    - vu
+                    - ws
+                    - ye
+                    - yt
+                    - za
+                    - zm
+                    - zw
+                  type: array
+                  minItems: 1
+                  description: A list of two-letter country codes (ISO 3166-1 alpha-2).
+                prompts:
+                  items:
+                    type: string
+                  type: array
+                  minItems: 1
+                  description: A list of custom prompts. They must be valid utf8 and less than 400 characters.
+              type: object
+              required:
+              - countries
+              - prompts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/brand-radar-prompts'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/brand-radar-prompts'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /brand-radar-prompts-delete:
+    put:
+      tags:
+      - Brand Radar prompts
+      summary: Delete Brand Radar prompts
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: brand-radar-prompts-delete
+      parameters:
+      - description: 'The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: report_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                countries:
+                  items:
+                    type: string
+                    enum:
+                    - ad
+                    - ae
+                    - af
+                    - ag
+                    - ai
+                    - al
+                    - am
+                    - ao
+                    - ar
+                    - as
+                    - at
+                    - au
+                    - aw
+                    - az
+                    - ba
+                    - bb
+                    - bd
+                    - be
+                    - bf
+                    - bg
+                    - bh
+                    - bi
+                    - bj
+                    - bn
+                    - bo
+                    - br
+                    - bs
+                    - bt
+                    - bw
+                    - by
+                    - bz
+                    - ca
+                    - cd
+                    - cf
+                    - cg
+                    - ch
+                    - ci
+                    - ck
+                    - cl
+                    - cm
+                    - cn
+                    - co
+                    - cr
+                    - cu
+                    - cv
+                    - cy
+                    - cz
+                    - de
+                    - dj
+                    - dk
+                    - dm
+                    - do
+                    - dz
+                    - ec
+                    - ee
+                    - eg
+                    - es
+                    - et
+                    - fi
+                    - fj
+                    - fm
+                    - fo
+                    - fr
+                    - ga
+                    - gb
+                    - gd
+                    - ge
+                    - gf
+                    - gg
+                    - gh
+                    - gi
+                    - gl
+                    - gm
+                    - gn
+                    - gp
+                    - gq
+                    - gr
+                    - gt
+                    - gu
+                    - gy
+                    - hk
+                    - hn
+                    - hr
+                    - ht
+                    - hu
+                    - id
+                    - ie
+                    - il
+                    - im
+                    - in
+                    - iq
+                    - is
+                    - it
+                    - je
+                    - jm
+                    - jo
+                    - jp
+                    - ke
+                    - kg
+                    - kh
+                    - ki
+                    - kn
+                    - kr
+                    - kw
+                    - ky
+                    - kz
+                    - la
+                    - lb
+                    - lc
+                    - li
+                    - lk
+                    - ls
+                    - lt
+                    - lu
+                    - lv
+                    - ly
+                    - ma
+                    - mc
+                    - md
+                    - me
+                    - mg
+                    - mk
+                    - ml
+                    - mm
+                    - mn
+                    - mq
+                    - mr
+                    - ms
+                    - mt
+                    - mu
+                    - mv
+                    - mw
+                    - mx
+                    - my
+                    - mz
+                    - na
+                    - nc
+                    - ne
+                    - ng
+                    - ni
+                    - nl
+                    - 'no'
+                    - np
+                    - nr
+                    - nu
+                    - nz
+                    - om
+                    - pa
+                    - pe
+                    - pf
+                    - pg
+                    - ph
+                    - pk
+                    - pl
+                    - pn
+                    - pr
+                    - ps
+                    - pt
+                    - py
+                    - qa
+                    - re
+                    - ro
+                    - rs
+                    - ru
+                    - rw
+                    - sa
+                    - sb
+                    - sc
+                    - se
+                    - sg
+                    - sh
+                    - si
+                    - sk
+                    - sl
+                    - sm
+                    - sn
+                    - so
+                    - sr
+                    - st
+                    - sv
+                    - td
+                    - tg
+                    - th
+                    - tj
+                    - tk
+                    - tl
+                    - tm
+                    - tn
+                    - to
+                    - tr
+                    - tt
+                    - tw
+                    - tz
+                    - ua
+                    - ug
+                    - us
+                    - uy
+                    - uz
+                    - vc
+                    - ve
+                    - vg
+                    - vi
+                    - vn
+                    - vu
+                    - ws
+                    - ye
+                    - yt
+                    - za
+                    - zm
+                    - zw
+                  type: array
+                  description: A list of two-letter country codes (ISO 3166-1 alpha-2).
+                  default: []
+                prompts:
+                  items:
+                    type: string
+                  type: array
+                  minItems: 1
+                  description: A list of custom prompts. They must be valid utf8 and less than 400 characters.
+              type: object
+              required:
+              - prompts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/brand-radar-prompts-delete'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/brand-radar-prompts-delete'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    brand-radar-prompts:
+      properties:
+        prompts:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: The country of the prompt.
+              created_at:
+                type: string
+                format: date
+                title: created_at
+                description: The date the prompt was created.
+              prompt:
+                type: string
+                title: prompt
+                description: The text of the prompt.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    brand-radar-prompts-delete:
+      properties:
+        prompts:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: The country of the prompt.
+              created_at:
+                type: string
+                format: date
+                title: created_at
+                description: The date the prompt was created.
+              prompt:
+                type: string
+                title: prompt
+                description: The text of the prompt.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

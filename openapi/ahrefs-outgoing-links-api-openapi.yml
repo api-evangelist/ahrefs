@@ -1,0 +1,511 @@
+openapi: 3.2.0
+info:
+  title: Site Explorer Outgoing links API
+  description: Fetch data from Site Explorer reports
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/site-explorer
+  description: Ahrefs Site Explorer
+security:
+- http:
+  - read
+tags:
+- name: Outgoing links
+  description: Outgoing links data
+paths:
+  /linkeddomains:
+    get:
+      tags:
+      - Outgoing links
+      summary: Linked Domains
+      operationId: linkeddomains
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**dofollow_linked_domains**: The number of unique root domains with dofollow links linked from the linked domain.  \ntype: integer\n\n**dofollow_links**: The number of links from your target to the linked domain that don’t have the “nofollow” attribute.  \ntype: integer\n\n**dofollow_refdomains** (5 units): The number of unique domains with dofollow links to the linked domain.  \ntype: integer\n\n**domain**: A linked domain that has at least one link from your target.  \ntype: string\n\n**domain_rating**: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**first_seen**: The date we first found a link to the linked domain from your target.  \ntype: datetime\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_root_domain**: The domain name is a root domain name.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**languages**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domain_traffic** (10 units): The linked domain’s estimated monthly organic traffic from search  \ntype: integer\n\n**linked_domains**: The number of unique root domains linked from the referring page.  \ntype: integer\n\n**linked_pages**: The number of the domain's pages linked from your target.  \ntype: integer\n\n**links_external**: The number of external links from the referring page.  \ntype: integer\n\n**links_from_target**: The number of links to the linked domain from your target.  \ntype: integer\n\n**port_source**: The network port of the referring page URL.  \ntype: integer\n\n**port_target**: The network port of the target page URL.  \ntype: integer\n\n**positions**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**refdomains** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**root_domain_name**: The root domain name of the referring domain, not including subdomains.  \ntype: string\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**title**: The html title of the referring page.  \ntype: string\n\n**traffic_page** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from**: The URL of the page containing a link from your target.  \ntype: string\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the outgoing link points to.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/linkeddomains'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/linkeddomains'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /linked-anchors-external:
+    get:
+      tags:
+      - Outgoing links
+      summary: Outgoing external anchors
+      operationId: linked-anchors-external
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**dofollow_links**: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.  \ntype: integer\n\n**domain**: A linked domain that has at least one link from your target with a given anchor.  \ntype: string\n\n**domain_rating**: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**first_seen**: The date we first found a link with a given anchor on your target.  \ntype: datetime\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**languages**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domains**: The number of unique domains linked from your target with a given anchor.  \ntype: integer\n\n**linked_domains_source**: The number of unique root domains linked from the source page.  \ntype: integer\n\n**linked_pages**: The number of unique pages linked from your target with a given anchor.  \ntype: integer\n\n**links_external**: The number of external links from the referring page.  \ntype: integer\n\n**links_from_target**: The number of outbound links your target has with a given anchor.  \ntype: integer\n\n**port_source**: The network port of the referring page URL.  \ntype: integer\n\n**port_target**: The network port of the target page URL.  \ntype: integer\n\n**positions**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**refdomains_source** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**title**: The html title of the referring page.  \ntype: string\n\n**traffic_page** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from**: The URL of the page containing a link to your target.  \ntype: string\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the backlink points to.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/linked-anchors-external'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/linked-anchors-external'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /linked-anchors-internal:
+    get:
+      tags:
+      - Outgoing links
+      summary: Outgoing internal anchors
+      operationId: linked-anchors-internal
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**dofollow_links**: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.  \ntype: integer\n\n**domain**: A linked domain that has at least one link from your target with a given anchor.  \ntype: string\n\n**domain_rating**: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**first_seen**: The date we first found a link with a given anchor on your target.  \ntype: datetime\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**languages**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domains_source**: The number of unique root domains linked from the source page.  \ntype: integer\n\n**linked_pages**: The number of unique pages linked from your target with a given anchor.  \ntype: integer\n\n**links_external**: The number of external links from the referring page.  \ntype: integer\n\n**links_from_target**: The number of outbound links your target has with a given anchor.  \ntype: integer\n\n**port_source**: The network port of the referring page URL.  \ntype: integer\n\n**port_target**: The network port of the target page URL.  \ntype: integer\n\n**positions**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**refdomains_source** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**title**: The html title of the referring page.  \ntype: string\n\n**traffic_page** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from**: The URL of the page containing a link to your target.  \ntype: string\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the backlink points to.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/linked-anchors-internal'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/linked-anchors-internal'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    linked-anchors-internal:
+      properties:
+        linkedanchors:
+          items:
+            properties:
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link with a given anchor on your target.
+              linked_pages:
+                type: integer
+                title: linked_pages
+                description: The number of unique pages linked from your target with a given anchor.
+              links_from_target:
+                type: integer
+                title: links_from_target
+                description: The number of outbound links your target has with a given anchor.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    linked-anchors-external:
+      properties:
+        linkedanchors:
+          items:
+            properties:
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link with a given anchor on your target.
+              linked_domains:
+                type: integer
+                title: linked_domains
+                description: The number of unique domains linked from your target with a given anchor.
+              linked_pages:
+                type: integer
+                title: linked_pages
+                description: The number of unique pages linked from your target with a given anchor.
+              links_from_target:
+                type: integer
+                title: links_from_target
+                description: The number of outbound links your target has with a given anchor.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    linkeddomains:
+      properties:
+        linkeddomains:
+          items:
+            properties:
+              dofollow_linked_domains:
+                type: integer
+                title: dofollow_linked_domains
+                description: The number of unique root domains with dofollow links linked from the linked domain.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of links from your target to the linked domain that don’t have the “nofollow” attribute.
+              dofollow_refdomains:
+                type: integer
+                title: dofollow_refdomains
+                description: (5 units) The number of unique domains with dofollow links to the linked domain.
+              domain:
+                type: string
+                title: domain
+                description: A linked domain that has at least one link from your target.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link to the linked domain from your target.
+              is_root_domain:
+                type: boolean
+                title: is_root_domain
+                description: The domain name is a root domain name.
+              linked_domain_traffic:
+                type: integer
+                title: linked_domain_traffic
+                description: (10 units) The linked domain’s estimated monthly organic traffic from search
+              linked_pages:
+                type: integer
+                title: linked_pages
+                description: The number of the domain's pages linked from your target.
+              links_from_target:
+                type: integer
+                title: links_from_target
+                description: The number of links to the linked domain from your target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

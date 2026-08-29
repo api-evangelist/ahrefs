@@ -1,0 +1,838 @@
+openapi: 3.2.0
+info:
+  title: Social Media Posts API
+  description: Social Media Management.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/social-media
+  description: Ahrefs Social Media
+security:
+- http:
+  - read
+tags:
+- name: Posts
+paths:
+  /authors:
+    get:
+      tags:
+      - Posts
+      summary: Authors
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: authors
+      parameters:
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/authors'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/authors'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /activity-history:
+    get:
+      tags:
+      - Posts
+      summary: Activity history
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: activity-history
+      parameters:
+      - description: Unique identifier for the post.
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: post_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/activity-history'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/activity-history'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /posts:
+    get:
+      tags:
+      - Posts
+      summary: Posts
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: posts
+      parameters:
+      - description: The publishing lifecycle stage of the post.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - published
+          - scheduled
+          - draft
+          - failed
+          - deleted
+        name: status
+        in: query
+      - description: Comma-separated list of channel IDs to filter by.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: channel_ids
+        in: query
+      - description: Comma-separated list of author user IDs to filter by.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: author_ids
+        in: query
+      - description: Text search query to filter posts by content.
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: search_query
+        in: query
+      - description: The start date of the historical period in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_from
+        in: query
+      - description: The end date of the historical period in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_to
+        in: query
+      - description: Sort field for posts. Metric-based sorting only applies to published posts.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - date
+          - views
+          - unique_views
+          - comments
+          - likes
+        name: order_by
+        in: query
+      - description: The order in which results are returned, ascending or descending.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+        name: order_direction
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 50
+        name: limit
+        in: query
+      - description: The number of results to skip.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 0
+        name: offset
+        in: query
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/posts'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/posts'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /post-metrics:
+    get:
+      tags:
+      - Posts
+      summary: Post metrics
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: post-metrics
+      parameters:
+      - description: Platform-specific post identifier.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: external_post_id
+        in: query
+      - description: Unique identifier for the social media channel.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: channel_id
+        in: query
+      - description: The start date of the historical period in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_from
+        in: query
+      - description: The end date of the historical period in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_to
+        in: query
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/post-metrics'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/post-metrics'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /post:
+    post:
+      tags:
+      - Posts
+      summary: Create post
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: post
+      parameters:
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                channel_ids:
+                  items:
+                    type: string
+                  type: array
+                  minItems: 1
+                  description: Non-empty list of channel IDs to publish the post to.
+                text_content:
+                  type: string
+                  description: Text content of the post.
+                timing:
+                  type: string
+                  enum:
+                  - publish_now
+                  - scheduled
+                  - draft
+                  description: When to publish the post.
+                scheduled_at:
+                  type: string
+                  format: date-time
+                  description: Timestamp for scheduled posts (required when timing is scheduled)
+                  examples:
+                  - '2026-01-01T12:00:00Z'
+                auto_comment:
+                  type: string
+                  description: Auto-comment text posted after publishing.
+              type: object
+              required:
+              - channel_ids
+              - text_content
+              - timing
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/post'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/post'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    delete:
+      tags:
+      - Posts
+      summary: Delete post
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: post
+      parameters:
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                post_id:
+                  type: integer
+                  description: Unique identifier for the post.
+              type: object
+              required:
+              - post_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/post'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/post'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    patch:
+      tags:
+      - Posts
+      summary: Update post
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: post
+      parameters:
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                post_id:
+                  type: integer
+                  description: Unique identifier for the post.
+                channel_ids:
+                  items:
+                    type: string
+                  type: array
+                  minItems: 1
+                  description: Non-empty list of channel IDs to publish the post to.
+                text_content:
+                  type: string
+                  description: Text content of the post.
+                timing:
+                  type: string
+                  enum:
+                  - publish_now
+                  - scheduled
+                  - draft
+                  description: When to publish the post.
+                scheduled_at:
+                  type: string
+                  format: date-time
+                  description: Timestamp for scheduled posts (required when timing is scheduled)
+                  examples:
+                  - '2026-01-01T12:00:00Z'
+                auto_comment:
+                  type: string
+                  description: Auto-comment text posted after publishing.
+              type: object
+              required:
+              - post_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/post'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/post'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    activity-history:
+      properties:
+        activities:
+          items:
+            properties:
+              action_type:
+                type: string
+                title: action_type
+                description: The action that was performed on the post.
+              activity_id:
+                type: integer
+                title: activity_id
+                description: Unique identifier for the activity history record.
+              channel_id:
+                type:
+                - string
+                - 'null'
+                title: channel_id
+                description: Unique identifier for the social media channel.
+              channel_kind:
+                type:
+                - string
+                - 'null'
+                title: channel_kind
+                description: Social media platform and account type.
+              created_at:
+                type: string
+                format: date-time
+                title: created_at
+                description: Timestamp when the activity was recorded.
+              user_name:
+                type:
+                - string
+                - 'null'
+                title: user_name
+                description: Name of the user who performed the action.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    posts:
+      properties:
+        posts:
+          items:
+            properties:
+              author_id:
+                type:
+                - string
+                - 'null'
+                title: author_id
+                description: Unique identifier of the author.
+              author_name:
+                type:
+                - string
+                - 'null'
+                title: author_name
+                description: Name of the author.
+              auto_comment:
+                type:
+                - string
+                - 'null'
+                title: auto_comment
+                description: Auto-comment text posted after publishing.
+              channels:
+                items:
+                  properties:
+                    channel_id:
+                      type: string
+                    channel_kind:
+                      type: string
+                    channel_username:
+                      type: string
+                    channel_display_name:
+                      type: string
+                    channel_profile_image_url:
+                      type:
+                      - string
+                      - 'null'
+                      format: url
+                  type: object
+                type: array
+                title: channels
+                description: Social media channels associated with the post.
+              created_at:
+                type: string
+                format: date-time
+                title: created_at
+                description: Timestamp when the author created the post.
+              external_post_id:
+                type:
+                - string
+                - 'null'
+                title: external_post_id
+                description: Platform-specific post identifier.
+              permalink:
+                type:
+                - string
+                - 'null'
+                title: permalink
+                description: URL of the published post on the platform.
+              post_id:
+                type: integer
+                title: post_id
+                description: Unique identifier for the post.
+              status_timestamp:
+                type: string
+                title: status_timestamp
+                description: Timestamp associated with the current status.
+              text_content:
+                type: string
+                title: text_content
+                description: Text content of the post.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    post:
+      properties:
+        post:
+          properties:
+            author_id:
+              type:
+              - string
+              - 'null'
+              title: author_id
+              description: Unique identifier of the author.
+            author_name:
+              type:
+              - string
+              - 'null'
+              title: author_name
+              description: Name of the author.
+            auto_comment:
+              type:
+              - string
+              - 'null'
+              title: auto_comment
+              description: Auto-comment text posted after publishing.
+            channels:
+              items:
+                properties:
+                  channel_id:
+                    type: string
+                  channel_kind:
+                    type: string
+                  channel_username:
+                    type: string
+                  channel_display_name:
+                    type: string
+                  channel_profile_image_url:
+                    type:
+                    - string
+                    - 'null'
+                    format: url
+                type: object
+              type: array
+              title: channels
+              description: Social media channels associated with the post.
+            created_at:
+              type: string
+              format: date-time
+              title: created_at
+              description: Timestamp when the author created the post.
+            external_post_id:
+              type:
+              - string
+              - 'null'
+              title: external_post_id
+              description: Platform-specific post identifier.
+            permalink:
+              type:
+              - string
+              - 'null'
+              title: permalink
+              description: URL of the published post on the platform.
+            post_id:
+              type: integer
+              title: post_id
+              description: Unique identifier for the post.
+            status_timestamp:
+              type: string
+              title: status_timestamp
+              description: Timestamp associated with the current status.
+            text_content:
+              type: string
+              title: text_content
+              description: Text content of the post.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    post-metrics:
+      properties:
+        metrics:
+          items:
+            properties:
+              facebook_metrics:
+                properties:
+                  comments:
+                    type: integer
+                  reactions:
+                    type: integer
+                type:
+                - object
+                - 'null'
+                title: facebook_metrics
+                description: Facebook-specific engagement metrics. Present only when the post is on Facebook.
+              instagram_metrics:
+                properties:
+                  comments:
+                    type: integer
+                  shares:
+                    type: integer
+                  saved:
+                    type: integer
+                type:
+                - object
+                - 'null'
+                title: instagram_metrics
+                description: Instagram-specific engagement metrics. Present only when the post is on Instagram.
+              likes:
+                type: integer
+                title: likes
+                description: Number of likes on the post.
+              linkedin_metrics:
+                properties:
+                  comments:
+                    type: integer
+                  reshares:
+                    type: integer
+                type:
+                - object
+                - 'null'
+                title: linkedin_metrics
+                description: LinkedIn-specific engagement metrics. Present only when the post is on LinkedIn.
+              retrieved_at:
+                type: string
+                format: date-time
+                title: retrieved_at
+                description: Timestamp when the metrics were last retrieved.
+              threads_metrics:
+                properties:
+                  replies:
+                    type: integer
+                  reposts:
+                    type: integer
+                  quotes:
+                    type: integer
+                  shares:
+                    type: integer
+                type:
+                - object
+                - 'null'
+                title: threads_metrics
+                description: Threads-specific engagement metrics. Present only when the post is on Threads.
+              tiktok_metrics:
+                properties:
+                  comments:
+                    type: integer
+                  shares:
+                    type: integer
+                type:
+                - object
+                - 'null'
+                title: tiktok_metrics
+                description: TikTok-specific engagement metrics. Present only when the post is on TikTok.
+              twitter_metrics:
+                properties:
+                  replies:
+                    type: integer
+                  retweets:
+                    type: integer
+                  quote_tweets:
+                    type: integer
+                type:
+                - object
+                - 'null'
+                title: twitter_metrics
+                description: Twitter/X-specific engagement metrics. Present only when the post is on Twitter/X.
+              unique_views:
+                type: integer
+                title: unique_views
+                description: Number of unique users who viewed the post.
+              views:
+                type: integer
+                title: views
+                description: Total number of times the post was viewed.
+              youtube_metrics:
+                properties:
+                  comments:
+                    type: integer
+                type:
+                - object
+                - 'null'
+                title: youtube_metrics
+                description: YouTube-specific engagement metrics. Present only when the post is on YouTube.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    authors:
+      properties:
+        authors:
+          items:
+            properties:
+              author_id:
+                type: string
+                title: author_id
+                description: Unique identifier of the author.
+              author_name:
+                type: string
+                title: author_name
+                description: Name of the author.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

@@ -1,0 +1,434 @@
+openapi: 3.2.0
+info:
+  title: Management Locations and languages API
+  description: Project management.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/management
+  description: Ahrefs Management
+security:
+- http:
+  - read
+tags:
+- name: Locations and languages
+paths:
+  /locations:
+    get:
+      tags:
+      - Locations and languages
+      summary: Locations and languages
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: locations
+      parameters:
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country_code
+        in: query
+      - description: A two-letter US state code (ISO 3166-2:US). Required only if `country_code` is set to `us`
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - al
+          - ak
+          - az
+          - ar
+          - ca
+          - co
+          - ct
+          - de
+          - dc
+          - fl
+          - ga
+          - hi
+          - id
+          - il
+          - in
+          - ia
+          - ks
+          - ky
+          - la
+          - me
+          - md
+          - ma
+          - mi
+          - mn
+          - ms
+          - mo
+          - mt
+          - ne
+          - nv
+          - nh
+          - nj
+          - nm
+          - ny
+          - nc
+          - nd
+          - oh
+          - ok
+          - or
+          - pa
+          - ri
+          - sc
+          - sd
+          - tn
+          - tx
+          - ut
+          - va
+          - wa
+          - wv
+          - wi
+          - wy
+        name: us_state
+        in: query
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/locations'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/locations'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    locations:
+      properties:
+        location:
+          properties:
+            country_code:
+              type: string
+              title: country_code
+              description: The country code of the location.
+            languages:
+              items:
+                items: false
+                prefixItems:
+                - type: string
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: languages
+              description: A list of language codes and names for the specified country code.
+            locations:
+              items:
+                items: false
+                prefixItems:
+                - type: integer
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: locations
+              description: A list of location IDs and names for the specified country code.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

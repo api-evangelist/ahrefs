@@ -1,0 +1,1412 @@
+openapi: 3.2.0
+info:
+  title: Keywords Explorer Keyword ideas API
+  description: Fetch data from Keywords Explorer reports
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/keywords-explorer
+  description: Ahrefs Keywords Explorer
+security:
+- http:
+  - read
+tags:
+- name: Keyword ideas
+  description: Keyword ideas reports
+paths:
+  /matching-terms:
+    get:
+      tags:
+      - Keyword ideas
+      summary: Matching terms
+      operationId: matching-terms
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: 'The number of results to return. Max: `150000`.'
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A column to order results by. See the response schema for valid column identifiers, except for `volume_monthly`, which is not supported in `order_by` for this endpoint.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cpc**: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword, in USD cents.  \ntype: integer nullable\n\n**cps**: Clicks Per Search (or CPS) is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.  \ntype: float nullable\n\n**difficulty** (10 units): An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.  \ntype: integer nullable\n\n**first_seen**: The date when we first checked search engine results for a keyword.  \ntype: datetime nullable\n\n**global_volume** (10 units): How many times per month, on average, people search for the target keyword across all countries in our database.  \ntype: integer nullable\n\n**intents.branded**:   \ntype: boolean nullable\n\n**intents.commercial**:   \ntype: boolean nullable\n\n**intents.informational**:   \ntype: boolean nullable\n\n**intents.local**:   \ntype: boolean nullable\n\n**intents.navigational**:   \ntype: boolean nullable\n\n**intents.transactional**:   \ntype: boolean nullable\n\n**keyword**:   \ntype: string\n\n**parent_topic**: Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead. To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.  \ntype: string nullable\n\n**serp_domain_rating_top10_min**: The keyword must have at least one ranking position in the top 10 results with a DR of up to this value.  \ntype: float nullable\n\n**serp_domain_rating_top5_min**: The keyword must have at least one ranking position in the top 5 results with a DR of up to this value.  \ntype: float nullable\n\n**serp_features**: The enriched results on a search engine results page (SERP) that are not traditional organic results.  \ntype: array(string)  \nenum: `\"ai_overview_sitelink\"` `\"snippet\"` `\"ai_overview\"` `\"local_pack\"` `\"sitelink\"` `\"news\"` `\"image\"` `\"video\"` `\"discussion\"` `\"tweet\"` `\"paid_top\"` `\"paid_bottom\"` `\"paid_sitelink\"` `\"shopping\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"question\"` `\"image_th\"` `\"video_th\"` `\"organic_shopping\"`\n\n**serp_last_update**: The date when we last checked search engine results for a keyword.  \ntype: datetime nullable\n\n**traffic_potential** (10 units): The sum of organic traffic that the #1 ranking page for your target keyword receives from all the keywords that it ranks for.  \ntype: integer nullable\n\n**volume** (10 units): An estimation of the average monthly number of searches for a keyword over the latest known 12 months of data.  \ntype: integer nullable\n\n**volume_desktop_pct**: The percentage of searches for a keyword performed on desktop devices.  \ntype: float nullable\n\n**volume_mobile_pct**: The percentage of searches for a keyword performed on mobile devices.  \ntype: float nullable\n\n**word_count**:   \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The id of an existing keyword list.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: keyword_list_id
+        in: query
+      - description: A comma-separated list of keywords to show metrics for.
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: keywords
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - description: All keywords ideas or keywords ideas phrased as questions.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - all
+          - questions
+          default: all
+        name: terms
+        in: query
+      - description: Keyword ideas contain the words from your query in any order (terms mode) or in the exact order they are written (phrase mode).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - terms
+          - phrase
+          default: terms
+        name: match_mode
+        in: query
+      - $ref: '#/components/parameters/output_json_php_xml'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/matching-terms'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/matching-terms'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /related-terms:
+    get:
+      tags:
+      - Keyword ideas
+      summary: Related terms
+      operationId: related-terms
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: 'The number of results to return. Max: `150000`.'
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A column to order results by. See the response schema for valid column identifiers, except for `volume_monthly`, which is not supported in `order_by` for this endpoint.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cpc**: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword, in USD cents.  \ntype: integer nullable\n\n**cps**: Clicks Per Search (or CPS) is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.  \ntype: float nullable\n\n**difficulty** (10 units): An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.  \ntype: integer nullable\n\n**first_seen**: The date when we first checked search engine results for a keyword.  \ntype: datetime nullable\n\n**global_volume** (10 units): How many times per month, on average, people search for the target keyword across all countries in our database.  \ntype: integer nullable\n\n**intents.branded**:   \ntype: boolean nullable\n\n**intents.commercial**:   \ntype: boolean nullable\n\n**intents.informational**:   \ntype: boolean nullable\n\n**intents.local**:   \ntype: boolean nullable\n\n**intents.navigational**:   \ntype: boolean nullable\n\n**intents.transactional**:   \ntype: boolean nullable\n\n**keyword**:   \ntype: string\n\n**parent_topic**: Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead. To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.  \ntype: string nullable\n\n**serp_domain_rating_top10_min**: The keyword must have at least one ranking position in the top 10 results with a DR of up to this value.  \ntype: float nullable\n\n**serp_domain_rating_top5_min**: The keyword must have at least one ranking position in the top 5 results with a DR of up to this value.  \ntype: float nullable\n\n**serp_features**: The enriched results on a search engine results page (SERP) that are not traditional organic results.  \ntype: array(string)  \nenum: `\"ai_overview_sitelink\"` `\"snippet\"` `\"ai_overview\"` `\"local_pack\"` `\"sitelink\"` `\"news\"` `\"image\"` `\"video\"` `\"discussion\"` `\"tweet\"` `\"paid_top\"` `\"paid_bottom\"` `\"paid_sitelink\"` `\"shopping\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"question\"` `\"image_th\"` `\"video_th\"` `\"organic_shopping\"`\n\n**serp_last_update**: The date when we last checked search engine results for a keyword.  \ntype: datetime nullable\n\n**traffic_potential** (10 units): The sum of organic traffic that the #1 ranking page for your target keyword receives from all the keywords that it ranks for.  \ntype: integer nullable\n\n**volume** (10 units): An estimation of the average monthly number of searches for a keyword over the latest known 12 months of data.  \ntype: integer nullable\n\n**volume_desktop_pct**: The percentage of searches for a keyword performed on desktop devices.  \ntype: float nullable\n\n**volume_mobile_pct**: The percentage of searches for a keyword performed on mobile devices.  \ntype: float nullable\n\n**word_count**:   \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The id of an existing keyword list.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: keyword_list_id
+        in: query
+      - description: A comma-separated list of keywords to show metrics for.
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: keywords
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - description: Related keywords which top-ranking pages also rank for (`also_rank_for`), additional keywords frequently mentioned in top-ranking pages (`also_talk_about`), or combination of both (`all`).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - all
+          - also_rank_for
+          - also_talk_about
+          default: all
+        name: terms
+        in: query
+      - description: View keywords for the top 10 or top 100 ranking pages.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - top_10
+          - top_100
+          default: top_10
+        name: view_for
+        in: query
+      - $ref: '#/components/parameters/output_json_php_xml'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/related-terms'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/related-terms'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /search-suggestions:
+    get:
+      tags:
+      - Keyword ideas
+      summary: Search suggestions
+      operationId: search-suggestions
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: 'The number of results to return. Max: `150000`.'
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A column to order results by. See the response schema for valid column identifiers, except for `volume_monthly`, which is not supported in `order_by` for this endpoint.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cpc**: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword, in USD cents.  \ntype: integer nullable\n\n**cps**: Clicks Per Search (or CPS) is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.  \ntype: float nullable\n\n**difficulty** (10 units): An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.  \ntype: integer nullable\n\n**first_seen**: The date when we first checked search engine results for a keyword.  \ntype: datetime nullable\n\n**global_volume** (10 units): How many times per month, on average, people search for the target keyword across all countries in our database.  \ntype: integer nullable\n\n**intents.branded**:   \ntype: boolean nullable\n\n**intents.commercial**:   \ntype: boolean nullable\n\n**intents.informational**:   \ntype: boolean nullable\n\n**intents.local**:   \ntype: boolean nullable\n\n**intents.navigational**:   \ntype: boolean nullable\n\n**intents.transactional**:   \ntype: boolean nullable\n\n**keyword**:   \ntype: string\n\n**parent_topic**: Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead. To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.  \ntype: string nullable\n\n**serp_domain_rating_top10_min**: The keyword must have at least one ranking position in the top 10 results with a DR of up to this value.  \ntype: float nullable\n\n**serp_domain_rating_top5_min**: The keyword must have at least one ranking position in the top 5 results with a DR of up to this value.  \ntype: float nullable\n\n**serp_features**: The enriched results on a search engine results page (SERP) that are not traditional organic results.  \ntype: array(string)  \nenum: `\"ai_overview_sitelink\"` `\"snippet\"` `\"ai_overview\"` `\"local_pack\"` `\"sitelink\"` `\"news\"` `\"image\"` `\"video\"` `\"discussion\"` `\"tweet\"` `\"paid_top\"` `\"paid_bottom\"` `\"paid_sitelink\"` `\"shopping\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"question\"` `\"image_th\"` `\"video_th\"` `\"organic_shopping\"`\n\n**serp_last_update**: The date when we last checked search engine results for a keyword.  \ntype: datetime nullable\n\n**traffic_potential** (10 units): The sum of organic traffic that the #1 ranking page for your target keyword receives from all the keywords that it ranks for.  \ntype: integer nullable\n\n**volume** (10 units): An estimation of the average monthly number of searches for a keyword over the latest known 12 months of data.  \ntype: integer nullable\n\n**volume_desktop_pct**: The percentage of searches for a keyword performed on desktop devices.  \ntype: float nullable\n\n**volume_mobile_pct**: The percentage of searches for a keyword performed on mobile devices.  \ntype: float nullable\n\n**word_count**:   \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The id of an existing keyword list.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: keyword_list_id
+        in: query
+      - description: A comma-separated list of keywords to show metrics for.
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: keywords
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - $ref: '#/components/parameters/output_json_php_xml'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search-suggestions'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/search-suggestions'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    matching-terms:
+      properties:
+        keywords:
+          items:
+            properties:
+              cpc:
+                type:
+                - integer
+                - 'null'
+                title: cpc
+                description: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword, in USD cents.
+              cps:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: cps
+                description: Clicks Per Search (or CPS) is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.
+              difficulty:
+                type:
+                - integer
+                - 'null'
+                title: difficulty
+                description: (10 units) An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.
+              first_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: first_seen
+                description: The date when we first checked search engine results for a keyword.
+              global_volume:
+                type:
+                - integer
+                - 'null'
+                title: global_volume
+                description: (10 units) How many times per month, on average, people search for the target keyword across all countries in our database.
+              intents:
+                type:
+                - object
+                - 'null'
+                title: intents
+                description: '(10 units) Indicates the purpose behind the user''s search query. Object fields: `informational`, `navigational`, `commercial`, `transactional`, `branded` or `local`. All the fields are of type `bool`, with possible values `true` or `false`.'
+              keyword:
+                type: string
+                title: keyword
+                description: ''
+              parent_topic:
+                type:
+                - string
+                - 'null'
+                title: parent_topic
+                description: 'Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead. To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.'
+              serp_features:
+                items:
+                  type: string
+                  enum:
+                  - ai_overview_sitelink
+                  - snippet
+                  - ai_overview
+                  - local_pack
+                  - sitelink
+                  - news
+                  - image
+                  - video
+                  - discussion
+                  - tweet
+                  - paid_top
+                  - paid_bottom
+                  - paid_sitelink
+                  - shopping
+                  - knowledge_card
+                  - knowledge_panel
+                  - question
+                  - image_th
+                  - video_th
+                  - organic_shopping
+                  title: serp_features
+                  description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
+                type: array
+                title: serp_features
+                description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
+              serp_last_update:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: serp_last_update
+                description: The date when we last checked search engine results for a keyword.
+              traffic_potential:
+                type:
+                - integer
+                - 'null'
+                title: traffic_potential
+                description: '(10 units) The sum of organic traffic that the #1 ranking page for your target keyword receives from all the keywords that it ranks for.'
+              volume:
+                type:
+                - integer
+                - 'null'
+                title: volume
+                description: (10 units) An estimation of the average monthly number of searches for a keyword over the latest known 12 months of data.
+              volume_desktop_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_desktop_pct
+                description: The percentage of searches for a keyword performed on desktop devices.
+              volume_mobile_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_mobile_pct
+                description: The percentage of searches for a keyword performed on mobile devices.
+              volume_monthly:
+                type:
+                - integer
+                - 'null'
+                title: volume_monthly
+                description: (10 units) An estimation of the number of searches for a keyword over the latest month. This field may not be included in the `order_by` parameter
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    search-suggestions:
+      properties:
+        keywords:
+          items:
+            properties:
+              cpc:
+                type:
+                - integer
+                - 'null'
+                title: cpc
+                description: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword, in USD cents.
+              cps:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: cps
+                description: Clicks Per Search (or CPS) is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.
+              difficulty:
+                type:
+                - integer
+                - 'null'
+                title: difficulty
+                description: (10 units) An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.
+              first_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: first_seen
+                description: The date when we first checked search engine results for a keyword.
+              global_volume:
+                type:
+                - integer
+                - 'null'
+                title: global_volume
+                description: (10 units) How many times per month, on average, people search for the target keyword across all countries in our database.
+              intents:
+                type:
+                - object
+                - 'null'
+                title: intents
+                description: '(10 units) Indicates the purpose behind the user''s search query. Object fields: `informational`, `navigational`, `commercial`, `transactional`, `branded` or `local`. All the fields are of type `bool`, with possible values `true` or `false`.'
+              keyword:
+                type: string
+                title: keyword
+                description: ''
+              parent_topic:
+                type:
+                - string
+                - 'null'
+                title: parent_topic
+                description: 'Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead. To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.'
+              serp_features:
+                items:
+                  type: string
+                  enum:
+                  - ai_overview_sitelink
+                  - snippet
+                  - ai_overview
+                  - local_pack
+                  - sitelink
+                  - news
+                  - image
+                  - video
+                  - discussion
+                  - tweet
+                  - paid_top
+                  - paid_bottom
+                  - paid_sitelink
+                  - shopping
+                  - knowledge_card
+                  - knowledge_panel
+                  - question
+                  - image_th
+                  - video_th
+                  - organic_shopping
+                  title: serp_features
+                  description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
+                type: array
+                title: serp_features
+                description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
+              serp_last_update:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: serp_last_update
+                description: The date when we last checked search engine results for a keyword.
+              traffic_potential:
+                type:
+                - integer
+                - 'null'
+                title: traffic_potential
+                description: '(10 units) The sum of organic traffic that the #1 ranking page for your target keyword receives from all the keywords that it ranks for.'
+              volume:
+                type:
+                - integer
+                - 'null'
+                title: volume
+                description: (10 units) An estimation of the average monthly number of searches for a keyword over the latest known 12 months of data.
+              volume_desktop_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_desktop_pct
+                description: The percentage of searches for a keyword performed on desktop devices.
+              volume_mobile_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_mobile_pct
+                description: The percentage of searches for a keyword performed on mobile devices.
+              volume_monthly:
+                type:
+                - integer
+                - 'null'
+                title: volume_monthly
+                description: (10 units) An estimation of the number of searches for a keyword over the latest month. This field may not be included in the `order_by` parameter
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    related-terms:
+      properties:
+        keywords:
+          items:
+            properties:
+              cpc:
+                type:
+                - integer
+                - 'null'
+                title: cpc
+                description: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword, in USD cents.
+              cps:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: cps
+                description: Clicks Per Search (or CPS) is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.
+              difficulty:
+                type:
+                - integer
+                - 'null'
+                title: difficulty
+                description: (10 units) An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.
+              first_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: first_seen
+                description: The date when we first checked search engine results for a keyword.
+              global_volume:
+                type:
+                - integer
+                - 'null'
+                title: global_volume
+                description: (10 units) How many times per month, on average, people search for the target keyword across all countries in our database.
+              intents:
+                type:
+                - object
+                - 'null'
+                title: intents
+                description: '(10 units) Indicates the purpose behind the user''s search query. Object fields: `informational`, `navigational`, `commercial`, `transactional`, `branded` or `local`. All the fields are of type `bool`, with possible values `true` or `false`.'
+              keyword:
+                type: string
+                title: keyword
+                description: ''
+              parent_topic:
+                type:
+                - string
+                - 'null'
+                title: parent_topic
+                description: 'Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead. To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.'
+              serp_features:
+                items:
+                  type: string
+                  enum:
+                  - ai_overview_sitelink
+                  - snippet
+                  - ai_overview
+                  - local_pack
+                  - sitelink
+                  - news
+                  - image
+                  - video
+                  - discussion
+                  - tweet
+                  - paid_top
+                  - paid_bottom
+                  - paid_sitelink
+                  - shopping
+                  - knowledge_card
+                  - knowledge_panel
+                  - question
+                  - image_th
+                  - video_th
+                  - organic_shopping
+                  title: serp_features
+                  description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
+                type: array
+                title: serp_features
+                description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
+              serp_last_update:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: serp_last_update
+                description: The date when we last checked search engine results for a keyword.
+              traffic_potential:
+                type:
+                - integer
+                - 'null'
+                title: traffic_potential
+                description: '(10 units) The sum of organic traffic that the #1 ranking page for your target keyword receives from all the keywords that it ranks for.'
+              volume:
+                type:
+                - integer
+                - 'null'
+                title: volume
+                description: (10 units) An estimation of the average monthly number of searches for a keyword over the latest known 12 months of data.
+              volume_desktop_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_desktop_pct
+                description: The percentage of searches for a keyword performed on desktop devices.
+              volume_mobile_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_mobile_pct
+                description: The percentage of searches for a keyword performed on mobile devices.
+              volume_monthly:
+                type:
+                - integer
+                - 'null'
+                title: volume_monthly
+                description: (10 units) An estimation of the number of searches for a keyword over the latest month. This field may not be included in the `order_by` parameter
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output_json_php_xml:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+        - xml
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

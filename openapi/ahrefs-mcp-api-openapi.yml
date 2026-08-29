@@ -1,0 +1,890 @@
+openapi: 3.2.0
+info:
+  title: Management MCP API
+  description: Project management.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/management
+  description: Ahrefs Management
+security:
+- http:
+  - read
+tags:
+- name: MCP
+paths:
+  /projects:
+    get:
+      tags:
+      - MCP
+      summary: Projects
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: projects
+      parameters:
+      - description: The access type of the project.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - private
+          - shared
+        name: access
+        in: query
+      - description: The email of the project owner
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: owned_by
+        in: query
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: Has Rank Tracker keywords.
+        required: false
+        explode: false
+        schema:
+          type: boolean
+        name: has_keywords
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/projects'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/projects'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /project-keywords:
+    get:
+      tags:
+      - MCP
+      summary: Keywords
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-keywords
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output_json_php_xml'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-keywords'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-keywords'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /keyword-list-keywords:
+    get:
+      tags:
+      - MCP
+      summary: Keywords list
+      description: '**Requests to this endpoint are free and do not consume any API units.**'
+      operationId: keyword-list-keywords
+      parameters:
+      - description: The id of an existing keyword list.
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: keyword_list_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/keyword-list-keywords'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/keyword-list-keywords'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /project-competitors:
+    get:
+      tags:
+      - MCP
+      summary: Competitors
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-competitors
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-competitors'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-competitors'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /locations:
+    get:
+      tags:
+      - MCP
+      summary: Locations and languages
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: locations
+      parameters:
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country_code
+        in: query
+      - description: A two-letter US state code (ISO 3166-2:US). Required only if `country_code` is set to `us`
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - al
+          - ak
+          - az
+          - ar
+          - ca
+          - co
+          - ct
+          - de
+          - dc
+          - fl
+          - ga
+          - hi
+          - id
+          - il
+          - in
+          - ia
+          - ks
+          - ky
+          - la
+          - me
+          - md
+          - ma
+          - mi
+          - mn
+          - ms
+          - mo
+          - mt
+          - ne
+          - nv
+          - nh
+          - nj
+          - nm
+          - ny
+          - nc
+          - nd
+          - oh
+          - ok
+          - or
+          - pa
+          - ri
+          - sc
+          - sd
+          - tn
+          - tx
+          - ut
+          - va
+          - wa
+          - wv
+          - wi
+          - wy
+        name: us_state
+        in: query
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/locations'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/locations'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /brand-radar-prompts:
+    get:
+      tags:
+      - MCP
+      summary: Brand Radar prompts
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: brand-radar-prompts
+      parameters:
+      - description: 'The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: report_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/brand-radar-prompts'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/brand-radar-prompts'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /brand-radar-reports:
+    get:
+      tags:
+      - MCP
+      summary: Brand Radar Reports
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: brand-radar-reports
+      parameters:
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/brand-radar-reports'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/brand-radar-reports'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    brand-radar-prompts:
+      properties:
+        prompts:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: The country of the prompt.
+              created_at:
+                type: string
+                format: date
+                title: created_at
+                description: The date the prompt was created.
+              prompt:
+                type: string
+                title: prompt
+                description: The text of the prompt.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    projects:
+      properties:
+        projects:
+          items:
+            properties:
+              access:
+                type: string
+                title: access
+                description: 'The access level of the project. Possible values: `private`, `shared`.'
+              folder:
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type:
+                    - string
+                    - 'null'
+                type:
+                - object
+                - 'null'
+                title: folder
+                description: Innermost folder that the project is in.
+              keyword_count:
+                type: integer
+                title: keyword_count
+                description: The number of keywords in the project.
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              owned_by:
+                type:
+                - string
+                - 'null'
+                title: owned_by
+                description: The email of the project owner.
+              project_id:
+                type: string
+                title: project_id
+                description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
+              project_name:
+                type: string
+                title: project_name
+                description: The project name.
+              protocol:
+                type: string
+                title: protocol
+                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+              verified:
+                type: boolean
+                title: verified
+                description: Whether the project is verified.
+              web_analytics_data_key:
+                type: string
+                title: web_analytics_data_key
+                description: Web Analytics Data Key.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    locations:
+      properties:
+        location:
+          properties:
+            country_code:
+              type: string
+              title: country_code
+              description: The country code of the location.
+            languages:
+              items:
+                items: false
+                prefixItems:
+                - type: string
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: languages
+              description: A list of language codes and names for the specified country code.
+            locations:
+              items:
+                items: false
+                prefixItems:
+                - type: integer
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: locations
+              description: A list of location IDs and names for the specified country code.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-competitors:
+      properties:
+        competitors:
+          items:
+            properties:
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    brand-radar-reports:
+      properties:
+        reports:
+          items:
+            properties:
+              created_at:
+                type: string
+                format: date
+                title: created_at
+                description: The date the report was created.
+              project_id:
+                type:
+                - integer
+                - 'null'
+                title: project_id
+                description: The ID of the project the report is linked to.
+              prompts_frequency:
+                items:
+                  properties:
+                    data_source:
+                      type: string
+                    frequency:
+                      type: string
+                  type: object
+                type: array
+                title: prompts_frequency
+                description: 'A record with fields `data_source` (possible values: `chatgpt`, `copilot`, `gemini`, `google_ai_mode`, `claude`, `google_ai_overviews`, `grok`, `perplexity`) and `frequency` (possible values: `daily`, `weekly`, `monthly`, `off`).'
+              report_id:
+                type: string
+                title: report_id
+                description: The unique identifier of the report.
+              report_name:
+                type: string
+                title: report_name
+                description: The name of the report.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keyword-list-keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+    output_json_php_xml:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+        - xml
+      name: output
+      in: query
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

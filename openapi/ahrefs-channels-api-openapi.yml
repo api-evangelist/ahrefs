@@ -1,0 +1,240 @@
+openapi: 3.2.0
+info:
+  title: Social Media Channels API
+  description: Social Media Management.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/social-media
+  description: Ahrefs Social Media
+security:
+- http:
+  - read
+tags:
+- name: Channels
+paths:
+  /channels:
+    get:
+      tags:
+      - Channels
+      summary: Channels
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: channels
+      parameters:
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/channels'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/channels'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /channel-metrics:
+    get:
+      tags:
+      - Channels
+      summary: Channel metrics
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: channel-metrics
+      parameters:
+      - description: Unique identifier for the social media channel.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: channel_id
+        in: query
+      - description: The start date of the historical period in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_from
+        in: query
+      - description: The end date of the historical period in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_to
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/channel-metrics'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/channel-metrics'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    channel-metrics:
+      properties:
+        metrics:
+          items:
+            properties:
+              follower_count:
+                type: integer
+                title: follower_count
+                description: Number of followers at time of retrieval.
+              retrieved_at:
+                type: string
+                format: date-time
+                title: retrieved_at
+                description: Timestamp when the metrics were last retrieved.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    channels:
+      properties:
+        channels:
+          items:
+            properties:
+              channel_display_name:
+                type: string
+                title: channel_display_name
+                description: Channel display name.
+              channel_id:
+                type: string
+                title: channel_id
+                description: Unique identifier for the social media channel.
+              channel_kind:
+                type: string
+                title: channel_kind
+                description: Social media platform and account type.
+              channel_profile_image_url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: channel_profile_image_url
+                description: URL of the channel's profile image.
+              channel_status:
+                type: string
+                title: channel_status
+                description: Channel status (connected, paused).
+              channel_username:
+                type: string
+                title: channel_username
+                description: Channel username on the platform.
+              external_channel_id:
+                type: string
+                title: external_channel_id
+                description: Provider-specific identifier for the channel on the external platform.
+              token_validity:
+                type: string
+                title: token_validity
+                description: Validity of the channel's authentication token (valid, expired, lost_access).
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

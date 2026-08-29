@@ -1,0 +1,168 @@
+openapi: 3.2.0
+info:
+  title: Subscription Information Limits and usage API
+  description: Subscription information.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/subscription-info
+  description: Ahrefs Subscription Information
+security:
+- http:
+  - read
+tags:
+- name: Limits and usage
+paths:
+  /limits-and-usage:
+    get:
+      tags:
+      - Limits and usage
+      summary: Limits and usage
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: limits-and-usage
+      parameters:
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/limits-and-usage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/limits-and-usage'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    limits-and-usage:
+      properties:
+        limits_and_usage:
+          properties:
+            api_key_expiration_date:
+              type: string
+              format: date-time
+              title: api_key_expiration_date
+              description: Date on which this API key will expire and stop working.
+            subscription:
+              type: string
+              title: subscription
+              description: Ahrefs subscription plan.
+            units_limit_api_key:
+              type:
+              - integer
+              - 'null'
+              title: units_limit_api_key
+              description: Limit for the number of API units that can be consumed via this API key per billing month (null = unlimited).
+            units_limit_workspace:
+              type:
+              - integer
+              - 'null'
+              title: units_limit_workspace
+              description: Total number of API units available to the workspace.
+            units_usage_api_key:
+              type: integer
+              title: units_usage_api_key
+              description: Number of API units consumed by this API key in the current billing month.
+            units_usage_workspace:
+              type:
+              - integer
+              - 'null'
+              title: units_usage_workspace
+              description: Number of API units consumed by the workspace in the current billing month.
+            usage_reset_date:
+              type: string
+              format: date
+              title: usage_reset_date
+              description: Start date of the next billing period when the API units usage will be reset.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

@@ -1,0 +1,174 @@
+openapi: 3.2.0
+info:
+  title: Public Crawler API
+  description: Free endpoints that don't require an Ahrefs subscription, or require a free/public APIv3 key
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/public
+  description: Ahrefs Public
+tags:
+- name: Crawler
+paths:
+  /crawler-ips:
+    get:
+      tags:
+      - Crawler
+      summary: Crawler IP addresses
+      description: '>Requests to this endpoint are free and do not require an API key.'
+      operationId: crawler-ips
+      parameters:
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/crawler-ips'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/crawler-ips'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+      security: []
+  /crawler-ip-ranges:
+    get:
+      tags:
+      - Crawler
+      summary: Crawler IP ranges
+      description: '>Requests to this endpoint are free and do not require an API key.'
+      operationId: crawler-ip-ranges
+      parameters:
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/crawler-ip-ranges'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/crawler-ip-ranges'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+      security: []
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    crawler-ip-ranges:
+      properties:
+        prefixes:
+          items:
+            properties:
+              ipv4Prefix:
+                type: string
+                title: ipv4Prefix
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    crawler-ips:
+      properties:
+        ips:
+          items:
+            properties:
+              ip_address:
+                type: string
+                title: ip_address
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

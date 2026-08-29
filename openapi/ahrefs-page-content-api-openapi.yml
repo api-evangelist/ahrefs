@@ -1,0 +1,200 @@
+openapi: 3.2.0
+info:
+  title: Site Audit Page content API
+  description: Site audit.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/site-audit
+  description: Ahrefs Site Audit
+security:
+- http:
+  - read
+tags:
+- name: Page content
+paths:
+  /page-content:
+    get:
+      tags:
+      - Page content
+      summary: Page content
+      description: '>This endpoint consumes a fixed cost of 50 API units per request.'
+      operationId: page-content
+      parameters:
+      - description: 'A comma-separated list of fields to return.
+
+
+          - `crawl_datetime`
+
+          - `page_text`
+
+          - `page_text_md`
+
+          - `raw_html`
+
+          - `rendered_html`'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: 'The unique identifier of the project. Only projects with verified ownership are supported. You can find the project ID in the URL of your Site Audit project in Ahrefs: `https://app.ahrefs.com/site-audit/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: The URL of the page to retrieve content for.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target_url
+        in: query
+      - description: A timestamp in `YYYY-MM-DDThh:mm:ss` format specifying the crawl date to retrieve metrics from. Defaults to the most recent available crawl if omitted. For scheduled crawls, we return data from the latest crawl finished before the specified timestamp. For Always-on audit crawls, we return data as of the provided date and time. If the time component is omitted, it defaults to `00:00:00`. The timestamp is interpreted in UTC.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: date
+        in: query
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/page-content'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/page-content'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    page-content:
+      properties:
+        page-content:
+          properties:
+            crawl_datetime:
+              type: string
+              format: date-time
+              title: crawl_datetime
+              description: The timestamp when the page was crawled.
+            page_text:
+              type:
+              - string
+              - 'null'
+              title: page_text
+              description: The text extracted from the page content.
+            page_text_md:
+              type:
+              - string
+              - 'null'
+              title: page_text_md
+              description: 'The page content converted to markdown text. The value is a JSON-encoded string: decode JSON escapes (e.g. with `jq -r`) before passing it to a markdown renderer.'
+            raw_html:
+              type:
+              - string
+              - 'null'
+              title: raw_html
+              description: The raw HTML of the page.
+            rendered_html:
+              type:
+              - string
+              - 'null'
+              title: rendered_html
+              description: The rendered HTML of the page.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

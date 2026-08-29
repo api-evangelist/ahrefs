@@ -1,0 +1,403 @@
+openapi: 3.2.0
+info:
+  title: Management Brand radar reports API
+  description: Project management.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/management
+  description: Ahrefs Management
+security:
+- http:
+  - read
+tags:
+- name: Brand radar reports
+paths:
+  /brand-radar-reports:
+    get:
+      tags:
+      - Brand radar reports
+      summary: Brand Radar Reports
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: brand-radar-reports
+      parameters:
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/brand-radar-reports'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/brand-radar-reports'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    post:
+      tags:
+      - Brand radar reports
+      summary: Brand Radar Reports
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: brand-radar-reports
+      parameters:
+      - $ref: '#/components/parameters/output_json_php'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                prompts_frequency:
+                  items:
+                    properties:
+                      data_source:
+                        type: string
+                        enum:
+                        - chatgpt
+                        - google_ai_overviews
+                        - google_ai_mode
+                        - gemini
+                        - perplexity
+                        - copilot
+                        - claude
+                        - grok
+                        description: The data source to use.
+                      frequency:
+                        type: string
+                        enum:
+                        - daily
+                        - weekly
+                        - monthly
+                        - 'off'
+                        description: The update interval to use.
+                    type: object
+                    required:
+                    - data_source
+                    - frequency
+                  type: array
+                  minItems: 1
+                  description: The prompts frequency to use.
+                project_id:
+                  type: integer
+                  description: The ID of the project to use.
+                name:
+                  type: string
+                  description: The name of the report.
+                market:
+                  items:
+                    type: string
+                    title: markets
+                  type: array
+                  minItems: 1
+                  description: A list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date.
+                competitors:
+                  oneOf:
+                  - items:
+                      anyOf:
+                      - required:
+                        - names
+                      - required:
+                        - url_groups
+                      properties:
+                        names:
+                          items:
+                            type: string
+                          type: array
+                          description: The names of the brand/competitor
+                          examples:
+                          - - ahrefs
+                            - ahrefs seo
+                        url_groups:
+                          items:
+                            properties:
+                              target:
+                                type: string
+                                format: domain
+                                description: The domain of the target
+                                examples:
+                                - ahrefs.com
+                              scope:
+                                type: string
+                                enum:
+                                - url
+                                - path
+                                - domain
+                                - subdomains
+                                description: Scope of the target.
+                            type: object
+                            required:
+                            - target
+                            - scope
+                          type: array
+                      type: object
+                    type: array
+                    description: Recommended. Can specify brand names and URL groups for precise targeting.
+                  - items:
+                      type: string
+                    type: array
+                    description: A list of competitor names to search for.
+                  description: At least one of `brand`, `competitors` or `market` is required to be non-empty.
+                brand:
+                  oneOf:
+                  - items:
+                      anyOf:
+                      - required:
+                        - names
+                      - required:
+                        - url_groups
+                      properties:
+                        names:
+                          items:
+                            type: string
+                          type: array
+                          description: The names of the brand/competitor
+                          examples:
+                          - - ahrefs
+                            - ahrefs seo
+                        url_groups:
+                          items:
+                            properties:
+                              target:
+                                type: string
+                                format: domain
+                                description: The domain of the target
+                                examples:
+                                - ahrefs.com
+                              scope:
+                                type: string
+                                enum:
+                                - url
+                                - path
+                                - domain
+                                - subdomains
+                                description: Scope of the target.
+                            type: object
+                            required:
+                            - target
+                            - scope
+                          type: array
+                      type: object
+                    type: array
+                    description: Recommended. Can specify brand names and URL groups for precise targeting.
+                  - items:
+                      type: string
+                    type: array
+                    description: A list of brand names to search for.
+                  description: At least one of `brand`, `competitors` or `market` is required to be non-empty.
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/brand-radar-reports'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/brand-radar-reports'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    patch:
+      tags:
+      - Brand radar reports
+      summary: Brand Radar Reports
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: brand-radar-reports
+      parameters:
+      - $ref: '#/components/parameters/output_json_php'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                prompts_frequency:
+                  items:
+                    properties:
+                      data_source:
+                        type: string
+                        enum:
+                        - chatgpt
+                        - google_ai_overviews
+                        - google_ai_mode
+                        - gemini
+                        - perplexity
+                        - copilot
+                        - claude
+                        - grok
+                        description: The data source to use.
+                      frequency:
+                        type: string
+                        enum:
+                        - daily
+                        - weekly
+                        - monthly
+                        - 'off'
+                        description: The update interval to use.
+                    type: object
+                    required:
+                    - data_source
+                    - frequency
+                  type: array
+                  minItems: 1
+                  description: The prompts frequency to use.
+                report_id:
+                  type: string
+                  description: 'The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+              type: object
+              required:
+              - prompts_frequency
+              - report_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/brand-radar-reports'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/brand-radar-reports'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+  schemas:
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    brand-radar-reports:
+      properties:
+        reports:
+          items:
+            properties:
+              created_at:
+                type: string
+                format: date
+                title: created_at
+                description: The date the report was created.
+              project_id:
+                type:
+                - integer
+                - 'null'
+                title: project_id
+                description: The ID of the project the report is linked to.
+              prompts_frequency:
+                items:
+                  properties:
+                    data_source:
+                      type: string
+                    frequency:
+                      type: string
+                  type: object
+                type: array
+                title: prompts_frequency
+                description: 'A record with fields `data_source` (possible values: `chatgpt`, `copilot`, `gemini`, `google_ai_mode`, `claude`, `google_ai_overviews`, `grok`, `perplexity`) and `frequency` (possible values: `daily`, `weekly`, `monthly`, `off`).'
+              report_id:
+                type: string
+                title: report_id
+                description: The unique identifier of the report.
+              report_name:
+                type: string
+                title: report_name
+                description: The name of the report.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

@@ -1,0 +1,1381 @@
+openapi: 3.2.0
+info:
+  title: Ahrefs Batch Analysis API
+  version: 3.0.0
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  termsOfService: https://ahrefs.com/terms
+  description: 'Operations tagged Batch Analysis across 2 of this provider''s published API definitions: ahrefs-batch-analysis-openapi.json, ahrefs-openapi-original.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.ahrefs.com/v3/batch-analysis
+  description: Ahrefs Batch Analysis
+- url: https://api.ahrefs.com/v3
+  description: Ahrefs API v3
+security:
+- http:
+  - read
+tags:
+- name: Batch Analysis
+  description: Batch Analysis table
+paths:
+  /batch-analysis:
+    post:
+      tags:
+      - Batch Analysis
+      summary: Batch Analysis
+      operationId: batch-analysis
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                select:
+                  items:
+                    type: string
+                  type: array
+                  description: 'A list of fields to return.
+
+
+                    - `ahrefs_rank`
+
+                    - `backlinks`
+
+                    - `backlinks_dofollow`
+
+                    - `backlinks_internal`
+
+                    - `backlinks_nofollow`
+
+                    - `backlinks_redirect`
+
+                    - `domain_rating`
+
+                    - `index`
+
+                    - `ip`
+
+                    - `linked_domains`
+
+                    - `linked_domains_dofollow`
+
+                    - `mode`
+
+                    - `org_cost` (10 units)
+
+                    - `org_keywords`
+
+                    - `org_keywords_11_20`
+
+                    - `org_keywords_1_3`
+
+                    - `org_keywords_21_50`
+
+                    - `org_keywords_4_10`
+
+                    - `org_keywords_51_plus`
+
+                    - `org_traffic` (10 units)
+
+                    - `org_traffic_top_by_country` (10 units)
+
+                    - `outgoing_links`
+
+                    - `outgoing_links_dofollow`
+
+                    - `paid_ads`
+
+                    - `paid_cost` (10 units)
+
+                    - `paid_keywords`
+
+                    - `paid_traffic` (10 units)
+
+                    - `protocol`
+
+                    - `refdomains` (5 units)
+
+                    - `refdomains_dofollow` (5 units)
+
+                    - `refdomains_nofollow` (5 units)
+
+                    - `refips`
+
+                    - `refips_subnets`
+
+                    - `url`
+
+                    - `url_rating`'
+                  examples:
+                  - - field_a
+                    - field_b
+                order_by:
+                  items:
+                    type: string
+                  type: array
+                  description: 'A list of fields to order the results by, with optional direction. Format: `field_name:asc` or `field_name:desc` (default `desc`).
+
+
+                    - `ahrefs_rank`
+
+                    - `backlinks`
+
+                    - `backlinks_dofollow`
+
+                    - `backlinks_internal`
+
+                    - `backlinks_nofollow`
+
+                    - `backlinks_redirect`
+
+                    - `domain_rating`
+
+                    - `index`
+
+                    - `ip`
+
+                    - `linked_domains`
+
+                    - `linked_domains_dofollow`
+
+                    - `mode`
+
+                    - `org_cost` (10 units)
+
+                    - `org_keywords`
+
+                    - `org_keywords_11_20`
+
+                    - `org_keywords_1_3`
+
+                    - `org_keywords_21_50`
+
+                    - `org_keywords_4_10`
+
+                    - `org_keywords_51_plus`
+
+                    - `org_traffic` (10 units)
+
+                    - `org_traffic_top_by_country` (10 units)
+
+                    - `outgoing_links`
+
+                    - `outgoing_links_dofollow`
+
+                    - `paid_ads`
+
+                    - `paid_cost` (10 units)
+
+                    - `paid_keywords`
+
+                    - `paid_traffic` (10 units)
+
+                    - `protocol`
+
+                    - `refdomains` (5 units)
+
+                    - `refdomains_dofollow` (5 units)
+
+                    - `refdomains_nofollow` (5 units)
+
+                    - `refips`
+
+                    - `refips_subnets`
+
+                    - `url`
+
+                    - `url_rating`'
+                  examples:
+                  - - field_a:asc
+                    - field_b:desc
+                country:
+                  type: string
+                  enum:
+                  - ad
+                  - ae
+                  - af
+                  - ag
+                  - ai
+                  - al
+                  - am
+                  - ao
+                  - ar
+                  - as
+                  - at
+                  - au
+                  - aw
+                  - az
+                  - ba
+                  - bb
+                  - bd
+                  - be
+                  - bf
+                  - bg
+                  - bh
+                  - bi
+                  - bj
+                  - bn
+                  - bo
+                  - br
+                  - bs
+                  - bt
+                  - bw
+                  - by
+                  - bz
+                  - ca
+                  - cd
+                  - cf
+                  - cg
+                  - ch
+                  - ci
+                  - ck
+                  - cl
+                  - cm
+                  - cn
+                  - co
+                  - cr
+                  - cu
+                  - cv
+                  - cy
+                  - cz
+                  - de
+                  - dj
+                  - dk
+                  - dm
+                  - do
+                  - dz
+                  - ec
+                  - ee
+                  - eg
+                  - es
+                  - et
+                  - fi
+                  - fj
+                  - fm
+                  - fo
+                  - fr
+                  - ga
+                  - gb
+                  - gd
+                  - ge
+                  - gf
+                  - gg
+                  - gh
+                  - gi
+                  - gl
+                  - gm
+                  - gn
+                  - gp
+                  - gq
+                  - gr
+                  - gt
+                  - gu
+                  - gy
+                  - hk
+                  - hn
+                  - hr
+                  - ht
+                  - hu
+                  - id
+                  - ie
+                  - il
+                  - im
+                  - in
+                  - iq
+                  - is
+                  - it
+                  - je
+                  - jm
+                  - jo
+                  - jp
+                  - ke
+                  - kg
+                  - kh
+                  - ki
+                  - kn
+                  - kr
+                  - kw
+                  - ky
+                  - kz
+                  - la
+                  - lb
+                  - lc
+                  - li
+                  - lk
+                  - ls
+                  - lt
+                  - lu
+                  - lv
+                  - ly
+                  - ma
+                  - mc
+                  - md
+                  - me
+                  - mg
+                  - mk
+                  - ml
+                  - mm
+                  - mn
+                  - mq
+                  - mr
+                  - ms
+                  - mt
+                  - mu
+                  - mv
+                  - mw
+                  - mx
+                  - my
+                  - mz
+                  - na
+                  - nc
+                  - ne
+                  - ng
+                  - ni
+                  - nl
+                  - 'no'
+                  - np
+                  - nr
+                  - nu
+                  - nz
+                  - om
+                  - pa
+                  - pe
+                  - pf
+                  - pg
+                  - ph
+                  - pk
+                  - pl
+                  - pn
+                  - pr
+                  - ps
+                  - pt
+                  - py
+                  - qa
+                  - re
+                  - ro
+                  - rs
+                  - ru
+                  - rw
+                  - sa
+                  - sb
+                  - sc
+                  - se
+                  - sg
+                  - sh
+                  - si
+                  - sk
+                  - sl
+                  - sm
+                  - sn
+                  - so
+                  - sr
+                  - st
+                  - sv
+                  - td
+                  - tg
+                  - th
+                  - tj
+                  - tk
+                  - tl
+                  - tm
+                  - tn
+                  - to
+                  - tr
+                  - tt
+                  - tw
+                  - tz
+                  - ua
+                  - ug
+                  - us
+                  - uy
+                  - uz
+                  - vc
+                  - ve
+                  - vg
+                  - vi
+                  - vn
+                  - vu
+                  - ws
+                  - ye
+                  - yt
+                  - za
+                  - zm
+                  - zw
+                  description: A two-letter country code (ISO 3166-1 alpha-2).
+                volume_mode:
+                  type: string
+                  enum:
+                  - monthly
+                  - average
+                  description: 'The search volume calculation mode: monthly or average. It affects volume, traffic, and traffic value.'
+                  default: monthly
+                targets:
+                  items:
+                    $ref: '#/components/schemas/target'
+                  type: array
+                  maxItems: 100
+                  minItems: 1
+                  description: A list of targets to do batch analysis.
+                output:
+                  type: string
+                  enum:
+                  - json
+                  - php
+                  description: The output format.
+              type: object
+              required:
+              - select
+              - targets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/batch-analysis'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/batch-analysis'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/batch-analysis
+      description: Ahrefs Batch Analysis
+  /batch-analysis/batch-analysis:
+    post:
+      tags:
+      - Batch Analysis
+      summary: Batch Analysis
+      operationId: batch-analysis.batch-analysis
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                select:
+                  items:
+                    type: string
+                  type: array
+                  description: 'A list of fields to return.
+
+
+                    - `ahrefs_rank`
+
+                    - `backlinks`
+
+                    - `backlinks_dofollow`
+
+                    - `backlinks_internal`
+
+                    - `backlinks_nofollow`
+
+                    - `backlinks_redirect`
+
+                    - `domain_rating`
+
+                    - `index`
+
+                    - `ip`
+
+                    - `linked_domains`
+
+                    - `linked_domains_dofollow`
+
+                    - `mode`
+
+                    - `org_cost` (10 units)
+
+                    - `org_keywords`
+
+                    - `org_keywords_11_20`
+
+                    - `org_keywords_1_3`
+
+                    - `org_keywords_21_50`
+
+                    - `org_keywords_4_10`
+
+                    - `org_keywords_51_plus`
+
+                    - `org_traffic` (10 units)
+
+                    - `org_traffic_top_by_country` (10 units)
+
+                    - `outgoing_links`
+
+                    - `outgoing_links_dofollow`
+
+                    - `paid_ads`
+
+                    - `paid_cost` (10 units)
+
+                    - `paid_keywords`
+
+                    - `paid_traffic` (10 units)
+
+                    - `protocol`
+
+                    - `refdomains` (5 units)
+
+                    - `refdomains_dofollow` (5 units)
+
+                    - `refdomains_nofollow` (5 units)
+
+                    - `refips`
+
+                    - `refips_subnets`
+
+                    - `url`
+
+                    - `url_rating`'
+                  examples:
+                  - - field_a
+                    - field_b
+                order_by:
+                  items:
+                    type: string
+                  type: array
+                  description: 'A list of fields to order the results by, with optional direction. Format: `field_name:asc` or `field_name:desc` (default `desc`).
+
+
+                    - `ahrefs_rank`
+
+                    - `backlinks`
+
+                    - `backlinks_dofollow`
+
+                    - `backlinks_internal`
+
+                    - `backlinks_nofollow`
+
+                    - `backlinks_redirect`
+
+                    - `domain_rating`
+
+                    - `index`
+
+                    - `ip`
+
+                    - `linked_domains`
+
+                    - `linked_domains_dofollow`
+
+                    - `mode`
+
+                    - `org_cost` (10 units)
+
+                    - `org_keywords`
+
+                    - `org_keywords_11_20`
+
+                    - `org_keywords_1_3`
+
+                    - `org_keywords_21_50`
+
+                    - `org_keywords_4_10`
+
+                    - `org_keywords_51_plus`
+
+                    - `org_traffic` (10 units)
+
+                    - `org_traffic_top_by_country` (10 units)
+
+                    - `outgoing_links`
+
+                    - `outgoing_links_dofollow`
+
+                    - `paid_ads`
+
+                    - `paid_cost` (10 units)
+
+                    - `paid_keywords`
+
+                    - `paid_traffic` (10 units)
+
+                    - `protocol`
+
+                    - `refdomains` (5 units)
+
+                    - `refdomains_dofollow` (5 units)
+
+                    - `refdomains_nofollow` (5 units)
+
+                    - `refips`
+
+                    - `refips_subnets`
+
+                    - `url`
+
+                    - `url_rating`'
+                  examples:
+                  - - field_a:asc
+                    - field_b:desc
+                country:
+                  type: string
+                  enum:
+                  - ad
+                  - ae
+                  - af
+                  - ag
+                  - ai
+                  - al
+                  - am
+                  - ao
+                  - ar
+                  - as
+                  - at
+                  - au
+                  - aw
+                  - az
+                  - ba
+                  - bb
+                  - bd
+                  - be
+                  - bf
+                  - bg
+                  - bh
+                  - bi
+                  - bj
+                  - bn
+                  - bo
+                  - br
+                  - bs
+                  - bt
+                  - bw
+                  - by
+                  - bz
+                  - ca
+                  - cd
+                  - cf
+                  - cg
+                  - ch
+                  - ci
+                  - ck
+                  - cl
+                  - cm
+                  - cn
+                  - co
+                  - cr
+                  - cu
+                  - cv
+                  - cy
+                  - cz
+                  - de
+                  - dj
+                  - dk
+                  - dm
+                  - do
+                  - dz
+                  - ec
+                  - ee
+                  - eg
+                  - es
+                  - et
+                  - fi
+                  - fj
+                  - fm
+                  - fo
+                  - fr
+                  - ga
+                  - gb
+                  - gd
+                  - ge
+                  - gf
+                  - gg
+                  - gh
+                  - gi
+                  - gl
+                  - gm
+                  - gn
+                  - gp
+                  - gq
+                  - gr
+                  - gt
+                  - gu
+                  - gy
+                  - hk
+                  - hn
+                  - hr
+                  - ht
+                  - hu
+                  - id
+                  - ie
+                  - il
+                  - im
+                  - in
+                  - iq
+                  - is
+                  - it
+                  - je
+                  - jm
+                  - jo
+                  - jp
+                  - ke
+                  - kg
+                  - kh
+                  - ki
+                  - kn
+                  - kr
+                  - kw
+                  - ky
+                  - kz
+                  - la
+                  - lb
+                  - lc
+                  - li
+                  - lk
+                  - ls
+                  - lt
+                  - lu
+                  - lv
+                  - ly
+                  - ma
+                  - mc
+                  - md
+                  - me
+                  - mg
+                  - mk
+                  - ml
+                  - mm
+                  - mn
+                  - mq
+                  - mr
+                  - ms
+                  - mt
+                  - mu
+                  - mv
+                  - mw
+                  - mx
+                  - my
+                  - mz
+                  - na
+                  - nc
+                  - ne
+                  - ng
+                  - ni
+                  - nl
+                  - 'no'
+                  - np
+                  - nr
+                  - nu
+                  - nz
+                  - om
+                  - pa
+                  - pe
+                  - pf
+                  - pg
+                  - ph
+                  - pk
+                  - pl
+                  - pn
+                  - pr
+                  - ps
+                  - pt
+                  - py
+                  - qa
+                  - re
+                  - ro
+                  - rs
+                  - ru
+                  - rw
+                  - sa
+                  - sb
+                  - sc
+                  - se
+                  - sg
+                  - sh
+                  - si
+                  - sk
+                  - sl
+                  - sm
+                  - sn
+                  - so
+                  - sr
+                  - st
+                  - sv
+                  - td
+                  - tg
+                  - th
+                  - tj
+                  - tk
+                  - tl
+                  - tm
+                  - tn
+                  - to
+                  - tr
+                  - tt
+                  - tw
+                  - tz
+                  - ua
+                  - ug
+                  - us
+                  - uy
+                  - uz
+                  - vc
+                  - ve
+                  - vg
+                  - vi
+                  - vn
+                  - vu
+                  - ws
+                  - ye
+                  - yt
+                  - za
+                  - zm
+                  - zw
+                  description: A two-letter country code (ISO 3166-1 alpha-2).
+                volume_mode:
+                  type: string
+                  enum:
+                  - monthly
+                  - average
+                  description: 'The search volume calculation mode: monthly or average. It affects volume, traffic, and traffic value.'
+                  default: monthly
+                targets:
+                  items:
+                    $ref: '#/components/schemas/batch-analysis.target'
+                  type: array
+                  maxItems: 100
+                  minItems: 1
+                  description: A list of targets to do batch analysis.
+                output:
+                  type: string
+                  enum:
+                  - json
+                  - php
+                  description: The output format.
+              type: object
+              required:
+              - select
+              - targets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/batch-analysis.batch-analysis'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/batch-analysis.batch-analysis'
+        '400':
+          $ref: '#/components/responses/batch-analysis.error_400'
+        '401':
+          $ref: '#/components/responses/batch-analysis.error_401'
+        '403':
+          $ref: '#/components/responses/batch-analysis.error_403'
+        '429':
+          $ref: '#/components/responses/batch-analysis.error_429'
+        '500':
+          $ref: '#/components/responses/batch-analysis.error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3
+      description: Ahrefs API v3
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    batch-analysis.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+  schemas:
+    target:
+      properties:
+        url:
+          type: string
+          description: The URL of the analyzed target.
+          examples:
+          - https://www.ahrefs.com
+        mode:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          description: The target mode used for the analysis.
+        protocol:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          description: The protocol of the target.
+      type: object
+      required:
+      - url
+      - mode
+      - protocol
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    batch-analysis:
+      properties:
+        targets:
+          items:
+            properties:
+              ahrefs_rank:
+                type: integer
+                title: ahrefs_rank
+                description: 'The strength of your target''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              backlinks:
+                type: integer
+                title: backlinks
+                description: The total number of links from other websites pointing to your target.
+              backlinks_dofollow:
+                type: integer
+                title: backlinks_dofollow
+                description: Links to your target that do not contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute. These links are also called “dofollow”.
+              backlinks_internal:
+                type: integer
+                title: backlinks_internal
+                description: The total number of internal links pointing to the target's pages.
+              backlinks_nofollow:
+                type: integer
+                title: backlinks_nofollow
+                description: Links to your target that contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute.
+              backlinks_redirect:
+                type: integer
+                title: backlinks_redirect
+                description: Links pointing to your target via a redirect.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+              index:
+                type: integer
+                title: index
+                description: Target index number.
+              ip:
+                type:
+                - string
+                - 'null'
+                title: ip
+                description: The IP address of the target.
+              linked_domains:
+                type: integer
+                title: linked_domains
+                description: The number of unique domains linked from your target.
+              linked_domains_dofollow:
+                type: integer
+                title: linked_domains_dofollow
+                description: The number of unique domains linked from your target with followed links.
+              mode:
+                type: string
+                title: mode
+                description: The target mode used for the analysis. Depending on the selected mode (Exact URL, Path, Domain, Subdomains), different parts of the website will be analyzed.
+              org_cost:
+                type: integer
+                title: org_cost
+                description: (10 units) The estimated value of your target’s monthly organic search traffic.
+              org_keywords:
+                type: integer
+                title: org_keywords
+                description: The total number of keywords that your target ranks for in the top 100 organic search results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_11_20:
+                type: integer
+                title: org_keywords_11_20
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 11th to 20th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_1_3:
+                type: integer
+                title: org_keywords_1_3
+                description: The total number of unique keywords for which your target's top organic ranking position is within the top 3 results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_21_50:
+                type: integer
+                title: org_keywords_21_50
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 21st to 50th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_4_10:
+                type: integer
+                title: org_keywords_4_10
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 4th to 10th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_51_plus:
+                type: integer
+                title: org_keywords_51_plus
+                description: The total number of unique keywords for which your target's top organic ranking position is the 51st result or higher. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_traffic:
+                type: integer
+                title: org_traffic
+                description: (10 units) The estimated number of monthly visits that your target gets from organic search.
+              org_traffic_top_by_country:
+                items:
+                  items: false
+                  prefixItems:
+                  - type: string
+                  - type: integer
+                  type: array
+                  maxItems: 2
+                  minItems: 2
+                type: array
+                title: org_traffic_top_by_country
+                description: (10 units) Top countries by traffic with corresponding traffic values. (Currently only a single element is being returned with the country with the most traffic.)
+              outgoing_links:
+                type: integer
+                title: outgoing_links
+                description: The total number of links from your target to other domains.
+              outgoing_links_dofollow:
+                type: integer
+                title: outgoing_links_dofollow
+                description: The total number of followed links from your target to other domains.
+              paid_ads:
+                type: integer
+                title: paid_ads
+                description: The total number of unique ads of a target website or URL in paid search results.
+              paid_cost:
+                type: integer
+                title: paid_cost
+                description: (10 units) The estimated cost of your target’s monthly paid search traffic.
+              paid_keywords:
+                type: integer
+                title: paid_keywords
+                description: The total number of keywords that your target ranks for in paid search results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              paid_traffic:
+                type: integer
+                title: paid_traffic
+                description: (10 units) The estimated number of monthly visits that your target gets from paid search.
+              protocol:
+                type: string
+                title: protocol
+                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+              refdomains:
+                type: integer
+                title: refdomains
+                description: (5 units) The total number of unique domains linking to your target.
+              refdomains_dofollow:
+                type: integer
+                title: refdomains_dofollow
+                description: (5 units) The number of unique domains with links to your target that do not contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute. These links are also called “dofollow”.
+              refdomains_nofollow:
+                type: integer
+                title: refdomains_nofollow
+                description: (5 units) The number of unique domains that only have links to your target containing a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute.
+              refips:
+                type: integer
+                title: refips
+                description: The number of unique IP addresses with at least one domain pointing to your target. Several domains can share one IP address.
+              refips_subnets:
+                type: integer
+                title: refips_subnets
+                description: 'The number of c-class IP networks (AAA.BBB.CCC.DDD) with at least one link to your target. Example: 151.80.39.61 is the website IP address where 151.80.39.XXX is the subnet.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the analyzed target.
+              url_rating:
+                type: number
+                format: float
+                title: url_rating
+                description: 'URL Rating (UR) shows the strength of your target page''s backlink profile on a 100-point logarithmic scale. If you analyze a domain, the homepage''s UR is shown. '
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    batch-analysis.target:
+      properties:
+        url:
+          type: string
+          description: The URL of the analyzed target.
+          examples:
+          - https://www.ahrefs.com
+        mode:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          description: The target mode used for the analysis.
+        protocol:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          description: The protocol of the target.
+      type: object
+      required:
+      - url
+      - mode
+      - protocol
+    batch-analysis.batch-analysis:
+      properties:
+        targets:
+          items:
+            properties:
+              ahrefs_rank:
+                type: integer
+                title: ahrefs_rank
+                description: 'The strength of your target''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              backlinks:
+                type: integer
+                title: backlinks
+                description: The total number of links from other websites pointing to your target.
+              backlinks_dofollow:
+                type: integer
+                title: backlinks_dofollow
+                description: Links to your target that do not contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute. These links are also called “dofollow”.
+              backlinks_internal:
+                type: integer
+                title: backlinks_internal
+                description: The total number of internal links pointing to the target's pages.
+              backlinks_nofollow:
+                type: integer
+                title: backlinks_nofollow
+                description: Links to your target that contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute.
+              backlinks_redirect:
+                type: integer
+                title: backlinks_redirect
+                description: Links pointing to your target via a redirect.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+              index:
+                type: integer
+                title: index
+                description: Target index number.
+              ip:
+                type:
+                - string
+                - 'null'
+                title: ip
+                description: The IP address of the target.
+              linked_domains:
+                type: integer
+                title: linked_domains
+                description: The number of unique domains linked from your target.
+              linked_domains_dofollow:
+                type: integer
+                title: linked_domains_dofollow
+                description: The number of unique domains linked from your target with followed links.
+              mode:
+                type: string
+                title: mode
+                description: The target mode used for the analysis. Depending on the selected mode (Exact URL, Path, Domain, Subdomains), different parts of the website will be analyzed.
+              org_cost:
+                type: integer
+                title: org_cost
+                description: (10 units) The estimated value of your target’s monthly organic search traffic.
+              org_keywords:
+                type: integer
+                title: org_keywords
+                description: The total number of keywords that your target ranks for in the top 100 organic search results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_11_20:
+                type: integer
+                title: org_keywords_11_20
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 11th to 20th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_1_3:
+                type: integer
+                title: org_keywords_1_3
+                description: The total number of unique keywords for which your target's top organic ranking position is within the top 3 results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_21_50:
+                type: integer
+                title: org_keywords_21_50
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 21st to 50th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_4_10:
+                type: integer
+                title: org_keywords_4_10
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 4th to 10th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_51_plus:
+                type: integer
+                title: org_keywords_51_plus
+                description: The total number of unique keywords for which your target's top organic ranking position is the 51st result or higher. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_traffic:
+                type: integer
+                title: org_traffic
+                description: (10 units) The estimated number of monthly visits that your target gets from organic search.
+              org_traffic_top_by_country:
+                items:
+                  items: false
+                  prefixItems:
+                  - type: string
+                  - type: integer
+                  type: array
+                  maxItems: 2
+                  minItems: 2
+                type: array
+                title: org_traffic_top_by_country
+                description: (10 units) Top countries by traffic with corresponding traffic values. (Currently only a single element is being returned with the country with the most traffic.)
+              outgoing_links:
+                type: integer
+                title: outgoing_links
+                description: The total number of links from your target to other domains.
+              outgoing_links_dofollow:
+                type: integer
+                title: outgoing_links_dofollow
+                description: The total number of followed links from your target to other domains.
+              paid_ads:
+                type: integer
+                title: paid_ads
+                description: The total number of unique ads of a target website or URL in paid search results.
+              paid_cost:
+                type: integer
+                title: paid_cost
+                description: (10 units) The estimated cost of your target’s monthly paid search traffic.
+              paid_keywords:
+                type: integer
+                title: paid_keywords
+                description: The total number of keywords that your target ranks for in paid search results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              paid_traffic:
+                type: integer
+                title: paid_traffic
+                description: (10 units) The estimated number of monthly visits that your target gets from paid search.
+              protocol:
+                type: string
+                title: protocol
+                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+              refdomains:
+                type: integer
+                title: refdomains
+                description: (5 units) The total number of unique domains linking to your target.
+              refdomains_dofollow:
+                type: integer
+                title: refdomains_dofollow
+                description: (5 units) The number of unique domains with links to your target that do not contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute. These links are also called “dofollow”.
+              refdomains_nofollow:
+                type: integer
+                title: refdomains_nofollow
+                description: (5 units) The number of unique domains that only have links to your target containing a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute.
+              refips:
+                type: integer
+                title: refips
+                description: The number of unique IP addresses with at least one domain pointing to your target. Several domains can share one IP address.
+              refips_subnets:
+                type: integer
+                title: refips_subnets
+                description: 'The number of c-class IP networks (AAA.BBB.CCC.DDD) with at least one link to your target. Example: 151.80.39.61 is the website IP address where 151.80.39.XXX is the subnet.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the analyzed target.
+              url_rating:
+                type: number
+                format: float
+                title: url_rating
+                description: 'URL Rating (UR) shows the strength of your target page''s backlink profile on a 100-point logarithmic scale. If you analyze a domain, the homepage''s UR is shown. '
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    batch-analysis.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/
+x-refined-from:
+- ahrefs-batch-analysis-openapi.json
+- ahrefs-openapi-original.json

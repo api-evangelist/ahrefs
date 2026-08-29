@@ -1,0 +1,2181 @@
+openapi: 3.2.0
+info:
+  title: Ahrefs Keywords API
+  version: 3.0.0
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  termsOfService: https://ahrefs.com/terms
+  description: 'Operations tagged Keywords across 2 of this provider''s published API definitions: ahrefs-gsc-openapi.json, ahrefs-management-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.ahrefs.com/v3/gsc
+  description: Ahrefs GSC Insights
+- url: https://api.ahrefs.com/v3/management
+  description: Ahrefs Management
+security:
+- http:
+  - read
+tags:
+- name: Keywords
+  description: GSC keywords data
+paths:
+  /keyword-history:
+    get:
+      tags:
+      - Keywords
+      summary: Keyword history
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: keyword-history
+      parameters:
+      - description: Project ID. Required when portfolio_id is not provided.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: portfolio_id
+        in: query
+      - description: The start date of the historical period in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_from
+        in: query
+      - description: The end date of the historical period in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_to
+        in: query
+      - description: The time interval used to group historical data.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - daily
+          - weekly
+          - monthly
+          default: monthly
+        name: history_grouping
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - description: Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+          - tablet
+        name: device
+        in: query
+      - description: A comma-separated list of keywords to get history data for.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: keywords
+        in: query
+      - description: "Supported fields:\n- url\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/keyword-history'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/keyword-history'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/gsc
+      description: Ahrefs GSC Insights
+  /keywords:
+    get:
+      tags:
+      - Keywords
+      summary: Keywords
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: keywords
+      parameters:
+      - description: Project ID. Required when portfolio_id is not provided.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: portfolio_id
+        in: query
+      - description: The start date of the historical period in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_from
+        in: query
+      - description: The end date of the historical period in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_to
+        in: query
+      - description: The type of search results to return (web, image, video, news).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - web
+          - image
+          - video
+          - news
+          default: web
+        name: search_type
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - description: Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+          - tablet
+        name: device
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: "Supported fields:\n- keyword\n- top_url\n- url\n- clicks\n- impressions\n- ctr\n- position\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: The id of an existing keyword list to show metrics for.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: keyword_list_id
+        in: query
+      - description: Keyword lists filter (JSON string). Supports include (is), exclude (is_not), empty (not in any list), and not_empty (in any list).
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: keyword_lists
+        in: query
+      - $ref: '#/components/parameters/output_json_php_xml'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/keywords'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/keywords'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/gsc
+      description: Ahrefs GSC Insights
+  /project-keywords:
+    get:
+      tags:
+      - Keywords
+      summary: Keywords
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-keywords
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output_json_php_xml'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-keywords'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-keywords'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    put:
+      tags:
+      - Keywords
+      summary: Keywords
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-keywords
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output_json_php_xml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                keywords:
+                  items:
+                    properties:
+                      keyword:
+                        type: string
+                        description: The keyword to add.
+                      tags:
+                        items:
+                          type: string
+                        type: array
+                        description: A list of tags to assign to a given keyword.
+                    type: object
+                    required:
+                    - keyword
+                  type: array
+                  minItems: 1
+                  description: A list of keywords to add.
+                locations:
+                  items:
+                    properties:
+                      country:
+                        type: string
+                        enum:
+                        - ad
+                        - ae
+                        - af
+                        - ag
+                        - ai
+                        - al
+                        - am
+                        - ao
+                        - ar
+                        - as
+                        - at
+                        - au
+                        - aw
+                        - az
+                        - ba
+                        - bb
+                        - bd
+                        - be
+                        - bf
+                        - bg
+                        - bh
+                        - bi
+                        - bj
+                        - bn
+                        - bo
+                        - br
+                        - bs
+                        - bt
+                        - bw
+                        - by
+                        - bz
+                        - ca
+                        - cd
+                        - cf
+                        - cg
+                        - ch
+                        - ci
+                        - ck
+                        - cl
+                        - cm
+                        - cn
+                        - co
+                        - cr
+                        - cu
+                        - cv
+                        - cy
+                        - cz
+                        - de
+                        - dj
+                        - dk
+                        - dm
+                        - do
+                        - dz
+                        - ec
+                        - ee
+                        - eg
+                        - es
+                        - et
+                        - fi
+                        - fj
+                        - fm
+                        - fo
+                        - fr
+                        - ga
+                        - gb
+                        - gd
+                        - ge
+                        - gf
+                        - gg
+                        - gh
+                        - gi
+                        - gl
+                        - gm
+                        - gn
+                        - gp
+                        - gq
+                        - gr
+                        - gt
+                        - gu
+                        - gy
+                        - hk
+                        - hn
+                        - hr
+                        - ht
+                        - hu
+                        - id
+                        - ie
+                        - il
+                        - im
+                        - in
+                        - iq
+                        - is
+                        - it
+                        - je
+                        - jm
+                        - jo
+                        - jp
+                        - ke
+                        - kg
+                        - kh
+                        - ki
+                        - kn
+                        - kr
+                        - kw
+                        - ky
+                        - kz
+                        - la
+                        - lb
+                        - lc
+                        - li
+                        - lk
+                        - ls
+                        - lt
+                        - lu
+                        - lv
+                        - ly
+                        - ma
+                        - mc
+                        - md
+                        - me
+                        - mg
+                        - mk
+                        - ml
+                        - mm
+                        - mn
+                        - mq
+                        - mr
+                        - ms
+                        - mt
+                        - mu
+                        - mv
+                        - mw
+                        - mx
+                        - my
+                        - mz
+                        - na
+                        - nc
+                        - ne
+                        - ng
+                        - ni
+                        - nl
+                        - 'no'
+                        - np
+                        - nr
+                        - nu
+                        - nz
+                        - om
+                        - pa
+                        - pe
+                        - pf
+                        - pg
+                        - ph
+                        - pk
+                        - pl
+                        - pn
+                        - pr
+                        - ps
+                        - pt
+                        - py
+                        - qa
+                        - re
+                        - ro
+                        - rs
+                        - ru
+                        - rw
+                        - sa
+                        - sb
+                        - sc
+                        - se
+                        - sg
+                        - sh
+                        - si
+                        - sk
+                        - sl
+                        - sm
+                        - sn
+                        - so
+                        - sr
+                        - st
+                        - sv
+                        - td
+                        - tg
+                        - th
+                        - tj
+                        - tk
+                        - tl
+                        - tm
+                        - tn
+                        - to
+                        - tr
+                        - tt
+                        - tw
+                        - tz
+                        - ua
+                        - ug
+                        - us
+                        - uy
+                        - uz
+                        - vc
+                        - ve
+                        - vg
+                        - vi
+                        - vn
+                        - vu
+                        - ws
+                        - ye
+                        - yt
+                        - za
+                        - zm
+                        - zw
+                        description: A two-letter country code (ISO 3166-1 alpha-2).
+                      location_id:
+                        type: integer
+                        description: The location ID.
+                      language:
+                        type: string
+                        description: The location code.
+                    type: object
+                    required:
+                    - country
+                  type: array
+                  minItems: 1
+                  description: A list of locations to assign to given keywords. You can use the 'Locations and languages' endpoint to get country codes, language codes and location IDs.
+              type: object
+              required:
+              - keywords
+              - locations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-keywords'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-keywords'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/management
+      description: Ahrefs Management
+  /project-keywords-delete:
+    put:
+      tags:
+      - Keywords
+      summary: Delete Keywords
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-keywords-delete
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output_json_php_xml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                keywords:
+                  items:
+                    properties:
+                      keyword:
+                        type: string
+                        description: The keyword to delete.
+                      country:
+                        type: string
+                        enum:
+                        - ad
+                        - ae
+                        - af
+                        - ag
+                        - ai
+                        - al
+                        - am
+                        - ao
+                        - ar
+                        - as
+                        - at
+                        - au
+                        - aw
+                        - az
+                        - ba
+                        - bb
+                        - bd
+                        - be
+                        - bf
+                        - bg
+                        - bh
+                        - bi
+                        - bj
+                        - bn
+                        - bo
+                        - br
+                        - bs
+                        - bt
+                        - bw
+                        - by
+                        - bz
+                        - ca
+                        - cd
+                        - cf
+                        - cg
+                        - ch
+                        - ci
+                        - ck
+                        - cl
+                        - cm
+                        - cn
+                        - co
+                        - cr
+                        - cu
+                        - cv
+                        - cy
+                        - cz
+                        - de
+                        - dj
+                        - dk
+                        - dm
+                        - do
+                        - dz
+                        - ec
+                        - ee
+                        - eg
+                        - es
+                        - et
+                        - fi
+                        - fj
+                        - fm
+                        - fo
+                        - fr
+                        - ga
+                        - gb
+                        - gd
+                        - ge
+                        - gf
+                        - gg
+                        - gh
+                        - gi
+                        - gl
+                        - gm
+                        - gn
+                        - gp
+                        - gq
+                        - gr
+                        - gt
+                        - gu
+                        - gy
+                        - hk
+                        - hn
+                        - hr
+                        - ht
+                        - hu
+                        - id
+                        - ie
+                        - il
+                        - im
+                        - in
+                        - iq
+                        - is
+                        - it
+                        - je
+                        - jm
+                        - jo
+                        - jp
+                        - ke
+                        - kg
+                        - kh
+                        - ki
+                        - kn
+                        - kr
+                        - kw
+                        - ky
+                        - kz
+                        - la
+                        - lb
+                        - lc
+                        - li
+                        - lk
+                        - ls
+                        - lt
+                        - lu
+                        - lv
+                        - ly
+                        - ma
+                        - mc
+                        - md
+                        - me
+                        - mg
+                        - mk
+                        - ml
+                        - mm
+                        - mn
+                        - mq
+                        - mr
+                        - ms
+                        - mt
+                        - mu
+                        - mv
+                        - mw
+                        - mx
+                        - my
+                        - mz
+                        - na
+                        - nc
+                        - ne
+                        - ng
+                        - ni
+                        - nl
+                        - 'no'
+                        - np
+                        - nr
+                        - nu
+                        - nz
+                        - om
+                        - pa
+                        - pe
+                        - pf
+                        - pg
+                        - ph
+                        - pk
+                        - pl
+                        - pn
+                        - pr
+                        - ps
+                        - pt
+                        - py
+                        - qa
+                        - re
+                        - ro
+                        - rs
+                        - ru
+                        - rw
+                        - sa
+                        - sb
+                        - sc
+                        - se
+                        - sg
+                        - sh
+                        - si
+                        - sk
+                        - sl
+                        - sm
+                        - sn
+                        - so
+                        - sr
+                        - st
+                        - sv
+                        - td
+                        - tg
+                        - th
+                        - tj
+                        - tk
+                        - tl
+                        - tm
+                        - tn
+                        - to
+                        - tr
+                        - tt
+                        - tw
+                        - tz
+                        - ua
+                        - ug
+                        - us
+                        - uy
+                        - uz
+                        - vc
+                        - ve
+                        - vg
+                        - vi
+                        - vn
+                        - vu
+                        - ws
+                        - ye
+                        - yt
+                        - za
+                        - zm
+                        - zw
+                        description: A two-letter country code (ISO 3166-1 alpha-2).
+                      location_id:
+                        type: integer
+                        description: The location ID.
+                      language:
+                        type: string
+                        description: The location code.
+                    type: object
+                    required:
+                    - keyword
+                  type: array
+                  minItems: 1
+                  description: A list of keywords to delete. You can use the 'Locations and languages' endpoint to get country codes, language codes and location IDs.
+              type: object
+              required:
+              - keywords
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-keywords-delete'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-keywords-delete'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/management
+      description: Ahrefs Management
+  /project-keywords-tags:
+    put:
+      tags:
+      - Keywords
+      summary: Add Keywords Tags
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-keywords-tags
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                project_id:
+                  type: integer
+                  description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+                keywords:
+                  items:
+                    properties:
+                      keyword:
+                        type: string
+                        description: The keyword to add.
+                      country:
+                        type: string
+                        enum:
+                        - ad
+                        - ae
+                        - af
+                        - ag
+                        - ai
+                        - al
+                        - am
+                        - ao
+                        - ar
+                        - as
+                        - at
+                        - au
+                        - aw
+                        - az
+                        - ba
+                        - bb
+                        - bd
+                        - be
+                        - bf
+                        - bg
+                        - bh
+                        - bi
+                        - bj
+                        - bn
+                        - bo
+                        - br
+                        - bs
+                        - bt
+                        - bw
+                        - by
+                        - bz
+                        - ca
+                        - cd
+                        - cf
+                        - cg
+                        - ch
+                        - ci
+                        - ck
+                        - cl
+                        - cm
+                        - cn
+                        - co
+                        - cr
+                        - cu
+                        - cv
+                        - cy
+                        - cz
+                        - de
+                        - dj
+                        - dk
+                        - dm
+                        - do
+                        - dz
+                        - ec
+                        - ee
+                        - eg
+                        - es
+                        - et
+                        - fi
+                        - fj
+                        - fm
+                        - fo
+                        - fr
+                        - ga
+                        - gb
+                        - gd
+                        - ge
+                        - gf
+                        - gg
+                        - gh
+                        - gi
+                        - gl
+                        - gm
+                        - gn
+                        - gp
+                        - gq
+                        - gr
+                        - gt
+                        - gu
+                        - gy
+                        - hk
+                        - hn
+                        - hr
+                        - ht
+                        - hu
+                        - id
+                        - ie
+                        - il
+                        - im
+                        - in
+                        - iq
+                        - is
+                        - it
+                        - je
+                        - jm
+                        - jo
+                        - jp
+                        - ke
+                        - kg
+                        - kh
+                        - ki
+                        - kn
+                        - kr
+                        - kw
+                        - ky
+                        - kz
+                        - la
+                        - lb
+                        - lc
+                        - li
+                        - lk
+                        - ls
+                        - lt
+                        - lu
+                        - lv
+                        - ly
+                        - ma
+                        - mc
+                        - md
+                        - me
+                        - mg
+                        - mk
+                        - ml
+                        - mm
+                        - mn
+                        - mq
+                        - mr
+                        - ms
+                        - mt
+                        - mu
+                        - mv
+                        - mw
+                        - mx
+                        - my
+                        - mz
+                        - na
+                        - nc
+                        - ne
+                        - ng
+                        - ni
+                        - nl
+                        - 'no'
+                        - np
+                        - nr
+                        - nu
+                        - nz
+                        - om
+                        - pa
+                        - pe
+                        - pf
+                        - pg
+                        - ph
+                        - pk
+                        - pl
+                        - pn
+                        - pr
+                        - ps
+                        - pt
+                        - py
+                        - qa
+                        - re
+                        - ro
+                        - rs
+                        - ru
+                        - rw
+                        - sa
+                        - sb
+                        - sc
+                        - se
+                        - sg
+                        - sh
+                        - si
+                        - sk
+                        - sl
+                        - sm
+                        - sn
+                        - so
+                        - sr
+                        - st
+                        - sv
+                        - td
+                        - tg
+                        - th
+                        - tj
+                        - tk
+                        - tl
+                        - tm
+                        - tn
+                        - to
+                        - tr
+                        - tt
+                        - tw
+                        - tz
+                        - ua
+                        - ug
+                        - us
+                        - uy
+                        - uz
+                        - vc
+                        - ve
+                        - vg
+                        - vi
+                        - vn
+                        - vu
+                        - ws
+                        - ye
+                        - yt
+                        - za
+                        - zm
+                        - zw
+                        description: A two-letter country code (ISO 3166-1 alpha-2).
+                      location_id:
+                        type: integer
+                        description: The location ID.
+                      language:
+                        type: string
+                        description: The location code.
+                    type: object
+                    required:
+                    - keyword
+                  type: array
+                  minItems: 1
+                  description: A list of keywords to add. You can use the 'Locations and languages' endpoint to get country codes, language codes and location IDs.
+                tags:
+                  items:
+                    type: string
+                  type: array
+                  minItems: 1
+                  description: A list of tags to add to the keywords. Empty string is not a valid tag.
+                update_mode:
+                  type: string
+                  enum:
+                  - add
+                  - replace
+                  description: '`add` appends tags to existing ones; `replace` overwrites all existing tags entirely.'
+                  default: add
+                output:
+                  type: string
+                  enum:
+                  - json
+                  - php
+                  description: The output format.
+              type: object
+              required:
+              - project_id
+              - keywords
+              - tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-keywords-tags'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-keywords-tags'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/management
+      description: Ahrefs Management
+  /project-keywords-tags-delete:
+    put:
+      tags:
+      - Keywords
+      summary: Delete Keywords Tags
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-keywords-tags-delete
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                project_id:
+                  type: integer
+                  description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+                keywords:
+                  items:
+                    properties:
+                      keyword:
+                        type: string
+                        description: The keyword to delete.
+                      country:
+                        type: string
+                        enum:
+                        - ad
+                        - ae
+                        - af
+                        - ag
+                        - ai
+                        - al
+                        - am
+                        - ao
+                        - ar
+                        - as
+                        - at
+                        - au
+                        - aw
+                        - az
+                        - ba
+                        - bb
+                        - bd
+                        - be
+                        - bf
+                        - bg
+                        - bh
+                        - bi
+                        - bj
+                        - bn
+                        - bo
+                        - br
+                        - bs
+                        - bt
+                        - bw
+                        - by
+                        - bz
+                        - ca
+                        - cd
+                        - cf
+                        - cg
+                        - ch
+                        - ci
+                        - ck
+                        - cl
+                        - cm
+                        - cn
+                        - co
+                        - cr
+                        - cu
+                        - cv
+                        - cy
+                        - cz
+                        - de
+                        - dj
+                        - dk
+                        - dm
+                        - do
+                        - dz
+                        - ec
+                        - ee
+                        - eg
+                        - es
+                        - et
+                        - fi
+                        - fj
+                        - fm
+                        - fo
+                        - fr
+                        - ga
+                        - gb
+                        - gd
+                        - ge
+                        - gf
+                        - gg
+                        - gh
+                        - gi
+                        - gl
+                        - gm
+                        - gn
+                        - gp
+                        - gq
+                        - gr
+                        - gt
+                        - gu
+                        - gy
+                        - hk
+                        - hn
+                        - hr
+                        - ht
+                        - hu
+                        - id
+                        - ie
+                        - il
+                        - im
+                        - in
+                        - iq
+                        - is
+                        - it
+                        - je
+                        - jm
+                        - jo
+                        - jp
+                        - ke
+                        - kg
+                        - kh
+                        - ki
+                        - kn
+                        - kr
+                        - kw
+                        - ky
+                        - kz
+                        - la
+                        - lb
+                        - lc
+                        - li
+                        - lk
+                        - ls
+                        - lt
+                        - lu
+                        - lv
+                        - ly
+                        - ma
+                        - mc
+                        - md
+                        - me
+                        - mg
+                        - mk
+                        - ml
+                        - mm
+                        - mn
+                        - mq
+                        - mr
+                        - ms
+                        - mt
+                        - mu
+                        - mv
+                        - mw
+                        - mx
+                        - my
+                        - mz
+                        - na
+                        - nc
+                        - ne
+                        - ng
+                        - ni
+                        - nl
+                        - 'no'
+                        - np
+                        - nr
+                        - nu
+                        - nz
+                        - om
+                        - pa
+                        - pe
+                        - pf
+                        - pg
+                        - ph
+                        - pk
+                        - pl
+                        - pn
+                        - pr
+                        - ps
+                        - pt
+                        - py
+                        - qa
+                        - re
+                        - ro
+                        - rs
+                        - ru
+                        - rw
+                        - sa
+                        - sb
+                        - sc
+                        - se
+                        - sg
+                        - sh
+                        - si
+                        - sk
+                        - sl
+                        - sm
+                        - sn
+                        - so
+                        - sr
+                        - st
+                        - sv
+                        - td
+                        - tg
+                        - th
+                        - tj
+                        - tk
+                        - tl
+                        - tm
+                        - tn
+                        - to
+                        - tr
+                        - tt
+                        - tw
+                        - tz
+                        - ua
+                        - ug
+                        - us
+                        - uy
+                        - uz
+                        - vc
+                        - ve
+                        - vg
+                        - vi
+                        - vn
+                        - vu
+                        - ws
+                        - ye
+                        - yt
+                        - za
+                        - zm
+                        - zw
+                        description: A two-letter country code (ISO 3166-1 alpha-2).
+                      location_id:
+                        type: integer
+                        description: The location ID.
+                      language:
+                        type: string
+                        description: The location code.
+                    type: object
+                    required:
+                    - keyword
+                  type: array
+                  minItems: 1
+                  description: A list of keywords to delete. You can use the 'Locations and languages' endpoint to get country codes, language codes and location IDs.
+                tags:
+                  items:
+                    type: string
+                  type: array
+                  minItems: 1
+                  description: A list of tags to remove from the keywords.
+                output:
+                  type: string
+                  enum:
+                  - json
+                  - php
+                  description: The output format.
+              type: object
+              required:
+              - project_id
+              - keywords
+              - tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-keywords-tags-delete'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-keywords-tags-delete'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/management
+      description: Ahrefs Management
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              clicks:
+                type:
+                - integer
+                - 'null'
+                title: clicks
+              ctr:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: ctr
+              impressions:
+                type:
+                - integer
+                - 'null'
+                title: impressions
+              keyword:
+                type: string
+                title: keyword
+              keyword_list_labels:
+                items:
+                  type: string
+                type: array
+                title: keyword_list_labels
+              position:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+              top_url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: top_url
+              urls_count:
+                type: integer
+                title: urls_count
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keyword-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              ctr:
+                type: number
+                format: float
+                title: ctr
+              date:
+                type: string
+                format: date-time
+                title: date
+              impressions:
+                type: integer
+                title: impressions
+              keyword:
+                type: string
+                title: keyword
+              position:
+                type: number
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-keywords-tags:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-keywords-delete:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-keywords-tags-delete:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output_json_php_xml:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+        - xml
+      name: output
+      in: query
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/
+x-refined-from:
+- ahrefs-gsc-openapi.json
+- ahrefs-management-openapi.json

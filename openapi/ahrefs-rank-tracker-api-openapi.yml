@@ -1,0 +1,2578 @@
+openapi: 3.2.0
+info:
+  title: Ahrefs Rank Tracker API
+  description: Ahrefs API v3 gives programmatic access to Ahrefs' SEO, marketing, and AI-search data — backlinks, organic and paid traffic, keywords, SERPs, rank tracking, site audits, brand/AI-search visibility, web and social analytics, and account management. This is the full spec for every tool; each tool also has its own spec under /reference/.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3
+  description: Ahrefs API v3
+security:
+- http:
+  - read
+tags:
+- name: Rank Tracker
+  description: Rank tracker.
+paths:
+  /rank-tracker/overview:
+    get:
+      tags:
+      - Rank Tracker
+      summary: Overview
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: rank-tracker.overview
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**best_position_has_thumbnail**: The top position (or target URL’s, if set) has a thumbnail.  \ntype: boolean nullable\n\n**best_position_has_thumbnail_previous**: The top position (or target URL’s, if set) has a thumbnail on the comparison date.  \ntype: boolean nullable\n\n**best_position_has_video_preview**: The top position (or target URL’s, if set) has a video preview.  \ntype: boolean nullable\n\n**best_position_has_video_preview_previous**: The top position (or target URL’s, if set) has a video preview on the comparison date.  \ntype: boolean nullable\n\n**best_position_kind**: The kind of top position (or target URL’s, if set): organic, paid, or a SERP feature.  \ntype: string nullable  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"`\n\n**best_position_kind_previous**: The kind of top position (or target URL’s, if set) on the comparison date.  \ntype: string nullable  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"`\n\n**clicks**: Clicks metric refers to the average monthly number of clicks on the search results that people make while searching for the target keyword. Some searches generate clicks on multiple results, while others might not end in any clicks at all.  \ntype: integer nullable\n\n**clicks_per_search**: Clicks Per Search is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.  \ntype: float nullable\n\n**cost_per_click**: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword.  \ntype: integer nullable\n\n**country**: The country that a given keyword is being tracked in. A two-letter country code (ISO 3166-1 alpha-2).  \ntype: string  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**country_prev**: The country that a given keyword is being tracked in on the comparison date. A two-letter country code (ISO 3166-1 alpha-2).  \ntype: string  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**created_at**: The date when a keyword was added to the project.  \ntype: datetime\n\n**is_branded**: User intent: branded. The user is searching for a specific brand or company name.  \ntype: boolean\n\n**is_commercial**: User intent: commercial. The user is comparing products or services before making a purchase decision.  \ntype: boolean\n\n**is_informational**: User intent: informational. The user is looking for information or an answer to a specific question.  \ntype: boolean\n\n**is_local**: User intent: local. The user is looking for information relevant to a specific location or nearby services.  \ntype: boolean\n\n**is_main_position**: Excludes positions in Ai Overview, Sitelinks, Top stories, Image packs, Videos, Discussions and forums, and posts on X (Twitter).  \ntype: boolean\n\n**is_main_position_prev**: Excludes positions in Ai Overview, Sitelinks, Top stories, Image packs, Videos, Discussions and forums, and posts on X (Twitter) on the comparison date.  \ntype: boolean\n\n**is_navigational**: User intent: navigational. The user is searching for a specific website or web page.  \ntype: boolean\n\n**is_transactional**: User intent: transactional. The user is ready to complete an action, often a purchase.  \ntype: boolean\n\n**keyword**: The keyword your target ranks for.  \ntype: string\n\n**keyword_difficulty**: An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.  \ntype: integer nullable\n\n**keyword_has_data**: Will return `false` if the keyword is still processing and no SERP has been fetched yet.  \ntype: boolean\n\n**keyword_is_frozen**: Indicates whether a keyword has exceeded the tracked keywords limit on your plan. Such keywords are \"frozen\", meaning they do not have their rankings updated.  \ntype: boolean\n\n**keyword_prev**: The keyword your target ranks for on the comparison date.  \ntype: string\n\n**keyword_words**: The number of words in a keyword.  \ntype: integer\n\n**keyword_words_prev**: The number of words in a keyword on the comparison date.  \ntype: integer\n\n**language**: The SERP language that a given keyword is being tracked for.  \ntype: string\n\n**language_prev**: The SERP language on the comparison date.  \ntype: string\n\n**location**: The location (country, state/province, or city) that a given keyword is being tracked in.  \ntype: string\n\n**location_prev**: The location (country, state/province, or city) that a given keyword is being tracked in on the comparison date.  \ntype: string\n\n**parent_topic**: Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead.  To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.  \ntype: string nullable\n\n**position**: The top position (or target URL’s, if set) in organic search.  \ntype: integer nullable\n\n**position_diff**: The change in top position (or target URL’s, if set) between selected dates.  \ntype: integer nullable\n\n**position_prev**: The top position (or target URL’s, if set) on the comparison date.  \ntype: integer nullable\n\n**search_type_image**: Search type Image shows the percentage of searches for a keyword made for images, highlighting interest in visual content.  \ntype: float nullable\n\n**search_type_news**: Search type News shows the percentage of searches for a keyword made for news articles.  \ntype: float nullable\n\n**search_type_video**: Search type Video shows the percentage of searches for a keyword made for video, reflecting interest in video content.  \ntype: float nullable\n\n**search_type_web**: Search type Web shows the percentage of searches for a keyword made for general web content, indicating interest in a wide range of information.  \ntype: float nullable\n\n**serp_features**: The SERP features that appear in search results for a keyword.  \ntype: array(string)  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"` `\"image_th\"` `\"video_th\"` `\"ai_overview_found\"`\n\n**serp_features_prev**: The SERP features that appear in search results for a keyword on the comparison date.  \ntype: array(string)  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"` `\"image_th\"` `\"video_th\"` `\"ai_overview_found\"`\n\n**serp_updated**: The date when we last checked search engine results for a keyword.  \ntype: datetime nullable\n\n**serp_updated_prev**: The date when we checked search engine results up to the comparison date.  \ntype: datetime nullable\n\n**tags**: A list of tags assigned to a given keyword.  \ntype: array(string)\n\n**tags_prev**: A list of tags assigned to a given keyword on the comparison date.  \ntype: array(string)\n\n**target_positions_count**: The number of target URLs ranking for a keyword.  \ntype: integer\n\n**traffic**: An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the \"volume_mode\" parameter.  \ntype: integer nullable\n\n**traffic_diff**: The change in traffic between your selected dates.  \ntype: integer nullable\n\n**traffic_prev**: An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the \"volume_mode\" parameter.  \ntype: integer nullable\n\n**url**: The top-ranking URL (or target URL, if set) in organic search.  \ntype: string nullable\n\n**url_prev**: The top-ranking URL (or target URL, if set) on the comparison date.  \ntype: string nullable\n\n**volume**: An estimation of the average monthly number of searches for a keyword over the latest month or over the latest known 12 months of data depending on the \"volume_mode\" parameter.  \ntype: integer nullable\n\n**volume_desktop_pct**: The percentage of the total search volume that comes from desktop devices.  \ntype: float nullable\n\n**volume_mobile_pct**: The percentage of the total search volume that comes from mobile devices.  \ntype: float nullable"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: A date to compare metrics with in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_compared
+        in: query
+      - description: A date to report metrics on in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: Choose between mobile and desktop rankings.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+        name: device
+        in: query
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: 'The search volume calculation mode: monthly or average. It affects volume, traffic, and traffic value.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - monthly
+          - average
+          default: monthly
+        name: volume_mode
+        in: query
+      - $ref: '#/components/parameters/rank-tracker.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.overview'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.overview'
+        '400':
+          $ref: '#/components/responses/rank-tracker.error_400'
+        '401':
+          $ref: '#/components/responses/rank-tracker.error_401'
+        '403':
+          $ref: '#/components/responses/rank-tracker.error_403'
+        '429':
+          $ref: '#/components/responses/rank-tracker.error_429'
+        '500':
+          $ref: '#/components/responses/rank-tracker.error_500'
+  /rank-tracker/competitors-overview:
+    get:
+      tags:
+      - Rank Tracker
+      summary: Competitors overview
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: rank-tracker.competitors-overview
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**country**: The country that a given keyword is being tracked in. A two-letter country code (ISO 3166-1 alpha-2).  \ntype: string  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**is_main_position**: Excludes positions in Ai Overview, Sitelinks, Top stories, Image packs, Videos, Discussions and forums, and posts on X (Twitter).  \ntype: boolean\n\n**is_main_position_prev**: Excludes positions in Ai Overview, Sitelinks, Top stories, Image packs, Videos, Discussions and forums, and posts on X (Twitter) on the comparison date.  \ntype: boolean\n\n**keyword**: The keyword your target ranks for.  \ntype: string\n\n**keyword_difficulty**: An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.  \ntype: integer nullable\n\n**keyword_has_data**: Will return `false` if the keyword is still processing and no SERP has been fetched yet.  \ntype: boolean\n\n**keyword_is_frozen**: Indicates whether a keyword has exceeded the tracked keywords limit on your plan. Such keywords are \"frozen\", meaning they do not have their rankings updated.  \ntype: boolean\n\n**language**: The SERP language that a given keyword is being tracked for.  \ntype: string\n\n**location**: The location (country, state/province, or city) that a given keyword is being tracked in.  \ntype: string\n\n**serp_features**: The SERP features that appear in search results for a keyword.  \ntype: array(string)  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"` `\"image_th\"` `\"video_th\"` `\"ai_overview_found\"`\n\n**serp_updated**: The date when we last checked search engine results for a keyword.  \ntype: datetime nullable\n\n**serp_updated_prev**: The date when we checked search engine results up to the comparison date.  \ntype: datetime nullable\n\n**tags**: A list of tags assigned to a given keyword.  \ntype: array(string)\n\n**volume**: An estimation of the average monthly number of searches for a keyword over the latest month or over the latest known 12 months of data depending on the \"volume_mode\" parameter.  \ntype: integer nullable"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: A date to compare metrics with in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_compared
+        in: query
+      - description: A date to report metrics on in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: Choose between mobile and desktop rankings.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+        name: device
+        in: query
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: 'The search volume calculation mode: monthly or average. It affects volume, traffic, and traffic value.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - monthly
+          - average
+          default: monthly
+        name: volume_mode
+        in: query
+      - $ref: '#/components/parameters/rank-tracker.output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.competitors-overview'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.competitors-overview'
+        '400':
+          $ref: '#/components/responses/rank-tracker.error_400'
+        '401':
+          $ref: '#/components/responses/rank-tracker.error_401'
+        '403':
+          $ref: '#/components/responses/rank-tracker.error_403'
+        '429':
+          $ref: '#/components/responses/rank-tracker.error_429'
+        '500':
+          $ref: '#/components/responses/rank-tracker.error_500'
+  /rank-tracker/competitors-pages:
+    get:
+      tags:
+      - Rank Tracker
+      summary: Competitors pages
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: rank-tracker.competitors-pages
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**country**: The country that a given keyword is being tracked in. A two-letter country code (ISO 3166-1 alpha-2).  \ntype: string  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**country_prev**: The country that a given keyword is being tracked in on the comparison date. A two-letter country code (ISO 3166-1 alpha-2).  \ntype: string  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**domain**: The page domain.  \ntype: string\n\n**keyword**: The keyword your target ranks for.  \ntype: string\n\n**keyword_prev**: The keyword your target ranks for on the comparison date.  \ntype: string\n\n**language**: The SERP language that a given keyword is being tracked for.  \ntype: string\n\n**language_prev**: The SERP language on the comparison date.  \ntype: string\n\n**location**: The location (country, state/province, or city) that a given keyword is being tracked in.  \ntype: string\n\n**location_prev**: The location (country, state/province, or city) that a given keyword is being tracked in on the comparison date.  \ntype: string\n\n**tags**: A list of tags assigned to a given keyword.  \ntype: array(string)\n\n**tags_prev**: A list of tags assigned to a given keyword on the comparison date.  \ntype: array(string)\n\n**url**: The page URL.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: Restrict pages to target and tracked competitors
+        required: false
+        explode: false
+        schema:
+          type: boolean
+          default: false
+        name: target_and_tracked_competitors_only
+        in: query
+      - description: A date to compare metrics with in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_compared
+        in: query
+      - description: A date to report metrics on in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: Choose between mobile and desktop rankings.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+        name: device
+        in: query
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: 'The search volume calculation mode: monthly or average. It affects volume, traffic, and traffic value.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - monthly
+          - average
+          default: monthly
+        name: volume_mode
+        in: query
+      - $ref: '#/components/parameters/rank-tracker.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.competitors-pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.competitors-pages'
+        '400':
+          $ref: '#/components/responses/rank-tracker.error_400'
+        '401':
+          $ref: '#/components/responses/rank-tracker.error_401'
+        '403':
+          $ref: '#/components/responses/rank-tracker.error_403'
+        '429':
+          $ref: '#/components/responses/rank-tracker.error_429'
+        '500':
+          $ref: '#/components/responses/rank-tracker.error_500'
+  /rank-tracker/competitors-domains:
+    get:
+      tags:
+      - Rank Tracker
+      summary: Competitors domains
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: rank-tracker.competitors-domains
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**country**: The country that a given keyword is being tracked in. A two-letter country code (ISO 3166-1 alpha-2).  \ntype: string  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**country_prev**: The country that a given keyword is being tracked in on the comparison date. A two-letter country code (ISO 3166-1 alpha-2).  \ntype: string  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**domain**: The page domain.  \ntype: domain\n\n**keyword**: The keyword your target ranks for.  \ntype: string\n\n**keyword_prev**: The keyword your target ranks for on the comparison date.  \ntype: string\n\n**language**: The SERP language that a given keyword is being tracked for.  \ntype: string\n\n**language_prev**: The SERP language on the comparison date.  \ntype: string\n\n**location**: The location (country, state/province, or city) that a given keyword is being tracked in.  \ntype: string\n\n**location_prev**: The location (country, state/province, or city) that a given keyword is being tracked in on the comparison date.  \ntype: string\n\n**tags**: A list of tags assigned to a given keyword.  \ntype: array(string)\n\n**tags_prev**: A list of tags assigned to a given keyword on the comparison date.  \ntype: array(string)"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: Restrict domains to target and tracked competitors
+        required: false
+        explode: false
+        schema:
+          type: boolean
+          default: false
+        name: target_and_tracked_competitors_only
+        in: query
+      - description: A date to compare metrics with in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_compared
+        in: query
+      - description: A date to report metrics on in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: Choose between mobile and desktop rankings.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+        name: device
+        in: query
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: 'The search volume calculation mode: monthly or average. It affects volume, traffic, and traffic value.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - monthly
+          - average
+          default: monthly
+        name: volume_mode
+        in: query
+      - $ref: '#/components/parameters/rank-tracker.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.competitors-domains'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.competitors-domains'
+        '400':
+          $ref: '#/components/responses/rank-tracker.error_400'
+        '401':
+          $ref: '#/components/responses/rank-tracker.error_401'
+        '403':
+          $ref: '#/components/responses/rank-tracker.error_403'
+        '429':
+          $ref: '#/components/responses/rank-tracker.error_429'
+        '500':
+          $ref: '#/components/responses/rank-tracker.error_500'
+  /rank-tracker/serp-overview:
+    get:
+      tags:
+      - Rank Tracker
+      summary: SERP Overview
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: rank-tracker.serp-overview
+      parameters:
+      - description: The number of top organic SERP positions to return. If not specified, all available positions will be returned.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: top_positions
+        in: query
+      - description: Choose between mobile and desktop rankings.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+        name: device
+        in: query
+      - description: A timestamp on which the last available SERP Overview is returned in YYYY-MM-DDThh:mm:ss format. If it is not specified, the most recent SERP Overview is returned.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: date
+        in: query
+      - description: The location ID of a tracked keyword.You can use the `management/project-keywords` endpoint to get country codes, language codes and location IDs for your tracked keywords.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: location_id
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - description: The language code of a tracked keyword.You can use the `management/project-keywords` endpoint to get country codes, language codes and location IDs for your tracked keywords.
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: language_code
+        in: query
+      - description: The keyword to return SERP Overview for.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: keyword
+        in: query
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/rank-tracker.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.serp-overview'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.serp-overview'
+        '400':
+          $ref: '#/components/responses/rank-tracker.error_400'
+        '401':
+          $ref: '#/components/responses/rank-tracker.error_401'
+        '403':
+          $ref: '#/components/responses/rank-tracker.error_403'
+        '429':
+          $ref: '#/components/responses/rank-tracker.error_429'
+        '500':
+          $ref: '#/components/responses/rank-tracker.error_500'
+  /rank-tracker/competitors-stats:
+    get:
+      tags:
+      - Rank Tracker
+      summary: Competitors metrics
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: rank-tracker.competitors-stats
+      parameters:
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: A date to report metrics on in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: Choose between mobile and desktop rankings.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+        name: device
+        in: query
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: 'The search volume calculation mode: monthly or average. It affects volume, traffic, and traffic value.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - monthly
+          - average
+          default: monthly
+        name: volume_mode
+        in: query
+      - $ref: '#/components/parameters/rank-tracker.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.competitors-stats'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/rank-tracker.competitors-stats'
+        '400':
+          $ref: '#/components/responses/rank-tracker.error_400'
+        '401':
+          $ref: '#/components/responses/rank-tracker.error_401'
+        '403':
+          $ref: '#/components/responses/rank-tracker.error_403'
+        '429':
+          $ref: '#/components/responses/rank-tracker.error_429'
+        '500':
+          $ref: '#/components/responses/rank-tracker.error_500'
+components:
+  parameters:
+    rank-tracker.output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+    rank-tracker.output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  schemas:
+    rank-tracker.competitors-stats:
+      properties:
+        competitors-metrics:
+          items:
+            properties:
+              ai_overview_count:
+                type: integer
+                title: ai_overview_count
+                description: The total number of tracked keywords for which your target ranks in an AI Overview.
+              average_position:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: average_position
+                description: The average of your target's top organic positions across all tracked keywords.
+              competitor:
+                type: string
+                title: competitor
+                description: Competitor's URL.
+              discussions_count:
+                type: integer
+                title: discussions_count
+                description: The total number of tracked keywords for which your target ranks in Discussions and forums.
+              featured_snippet_count:
+                type: integer
+                title: featured_snippet_count
+                description: The total number of tracked keywords for which your target ranks in a Featured snippet.
+              image_pack_count:
+                type: integer
+                title: image_pack_count
+                description: The total number of tracked keywords for which your target ranks in an Image pack.
+              knowledge_card_count:
+                type: integer
+                title: knowledge_card_count
+                description: The total number of tracked keywords for which your target ranks in a Knowledge card.
+              knowledge_panel_count:
+                type: integer
+                title: knowledge_panel_count
+                description: The total number of tracked keywords for which your target ranks in a Knowledge panel.
+              pos_11_20:
+                type: integer
+                title: pos_11_20
+                description: The total number of tracked keywords for which your target's top organic position is within the 11th to 20th results.
+              pos_1_3:
+                type: integer
+                title: pos_1_3
+                description: The total number of tracked keywords for which your target's top organic position is within the top 3 results.
+              pos_21_50:
+                type: integer
+                title: pos_21_50
+                description: The total number of tracked keywords for which your target's top organic position is within the 21st to 50th results.
+              pos_4_10:
+                type: integer
+                title: pos_4_10
+                description: The total number of tracked keywords for which your target's top organic position is within the 4th to 10th results.
+              pos_51_plus:
+                type: integer
+                title: pos_51_plus
+                description: The total number of tracked keywords for which your target's top organic position is the 51st or higher.
+              pos_no_rank:
+                type: integer
+                title: pos_no_rank
+                description: The total number of tracked keywords where your target doesn't rank.
+              share_of_traffic_value:
+                type: number
+                format: float
+                title: share_of_traffic_value
+                description: The share of your target's organic search traffic value compared to the total organic search traffic value for all tracked keywords.
+              share_of_voice:
+                type: number
+                format: float
+                title: share_of_voice
+                description: The share of your target's organic search traffic compared to the total organic search traffic for all tracked keywords.
+              sitelinks_count:
+                type: integer
+                title: sitelinks_count
+                description: The total number of tracked keywords for which your target ranks in Sitelinks.
+              thumbnail_count:
+                type: integer
+                title: thumbnail_count
+                description: The total number of tracked keywords for which your target ranks in a Thumbnail.
+              top_stories_count:
+                type: integer
+                title: top_stories_count
+                description: The total number of tracked keywords for which your target ranks in Top stories.
+              traffic:
+                type:
+                - integer
+                - 'null'
+                title: traffic
+                description: The estimated number of monthly visits that your target gets from organic search for all tracked keywords.
+              traffic_value:
+                type:
+                - integer
+                - 'null'
+                title: traffic_value
+                description: The estimated value of your target's monthly organic search traffic for all tracked keywords.
+              video_preview_count:
+                type: integer
+                title: video_preview_count
+                description: The total number of tracked keywords for which your target ranks in a Video preview.
+              videos_count:
+                type: integer
+                title: videos_count
+                description: The total number of tracked keywords for which your target ranks in Videos.
+              x_count:
+                type: integer
+                title: x_count
+                description: The total number of tracked keywords for which your target ranks in an X (Twitter) widget.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    rank-tracker.serp-overview:
+      properties:
+        positions:
+          items:
+            properties:
+              ahrefs_rank:
+                type:
+                - integer
+                - 'null'
+                title: ahrefs_rank
+                description: 'The strength of a domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              backlinks:
+                type:
+                - integer
+                - 'null'
+                title: backlinks
+                description: The total number of links from other websites pointing to a search result.
+              domain_rating:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: domain_rating
+                description: The strength of a domain’s backlink profile compared to the others in our database on a 100-point scale.
+              keywords:
+                type:
+                - integer
+                - 'null'
+                title: keywords
+                description: The total number of keywords that a search result ranks for in the top 100 organic positions.
+              nr_words:
+                type:
+                - integer
+                - 'null'
+                title: nr_words
+                description: The total number of words present in the HTML of a web page.
+              page_type:
+                type:
+                - string
+                - 'null'
+                title: page_type
+                description: Comma-separated list of AI-predicted hierarchical page type paths for the ranking page. Each value is a slash-prefixed path (e.g. /Article/How_to).
+              position:
+                type: integer
+                title: position
+                description: The position of the search result in SERP.
+              refdomains:
+                type:
+                - integer
+                - 'null'
+                title: refdomains
+                description: The total number of unique domains linking to a search result.
+              title:
+                type:
+                - string
+                - 'null'
+                title: title
+                description: The title of a ranking page.
+              top_keyword:
+                type:
+                - string
+                - 'null'
+                title: top_keyword
+                description: The keyword that brings the most organic traffic to a search result.
+              top_keyword_volume:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_volume
+                description: An estimation of the average monthly number of searches for the top keyword over the latest known 12 months of data.
+              traffic:
+                type:
+                - integer
+                - 'null'
+                title: traffic
+                description: An estimation of the monthly organic search traffic that a result gets from all the keywords that it ranks for.
+              type:
+                items:
+                  type: string
+                type: array
+                title: type
+                description: 'The kind of the position: organic, paid, or a SERP feature. Allowed values: `ai_overview`, `ai_overview_sitelink`, `discussion`, `image`, `image_th`, `knowledge_card`, `knowledge_panel`, `local_pack`, `organic`, `organic_shopping`, `paid_top`, `paid_bottom`, `paid_right`, `question`, `sitelink`, `snippet`, `top_story`, `tweet`, `video`, `video_th`. '
+              update_date:
+                type: string
+                format: date
+                title: update_date
+                description: The date when we checked search engine results for a keyword.
+              url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url
+                description: The URL of a ranking page.
+              url_rating:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: url_rating
+                description: The strength of a page's backlink profile on a 100-point logarithmic scale.
+              value:
+                type:
+                - integer
+                - 'null'
+                title: value
+                description: The estimated value of a page’s monthly organic search traffic, in USD cents.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    rank-tracker.competitors-overview:
+      properties:
+        keywords:
+          items:
+            properties:
+              competitors_list:
+                items:
+                  type: object
+                  title: competitors_list
+                  description: 'Competitors information for a given keyword. The following fields are included: `url`, `url_prev`, `position`, `position_prev`, `best_position_kind`, `best_position_kind_prev`, `traffic`, `traffic_prev`, `value`, `value_prev`. Fields ending in `prev` are included only in the compared view.'
+                type: array
+                title: competitors_list
+                description: 'Competitors information for a given keyword. The following fields are included: `url`, `url_prev`, `position`, `position_prev`, `best_position_kind`, `best_position_kind_prev`, `traffic`, `traffic_prev`, `value`, `value_prev`. Fields ending in `prev` are included only in the compared view.'
+              country:
+                type: string
+                enum:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: country
+                description: The country that a given keyword is being tracked in. A two-letter country code (ISO 3166-1 alpha-2).
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword your target ranks for.
+              keyword_difficulty:
+                type:
+                - integer
+                - 'null'
+                title: keyword_difficulty
+                description: An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.
+              keyword_has_data:
+                type: boolean
+                title: keyword_has_data
+                description: Will return `false` if the keyword is still processing and no SERP has been fetched yet.
+              keyword_is_frozen:
+                type: boolean
+                title: keyword_is_frozen
+                description: Indicates whether a keyword has exceeded the tracked keywords limit on your plan. Such keywords are "frozen", meaning they do not have their rankings updated.
+              language:
+                type: string
+                title: language
+                description: The SERP language that a given keyword is being tracked for.
+              location:
+                type: string
+                title: location
+                description: The location (country, state/province, or city) that a given keyword is being tracked in.
+              serp_features:
+                items:
+                  type: string
+                  enum:
+                  - paid_top
+                  - paid_bottom
+                  - paid_right
+                  - paid_sitelink
+                  - organic
+                  - sitelink
+                  - snippet
+                  - image
+                  - article
+                  - knowledge_card
+                  - knowledge_panel
+                  - local_pack
+                  - local_teaser
+                  - news
+                  - question
+                  - review
+                  - shopping
+                  - tweet
+                  - spelling
+                  - video
+                  - discussion
+                  - ai_overview
+                  - ai_overview_sitelink
+                  - organic_shopping
+                  - image_th
+                  - video_th
+                  - ai_overview_found
+                  title: serp_features
+                  description: The SERP features that appear in search results for a keyword.
+                type: array
+                title: serp_features
+                description: The SERP features that appear in search results for a keyword.
+              serp_updated:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: serp_updated
+                description: The date when we last checked search engine results for a keyword.
+              serp_updated_prev:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: serp_updated_prev
+                description: The date when we checked search engine results up to the comparison date.
+              tags:
+                items:
+                  type: string
+                  title: tags
+                  description: A list of tags assigned to a given keyword.
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+              volume:
+                type:
+                - integer
+                - 'null'
+                title: volume
+                description: An estimation of the average monthly number of searches for a keyword over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    rank-tracker.competitors-domains:
+      properties:
+        competitors-domains:
+          items:
+            properties:
+              domain:
+                type: string
+                format: domain
+                title: domain
+                description: The page domain.
+              keywords:
+                type: integer
+                title: keywords
+                description: The total number of keywords that your target ranks for in the top 100 organic search results.
+              pages:
+                type: integer
+                title: pages
+                description: The total number of pages from this domain ranking for the project's tracked keywords.
+              share_of_traffic_value:
+                type: number
+                format: float
+                title: share_of_traffic_value
+                description: The share of your target's organic search traffic value compared to the total organic search traffic value for all tracked keywords.
+              share_of_traffic_value_prev:
+                type: number
+                format: float
+                title: share_of_traffic_value_prev
+                description: The share of traffic value on the comparison date.
+              share_of_voice:
+                type: number
+                format: float
+                title: share_of_voice
+                description: The share of your target's organic search traffic compared to the total organic search traffic for all tracked keywords.
+              share_of_voice_prev:
+                type: number
+                format: float
+                title: share_of_voice_prev
+                description: The share of voice on the comparison date.
+              status:
+                type: string
+                enum:
+                - left
+                - right
+                - both
+                title: status
+                description: 'The status of a page: the new page that just started to rank ("left"), the lost page that disappeared from search results ("right"), or no change ("both").'
+              traffic:
+                type: integer
+                title: traffic
+                description: An estimation of the number of monthly visits that a page gets from organic search.
+              traffic_prev:
+                type: integer
+                title: traffic_prev
+                description: The traffic on the comparison date.
+              traffic_value:
+                type:
+                - integer
+                - 'null'
+                title: traffic_value
+                description: The estimated value of a page’s monthly organic search traffic, in USD cents.
+              traffic_value_prev:
+                type:
+                - integer
+                - 'null'
+                title: traffic_value_prev
+                description: The traffic value on the comparison date.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    rank-tracker.competitors-pages:
+      properties:
+        competitors-pages:
+          items:
+            properties:
+              keywords:
+                type: integer
+                title: keywords
+                description: The total number of keywords that your target ranks for in the top 100 organic search results.
+              share_of_traffic_value:
+                type: number
+                format: float
+                title: share_of_traffic_value
+                description: The share of your target's organic search traffic value compared to the total organic search traffic value for all tracked keywords.
+              share_of_traffic_value_prev:
+                type: number
+                format: float
+                title: share_of_traffic_value_prev
+                description: The share of traffic value on the comparison date.
+              share_of_voice:
+                type: number
+                format: float
+                title: share_of_voice
+                description: The share of your target's organic search traffic compared to the total organic search traffic for all tracked keywords.
+              share_of_voice_prev:
+                type: number
+                format: float
+                title: share_of_voice_prev
+                description: The share of voice on the comparison date.
+              status:
+                type: string
+                enum:
+                - left
+                - right
+                - both
+                title: status
+                description: 'The status of a page: the new page that just started to rank ("left"), the lost page that disappeared from search results ("right"), or no change ("both").'
+              title:
+                type:
+                - string
+                - 'null'
+                title: title
+                description: The title displayed for the page in its top keyword's SERP.
+              title_prev:
+                type:
+                - string
+                - 'null'
+                title: title_prev
+                description: The title on the comparison date.
+              traffic:
+                type: integer
+                title: traffic
+                description: An estimation of the number of monthly visits that a page gets from organic search.
+              traffic_prev:
+                type: integer
+                title: traffic_prev
+                description: The traffic on the comparison date.
+              traffic_value:
+                type:
+                - integer
+                - 'null'
+                title: traffic_value
+                description: The estimated value of a page’s monthly organic search traffic, in USD cents.
+              traffic_value_prev:
+                type:
+                - integer
+                - 'null'
+                title: traffic_value_prev
+                description: The traffic value on the comparison date.
+              url:
+                type: string
+                format: url
+                title: url
+                description: The page URL.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    rank-tracker.overview:
+      properties:
+        overviews:
+          items:
+            properties:
+              best_position_has_thumbnail:
+                type:
+                - boolean
+                - 'null'
+                title: best_position_has_thumbnail
+                description: The top position (or target URL’s, if set) has a thumbnail.
+              best_position_has_thumbnail_previous:
+                type:
+                - boolean
+                - 'null'
+                title: best_position_has_thumbnail_previous
+                description: The top position (or target URL’s, if set) has a thumbnail on the comparison date.
+              best_position_has_video_preview:
+                type:
+                - boolean
+                - 'null'
+                title: best_position_has_video_preview
+                description: The top position (or target URL’s, if set) has a video preview.
+              best_position_has_video_preview_previous:
+                type:
+                - boolean
+                - 'null'
+                title: best_position_has_video_preview_previous
+                description: The top position (or target URL’s, if set) has a video preview on the comparison date.
+              best_position_kind:
+                type:
+                - string
+                - 'null'
+                enum:
+                - paid_top
+                - paid_bottom
+                - paid_right
+                - paid_sitelink
+                - organic
+                - sitelink
+                - snippet
+                - image
+                - article
+                - knowledge_card
+                - knowledge_panel
+                - local_pack
+                - local_teaser
+                - news
+                - question
+                - review
+                - shopping
+                - tweet
+                - spelling
+                - video
+                - discussion
+                - ai_overview
+                - ai_overview_sitelink
+                - organic_shopping
+                title: best_position_kind
+                description: 'The kind of top position (or target URL’s, if set): organic, paid, or a SERP feature.'
+              best_position_kind_previous:
+                type:
+                - string
+                - 'null'
+                enum:
+                - paid_top
+                - paid_bottom
+                - paid_right
+                - paid_sitelink
+                - organic
+                - sitelink
+                - snippet
+                - image
+                - article
+                - knowledge_card
+                - knowledge_panel
+                - local_pack
+                - local_teaser
+                - news
+                - question
+                - review
+                - shopping
+                - tweet
+                - spelling
+                - video
+                - discussion
+                - ai_overview
+                - ai_overview_sitelink
+                - organic_shopping
+                title: best_position_kind_previous
+                description: The kind of top position (or target URL’s, if set) on the comparison date.
+              clicks:
+                type:
+                - integer
+                - 'null'
+                title: clicks
+                description: Clicks metric refers to the average monthly number of clicks on the search results that people make while searching for the target keyword. Some searches generate clicks on multiple results, while others might not end in any clicks at all.
+              clicks_per_search:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: clicks_per_search
+                description: Clicks Per Search is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.
+              cost_per_click:
+                type:
+                - integer
+                - 'null'
+                title: cost_per_click
+                description: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword.
+              country:
+                type: string
+                enum:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: country
+                description: The country that a given keyword is being tracked in. A two-letter country code (ISO 3166-1 alpha-2).
+              country_prev:
+                type: string
+                enum:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: country_prev
+                description: The country that a given keyword is being tracked in on the comparison date. A two-letter country code (ISO 3166-1 alpha-2).
+              created_at:
+                type: string
+                format: date-time
+                title: created_at
+                description: The date when a keyword was added to the project.
+              is_branded:
+                type: boolean
+                title: is_branded
+                description: 'User intent: branded. The user is searching for a specific brand or company name.'
+              is_commercial:
+                type: boolean
+                title: is_commercial
+                description: 'User intent: commercial. The user is comparing products or services before making a purchase decision.'
+              is_informational:
+                type: boolean
+                title: is_informational
+                description: 'User intent: informational. The user is looking for information or an answer to a specific question.'
+              is_local:
+                type: boolean
+                title: is_local
+                description: 'User intent: local. The user is looking for information relevant to a specific location or nearby services.'
+              is_navigational:
+                type: boolean
+                title: is_navigational
+                description: 'User intent: navigational. The user is searching for a specific website or web page.'
+              is_transactional:
+                type: boolean
+                title: is_transactional
+                description: 'User intent: transactional. The user is ready to complete an action, often a purchase.'
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword your target ranks for.
+              keyword_difficulty:
+                type:
+                - integer
+                - 'null'
+                title: keyword_difficulty
+                description: An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.
+              keyword_has_data:
+                type: boolean
+                title: keyword_has_data
+                description: Will return `false` if the keyword is still processing and no SERP has been fetched yet.
+              keyword_is_frozen:
+                type: boolean
+                title: keyword_is_frozen
+                description: Indicates whether a keyword has exceeded the tracked keywords limit on your plan. Such keywords are "frozen", meaning they do not have their rankings updated.
+              keyword_prev:
+                type: string
+                title: keyword_prev
+                description: The keyword your target ranks for on the comparison date.
+              language:
+                type: string
+                title: language
+                description: The SERP language that a given keyword is being tracked for.
+              language_prev:
+                type: string
+                title: language_prev
+                description: The SERP language on the comparison date.
+              location:
+                type: string
+                title: location
+                description: The location (country, state/province, or city) that a given keyword is being tracked in.
+              location_prev:
+                type: string
+                title: location_prev
+                description: The location (country, state/province, or city) that a given keyword is being tracked in on the comparison date.
+              parent_topic:
+                type:
+                - string
+                - 'null'
+                title: parent_topic
+                description: 'Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead.  To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.'
+              position:
+                type:
+                - integer
+                - 'null'
+                title: position
+                description: The top position (or target URL’s, if set) in organic search.
+              position_diff:
+                type:
+                - integer
+                - 'null'
+                title: position_diff
+                description: The change in top position (or target URL’s, if set) between selected dates.
+              position_prev:
+                type:
+                - integer
+                - 'null'
+                title: position_prev
+                description: The top position (or target URL’s, if set) on the comparison date.
+              search_type_image:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: search_type_image
+                description: Search type Image shows the percentage of searches for a keyword made for images, highlighting interest in visual content.
+              search_type_news:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: search_type_news
+                description: Search type News shows the percentage of searches for a keyword made for news articles.
+              search_type_video:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: search_type_video
+                description: Search type Video shows the percentage of searches for a keyword made for video, reflecting interest in video content.
+              search_type_web:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: search_type_web
+                description: Search type Web shows the percentage of searches for a keyword made for general web content, indicating interest in a wide range of information.
+              serp_features:
+                items:
+                  type: string
+                  enum:
+                  - paid_top
+                  - paid_bottom
+                  - paid_right
+                  - paid_sitelink
+                  - organic
+                  - sitelink
+                  - snippet
+                  - image
+                  - article
+                  - knowledge_card
+                  - knowledge_panel
+                  - local_pack
+                  - local_teaser
+                  - news
+                  - question
+                  - review
+                  - shopping
+                  - tweet
+                  - spelling
+                  - video
+                  - discussion
+                  - ai_overview
+                  - ai_overview_sitelink
+                  - organic_shopping
+                  - image_th
+                  - video_th
+                  - ai_overview_found
+                  title: serp_features
+                  description: The SERP features that appear in search results for a keyword.
+                type: array
+                title: serp_features
+                description: The SERP features that appear in search results for a keyword.
+              serp_features_prev:
+                items:
+                  type: string
+                  enum:
+                  - paid_top
+                  - paid_bottom
+                  - paid_right
+                  - paid_sitelink
+                  - organic
+                  - sitelink
+                  - snippet
+                  - image
+                  - article
+                  - knowledge_card
+                  - knowledge_panel
+                  - local_pack
+                  - local_teaser
+                  - news
+                  - question
+                  - review
+                  - shopping
+                  - tweet
+                  - spelling
+                  - video
+                  - discussion
+                  - ai_overview
+                  - ai_overview_sitelink
+                  - organic_shopping
+                  - image_th
+                  - video_th
+                  - ai_overview_found
+                  title: serp_features_prev
+                  description: The SERP features that appear in search results for a keyword on the comparison date.
+                type: array
+                title: serp_features_prev
+                description: The SERP features that appear in search results for a keyword on the comparison date.
+              serp_updated:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: serp_updated
+                description: The date when we last checked search engine results for a keyword.
+              serp_updated_prev:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: serp_updated_prev
+                description: The date when we checked search engine results up to the comparison date.
+              tags:
+                items:
+                  type: string
+                  title: tags
+                  description: A list of tags assigned to a given keyword.
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+              tags_prev:
+                items:
+                  type: string
+                  title: tags_prev
+                  description: A list of tags assigned to a given keyword on the comparison date.
+                type: array
+                title: tags_prev
+                description: A list of tags assigned to a given keyword on the comparison date.
+              target_positions_count:
+                type: integer
+                title: target_positions_count
+                description: The number of target URLs ranking for a keyword.
+              traffic:
+                type:
+                - integer
+                - 'null'
+                title: traffic
+                description: An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+              traffic_diff:
+                type:
+                - integer
+                - 'null'
+                title: traffic_diff
+                description: The change in traffic between your selected dates.
+              traffic_prev:
+                type:
+                - integer
+                - 'null'
+                title: traffic_prev
+                description: An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+              url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url
+                description: The top-ranking URL (or target URL, if set) in organic search.
+              url_prev:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url_prev
+                description: The top-ranking URL (or target URL, if set) on the comparison date.
+              volume:
+                type:
+                - integer
+                - 'null'
+                title: volume
+                description: An estimation of the average monthly number of searches for a keyword over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+              volume_desktop_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_desktop_pct
+                description: The percentage of the total search volume that comes from desktop devices.
+              volume_mobile_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_mobile_pct
+                description: The percentage of the total search volume that comes from mobile devices.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    rank-tracker.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  responses:
+    rank-tracker.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+    rank-tracker.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+    rank-tracker.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+    rank-tracker.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+    rank-tracker.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer

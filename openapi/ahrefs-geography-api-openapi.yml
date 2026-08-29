@@ -1,0 +1,877 @@
+openapi: 3.2.0
+info:
+  title: Web Analytics Geography API
+  description: Web_analytics.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/web-analytics
+  description: Ahrefs Web Analytics
+security:
+- http:
+  - read
+tags:
+- name: Geography
+paths:
+  /cities:
+    get:
+      tags:
+      - Geography
+      summary: Cities
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: cities
+      parameters:
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: limit
+        in: query
+      - description: "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: order_by
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cities'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/cities'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /cities-chart:
+    get:
+      tags:
+      - Geography
+      summary: Cities Chart
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: cities-chart
+      parameters:
+      - description: Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count).
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: cities_to_chart
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: Time granularity for chart data points.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - hourly
+          - daily
+          - weekly
+          - monthly
+        name: granularity
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cities-chart'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/cities-chart'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /continents:
+    get:
+      tags:
+      - Geography
+      summary: Continents
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: continents
+      parameters:
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: limit
+        in: query
+      - description: "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: order_by
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/continents'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/continents'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /continents-chart:
+    get:
+      tags:
+      - Geography
+      summary: Continents Chart
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: continents-chart
+      parameters:
+      - description: Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count).
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: continents_to_chart
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: Time granularity for chart data points.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - hourly
+          - daily
+          - weekly
+          - monthly
+        name: granularity
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/continents-chart'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/continents-chart'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /countries:
+    get:
+      tags:
+      - Geography
+      summary: Countries
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: countries
+      parameters:
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: limit
+        in: query
+      - description: "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: order_by
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/countries'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/countries'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /countries-chart:
+    get:
+      tags:
+      - Geography
+      summary: Countries Chart
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: countries-chart
+      parameters:
+      - description: Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count).
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: countries_to_chart
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: Time granularity for chart data points.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - hourly
+          - daily
+          - weekly
+          - monthly
+        name: granularity
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/countries-chart'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/countries-chart'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /languages:
+    get:
+      tags:
+      - Geography
+      summary: Languages
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: languages
+      parameters:
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: limit
+        in: query
+      - description: "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: order_by
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/languages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/languages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /languages-chart:
+    get:
+      tags:
+      - Geography
+      summary: Languages Chart
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: languages-chart
+      parameters:
+      - description: Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count).
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: browser_language_to_chart
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: Time granularity for chart data points.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - hourly
+          - daily
+          - weekly
+          - monthly
+        name: granularity
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/languages-chart'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/languages-chart'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    languages-chart:
+      properties:
+        points:
+          items:
+            properties:
+              browser_language:
+                type: string
+                title: browser_language
+                description: Browser language
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    continents-chart:
+      properties:
+        points:
+          items:
+            properties:
+              continent:
+                type: string
+                enum:
+                - AF
+                - AS
+                - EU
+                - NA
+                - OC
+                - SA
+                - AN
+                - ''
+                title: continent
+                description: Continent
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    cities:
+      properties:
+        stats:
+          items:
+            properties:
+              city:
+                type: string
+                title: city
+                description: City
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    countries:
+      properties:
+        stats:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: Country
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    continents:
+      properties:
+        stats:
+          items:
+            properties:
+              continent:
+                type: string
+                enum:
+                - AF
+                - AS
+                - EU
+                - NA
+                - OC
+                - SA
+                - AN
+                - ''
+                title: continent
+                description: Continent
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    countries-chart:
+      properties:
+        points:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: Country
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    languages:
+      properties:
+        stats:
+          items:
+            properties:
+              browser_language:
+                type: string
+                title: browser_language
+                description: Browser language
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    cities-chart:
+      properties:
+        points:
+          items:
+            properties:
+              city:
+                type: string
+                title: city
+                description: City
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

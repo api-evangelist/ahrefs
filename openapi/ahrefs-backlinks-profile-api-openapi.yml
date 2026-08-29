@@ -1,0 +1,1496 @@
+openapi: 3.2.0
+info:
+  title: Site Explorer Backlinks profile API
+  description: Fetch data from Site Explorer reports
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/site-explorer
+  description: Ahrefs Site Explorer
+security:
+- http:
+  - read
+tags:
+- name: Backlinks profile
+  description: Backlinks data
+paths:
+  /all-backlinks:
+    get:
+      tags:
+      - Backlinks profile
+      summary: Backlinks
+      operationId: all-backlinks
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A column to order results by. See the response schema for valid column identifiers, except for `link_group_count`, which is not supported in `order_by` for this endpoint.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**ahrefs_rank_source**: The strength of the referring domain's backlink profile compared to the other websites in our database, with rank #1 being the strongest.  \ntype: integer\n\n**ahrefs_rank_target**: The strength of the target domain's backlink profile compared to the other websites in our database, with rank #1 being the strongest.  \ntype: integer\n\n**alt**: The alt attribute of the link.  \ntype: string nullable\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**broken_redirect_new_target**: The new destination of a modified redirect.  \ntype: string nullable\n\n**broken_redirect_reason**: The reason the redirect was considered broken during the last crawl.  \ntype: string nullable  \nenum: `\"droppedmanual\"` `\"droppedtooold\"` `\"dropped\"` `\"codechanged\"` `\"nxdomain\"` `\"robotsdisallowed\"` `\"curlerror\"` `\"invalidtarget\"` `\"nomorecanonical\"` `\"isnowparked\"` `\"targetchanged\"`\n\n**broken_redirect_source**: The redirecting URL that was modified, causing the redirect to become broken.  \ntype: string nullable\n\n**class_c** (5 units): The number of unique class_c subnets linking to the referring page.  \ntype: integer\n\n**discovered_status**: The reason the link was discovered during the last crawl: the page was crawled for the first time, the link was added to the page, or the link re-appeared after being removed.  \ntype: string nullable  \nenum: `\"pagefound\"` `\"linkfound\"` `\"linkrestored\"`\n\n**domain_rating_source**: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**domain_rating_target**: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**drop_reason**: The reason we removed the link from our index.  \ntype: string nullable  \nenum: `\"manual\"` `\"noratingunused\"` `\"notop\"` `\"tooold\"` `\"oldunavailable\"` `\"rescursive\"` `\"duplicate\"` `\"nxdomain\"` `\"malformed\"` `\"blockedport\"` `\"disallowed\"` `\"unlinked\"` `\"lowvalue\"`\n\n**encoding**: The character set encoding of the referring page HTML.  \ntype: string\n\n**first_seen**: The date the referring page URL was first discovered.  \ntype: datetime\n\n**first_seen_link**: The date we first found a backlink to your target on a given referring page.  \ntype: datetime\n\n**http_code**: The return code from HTTP protocol returned during the referring page crawl.  \ntype: integer\n\n**http_crawl**: The link was discovered without executing javascript and rendering the page.  \ntype: boolean\n\n**ip_source**: The referring domain IP address.  \ntype: string nullable\n\n**is_alternate**: The link with the rel=“alternate” attribute.  \ntype: boolean\n\n**is_canonical**: The link with the rel=“canonical” attribute.  \ntype: boolean\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_form**: The link was found in a form HTML tag.  \ntype: boolean\n\n**is_frame**: The link was found in an iframe HTML tag.  \ntype: boolean\n\n**is_homepage_link**: The link was found on the homepage of a referring website.  \ntype: boolean\n\n**is_image**: The link is a regular link that has an image inside their href attribute.  \ntype: boolean\n\n**is_lost**: The link currently does not exist anymore.  \ntype: boolean\n\n**is_new**: The link was discovered on the last crawl.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_redirect**: The link pointing to your target via a redirect.  \ntype: boolean\n\n**is_redirect_lost**: The redirected link currently does not exist anymore.  \ntype: boolean\n\n**is_root_source**: The referring domain name is a root domain name.  \ntype: boolean\n\n**is_root_target**: The target domain name is a root domain name.  \ntype: boolean\n\n**is_rss**: The link was found in an RSS feed.  \ntype: boolean\n\n**is_spam**: Indicates whether the backlink comes from a known spammy domain.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_text**: The link is a standard href hyperlink.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**js_crawl**: The link was discovered after executing javascript and rendering the page.  \ntype: boolean\n\n**languages**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**last_seen**: The date we discovered that the link was lost.  \ntype: datetime nullable\n\n**last_visited**: The date we last verified a live link to your target page.  \ntype: datetime\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_group_count**: The number of backlinks that were grouped together based on the aggregation parameter. This field cannot be used with aggregation 'all'.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domains_source_domain**: The number of unique root domains linked from the referring domain.  \ntype: integer\n\n**linked_domains_source_page**: The number of unique root domains linked from the referring page.  \ntype: integer\n\n**linked_domains_target_domain**: The number of unique root domains linked from the target domain.  \ntype: integer\n\n**links_external**: The number of external links from the referring page.  \ntype: integer\n\n**links_internal**: The number of internal links from the referring page.  \ntype: integer\n\n**lost_reason**: The reason the link was lost during the last crawl.  \ntype: string nullable  \nenum: `\"removedfromhtml\"` `\"notcanonical\"` `\"noindex\"` `\"pageredirected\"` `\"pageerror\"` `\"lostredirect\"` `\"notfound\"`\n\n**name_source**: The complete referring domain name, including subdomains.  \ntype: string\n\n**name_target**: The complete target domain name, including subdomains.  \ntype: string\n\n**noindex**: The referring page has the noindex meta attribute.  \ntype: boolean\n\n**page_category_source**: Comma-separated list of AI-predicted hierarchical category paths for the referring page. Each value is a slash-prefixed path (e.g. /Business_and_Industrial/Advertising_and_Marketing/Marketing).  \ntype: string nullable\n\n**page_size**: The size in bytes of the referring page content.  \ntype: integer\n\n**page_type_source**: Comma-separated list of AI-predicted hierarchical page type paths for the referring page. Each value is a slash-prefixed path (e.g. /Article/How_to).  \ntype: string nullable\n\n**port_source**: The network port of the referring page URL.  \ntype: integer\n\n**port_target**: The network port of the target page URL.  \ntype: integer\n\n**positions**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**positions_source_domain**: The number of keywords that the referring domain ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**redirect_code**: The HTTP status code of a referring page pointing to your target via a redirect.  \ntype: integer nullable\n\n**redirect_kind**: The HTTP status codes returned by the target redirecting URL or redirect chain.  \ntype: array(integer)\n\n**refdomains_source** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**refdomains_source_domain** (5 units): The number of unique referring domains linking to the referring domain.  \ntype: integer\n\n**refdomains_target_domain** (5 units): The number of unique referring domains linking to the target domain.  \ntype: integer\n\n**root_name_source**: The root domain name of the referring domain, not including subdomains.  \ntype: string\n\n**root_name_target**: The root domain name of the target domain, not including subdomains.  \ntype: string\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**source_page_author**: The author of the referring page.  \ntype: string nullable\n\n**source_page_publish_date**: the date we identified the page was published  \ntype: date nullable\n\n**title**: The html title of the referring page.  \ntype: string\n\n**tld_class_source**: The top level domain class of the referring domain.  \ntype: string  \nenum: `\"gov\"` `\"edu\"` `\"normal\"`\n\n**tld_class_target**: The top level domain class of the target domain.  \ntype: string  \nenum: `\"gov\"` `\"edu\"` `\"normal\"`\n\n**traffic** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**traffic_domain** (10 units): The referring domain's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from**: The URL of the page containing a link to your target.  \ntype: string\n\n**url_from_plain**: The referring page URL optimized for use as a filter.  \ntype: string\n\n**url_rating_source**: The strength of the referring page's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the backlink points to.  \ntype: string\n\n**url_to_plain**: The target page URL optimized for use as a filter.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - description: The backlinks grouping mode.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - similar_links
+          - 1_per_domain
+          - all
+          default: similar_links
+        name: aggregation
+        in: query
+      - description: A time frame to add lost backlinks to the report. Choose between `live` (no history), `since:<date>` (history since a specified date), and `all_time` (full history). The date should be in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: all_time
+        name: history
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/all-backlinks'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/all-backlinks'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /broken-backlinks:
+    get:
+      tags:
+      - Backlinks profile
+      summary: Broken Backlinks
+      operationId: broken-backlinks
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A column to order results by. See the response schema for valid column identifiers, except for `http_code_target`, `last_visited_target`, `link_group_count`, which are not supported in `order_by` for this endpoint.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**ahrefs_rank_source**: The strength of the referring domain's backlink profile compared to the other websites in our database, with rank #1 being the strongest.  \ntype: integer\n\n**ahrefs_rank_target**: The strength of the target domain's backlink profile compared to the other websites in our database, with rank #1 being the strongest.  \ntype: integer\n\n**alt**: The alt attribute of the link.  \ntype: string nullable\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**class_c** (5 units): The number of unique class_c subnets linking to the referring page.  \ntype: integer\n\n**domain_rating_source**: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**domain_rating_target**: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**encoding**: The character set encoding of the referring page HTML.  \ntype: string\n\n**first_seen**: The date the referring page URL was first discovered.  \ntype: datetime\n\n**first_seen_link**: The date we first found a backlink to your target on a given referring page.  \ntype: datetime\n\n**http_code**: The return code from HTTP protocol returned during the referring page crawl.  \ntype: integer\n\n**http_code_target**: The return code from HTTP protocol returned during the target page crawl.  \ntype: integer nullable\n\n**http_crawl**: The link was discovered without executing javascript and rendering the page.  \ntype: boolean\n\n**ip_source**: The referring domain IP address.  \ntype: string nullable\n\n**is_alternate**: The link with the rel=“alternate” attribute.  \ntype: boolean\n\n**is_canonical**: The link with the rel=“canonical” attribute.  \ntype: boolean\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_form**: The link was found in a form HTML tag.  \ntype: boolean\n\n**is_frame**: The link was found in an iframe HTML tag.  \ntype: boolean\n\n**is_homepage_link**: The link was found on the homepage of a referring website.  \ntype: boolean\n\n**is_image**: The link is a regular link that has an image inside their href attribute.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_redirect**: The link pointing to your target via a redirect.  \ntype: boolean\n\n**is_root_source**: The referring domain name is a root domain name.  \ntype: boolean\n\n**is_root_target**: The target domain name is a root domain name.  \ntype: boolean\n\n**is_rss**: The link was found in an RSS feed.  \ntype: boolean\n\n**is_spam**: Indicates whether the backlink comes from a known spammy domain.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_text**: The link is a standard href hyperlink.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**js_crawl**: The link was discovered after executing javascript and rendering the page.  \ntype: boolean\n\n**languages**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**last_seen**: The date we discovered that the link was lost.  \ntype: datetime nullable\n\n**last_visited**: The date we last re-crawled the referring page to verify the backlink is alive.  \ntype: datetime\n\n**last_visited_target**: The date we last re-crawled the target page to verify that it is broken.  \ntype: datetime nullable\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_group_count**: The number of backlinks that were grouped together based on the aggregation parameter. This field cannot be used with aggregation 'all'.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domains_source_domain**: The number of unique root domains linked from the referring domain.  \ntype: integer\n\n**linked_domains_source_page**: The number of unique root domains linked from the referring page.  \ntype: integer\n\n**linked_domains_target_domain**: The number of unique root domains linked from the target domain.  \ntype: integer\n\n**links_external**: The number of external links from the referring page.  \ntype: integer\n\n**links_internal**: The number of internal links from the referring page.  \ntype: integer\n\n**name_source**: The complete referring domain name, including subdomains.  \ntype: string\n\n**name_target**: The complete target domain name, including subdomains.  \ntype: string\n\n**page_category_source**: Comma-separated list of AI-predicted hierarchical category paths for the referring page. Each value is a slash-prefixed path (e.g. /Business_and_Industrial/Advertising_and_Marketing/Marketing).  \ntype: string nullable\n\n**page_size**: The size in bytes of the referring page content.  \ntype: integer\n\n**page_type_source**: Comma-separated list of AI-predicted hierarchical page type paths for the referring page. Each value is a slash-prefixed path (e.g. /Article/How_to).  \ntype: string nullable\n\n**port_source**: The network port of the referring page URL.  \ntype: integer\n\n**port_target**: The network port of the target page URL.  \ntype: integer\n\n**positions**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**positions_source_domain**: The number of keywords that the referring domain ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**redirect_code**: The HTTP status code of a referring page pointing to your target via a redirect.  \ntype: integer nullable\n\n**redirect_kind**: The HTTP status codes returned by the target redirecting URL or redirect chain.  \ntype: array(integer)\n\n**refdomains_source** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**refdomains_source_domain** (5 units): The number of unique referring domains linking to the referring domain.  \ntype: integer\n\n**refdomains_target_domain** (5 units): The number of unique referring domains linking to the target domain.  \ntype: integer\n\n**root_name_source**: The root domain name of the referring domain, not including subdomains.  \ntype: string\n\n**root_name_target**: The root domain name of the target domain, not including subdomains.  \ntype: string\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**source_page_author**: The author of the referring page.  \ntype: string nullable\n\n**title**: The html title of the referring page.  \ntype: string\n\n**tld_class_source**: The top level domain class of the referring domain.  \ntype: string  \nenum: `\"gov\"` `\"edu\"` `\"normal\"`\n\n**tld_class_target**: The top level domain class of the target domain.  \ntype: string  \nenum: `\"gov\"` `\"edu\"` `\"normal\"`\n\n**traffic** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**traffic_domain** (10 units): The referring domain's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from**: The URL of the page containing a link to your target.  \ntype: string\n\n**url_from_plain**: The referring page URL optimized for use as a filter.  \ntype: string\n\n**url_rating_source**: The strength of the referring page's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the backlink points to.  \ntype: string\n\n**url_to_plain**: The target page URL optimized for use as a filter.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - description: The backlinks grouping mode.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - similar_links
+          - 1_per_domain
+          - all
+          default: similar_links
+        name: aggregation
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/broken-backlinks'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/broken-backlinks'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /refdomains:
+    get:
+      tags:
+      - Backlinks profile
+      summary: Refdomains
+      operationId: refdomains
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**discovered_status**: The reason the link was discovered during the last crawl: the page was crawled for the first time, the link was added to the page, or the link re-appeared after being removed.  \ntype: string nullable  \nenum: `\"pagefound\"` `\"linkfound\"` `\"linkrestored\"`\n\n**dofollow_linked_domains**: The number of unique root domains with dofollow links linked from the referring domain.  \ntype: integer\n\n**dofollow_links**: The number of links from the referring domain to your target that don't have the “nofollow” attribute.  \ntype: integer\n\n**dofollow_refdomains** (5 units): The number of unique domains with dofollow links to the referring domain.  \ntype: integer\n\n**domain**: A referring domain that has at least one link to your target.  \ntype: string\n\n**domain_rating**: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**drop_reason**: The reason we removed the link from our index.  \ntype: string nullable  \nenum: `\"manual\"` `\"noratingunused\"` `\"notop\"` `\"tooold\"` `\"oldunavailable\"` `\"rescursive\"` `\"duplicate\"` `\"nxdomain\"` `\"malformed\"` `\"blockedport\"` `\"disallowed\"` `\"unlinked\"` `\"lowvalue\"`\n\n**first_seen**: The date we first found a backlink to your target from the referring domain.  \ntype: datetime\n\n**ip_source**: The referring domain IP address.  \ntype: string nullable\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_homepage_link**: The link was found on the homepage of a referring website.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_root_domain**: The domain name is a root domain name.  \ntype: boolean\n\n**is_spam**: Indicates whether the backlink comes from a known spammy domain.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**languages**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**last_seen**: The date your target lost its last live backlink for the referring domain.  \ntype: datetime nullable\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domains**: The number of unique root domains linked from the referring page.  \ntype: integer\n\n**links_external**: The number of external links from the referring page.  \ntype: integer\n\n**links_to_target**: The number of backlinks from the referring domain to your target.  \ntype: integer\n\n**lost_links**: The number of backlinks lost from the referring domain for the selected time period.  \ntype: integer\n\n**lost_reason**: The reason the link was lost during the last crawl.  \ntype: string nullable  \nenum: `\"removedfromhtml\"` `\"notcanonical\"` `\"noindex\"` `\"pageredirected\"` `\"pageerror\"` `\"lostredirect\"` `\"notfound\"`\n\n**new_links**: The number of new backlinks found from the referring domain for the selected time period.  \ntype: integer\n\n**noindex**: The referring page has the noindex meta attribute.  \ntype: boolean\n\n**port_source**: The network port of the referring page URL.  \ntype: integer\n\n**port_target**: The network port of the target page URL.  \ntype: integer\n\n**positions**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**positions_source_domain**: The number of keywords that the referring domain ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**refdomains** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**root_domain_name**: The root domain name of the referring domain, not including subdomains.  \ntype: string\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**source_page_author**: The author of the referring page.  \ntype: string nullable\n\n**title**: The html title of the referring page.  \ntype: string\n\n**traffic_domain** (10 units): The referring domain's estimated monthly organic traffic from search.  \ntype: integer\n\n**traffic_page** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from**: The URL of the page containing a link to your target.  \ntype: string\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the backlink points to.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - description: A time frame to add lost backlinks to the report. Choose between `live` (no history), `since:<date>` (history since a specified date), and `all_time` (full history). The date should be in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: all_time
+        name: history
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refdomains'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/refdomains'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /anchors:
+    get:
+      tags:
+      - Backlinks profile
+      summary: Anchors
+      operationId: anchors
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**discovered_status**: The reason the link was discovered during the last crawl: the page was crawled for the first time, the link was added to the page, or the link re-appeared after being removed.  \ntype: string nullable  \nenum: `\"pagefound\"` `\"linkfound\"` `\"linkrestored\"`\n\n**dofollow_links**: The number of links with a given anchor to your target that don’t have the “nofollow” attribute.  \ntype: integer\n\n**domain_rating**: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**drop_reason**: The reason we removed the link from our index.  \ntype: string nullable  \nenum: `\"manual\"` `\"noratingunused\"` `\"notop\"` `\"tooold\"` `\"oldunavailable\"` `\"rescursive\"` `\"duplicate\"` `\"nxdomain\"` `\"malformed\"` `\"blockedport\"` `\"disallowed\"` `\"unlinked\"` `\"lowvalue\"`\n\n**first_seen**: The date we first found a link with a given anchor to your target.  \ntype: datetime\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_homepage_link**: The link was found on the homepage of a referring website.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_root_domain**: The domain name is a root domain name.  \ntype: boolean\n\n**is_spam**: Indicates whether the backlink comes from a known spammy domain.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**languages**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**last_seen**: The date we discovered the last backlink with a given anchor was lost.  \ntype: datetime nullable\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domains**: The number of unique root domains linked from the referring page.  \ntype: integer\n\n**links_external**: The number of external links from the referring page.  \ntype: integer\n\n**links_to_target**: The number of inbound backlinks your target has with a given anchor.  \ntype: integer\n\n**lost_links**: The number of backlinks with a given anchor lost during the selected time period.  \ntype: integer\n\n**lost_reason**: The reason the link was lost during the last crawl.  \ntype: string nullable  \nenum: `\"removedfromhtml\"` `\"notcanonical\"` `\"noindex\"` `\"pageredirected\"` `\"pageerror\"` `\"lostredirect\"` `\"notfound\"`\n\n**new_links**: The number of new backlinks with a given anchor found during the selected time period.  \ntype: integer\n\n**noindex**: The referring page has the noindex meta attribute.  \ntype: boolean\n\n**positions**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**positions_source_domain**: The number of keywords that the referring domain ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**refdomains** (5 units): The number of unique domains linking to your target with a given anchor.  \ntype: integer\n\n**refdomains_source** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**refpages**: The number of pages containing a link with a given anchor to your target.  \ntype: integer\n\n**root_domain_name**: The root domain name of the referring domain, not including subdomains.  \ntype: string\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**source_page_author**: The author of the referring page.  \ntype: string nullable\n\n**title**: The html title of the referring page.  \ntype: string\n\n**top_domain_rating**: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**traffic_domain** (10 units): The referring domain's estimated monthly organic traffic from search.  \ntype: integer\n\n**traffic_page** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from**: The URL of the page containing a link to your target.  \ntype: string\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the backlink points to.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - description: A time frame to add lost backlinks to the report. Choose between `live` (no history), `since:<date>` (history since a specified date), and `all_time` (full history). The date should be in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: all_time
+        name: history
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/anchors'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/anchors'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    broken-backlinks:
+      properties:
+        backlinks:
+          items:
+            properties:
+              ahrefs_rank_source:
+                type: integer
+                title: ahrefs_rank_source
+                description: 'The strength of the referring domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              ahrefs_rank_target:
+                type: integer
+                title: ahrefs_rank_target
+                description: 'The strength of the target domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              alt:
+                type:
+                - string
+                - 'null'
+                title: alt
+                description: The alt attribute of the link.
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              class_c:
+                type: integer
+                title: class_c
+                description: (5 units) The number of unique class_c subnets linking to the referring page.
+              domain_rating_source:
+                type: number
+                format: float
+                title: domain_rating_source
+                description: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.
+              domain_rating_target:
+                type: number
+                format: float
+                title: domain_rating_target
+                description: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.
+              encoding:
+                type: string
+                title: encoding
+                description: The character set encoding of the referring page HTML.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date the referring page URL was first discovered.
+              first_seen_link:
+                type: string
+                format: date-time
+                title: first_seen_link
+                description: The date we first found a backlink to your target on a given referring page.
+              http_code:
+                type: integer
+                title: http_code
+                description: The return code from HTTP protocol returned during the referring page crawl.
+              http_code_target:
+                type:
+                - integer
+                - 'null'
+                title: http_code_target
+                description: The return code from HTTP protocol returned during the target page crawl.
+              http_crawl:
+                type: boolean
+                title: http_crawl
+                description: The link was discovered without executing javascript and rendering the page.
+              ip_source:
+                type:
+                - string
+                - 'null'
+                title: ip_source
+                description: The referring domain IP address.
+              is_alternate:
+                type: boolean
+                title: is_alternate
+                description: The link with the rel=“alternate” attribute.
+              is_canonical:
+                type: boolean
+                title: is_canonical
+                description: The link with the rel=“canonical” attribute.
+              is_content:
+                type: boolean
+                title: is_content
+                description: The link was found in the biggest piece of content on the page.
+              is_dofollow:
+                type: boolean
+                title: is_dofollow
+                description: The link has no special nofollow attribute.
+              is_form:
+                type: boolean
+                title: is_form
+                description: The link was found in a form HTML tag.
+              is_frame:
+                type: boolean
+                title: is_frame
+                description: The link was found in an iframe HTML tag.
+              is_image:
+                type: boolean
+                title: is_image
+                description: The link is a regular link that has an image inside their href attribute.
+              is_nofollow:
+                type: boolean
+                title: is_nofollow
+                description: The link or the referring page has the nofollow attribute set.
+              is_redirect:
+                type: boolean
+                title: is_redirect
+                description: The link pointing to your target via a redirect.
+              is_root_source:
+                type: boolean
+                title: is_root_source
+                description: The referring domain name is a root domain name.
+              is_root_target:
+                type: boolean
+                title: is_root_target
+                description: The target domain name is a root domain name.
+              is_rss:
+                type: boolean
+                title: is_rss
+                description: The link was found in an RSS feed.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              is_sponsored:
+                type: boolean
+                title: is_sponsored
+                description: The link has the Sponsored attribute set in the referring page HTML.
+              is_text:
+                type: boolean
+                title: is_text
+                description: The link is a standard href hyperlink.
+              is_ugc:
+                type: boolean
+                title: is_ugc
+                description: The link has the User Generated Content attribute set in the referring page HTML.
+              js_crawl:
+                type: boolean
+                title: js_crawl
+                description: The link was discovered after executing javascript and rendering the page.
+              languages:
+                items:
+                  type: string
+                  title: languages
+                  description: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.
+                type: array
+                title: languages
+                description: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date we discovered that the link was lost.
+              last_visited:
+                type: string
+                format: date-time
+                title: last_visited
+                description: The date we last re-crawled the referring page to verify the backlink is alive.
+              last_visited_target:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_visited_target
+                description: The date we last re-crawled the target page to verify that it is broken.
+              link_group_count:
+                type: integer
+                title: link_group_count
+                description: The number of backlinks that were grouped together based on the aggregation parameter. This field cannot be used with aggregation 'all'.
+              link_type:
+                type: string
+                enum:
+                - redirect
+                - frame
+                - text
+                - form
+                - canonical
+                - alternate
+                - rss
+                - image
+                title: link_type
+                description: The kind of the backlink.
+              linked_domains_source_domain:
+                type: integer
+                title: linked_domains_source_domain
+                description: The number of unique root domains linked from the referring domain.
+              linked_domains_source_page:
+                type: integer
+                title: linked_domains_source_page
+                description: The number of unique root domains linked from the referring page.
+              linked_domains_target_domain:
+                type: integer
+                title: linked_domains_target_domain
+                description: The number of unique root domains linked from the target domain.
+              links_external:
+                type: integer
+                title: links_external
+                description: The number of external links from the referring page.
+              links_internal:
+                type: integer
+                title: links_internal
+                description: The number of internal links from the referring page.
+              name_source:
+                type: string
+                title: name_source
+                description: The complete referring domain name, including subdomains.
+              name_target:
+                type: string
+                title: name_target
+                description: The complete target domain name, including subdomains.
+              page_category_source:
+                type:
+                - string
+                - 'null'
+                title: page_category_source
+                description: Comma-separated list of AI-predicted hierarchical category paths for the referring page. Each value is a slash-prefixed path (e.g. /Business_and_Industrial/Advertising_and_Marketing/Marketing).
+              page_size:
+                type: integer
+                title: page_size
+                description: The size in bytes of the referring page content.
+              page_type_source:
+                type:
+                - string
+                - 'null'
+                title: page_type_source
+                description: Comma-separated list of AI-predicted hierarchical page type paths for the referring page. Each value is a slash-prefixed path (e.g. /Article/How_to).
+              port_source:
+                type: integer
+                title: port_source
+                description: The network port of the referring page URL.
+              port_target:
+                type: integer
+                title: port_target
+                description: The network port of the target page URL.
+              positions:
+                type: integer
+                title: positions
+                description: The number of keywords that the referring page ranks for in the top 100 positions.
+              powered_by:
+                items:
+                  type: string
+                  title: powered_by
+                  description: Web technologies used to build and serve the referring page content.
+                type: array
+                title: powered_by
+                description: Web technologies used to build and serve the referring page content.
+              redirect_code:
+                type:
+                - integer
+                - 'null'
+                title: redirect_code
+                description: The HTTP status code of a referring page pointing to your target via a redirect.
+              redirect_kind:
+                items:
+                  type: integer
+                  title: redirect_kind
+                  description: The HTTP status codes returned by the target redirecting URL or redirect chain.
+                type: array
+                title: redirect_kind
+                description: The HTTP status codes returned by the target redirecting URL or redirect chain.
+              refdomains_source:
+                type: integer
+                title: refdomains_source
+                description: (5 units) The number of unique referring domains linking to the referring page.
+              refdomains_source_domain:
+                type: integer
+                title: refdomains_source_domain
+                description: (5 units) The number of unique referring domains linking to the referring domain.
+              refdomains_target_domain:
+                type: integer
+                title: refdomains_target_domain
+                description: (5 units) The number of unique referring domains linking to the target domain.
+              root_name_source:
+                type: string
+                title: root_name_source
+                description: The root domain name of the referring domain, not including subdomains.
+              root_name_target:
+                type: string
+                title: root_name_target
+                description: The root domain name of the target domain, not including subdomains.
+              snippet_left:
+                type: string
+                title: snippet_left
+                description: The snippet of text appearing just before the link.
+              snippet_right:
+                type: string
+                title: snippet_right
+                description: The snippet of text appearing just after the link.
+              source_page_author:
+                type:
+                - string
+                - 'null'
+                title: source_page_author
+                description: The author of the referring page.
+              title:
+                type: string
+                title: title
+                description: The html title of the referring page.
+              tld_class_source:
+                type: string
+                enum:
+                - gov
+                - edu
+                - normal
+                title: tld_class_source
+                description: The top level domain class of the referring domain.
+              tld_class_target:
+                type: string
+                enum:
+                - gov
+                - edu
+                - normal
+                title: tld_class_target
+                description: The top level domain class of the target domain.
+              traffic:
+                type: integer
+                title: traffic
+                description: (10 units) The referring page's estimated monthly organic traffic from search.
+              traffic_domain:
+                type: integer
+                title: traffic_domain
+                description: (10 units) The referring domain's estimated monthly organic traffic from search.
+              url_from:
+                type: string
+                format: url
+                title: url_from
+                description: The URL of the page containing a link to your target.
+              url_from_plain:
+                type: string
+                title: url_from_plain
+                description: The referring page URL optimized for use as a filter.
+              url_rating_source:
+                type: number
+                format: float
+                title: url_rating_source
+                description: The strength of the referring page's backlink profile compared to the others in our database on a 100-point scale.
+              url_redirect:
+                items:
+                  type: string
+                  format: url
+                  title: url_redirect
+                  description: A redirect chain the target URL of the link points to.
+                type: array
+                title: url_redirect
+                description: A redirect chain the target URL of the link points to.
+              url_redirect_with_target:
+                items:
+                  type: string
+                  title: url_redirect_with_target
+                  description: The target URL of the link with its redirect chain.
+                type: array
+                title: url_redirect_with_target
+                description: The target URL of the link with its redirect chain.
+              url_to:
+                type: string
+                format: url
+                title: url_to
+                description: The URL the backlink points to.
+              url_to_plain:
+                type: string
+                title: url_to_plain
+                description: The target page URL optimized for use as a filter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    refdomains:
+      properties:
+        refdomains:
+          items:
+            properties:
+              dofollow_linked_domains:
+                type: integer
+                title: dofollow_linked_domains
+                description: The number of unique root domains with dofollow links linked from the referring domain.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of links from the referring domain to your target that don't have the “nofollow” attribute.
+              dofollow_refdomains:
+                type: integer
+                title: dofollow_refdomains
+                description: (5 units) The number of unique domains with dofollow links to the referring domain.
+              domain:
+                type: string
+                title: domain
+                description: A referring domain that has at least one link to your target.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a backlink to your target from the referring domain.
+              ip_source:
+                type:
+                - string
+                - 'null'
+                title: ip_source
+                description: The referring domain IP address.
+              is_root_domain:
+                type: boolean
+                title: is_root_domain
+                description: The domain name is a root domain name.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date your target lost its last live backlink for the referring domain.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of backlinks from the referring domain to your target.
+              lost_links:
+                type: integer
+                title: lost_links
+                description: The number of backlinks lost from the referring domain for the selected time period.
+              new_links:
+                type: integer
+                title: new_links
+                description: The number of new backlinks found from the referring domain for the selected time period.
+              positions_source_domain:
+                type: integer
+                title: positions_source_domain
+                description: The number of keywords that the referring domain ranks for in the top 100 positions.
+              traffic_domain:
+                type: integer
+                title: traffic_domain
+                description: (10 units) The referring domain's estimated monthly organic traffic from search.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    anchors:
+      properties:
+        anchors:
+          items:
+            properties:
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of links with a given anchor to your target that don’t have the “nofollow” attribute.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link with a given anchor to your target.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date we discovered the last backlink with a given anchor was lost.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of inbound backlinks your target has with a given anchor.
+              lost_links:
+                type: integer
+                title: lost_links
+                description: The number of backlinks with a given anchor lost during the selected time period.
+              new_links:
+                type: integer
+                title: new_links
+                description: The number of new backlinks with a given anchor found during the selected time period.
+              refdomains:
+                type: integer
+                title: refdomains
+                description: (5 units) The number of unique domains linking to your target with a given anchor.
+              refpages:
+                type: integer
+                title: refpages
+                description: The number of pages containing a link with a given anchor to your target.
+              top_domain_rating:
+                type: number
+                format: float
+                title: top_domain_rating
+                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    all-backlinks:
+      properties:
+        backlinks:
+          items:
+            properties:
+              ahrefs_rank_source:
+                type: integer
+                title: ahrefs_rank_source
+                description: 'The strength of the referring domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              ahrefs_rank_target:
+                type: integer
+                title: ahrefs_rank_target
+                description: 'The strength of the target domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              alt:
+                type:
+                - string
+                - 'null'
+                title: alt
+                description: The alt attribute of the link.
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              broken_redirect_new_target:
+                type:
+                - string
+                - 'null'
+                title: broken_redirect_new_target
+                description: The new destination of a modified redirect.
+              broken_redirect_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - droppedmanual
+                - droppedtooold
+                - dropped
+                - codechanged
+                - nxdomain
+                - robotsdisallowed
+                - curlerror
+                - invalidtarget
+                - nomorecanonical
+                - isnowparked
+                - targetchanged
+                title: broken_redirect_reason
+                description: The reason the redirect was considered broken during the last crawl.
+              broken_redirect_source:
+                type:
+                - string
+                - 'null'
+                title: broken_redirect_source
+                description: The redirecting URL that was modified, causing the redirect to become broken.
+              class_c:
+                type: integer
+                title: class_c
+                description: (5 units) The number of unique class_c subnets linking to the referring page.
+              discovered_status:
+                type:
+                - string
+                - 'null'
+                enum:
+                - pagefound
+                - linkfound
+                - linkrestored
+                title: discovered_status
+                description: 'The reason the link was discovered during the last crawl: the page was crawled for the first time, the link was added to the page, or the link re-appeared after being removed.'
+              domain_rating_source:
+                type: number
+                format: float
+                title: domain_rating_source
+                description: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.
+              domain_rating_target:
+                type: number
+                format: float
+                title: domain_rating_target
+                description: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.
+              drop_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - manual
+                - noratingunused
+                - notop
+                - tooold
+                - oldunavailable
+                - rescursive
+                - duplicate
+                - nxdomain
+                - malformed
+                - blockedport
+                - disallowed
+                - unlinked
+                - lowvalue
+                title: drop_reason
+                description: The reason we removed the link from our index.
+              encoding:
+                type: string
+                title: encoding
+                description: The character set encoding of the referring page HTML.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date the referring page URL was first discovered.
+              first_seen_link:
+                type: string
+                format: date-time
+                title: first_seen_link
+                description: The date we first found a backlink to your target on a given referring page.
+              http_code:
+                type: integer
+                title: http_code
+                description: The return code from HTTP protocol returned during the referring page crawl.
+              http_crawl:
+                type: boolean
+                title: http_crawl
+                description: The link was discovered without executing javascript and rendering the page.
+              ip_source:
+                type:
+                - string
+                - 'null'
+                title: ip_source
+                description: The referring domain IP address.
+              is_alternate:
+                type: boolean
+                title: is_alternate
+                description: The link with the rel=“alternate” attribute.
+              is_canonical:
+                type: boolean
+                title: is_canonical
+                description: The link with the rel=“canonical” attribute.
+              is_content:
+                type: boolean
+                title: is_content
+                description: The link was found in the biggest piece of content on the page.
+              is_dofollow:
+                type: boolean
+                title: is_dofollow
+                description: The link has no special nofollow attribute.
+              is_form:
+                type: boolean
+                title: is_form
+                description: The link was found in a form HTML tag.
+              is_frame:
+                type: boolean
+                title: is_frame
+                description: The link was found in an iframe HTML tag.
+              is_image:
+                type: boolean
+                title: is_image
+                description: The link is a regular link that has an image inside their href attribute.
+              is_lost:
+                type: boolean
+                title: is_lost
+                description: The link currently does not exist anymore.
+              is_new:
+                type: boolean
+                title: is_new
+                description: The link was discovered on the last crawl.
+              is_nofollow:
+                type: boolean
+                title: is_nofollow
+                description: The link or the referring page has the nofollow attribute set.
+              is_redirect:
+                type: boolean
+                title: is_redirect
+                description: The link pointing to your target via a redirect.
+              is_redirect_lost:
+                type: boolean
+                title: is_redirect_lost
+                description: The redirected link currently does not exist anymore.
+              is_root_source:
+                type: boolean
+                title: is_root_source
+                description: The referring domain name is a root domain name.
+              is_root_target:
+                type: boolean
+                title: is_root_target
+                description: The target domain name is a root domain name.
+              is_rss:
+                type: boolean
+                title: is_rss
+                description: The link was found in an RSS feed.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              is_sponsored:
+                type: boolean
+                title: is_sponsored
+                description: The link has the Sponsored attribute set in the referring page HTML.
+              is_text:
+                type: boolean
+                title: is_text
+                description: The link is a standard href hyperlink.
+              is_ugc:
+                type: boolean
+                title: is_ugc
+                description: The link has the User Generated Content attribute set in the referring page HTML.
+              js_crawl:
+                type: boolean
+                title: js_crawl
+                description: The link was discovered after executing javascript and rendering the page.
+              languages:
+                items:
+                  type: string
+                  title: languages
+                  description: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.
+                type: array
+                title: languages
+                description: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date we discovered that the link was lost.
+              last_visited:
+                type: string
+                format: date-time
+                title: last_visited
+                description: The date we last verified a live link to your target page.
+              link_group_count:
+                type: integer
+                title: link_group_count
+                description: The number of backlinks that were grouped together based on the aggregation parameter. This field cannot be used with aggregation 'all'.
+              link_type:
+                type: string
+                enum:
+                - redirect
+                - frame
+                - text
+                - form
+                - canonical
+                - alternate
+                - rss
+                - image
+                title: link_type
+                description: The kind of the backlink.
+              linked_domains_source_domain:
+                type: integer
+                title: linked_domains_source_domain
+                description: The number of unique root domains linked from the referring domain.
+              linked_domains_source_page:
+                type: integer
+                title: linked_domains_source_page
+                description: The number of unique root domains linked from the referring page.
+              linked_domains_target_domain:
+                type: integer
+                title: linked_domains_target_domain
+                description: The number of unique root domains linked from the target domain.
+              links_external:
+                type: integer
+                title: links_external
+                description: The number of external links from the referring page.
+              links_internal:
+                type: integer
+                title: links_internal
+                description: The number of internal links from the referring page.
+              lost_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - removedfromhtml
+                - notcanonical
+                - noindex
+                - pageredirected
+                - pageerror
+                - lostredirect
+                - notfound
+                title: lost_reason
+                description: The reason the link was lost during the last crawl.
+              name_source:
+                type: string
+                title: name_source
+                description: The complete referring domain name, including subdomains.
+              name_target:
+                type: string
+                title: name_target
+                description: The complete target domain name, including subdomains.
+              noindex:
+                type: boolean
+                title: noindex
+                description: The referring page has the noindex meta attribute.
+              page_category_source:
+                type:
+                - string
+                - 'null'
+                title: page_category_source
+                description: Comma-separated list of AI-predicted hierarchical category paths for the referring page. Each value is a slash-prefixed path (e.g. /Business_and_Industrial/Advertising_and_Marketing/Marketing).
+              page_size:
+                type: integer
+                title: page_size
+                description: The size in bytes of the referring page content.
+              page_type_source:
+                type:
+                - string
+                - 'null'
+                title: page_type_source
+                description: Comma-separated list of AI-predicted hierarchical page type paths for the referring page. Each value is a slash-prefixed path (e.g. /Article/How_to).
+              port_source:
+                type: integer
+                title: port_source
+                description: The network port of the referring page URL.
+              port_target:
+                type: integer
+                title: port_target
+                description: The network port of the target page URL.
+              positions:
+                type: integer
+                title: positions
+                description: The number of keywords that the referring page ranks for in the top 100 positions.
+              powered_by:
+                items:
+                  type: string
+                  title: powered_by
+                  description: Web technologies used to build and serve the referring page content.
+                type: array
+                title: powered_by
+                description: Web technologies used to build and serve the referring page content.
+              redirect_code:
+                type:
+                - integer
+                - 'null'
+                title: redirect_code
+                description: The HTTP status code of a referring page pointing to your target via a redirect.
+              redirect_kind:
+                items:
+                  type: integer
+                  title: redirect_kind
+                  description: The HTTP status codes returned by the target redirecting URL or redirect chain.
+                type: array
+                title: redirect_kind
+                description: The HTTP status codes returned by the target redirecting URL or redirect chain.
+              refdomains_source:
+                type: integer
+                title: refdomains_source
+                description: (5 units) The number of unique referring domains linking to the referring page.
+              refdomains_source_domain:
+                type: integer
+                title: refdomains_source_domain
+                description: (5 units) The number of unique referring domains linking to the referring domain.
+              refdomains_target_domain:
+                type: integer
+                title: refdomains_target_domain
+                description: (5 units) The number of unique referring domains linking to the target domain.
+              root_name_source:
+                type: string
+                title: root_name_source
+                description: The root domain name of the referring domain, not including subdomains.
+              root_name_target:
+                type: string
+                title: root_name_target
+                description: The root domain name of the target domain, not including subdomains.
+              snippet_left:
+                type: string
+                title: snippet_left
+                description: The snippet of text appearing just before the link.
+              snippet_right:
+                type: string
+                title: snippet_right
+                description: The snippet of text appearing just after the link.
+              source_page_author:
+                type:
+                - string
+                - 'null'
+                title: source_page_author
+                description: The author of the referring page.
+              source_page_publish_date:
+                type:
+                - string
+                - 'null'
+                format: date
+                title: source_page_publish_date
+                description: the date we identified the page was published
+              title:
+                type: string
+                title: title
+                description: The html title of the referring page.
+              tld_class_source:
+                type: string
+                enum:
+                - gov
+                - edu
+                - normal
+                title: tld_class_source
+                description: The top level domain class of the referring domain.
+              tld_class_target:
+                type: string
+                enum:
+                - gov
+                - edu
+                - normal
+                title: tld_class_target
+                description: The top level domain class of the target domain.
+              traffic:
+                type: integer
+                title: traffic
+                description: (10 units) The referring page's estimated monthly organic traffic from search.
+              traffic_domain:
+                type: integer
+                title: traffic_domain
+                description: (10 units) The referring domain's estimated monthly organic traffic from search.
+              url_from:
+                type: string
+                format: url
+                title: url_from
+                description: The URL of the page containing a link to your target.
+              url_from_plain:
+                type: string
+                title: url_from_plain
+                description: The referring page URL optimized for use as a filter.
+              url_rating_source:
+                type: number
+                format: float
+                title: url_rating_source
+                description: The strength of the referring page's backlink profile compared to the others in our database on a 100-point scale.
+              url_redirect:
+                items:
+                  type: string
+                  format: url
+                  title: url_redirect
+                  description: A redirect chain the target URL of the link points to.
+                type: array
+                title: url_redirect
+                description: A redirect chain the target URL of the link points to.
+              url_redirect_with_target:
+                items:
+                  type: string
+                  title: url_redirect_with_target
+                  description: The target URL of the link with its redirect chain.
+                type: array
+                title: url_redirect_with_target
+                description: The target URL of the link with its redirect chain.
+              url_to:
+                type: string
+                format: url
+                title: url_to
+                description: The URL the backlink points to.
+              url_to_plain:
+                type: string
+                title: url_to_plain
+                description: The target page URL optimized for use as a filter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

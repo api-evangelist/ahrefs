@@ -1,0 +1,664 @@
+openapi: 3.2.0
+info:
+  title: Ahrefs Projects API
+  version: 3.0.0
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  termsOfService: https://ahrefs.com/terms
+  description: 'Operations tagged Projects across 2 of this provider''s published API definitions: ahrefs-management-openapi.json, ahrefs-site-audit-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.ahrefs.com/v3/management
+  description: Ahrefs Management
+- url: https://api.ahrefs.com/v3/site-audit
+  description: Ahrefs Site Audit
+security:
+- http:
+  - read
+tags:
+- name: Projects
+paths:
+  /projects:
+    get:
+      tags:
+      - Projects
+      summary: Projects
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: projects
+      parameters:
+      - description: The access type of the project.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - private
+          - shared
+        name: access
+        in: query
+      - description: The email of the project owner
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: owned_by
+        in: query
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: Has Rank Tracker keywords.
+        required: false
+        explode: false
+        schema:
+          type: boolean
+        name: has_keywords
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/projects'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/projects'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    post:
+      tags:
+      - Projects
+      summary: Projects
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: projects
+      parameters:
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                access:
+                  type: string
+                  enum:
+                  - private
+                  - shared
+                  description: The access type of the project.
+                  default: private
+                owned_by:
+                  type: string
+                  description: The email of the project owner. If not provided, the project is assigned to the Workspace owner.
+                project_name:
+                  type: string
+                  description: The name of the project.
+                mode:
+                  type: string
+                  enum:
+                  - exact
+                  - prefix
+                  - domain
+                  - subdomains
+                  description: The scope of the target.
+                url:
+                  type: string
+                  format: url
+                  description: The URL of your target.
+                protocol:
+                  type: string
+                  enum:
+                  - both
+                  - http
+                  - https
+                  description: The protocol of your target.
+                folder_id:
+                  type: integer
+                  description: The folder id to assign to the project. You can find the id of a folder in `https://app.ahrefs.com/dashboard/folders/#folder_id#`.
+              type: object
+              required:
+              - project_name
+              - mode
+              - url
+              - protocol
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/projects'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/projects'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    delete:
+      tags:
+      - Projects
+      summary: Projects
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: projects
+      parameters:
+      - description: A comma-separated list of the IDs of the projects you want to delete.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: project_ids
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/projects'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/projects'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/management
+      description: Ahrefs Management
+  /update-project:
+    patch:
+      tags:
+      - Projects
+      summary: Update Project
+      description: '>Requests to this endpoint are free and do not consume any API units.
+
+
+        At least one of `access` or `folder` must be set.
+
+        '
+      operationId: update-project
+      parameters:
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                project_id:
+                  type: integer
+                  description: 'The ID of the project whose access setting you want to update. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+                folder:
+                  oneOf:
+                  - properties:
+                      operation:
+                        type: string
+                        enum:
+                        - remove
+                    type: object
+                    required:
+                    - operation
+                    title: remove
+                    description: Remove project from its folder tree entirely.
+                  - properties:
+                      operation:
+                        type: string
+                        enum:
+                        - move
+                      folder_id:
+                        type: integer
+                        description: The folder id to move the project to. You can find the id of a folder in `https://app.ahrefs.com/dashboard/folders/#folder_id#`.
+                    type: object
+                    required:
+                    - operation
+                    - folder_id
+                    title: move
+                    description: Move a project to a folder.
+                  description: 'A folder operation, applied before the access change.
+
+                    Keep in mind that moving a project to another folder may make it visible to members of the destination folder.'
+                  discriminator:
+                    propertyName: operation
+                access:
+                  type: string
+                  enum:
+                  - private
+                  - shared
+                  description: The new access setting for the project.
+              type: object
+              required:
+              - project_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update-project'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/update-project'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/management
+      description: Ahrefs Management
+  /issues:
+    get:
+      tags:
+      - Projects
+      summary: Project Issues
+      description: '>This endpoint consumes a fixed cost of 50 API units per request.'
+      operationId: issues
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Site Audit project in Ahrefs: `https://app.ahrefs.com/site-audit/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: A timestamp in `YYYY-MM-DDThh:mm:ss` format specifying the crawl date to retrieve metrics from. Defaults to the most recent available crawl if omitted. For scheduled crawls, we return data from the latest crawl finished before the specified timestamp. For Always-on audit crawls, we return data as of the provided date and time. If the time component is omitted, it defaults to `00:00:00`. The timestamp is interpreted in UTC.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: date
+        in: query
+      - description: A timestamp in `YYYY-MM-DDThh:mm:ss` format specifying the crawl date to compare metrics with. Follows the same rules as the `date` field.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: date_compared
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/issues'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/issues'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/site-audit
+      description: Ahrefs Site Audit
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    projects:
+      properties:
+        projects:
+          items:
+            properties:
+              access:
+                type: string
+                title: access
+                description: 'The access level of the project. Possible values: `private`, `shared`.'
+              folder:
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type:
+                    - string
+                    - 'null'
+                type:
+                - object
+                - 'null'
+                title: folder
+                description: Innermost folder that the project is in.
+              keyword_count:
+                type: integer
+                title: keyword_count
+                description: The number of keywords in the project.
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              owned_by:
+                type:
+                - string
+                - 'null'
+                title: owned_by
+                description: The email of the project owner.
+              project_id:
+                type: string
+                title: project_id
+                description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
+              project_name:
+                type: string
+                title: project_name
+                description: The project name.
+              protocol:
+                type: string
+                title: protocol
+                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+              verified:
+                type: boolean
+                title: verified
+                description: Whether the project is verified.
+              web_analytics_data_key:
+                type: string
+                title: web_analytics_data_key
+                description: Web Analytics Data Key.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    update-project:
+      properties:
+        project:
+          properties:
+            access:
+              type: string
+              title: access
+              description: 'The access level of the project. Possible values: `private`, `shared`.'
+            folder:
+              properties:
+                id:
+                  type: integer
+                name:
+                  type:
+                  - string
+                  - 'null'
+              type:
+              - object
+              - 'null'
+              title: folder
+              description: Innermost folder that the project is in.
+            mode:
+              type: string
+              title: mode
+              description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+            project_id:
+              type: string
+              title: project_id
+              description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
+            project_name:
+              type: string
+              title: project_name
+              description: The project name.
+            protocol:
+              type: string
+              title: protocol
+              description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+            url:
+              type: string
+              format: url
+              title: url
+              description: The URL of the project's target.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    projects_2:
+      properties:
+        healthscores:
+          items:
+            properties:
+              date:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: date
+                description: The finish date and time of the last finished crawl, in GMT time zone.
+              health_score:
+                type:
+                - integer
+                - 'null'
+                title: health_score
+                description: Reflects the proportion of internal URLs on your site that do not have errors, based on the last finished crawl. Excludes crawls that are starting, in progress, finalizing, or were skipped.
+              project_id:
+                type: string
+                title: project_id
+                description: The unique identifier of the project.
+              project_name:
+                type: string
+                title: project_name
+                description: The project name.
+              status:
+                type:
+                - string
+                - 'null'
+                title: status
+                description: 'The status of the most recent finished crawl. Possible values: `Completed`, `Stopped`, `Error`, `In_progress`.'
+              target_mode:
+                type: string
+                title: target_mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              target_protocol:
+                type: string
+                title: target_protocol
+                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+              target_url:
+                type: string
+                format: url
+                title: target_url
+                description: The URL of the project's target.
+              total:
+                type:
+                - integer
+                - 'null'
+                title: total
+                description: Number of total crawled internal URLs
+              urls_with_errors:
+                type:
+                - integer
+                - 'null'
+                title: urls_with_errors
+                description: Number of internal URLs with errors
+              urls_with_notices:
+                type:
+                - integer
+                - 'null'
+                title: urls_with_notices
+                description: Number of internal URLs with notices
+              urls_with_warnings:
+                type:
+                - integer
+                - 'null'
+                title: urls_with_warnings
+                description: Number of internal URLs with warnings
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    issues:
+      properties:
+        issues:
+          items:
+            properties:
+              added:
+                type:
+                - integer
+                - 'null'
+                title: added
+                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
+              category:
+                type: string
+                title: category
+                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
+              change:
+                type:
+                - integer
+                - 'null'
+                title: change
+                description: Difference in the number of affected URLs between the specified dates.
+              crawled:
+                type: integer
+                title: crawled
+                description: Number of URLs currently affected by the issue.
+              importance:
+                type: string
+                title: importance
+                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
+              is_indexable:
+                type:
+                - boolean
+                - 'null'
+                title: is_indexable
+                description: True if the issue applies only to indexable pages.
+              issue_id:
+                type: string
+                title: issue_id
+                description: The unique identifier of the issue.
+              missing:
+                type:
+                - integer
+                - 'null'
+                title: missing
+                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
+              name:
+                type: string
+                title: name
+                description: The name of the issue.
+              new:
+                type:
+                - integer
+                - 'null'
+                title: new
+                description: Number of newly discovered URLs that have the issue on the current date.
+              removed:
+                type:
+                - integer
+                - 'null'
+                title: removed
+                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/
+x-refined-from:
+- ahrefs-management-openapi.json
+- ahrefs-site-audit-openapi.json

@@ -1,0 +1,1215 @@
+openapi: 3.2.0
+info:
+  title: Site Explorer Paid search API
+  description: Fetch data from Site Explorer reports
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/site-explorer
+  description: Ahrefs Site Explorer
+security:
+- http:
+  - read
+tags:
+- name: Paid search
+  description: Paid search data
+paths:
+  /paid-pages:
+    get:
+      tags:
+      - Paid search
+      summary: Paid pages
+      operationId: paid-pages
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A comma-separated list of columns to order results by, with optional direction. See response schema for valid column identifiers.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**ads_count**: The number of unique ads with a page.  \ntype: integer\n\n**ads_count_diff**: The change in ads between your selected dates.  \ntype: integer\n\n**ads_count_prev**: The number of ads on the comparison date.  \ntype: integer\n\n**cpc**  \ntype: integer nullable\n\n**cpc_prev**: The CPC metric on the comparison date.  \ntype: integer nullable\n\n**description**: The description of an ad as seen in search results.  \ntype: string\n\n**description_prev**: The description of an ad on the comparison date.  \ntype: string\n\n**has_thumbnail**: The position has a thumbnail.  \ntype: boolean\n\n**has_thumbnail_prev**: The position has a thumbnail on the comparison date.  \ntype: boolean\n\n**has_video**: The position has a video.  \ntype: boolean\n\n**has_video_prev**: The position has a video on the comparison date.  \ntype: boolean\n\n**keyword**: The keyword your target ranks for.  \ntype: string\n\n**keyword_difficulty** (10 units): An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.  \ntype: integer nullable\n\n**keyword_difficulty_prev** (10 units): The keyword difficulty on the comparison date.  \ntype: integer nullable\n\n**keyword_prev**: The keyword your target ranks for on the comparison date.  \ntype: string\n\n**keywords**: The total number of keywords that your target ranks for in paid search results.  \ntype: integer\n\n**keywords_diff**: The change in keywords between your selected dates.  \ntype: integer\n\n**keywords_diff_percent**: The change in keywords between your selected dates, in percents.  \ntype: integer\n\n**keywords_merged**: The total number of keywords optimized for sorting.  \ntype: integer\n\n**keywords_prev**: The keyword your target ranks for on the comparison date.  \ntype: integer\n\n**position**: The position your target ranks for in the paid search results for a keyword.  \ntype: integer\n\n**position_kind**: The kind of a position: organic, paid or a SERP feature. This applies to all positions for a given keyword and URL before picking the top position.  \ntype: string  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"`\n\n**position_kind_prev**: The kind of a position on the comparison date.  \ntype: string  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"`\n\n**position_prev**: The position of your target for a given keyword on the comparison date.  \ntype: integer\n\n**raw_url**: The ranking page URL in encoded format.  \ntype: string\n\n**raw_url_prev**: The ranking page URL on the comparison date in encoded format.  \ntype: string\n\n**referring_domains** (5 units): The number of unique domains linking to a page.  \ntype: integer nullable\n\n**serp_features**  \ntype: array(string)  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"` `\"image_th\"` `\"video_th\"` `\"ai_overview_found\"`\n\n**serp_features_prev**: The SERP features on the comparison date.  \ntype: array(string)  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"` `\"image_th\"` `\"video_th\"` `\"ai_overview_found\"`\n\n**status**: The status of a page: the new page that just started to rank in paid results (\"left\"), the lost page that disappeared from paid results (\"right\"), or no change (\"both\").  \ntype: string  \nenum: `\"left\"` `\"right\"` `\"both\"`\n\n**sum_traffic** (10 units): An estimation of the monthly paid search traffic that a page gets from all the keywords that it ranks for.  \ntype: integer nullable\n\n**sum_traffic_merged** (10 units): The paid traffic field optimized for sorting.  \ntype: integer\n\n**sum_traffic_prev** (10 units): The paid traffic on the comparison date.  \ntype: integer nullable\n\n**title**: The title of an ad as seen in search results.  \ntype: string\n\n**title_prev**: The title of an ad on the comparison date.  \ntype: string\n\n**top_keyword**: The keyword that brings the most paid traffic to a page.  \ntype: string nullable\n\n**top_keyword_best_position**: The ranking position that a page holds for its top keyword.  \ntype: integer nullable\n\n**top_keyword_best_position_diff**: The change in the top position between your selected dates.  \ntype: integer nullable\n\n**top_keyword_best_position_kind**: The kind of the top position: organic, paid or a SERP feature.  \ntype: string nullable  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"`\n\n**top_keyword_best_position_kind_prev**: The kind of the top position on the comparison date.  \ntype: string nullable  \nenum: `\"paid_top\"` `\"paid_bottom\"` `\"paid_right\"` `\"paid_sitelink\"` `\"organic\"` `\"sitelink\"` `\"snippet\"` `\"image\"` `\"article\"` `\"knowledge_card\"` `\"knowledge_panel\"` `\"local_pack\"` `\"local_teaser\"` `\"news\"` `\"question\"` `\"review\"` `\"shopping\"` `\"tweet\"` `\"spelling\"` `\"video\"` `\"discussion\"` `\"ai_overview\"` `\"ai_overview_sitelink\"` `\"organic_shopping\"`\n\n**top_keyword_best_position_prev**: The top position on the comparison date.  \ntype: integer nullable\n\n**top_keyword_best_position_title**: The title displayed for the page in its top keyword's SERP.  \ntype: string nullable\n\n**top_keyword_best_position_title_prev**: The title displayed for the page in its top keyword's SERP on the comparison date.  \ntype: string nullable\n\n**top_keyword_country**: The country in which a page ranks for its top keyword.  \ntype: string nullable  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**top_keyword_country_prev**: The country in which a page ranks for its top keyword on the comparison date.  \ntype: string nullable  \nenum: `\"AD\"` `\"AE\"` `\"AF\"` `\"AG\"` `\"AI\"` `\"AL\"` `\"AM\"` `\"AO\"` `\"AQ\"` `\"AR\"` `\"AS\"` `\"AT\"` `\"AU\"` `\"AW\"` `\"AX\"` `\"AZ\"` `\"BA\"` `\"BB\"` `\"BD\"` `\"BE\"` `\"BF\"` `\"BG\"` `\"BH\"` `\"BI\"` `\"BJ\"` `\"BL\"` `\"BM\"` `\"BN\"` `\"BO\"` `\"BQ\"` `\"BR\"` `\"BS\"` `\"BT\"` `\"BV\"` `\"BW\"` `\"BY\"` `\"BZ\"` `\"CA\"` `\"CC\"` `\"CD\"` `\"CF\"` `\"CG\"` `\"CH\"` `\"CI\"` `\"CK\"` `\"CL\"` `\"CM\"` `\"CN\"` `\"CO\"` `\"CR\"` `\"CU\"` `\"CV\"` `\"CW\"` `\"CX\"` `\"CY\"` `\"CZ\"` `\"DE\"` `\"DJ\"` `\"DK\"` `\"DM\"` `\"DO\"` `\"DZ\"` `\"EC\"` `\"EE\"` `\"EG\"` `\"EH\"` `\"ER\"` `\"ES\"` `\"ET\"` `\"FI\"` `\"FJ\"` `\"FK\"` `\"FM\"` `\"FO\"` `\"FR\"` `\"GA\"` `\"GB\"` `\"GD\"` `\"GE\"` `\"GF\"` `\"GG\"` `\"GH\"` `\"GI\"` `\"GL\"` `\"GM\"` `\"GN\"` `\"GP\"` `\"GQ\"` `\"GR\"` `\"GS\"` `\"GT\"` `\"GU\"` `\"GW\"` `\"GY\"` `\"HK\"` `\"HM\"` `\"HN\"` `\"HR\"` `\"HT\"` `\"HU\"` `\"ID\"` `\"IE\"` `\"IL\"` `\"IM\"` `\"IN\"` `\"IO\"` `\"IQ\"` `\"IR\"` `\"IS\"` `\"IT\"` `\"JE\"` `\"JM\"` `\"JO\"` `\"JP\"` `\"KE\"` `\"KG\"` `\"KH\"` `\"KI\"` `\"KM\"` `\"KN\"` `\"KP\"` `\"KR\"` `\"KW\"` `\"KY\"` `\"KZ\"` `\"LA\"` `\"LB\"` `\"LC\"` `\"LI\"` `\"LK\"` `\"LR\"` `\"LS\"` `\"LT\"` `\"LU\"` `\"LV\"` `\"LY\"` `\"MA\"` `\"MC\"` `\"MD\"` `\"ME\"` `\"MF\"` `\"MG\"` `\"MH\"` `\"MK\"` `\"ML\"` `\"MM\"` `\"MN\"` `\"MO\"` `\"MP\"` `\"MQ\"` `\"MR\"` `\"MS\"` `\"MT\"` `\"MU\"` `\"MV\"` `\"MW\"` `\"MX\"` `\"MY\"` `\"MZ\"` `\"NA\"` `\"NC\"` `\"NE\"` `\"NF\"` `\"NG\"` `\"NI\"` `\"NL\"` `\"NO\"` `\"NP\"` `\"NR\"` `\"NU\"` `\"NZ\"` `\"OM\"` `\"OTHER\"` `\"PA\"` `\"PE\"` `\"PF\"` `\"PG\"` `\"PH\"` `\"PK\"` `\"PL\"` `\"PM\"` `\"PN\"` `\"PR\"` `\"PS\"` `\"PT\"` `\"PW\"` `\"PY\"` `\"QA\"` `\"RE\"` `\"RO\"` `\"RS\"` `\"RU\"` `\"RW\"` `\"SA\"` `\"SB\"` `\"SC\"` `\"SD\"` `\"SE\"` `\"SG\"` `\"SH\"` `\"SI\"` `\"SJ\"` `\"SK\"` `\"SL\"` `\"SM\"` `\"SN\"` `\"SO\"` `\"SR\"` `\"SS\"` `\"ST\"` `\"SV\"` `\"SX\"` `\"SY\"` `\"SZ\"` `\"TC\"` `\"TD\"` `\"TF\"` `\"TG\"` `\"TH\"` `\"TJ\"` `\"TK\"` `\"TL\"` `\"TM\"` `\"TN\"` `\"TO\"` `\"TR\"` `\"TT\"` `\"TV\"` `\"TW\"` `\"TZ\"` `\"UA\"` `\"UG\"` `\"UM\"` `\"US\"` `\"UY\"` `\"UZ\"` `\"VA\"` `\"VC\"` `\"VE\"` `\"VG\"` `\"VI\"` `\"VN\"` `\"VU\"` `\"WF\"` `\"WS\"` `\"YE\"` `\"YT\"` `\"ZA\"` `\"ZM\"` `\"ZW\"`\n\n**top_keyword_prev**: The keyword that brings the most paid traffic to a page on the comparison date.  \ntype: string nullable\n\n**top_keyword_volume** (10 units): An estimation of the average monthly number of searches for the top keyword over the latest month or over the latest known 12 months of data depending on the \"volume_mode\" parameter.  \ntype: integer nullable\n\n**top_keyword_volume_prev** (10 units): The search volume on the comparison date.  \ntype: integer nullable\n\n**traffic** (10 units): An estimation of the number of monthly visitors that your target gets from paid search for a keyword.  \ntype: integer\n\n**traffic_diff**: The change in traffic between your selected dates.  \ntype: integer\n\n**traffic_diff_percent**: The change in traffic between your selected dates, in percents.  \ntype: integer\n\n**traffic_prev** (10 units): The traffic from a keyword on the comparison date.  \ntype: integer\n\n**ur**: URL Rating (UR) shows the strength of your target page’s backlink profile on a 100-point logarithmic scale.  \ntype: float nullable\n\n**url**: The ranking page URL.  \ntype: url nullable\n\n**url_prev**: The ranking page URL on the comparison date.  \ntype: url nullable\n\n**url_visual**: The URL of an ad as seen in search results.  \ntype: string\n\n**url_visual_prev**: The URL of an ad on the comparison date.  \ntype: string\n\n**value** (10 units): The estimated cost of a page's monthly paid search traffic, in USD cents.  \ntype: integer nullable\n\n**value_diff**: The change in traffic value between your selected dates.  \ntype: integer\n\n**value_diff_percent**: The change in traffic value between your selected dates, in percents.  \ntype: integer\n\n**value_merged** (10 units): The traffic value field optimized for sorting.  \ntype: integer nullable\n\n**value_prev** (10 units): The traffic value on the comparison date.  \ntype: integer nullable\n\n**volume** (10 units): An estimation of the number of searches for a keyword over the latest month.  \ntype: integer nullable\n\n**volume_prev** (10 units): The search volume on the comparison date.  \ntype: integer nullable\n\n**words**: The number of words in a keyword.  \ntype: integer\n\n**words_prev**: The number of words in a keyword on the comparison date.  \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - description: A date to compare metrics with in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_compared
+        in: query
+      - description: A date to report metrics on in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: 'The search volume calculation mode: monthly or average. It affects volume, traffic, and traffic value.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - monthly
+          - average
+          default: monthly
+        name: volume_mode
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paid-pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/paid-pages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    paid-pages:
+      properties:
+        pages:
+          items:
+            properties:
+              ads_count:
+                type:
+                - integer
+                - 'null'
+                title: ads_count
+                description: The number of unique ads with a page.
+              ads_count_diff:
+                type: integer
+                title: ads_count_diff
+                description: The change in ads between your selected dates.
+              ads_count_prev:
+                type:
+                - integer
+                - 'null'
+                title: ads_count_prev
+                description: The number of ads on the comparison date.
+              keywords:
+                type:
+                - integer
+                - 'null'
+                title: keywords
+                description: The total number of keywords that your target ranks for in paid search results.
+              keywords_diff:
+                type: integer
+                title: keywords_diff
+                description: The change in keywords between your selected dates.
+              keywords_diff_percent:
+                type: integer
+                title: keywords_diff_percent
+                description: The change in keywords between your selected dates, in percents.
+              keywords_merged:
+                type: integer
+                title: keywords_merged
+                description: The total number of keywords optimized for sorting.
+              keywords_prev:
+                type:
+                - integer
+                - 'null'
+                title: keywords_prev
+                description: The keyword your target ranks for on the comparison date.
+              raw_url:
+                type: string
+                title: raw_url
+                description: The ranking page URL in encoded format.
+              raw_url_prev:
+                type:
+                - string
+                - 'null'
+                title: raw_url_prev
+                description: The ranking page URL on the comparison date in encoded format.
+              referring_domains:
+                type:
+                - integer
+                - 'null'
+                title: referring_domains
+                description: (5 units) The number of unique domains linking to a page.
+              status:
+                type: string
+                enum:
+                - left
+                - right
+                - both
+                title: status
+                description: 'The status of a page: the new page that just started to rank in paid results ("left"), the lost page that disappeared from paid results ("right"), or no change ("both").'
+              sum_traffic:
+                type:
+                - integer
+                - 'null'
+                title: sum_traffic
+                description: (10 units) An estimation of the monthly paid search traffic that a page gets from all the keywords that it ranks for.
+              sum_traffic_merged:
+                type: integer
+                title: sum_traffic_merged
+                description: (10 units) The paid traffic field optimized for sorting.
+              sum_traffic_prev:
+                type:
+                - integer
+                - 'null'
+                title: sum_traffic_prev
+                description: (10 units) The paid traffic on the comparison date.
+              top_keyword:
+                type:
+                - string
+                - 'null'
+                title: top_keyword
+                description: The keyword that brings the most paid traffic to a page.
+              top_keyword_best_position:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position
+                description: The ranking position that a page holds for its top keyword.
+              top_keyword_best_position_diff:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position_diff
+                description: The change in the top position between your selected dates.
+              top_keyword_best_position_kind:
+                type:
+                - string
+                - 'null'
+                enum:
+                - paid_top
+                - paid_bottom
+                - paid_right
+                - paid_sitelink
+                - organic
+                - sitelink
+                - snippet
+                - image
+                - article
+                - knowledge_card
+                - knowledge_panel
+                - local_pack
+                - local_teaser
+                - news
+                - question
+                - review
+                - shopping
+                - tweet
+                - spelling
+                - video
+                - discussion
+                - ai_overview
+                - ai_overview_sitelink
+                - organic_shopping
+                title: top_keyword_best_position_kind
+                description: 'The kind of the top position: organic, paid or a SERP feature.'
+              top_keyword_best_position_kind_prev:
+                type:
+                - string
+                - 'null'
+                enum:
+                - paid_top
+                - paid_bottom
+                - paid_right
+                - paid_sitelink
+                - organic
+                - sitelink
+                - snippet
+                - image
+                - article
+                - knowledge_card
+                - knowledge_panel
+                - local_pack
+                - local_teaser
+                - news
+                - question
+                - review
+                - shopping
+                - tweet
+                - spelling
+                - video
+                - discussion
+                - ai_overview
+                - ai_overview_sitelink
+                - organic_shopping
+                title: top_keyword_best_position_kind_prev
+                description: The kind of the top position on the comparison date.
+              top_keyword_best_position_prev:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position_prev
+                description: The top position on the comparison date.
+              top_keyword_best_position_title:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_best_position_title
+                description: The title displayed for the page in its top keyword's SERP.
+              top_keyword_best_position_title_prev:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_best_position_title_prev
+                description: The title displayed for the page in its top keyword's SERP on the comparison date.
+              top_keyword_country:
+                type:
+                - string
+                - 'null'
+                enum:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: top_keyword_country
+                description: The country in which a page ranks for its top keyword.
+              top_keyword_country_prev:
+                type:
+                - string
+                - 'null'
+                enum:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: top_keyword_country_prev
+                description: The country in which a page ranks for its top keyword on the comparison date.
+              top_keyword_prev:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_prev
+                description: The keyword that brings the most paid traffic to a page on the comparison date.
+              top_keyword_volume:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_volume
+                description: (10 units) An estimation of the average monthly number of searches for the top keyword over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+              top_keyword_volume_prev:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_volume_prev
+                description: (10 units) The search volume on the comparison date.
+              traffic_diff:
+                type: integer
+                title: traffic_diff
+                description: The change in traffic between your selected dates.
+              traffic_diff_percent:
+                type: integer
+                title: traffic_diff_percent
+                description: The change in traffic between your selected dates, in percents.
+              ur:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: ur
+                description: URL Rating (UR) shows the strength of your target page’s backlink profile on a 100-point logarithmic scale.
+              url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url
+                description: The ranking page URL.
+              url_prev:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url_prev
+                description: The ranking page URL on the comparison date.
+              value:
+                type:
+                - integer
+                - 'null'
+                title: value
+                description: (10 units) The estimated cost of a page's monthly paid search traffic, in USD cents.
+              value_diff:
+                type: integer
+                title: value_diff
+                description: The change in traffic value between your selected dates.
+              value_diff_percent:
+                type: integer
+                title: value_diff_percent
+                description: The change in traffic value between your selected dates, in percents.
+              value_merged:
+                type:
+                - integer
+                - 'null'
+                title: value_merged
+                description: (10 units) The traffic value field optimized for sorting.
+              value_prev:
+                type:
+                - integer
+                - 'null'
+                title: value_prev
+                description: (10 units) The traffic value on the comparison date.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

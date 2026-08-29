@@ -1,0 +1,2083 @@
+openapi: 3.2.0
+info:
+  title: Ahrefs Pages API
+  version: 3.0.0
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  termsOfService: https://ahrefs.com/terms
+  description: 'Operations tagged Pages across 3 of this provider''s published API definitions: ahrefs-gsc-openapi.json, ahrefs-site-explorer-openapi.json, ahrefs-web-analytics-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.ahrefs.com/v3/gsc
+  description: Ahrefs GSC Insights
+- url: https://api.ahrefs.com/v3/site-explorer
+  description: Ahrefs Site Explorer
+- url: https://api.ahrefs.com/v3/web-analytics
+  description: Ahrefs Web Analytics
+security:
+- http:
+  - read
+tags:
+- name: Pages
+  description: GSC pages data
+paths:
+  /page-history:
+    get:
+      tags:
+      - Pages
+      summary: Page history
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: page-history
+      parameters:
+      - description: Project ID. Required when portfolio_id is not provided.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: portfolio_id
+        in: query
+      - description: The start date of the historical period in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_from
+        in: query
+      - description: The end date of the historical period in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_to
+        in: query
+      - description: The time interval used to group historical data.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - daily
+          - weekly
+          - monthly
+          default: monthly
+        name: history_grouping
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - description: Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+          - tablet
+        name: device
+        in: query
+      - description: A comma-separated list of page URLs to get history data for.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: pages
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/page-history'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/page-history'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/gsc
+      description: Ahrefs GSC Insights
+  /pages:
+    get:
+      tags:
+      - Pages
+      summary: Pages
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: pages
+      parameters:
+      - description: Project ID. Required when portfolio_id is not provided.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - description: Portfolio ID. When provided, aggregates data across all GSC-connected projects in the portfolio.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: portfolio_id
+        in: query
+      - description: The start date of the historical period in YYYY-MM-DD format.
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_from
+        in: query
+      - description: The end date of the historical period in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date_to
+        in: query
+      - description: The type of search results to return (web, image, video, news).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - web
+          - image
+          - video
+          - news
+          default: web
+        name: search_type
+        in: query
+      - description: A two-letter country code (ISO 3166-1 alpha-2).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+        name: country
+        in: query
+      - description: Filter by device type (DESKTOP, MOBILE, TABLET). If not specified, all devices are included.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+          - tablet
+        name: device
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: "Supported fields:\n- url\n- clicks\n- impressions\n- ctr\n- position\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/pages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/gsc
+      description: Ahrefs GSC Insights
+  /pages-by-backlinks:
+    get:
+      tags:
+      - Pages
+      summary: Best pages by backlinks
+      description: Formerly `/best-by-external-links`
+      operationId: pages-by-backlinks
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A column to order results by. See the response schema for valid column identifiers, except for `http_code_target`, `languages_target`, `last_visited_target`, `powered_by_target`, `target_redirect`, `title_target`, `url_rating_target`, which are not supported in `order_by` for this endpoint.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**dofollow_to_target**: The number of links to your target page that don’t have the “nofollow” attribute.  \ntype: integer\n\n**domain_rating_source**: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**first_seen_link**: The date we first found a link to your target.  \ntype: datetime\n\n**http_code_source**: The return code from HTTP protocol returned during the referring page crawl.  \ntype: integer\n\n**http_code_target**: The return code from HTTP protocol returned during the target page crawl.  \ntype: integer nullable\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_homepage_link**: The link was found on the homepage of a referring website.  \ntype: boolean\n\n**is_lost**: The link currently does not exist anymore.  \ntype: boolean\n\n**is_new**: The link was discovered on the last crawl.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_root_source**: The referring domain name is a root domain name.  \ntype: boolean\n\n**is_spam**: Indicates whether the backlink comes from a known spammy domain.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**languages_source**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**languages_target**: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**last_seen**: The date your target page lost its last live link.  \ntype: datetime nullable\n\n**last_visited_source**: The date we last verified a live link to your target page.  \ntype: datetime\n\n**last_visited_target**: The date we last crawled your target page.  \ntype: datetime nullable\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domains_source**: The number of unique root domains linked from the referring page.  \ntype: integer\n\n**links_external_source**: The number of external links from the referring page.  \ntype: integer\n\n**links_to_target**: The number of inbound backlinks the target page has.  \ntype: integer\n\n**lost_links_to_target**: The number of backlinks lost during the selected time period.  \ntype: integer\n\n**new_links_to_target**: The number of new backlinks found during the selected time period.  \ntype: integer\n\n**nofollow_to_target**: The number of links to your target page that have the “nofollow” attribute.  \ntype: integer\n\n**positions_source**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**positions_source_domain**: The number of keywords that the referring domain ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by_source**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**powered_by_target**: Web technologies used to build and serve the target page content.  \ntype: array(string)\n\n**redirects_to_target**: The number of inbound redirects to your target page.  \ntype: integer\n\n**refdomains_source** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**refdomains_target** (5 units): The number of unique referring domains linking to the target page.  \ntype: integer\n\n**root_name_source**: The root domain name of the referring domain, not including subdomains.  \ntype: string\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**source_page_author**: The author of the referring page.  \ntype: string nullable\n\n**target_redirect**: The target's redirect if any.  \ntype: string nullable\n\n**title_source**: The html title of the referring page.  \ntype: string\n\n**title_target**: The html title of the target page.  \ntype: string nullable\n\n**top_domain_rating_source**: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**traffic_domain_source** (10 units): The referring domain's estimated monthly organic traffic from search.  \ntype: integer\n\n**traffic_source** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from_plain**: The referring page URL optimized for use as a filter.  \ntype: string\n\n**url_rating_source**: The strength of the referring page's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**url_rating_target**: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float nullable\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the backlink points to.  \ntype: string\n\n**url_to_plain**: The target page URL optimized for use as a filter.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - description: A time frame to add lost backlinks to the report. Choose between `live` (no history), `since:<date>` (history since a specified date), and `all_time` (full history). The date should be in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: all_time
+        name: history
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pages-by-backlinks'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/pages-by-backlinks'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/site-explorer
+      description: Ahrefs Site Explorer
+  /pages-by-internal-links:
+    get:
+      tags:
+      - Pages
+      summary: Best pages by internal links
+      description: Formerly `/best-by-internal-links`
+      operationId: pages-by-internal-links
+      parameters:
+      - description: A manual timeout duration in seconds.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: timeout
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: A column to order results by. See the response schema for valid column identifiers, except for `http_code_target`, `languages_target`, `last_visited_target`, `powered_by_target`, `target_redirect`, `title_target`, `url_rating_target`, which are not supported in `order_by` for this endpoint.
+        required: false
+        explode: false
+        schema:
+          type: string
+          examples:
+          - field_a,field_b:asc,field_c:desc
+        name: order_by
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**anchor**: The clickable words in a link that point to a URL.  \ntype: string\n\n**canonical_to_target**: The number of inbound canonical links to your target page.  \ntype: integer\n\n**dofollow_to_target**: The number of links to your target page that don’t have the “nofollow” attribute.  \ntype: integer\n\n**domain_rating_source**: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**first_seen_link**: The date we first found a link to your target.  \ntype: datetime\n\n**http_code_source**: The return code from HTTP protocol returned during the referring page crawl.  \ntype: integer\n\n**http_code_target**: The return code from HTTP protocol returned during the target page crawl.  \ntype: integer nullable\n\n**is_content**: The link was found in the biggest piece of content on the page.  \ntype: boolean\n\n**is_dofollow**: The link has no special nofollow attribute.  \ntype: boolean\n\n**is_homepage_link**: The link was found on the homepage of a referring website.  \ntype: boolean\n\n**is_nofollow**: The link or the referring page has the nofollow attribute set.  \ntype: boolean\n\n**is_non_html**: The link points to a URL with non-HTML content.  \ntype: boolean\n\n**is_root_source**: The referring domain name is a root domain name.  \ntype: boolean\n\n**is_sponsored**: The link has the Sponsored attribute set in the referring page HTML.  \ntype: boolean\n\n**is_ugc**: The link has the User Generated Content attribute set in the referring page HTML.  \ntype: boolean\n\n**languages_source**: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**languages_target**: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.  \ntype: array(string)\n\n**last_seen**: The date your target page lost its last live link.  \ntype: datetime nullable\n\n**last_visited_source**: The date we last verified a live link to your target page.  \ntype: datetime\n\n**last_visited_target**: The date we last crawled your target page.  \ntype: datetime nullable\n\n**len_url_redirect**: The number of redirect chain URLs.  \ntype: integer\n\n**link_type**: The kind of the backlink.  \ntype: string  \nenum: `\"redirect\"` `\"frame\"` `\"text\"` `\"form\"` `\"canonical\"` `\"alternate\"` `\"rss\"` `\"image\"`\n\n**linked_domains_source**: The number of unique root domains linked from the referring page.  \ntype: integer\n\n**links_external_source**: The number of external links from the referring page.  \ntype: integer\n\n**links_to_target**: The number of inbound backlinks the target page has.  \ntype: integer\n\n**nofollow_to_target**: The number of links to your target page that have the “nofollow” attribute.  \ntype: integer\n\n**positions_source**: The number of keywords that the referring page ranks for in the top 100 positions.  \ntype: integer\n\n**positions_source_domain**: The number of keywords that the referring domain ranks for in the top 100 positions.  \ntype: integer\n\n**powered_by_source**: Web technologies used to build and serve the referring page content.  \ntype: array(string)\n\n**powered_by_target**: Web technologies used to build and serve the target page content.  \ntype: array(string)\n\n**redirects_to_target**: The number of inbound redirects to your target page.  \ntype: integer\n\n**refdomains_source** (5 units): The number of unique referring domains linking to the referring page.  \ntype: integer\n\n**root_name_source**: The root domain name of the referring domain, not including subdomains.  \ntype: string\n\n**snippet_left**: The snippet of text appearing just before the link.  \ntype: string\n\n**snippet_right**: The snippet of text appearing just after the link.  \ntype: string\n\n**source_page_author**: The author of the referring page.  \ntype: string nullable\n\n**target_redirect**: The target's redirect if any.  \ntype: string nullable\n\n**title_source**: The html title of the referring page.  \ntype: string\n\n**title_target**: The html title of the target page.  \ntype: string nullable\n\n**traffic_domain_source** (10 units): The referring domain's estimated monthly organic traffic from search.  \ntype: integer\n\n**traffic_source** (10 units): The referring page's estimated monthly organic traffic from search.  \ntype: integer\n\n**url_from_plain**: The referring page URL optimized for use as a filter.  \ntype: string\n\n**url_rating_source**: The strength of the referring page's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float\n\n**url_rating_target**: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.  \ntype: float nullable\n\n**url_redirect**: A redirect chain the target URL of the link points to.  \ntype: array(url)\n\n**url_redirect_with_target**: The target URL of the link with its redirect chain.  \ntype: array(string)\n\n**url_to**: The URL the backlink points to.  \ntype: string\n\n**url_to_plain**: The target page URL optimized for use as a filter.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: A comma-separated list of columns to return. See response schema for valid column identifiers.
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the search based on the target you entered.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pages-by-internal-links'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/pages-by-internal-links'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/site-explorer
+      description: Ahrefs Site Explorer
+  /crawled-pages:
+    get:
+      tags:
+      - Pages
+      summary: Crawled pages
+      operationId: crawled-pages
+      parameters:
+      - description: 'A comma-separated list of fields to return.
+
+
+          - `first_seen`
+
+          - `http_code`
+
+          - `last_attempt`
+
+          - `last_crawled`
+
+          - `title`
+
+          - `url`
+
+          - `url_rating`'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: 'A field to order the results by, with optional direction. Format: `field_name:asc` or `field_name:desc` (default `desc`).
+
+
+          - `first_seen`
+
+          - `http_code`
+
+          - `last_attempt`
+
+          - `last_crawled`
+
+          - `title`
+
+          - `url`
+
+          - `url_rating`'
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: order_by
+        in: query
+      - description: "Supported fields:\n- url\n- http_code\n- last_crawled\n- first_seen\n- last_attempt\n- url_rating\n- title\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - description: The scope of the target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          default: subdomains
+        name: mode
+        in: query
+      - description: The protocol of your target.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          default: both
+        name: protocol
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/crawled-pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/crawled-pages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/site-explorer
+      description: Ahrefs Site Explorer
+  /entry-pages:
+    get:
+      tags:
+      - Pages
+      summary: Entry Pages
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: entry-pages
+      parameters:
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: limit
+        in: query
+      - description: "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: order_by
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entry-pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/entry-pages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/web-analytics
+      description: Ahrefs Web Analytics
+  /entry-pages-chart:
+    get:
+      tags:
+      - Pages
+      summary: Entry Pages Chart
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: entry-pages-chart
+      parameters:
+      - description: Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count).
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: entry_pages_to_chart
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: Time granularity for chart data points.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - hourly
+          - daily
+          - weekly
+          - monthly
+        name: granularity
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entry-pages-chart'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/entry-pages-chart'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/web-analytics
+      description: Ahrefs Web Analytics
+  /exit-pages:
+    get:
+      tags:
+      - Pages
+      summary: Exit Pages
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: exit-pages
+      parameters:
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: limit
+        in: query
+      - description: "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: order_by
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exit-pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/exit-pages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/web-analytics
+      description: Ahrefs Web Analytics
+  /exit-pages-chart:
+    get:
+      tags:
+      - Pages
+      summary: Exit Pages Chart
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: exit-pages-chart
+      parameters:
+      - description: Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count).
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: exit_pages_to_chart
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: Time granularity for chart data points.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - hourly
+          - daily
+          - weekly
+          - monthly
+        name: granularity
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exit-pages-chart'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/exit-pages-chart'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/web-analytics
+      description: Ahrefs Web Analytics
+  /top-pages:
+    get:
+      tags:
+      - Pages
+      summary: Top Pages
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: top-pages
+      parameters:
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+        name: limit
+        in: query
+      - description: "Order by metric, as `metric:desc` or `metric:asc`. The following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: order_by
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/top-pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/top-pages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/web-analytics
+      description: Ahrefs Web Analytics
+  /top-pages-chart:
+    get:
+      tags:
+      - Pages
+      summary: Top Pages Chart
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: top-pages-chart
+      parameters:
+      - description: Specify which values to chart (as a comma separated list), if not provided then `(top5-by-visitors)` is used by default (which charts top 5 values by visitor count).
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: pages_to_chart
+        in: query
+      - description: "Filter expression. Can mention dimensions and metrics.\n\nThe following dimensions are supported:\n\n**source_channel**: Source Channel  \ntype: enum (search \\| llm \\| email \\| paid \\| search/paid \\| social \\| unknown \\| direct \\| newsletter \\| shopping/organic \\| shopping/paid \\| audio \\| social/paid \\| cross-network \\| mobile-push-notification \\| sms \\| affiliate \\| referral \\| display \\| internal)\n\n**source**: Source  \ntype: string\n\n**source_referer**: Referer source  \ntype: string\n\n**source_referer_domain**: Referer domain  \ntype: string\n\n**utm_source**: UTM source  \ntype: string\n\n**utm_medium**: UTM medium  \ntype: string\n\n**utm_campaign**: UTM campaign  \ntype: string\n\n**utm_term**: UTM term  \ntype: string\n\n**utm_content**: UTM content  \ntype: string\n\n**page**: Page URL  \ntype: url\n\n**page_domain**: Page domain  \ntype: string\n\n**page_title**: Page title  \ntype: string\n\n**entry_page**: Entry page URL  \ntype: url\n\n**exit_page**: Exit page URL  \ntype: url\n\n**continent**: Continent  \ntype: enum (AF \\| AS \\| EU \\| NA \\| OC \\| SA \\| AN \\| )\n\n**country**: Country  \ntype: string\n\n**city**: City  \ntype: string\n\n**browser_language**: Browser language  \ntype: string\n\n**browser**: Browser  \ntype: string\n\n**browser_version**: Browser version  \ntype: string\n\n**os**: Operating system  \ntype: string\n\n**os_version**: Operating system version  \ntype: string\n\n**device**: Device type  \ntype: string\n\n**screensize**: Screen size  \ntype: string\n\n**event_name**: Event name  \ntype: string\n\n**is_external_link_click**: Is external link click  \ntype: boolean\n\n**event_prop:EVENT_PROP**: a custom event property can be specified by its name  \ntype: string\n\nThe following metrics are supported:\n\n**pageviews**: Number of pageview events  \ntype: integer\n\n**visitors**: Number of visitors  \ntype: integer\n\n**visits**: Number of visits  \ntype: integer\n\n**session_bounce_rate**: Session bounce rate (percentage of sessions that triggered only one request)  \ntype: float\n\n**avg_session_length**: Average session length (in seconds)  \ntype: float\n\n**avg_session_duration_sec**: Average session duration (in seconds)  \ntype: integer\n\n**exit_rate**: Exit rate (percentage of pageviews that were the last in the session)  \ntype: float\n\n**exits**: Number of exits  \ntype: integer\n\n**entries**: Number of entries  \ntype: integer\n\n**avg_page_visit_duration_sec**: Average page visit duration (in seconds)  \ntype: integer\n\nFilter is a JSON string that represents a boolean expression, it should follow the following structure:\n```\n<bool_filter> ::= { \"and\" : <bool_filter>+ }\n              |   { \"or\" : <bool_filter>+ }\n              |   { \"not\" : <bool_filter> }\n              |   <expr>\n\n<expr> ::= {\n             \"field\" : <dimension|metric>,\n             ? \"is\": <condition>,\n           }\n\n<condition> ::= [ \"eq\", <value> ]\n            |   [ \"neq\", <value> ]\n            |   [ \"gt\", <value> ]\n            |   [ \"gte\", <value> ]\n            |   [ \"lt\", <value> ]\n            |   [ \"lte\", <value> ]\n            |   [ \"substring\", <value> ]\n            |   [ \"isubstring\", <value> ]\n            |   [ \"phrase_match\", <value> ]\n            |   [ \"iphrase_match\", <value> ]\n            |   [ \"prefix\", <value> ]\n            |   [ \"suffix\", <value> ]\n```"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: Time granularity for chart data points.
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - hourly
+          - daily
+          - weekly
+          - monthly
+        name: granularity
+        in: query
+      - description: end datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: to
+        in: query
+      - description: start datetime for the data query
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date-time
+        name: from
+        in: query
+      - description: Project ID
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/top-pages-chart'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/top-pages-chart'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    servers:
+    - url: https://api.ahrefs.com/v3/web-analytics
+      description: Ahrefs Web Analytics
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    page-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              ctr:
+                type: number
+                format: float
+                title: ctr
+              date:
+                type: string
+                format: date-time
+                title: date
+              impressions:
+                type: integer
+                title: impressions
+              page:
+                type: string
+                format: url
+                title: page
+              position:
+                type: number
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    pages:
+      properties:
+        pages:
+          items:
+            properties:
+              clicks:
+                type:
+                - integer
+                - 'null'
+                title: clicks
+              ctr:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: ctr
+              impressions:
+                type:
+                - integer
+                - 'null'
+                title: impressions
+              keywords_count:
+                type: integer
+                title: keywords_count
+              page:
+                type: string
+                format: url
+                title: page
+              position:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+              top_keyword:
+                type:
+                - string
+                - 'null'
+                title: top_keyword
+              traffic_value:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: traffic_value
+                description: Estimated traffic value in USD
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    crawled-pages:
+      properties:
+        pages:
+          items:
+            properties:
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The timestamp when the URL was first seen by Ahrefs.
+              http_code:
+                type: integer
+                title: http_code
+                description: The HTTP status code returned when the page was last crawled.
+              last_attempt:
+                type: string
+                format: date-time
+                title: last_attempt
+                description: The timestamp of the last crawl attempt.
+              last_crawled:
+                type: string
+                format: date-time
+                title: last_crawled
+                description: The timestamp of the last successful crawl.
+              title:
+                type:
+                - string
+                - 'null'
+                title: title
+                description: The page's meta title.
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the crawled page.
+              url_rating:
+                type: number
+                format: float
+                title: url_rating
+                description: URL Rating of the page at the time of the last crawl, on a 100-point scale.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    pages-by-backlinks:
+      properties:
+        pages:
+          items:
+            properties:
+              dofollow_to_target:
+                type: integer
+                title: dofollow_to_target
+                description: The number of links to your target page that don’t have the “nofollow” attribute.
+              first_seen_link:
+                type: string
+                format: date-time
+                title: first_seen_link
+                description: The date we first found a link to your target.
+              http_code_target:
+                type:
+                - integer
+                - 'null'
+                title: http_code_target
+                description: The return code from HTTP protocol returned during the target page crawl.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              languages_target:
+                items:
+                  type: string
+                  title: languages_target
+                  description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+                type: array
+                title: languages_target
+                description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date your target page lost its last live link.
+              last_visited_source:
+                type: string
+                format: date-time
+                title: last_visited_source
+                description: The date we last verified a live link to your target page.
+              last_visited_target:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_visited_target
+                description: The date we last crawled your target page.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of inbound backlinks the target page has.
+              lost_links_to_target:
+                type: integer
+                title: lost_links_to_target
+                description: The number of backlinks lost during the selected time period.
+              new_links_to_target:
+                type: integer
+                title: new_links_to_target
+                description: The number of new backlinks found during the selected time period.
+              nofollow_to_target:
+                type: integer
+                title: nofollow_to_target
+                description: The number of links to your target page that have the “nofollow” attribute.
+              powered_by_target:
+                items:
+                  type: string
+                  title: powered_by_target
+                  description: Web technologies used to build and serve the target page content.
+                type: array
+                title: powered_by_target
+                description: Web technologies used to build and serve the target page content.
+              redirects_to_target:
+                type: integer
+                title: redirects_to_target
+                description: The number of inbound redirects to your target page.
+              refdomains_target:
+                type: integer
+                title: refdomains_target
+                description: (5 units) The number of unique referring domains linking to the target page.
+              target_redirect:
+                type:
+                - string
+                - 'null'
+                title: target_redirect
+                description: The target's redirect if any.
+              title_target:
+                type:
+                - string
+                - 'null'
+                title: title_target
+                description: The html title of the target page.
+              top_domain_rating_source:
+                type: number
+                format: float
+                title: top_domain_rating_source
+                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
+              url_rating_target:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: url_rating_target
+                description: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.
+              url_to:
+                type: string
+                format: url
+                title: url_to
+                description: The URL the backlink points to.
+              url_to_plain:
+                type: string
+                title: url_to_plain
+                description: The target page URL optimized for use as a filter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    pages-by-internal-links:
+      properties:
+        pages:
+          items:
+            properties:
+              canonical_to_target:
+                type: integer
+                title: canonical_to_target
+                description: The number of inbound canonical links to your target page.
+              dofollow_to_target:
+                type: integer
+                title: dofollow_to_target
+                description: The number of links to your target page that don’t have the “nofollow” attribute.
+              first_seen_link:
+                type: string
+                format: date-time
+                title: first_seen_link
+                description: The date we first found a link to your target.
+              http_code_target:
+                type:
+                - integer
+                - 'null'
+                title: http_code_target
+                description: The return code from HTTP protocol returned during the target page crawl.
+              languages_target:
+                items:
+                  type: string
+                  title: languages_target
+                  description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+                type: array
+                title: languages_target
+                description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date your target page lost its last live link.
+              last_visited_source:
+                type: string
+                format: date-time
+                title: last_visited_source
+                description: The date we last verified a live link to your target page.
+              last_visited_target:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_visited_target
+                description: The date we last crawled your target page.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of inbound backlinks the target page has.
+              nofollow_to_target:
+                type: integer
+                title: nofollow_to_target
+                description: The number of links to your target page that have the “nofollow” attribute.
+              powered_by_target:
+                items:
+                  type: string
+                  title: powered_by_target
+                  description: Web technologies used to build and serve the target page content.
+                type: array
+                title: powered_by_target
+                description: Web technologies used to build and serve the target page content.
+              redirects_to_target:
+                type: integer
+                title: redirects_to_target
+                description: The number of inbound redirects to your target page.
+              target_redirect:
+                type:
+                - string
+                - 'null'
+                title: target_redirect
+                description: The target's redirect if any.
+              title_target:
+                type:
+                - string
+                - 'null'
+                title: title_target
+                description: The html title of the target page.
+              url_rating_target:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: url_rating_target
+                description: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.
+              url_to:
+                type: string
+                format: url
+                title: url_to
+                description: The URL the backlink points to.
+              url_to_plain:
+                type: string
+                title: url_to_plain
+                description: The target page URL optimized for use as a filter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    top-pages:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_page_visit_duration_sec:
+                type: integer
+                title: avg_page_visit_duration_sec
+                description: Average page visit duration (in seconds)
+              page:
+                type: string
+                format: url
+                title: page
+                description: Page URL
+              pageviews:
+                type: integer
+                title: pageviews
+                description: Number of pageview events
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    exit-pages-chart:
+      properties:
+        points:
+          items:
+            properties:
+              exit_page:
+                type: string
+                format: url
+                title: exit_page
+                description: Exit page URL
+              exit_rate:
+                type: number
+                format: float
+                title: exit_rate
+                description: Exit rate (percentage of pageviews that were the last in the session)
+              exits:
+                type: integer
+                title: exits
+                description: Number of exits
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    top-pages-chart:
+      properties:
+        points:
+          items:
+            properties:
+              avg_page_visit_duration_sec:
+                type: integer
+                title: avg_page_visit_duration_sec
+                description: Average page visit duration (in seconds)
+              page:
+                type: string
+                format: url
+                title: page
+                description: Page URL
+              pageviews:
+                type: integer
+                title: pageviews
+                description: Number of pageview events
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    exit-pages:
+      properties:
+        stats:
+          items:
+            properties:
+              exit_page:
+                type: string
+                format: url
+                title: exit_page
+                description: Exit page URL
+              exit_rate:
+                type: number
+                format: float
+                title: exit_rate
+                description: Exit rate (percentage of pageviews that were the last in the session)
+              exits:
+                type: integer
+                title: exits
+                description: Number of exits
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    entry-pages:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              entries:
+                type: integer
+                title: entries
+                description: Number of entries
+              entry_page:
+                type: string
+                format: url
+                title: entry_page
+                description: Entry page URL
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    entry-pages-chart:
+      properties:
+        points:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              entries:
+                type: integer
+                title: entries
+                description: Number of entries
+              entry_page:
+                type: string
+                format: url
+                title: entry_page
+                description: Entry page URL
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/
+x-refined-from:
+- ahrefs-gsc-openapi.json
+- ahrefs-site-explorer-openapi.json
+- ahrefs-web-analytics-openapi.json

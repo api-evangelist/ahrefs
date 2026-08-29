@@ -1,0 +1,300 @@
+openapi: 3.2.0
+info:
+  title: Management Competitors API
+  description: Project management.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/management
+  description: Ahrefs Management
+security:
+- http:
+  - read
+tags:
+- name: Competitors
+paths:
+  /project-competitors:
+    get:
+      tags:
+      - Competitors
+      summary: Competitors
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-competitors
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-competitors'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-competitors'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    post:
+      tags:
+      - Competitors
+      summary: Competitors
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-competitors
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                competitors:
+                  items:
+                    properties:
+                      url:
+                        type: string
+                        format: url
+                        description: The URL of the project's target.
+                      mode:
+                        type: string
+                        enum:
+                        - exact
+                        - prefix
+                        - domain
+                        - subdomains
+                        description: The scope of the target.
+                    type: object
+                    required:
+                    - url
+                    - mode
+                  type: array
+                  minItems: 1
+                  description: A list of competitors to add.
+              type: object
+              required:
+              - competitors
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-competitors'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-competitors'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /project-competitors-delete:
+    post:
+      tags:
+      - Competitors
+      summary: Delete competitors
+      description: '>Requests to this endpoint are free and do not consume any API units.'
+      operationId: project-competitors-delete
+      parameters:
+      - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: project_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                competitors:
+                  items:
+                    properties:
+                      url:
+                        type: string
+                        format: url
+                        description: The URL of the project's target.
+                      mode:
+                        type: string
+                        enum:
+                        - exact
+                        - prefix
+                        - domain
+                        - subdomains
+                        description: The scope of the target.
+                    type: object
+                    required:
+                    - url
+                    - mode
+                  type: array
+                  minItems: 1
+                  description: A list of competitors to delete.
+              type: object
+              required:
+              - competitors
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project-competitors-delete'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/project-competitors-delete'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    project-competitors-delete:
+      properties:
+        competitors:
+          items:
+            properties:
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-competitors:
+      properties:
+        competitors:
+          items:
+            properties:
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

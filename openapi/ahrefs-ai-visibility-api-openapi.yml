@@ -1,0 +1,2550 @@
+openapi: 3.2.0
+info:
+  title: Brand Radar AI visibility API
+  description: Brand radar.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/brand-radar
+  description: Ahrefs Brand Radar
+security:
+- http:
+  - read
+tags:
+- name: AI visibility
+paths:
+  /ai-responses:
+    get:
+      tags:
+      - AI visibility
+      summary: AI Responses
+      description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
+      operationId: ai-responses
+      parameters:
+      - description: 'A comma-separated list of fields to return.
+
+
+          - `country`
+
+          - `data_source`
+
+          - `last_updated`
+
+          - `links` (10 units)
+
+          - `question`
+
+          - `response`
+
+          - `search_queries`
+
+          - `tags`
+
+          - `volume` (10 units)'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: The date to search for in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: 'AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.
+
+
+          `ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.
+
+
+          `keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ask_volume
+          - keyword_volume
+          default: ask_volume
+        name: search_volume_type
+        in: query
+      - description: A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+          default: ''
+        name: country
+        in: query
+      - description: A column to order the results by.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - relevance
+          - volume
+          default: relevance
+        name: order_by
+        in: query
+      - description: 'The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: report_id
+        in: query
+      - description: The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ahrefs
+          - custom
+        name: prompts
+        in: query
+      - description: 'A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.
+
+          The `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - chatgpt
+          - google_ai_overviews
+          - google_ai_mode
+          - gemini
+          - perplexity
+          - copilot
+          - claude
+          - grok
+          - google_ai_overviews_keywords
+          - google_ai_mode_keywords
+          examples:
+          - chatgpt,perplexity
+        name: data_source
+        in: query
+      - description: A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: market
+        in: query
+      - description: A comma-separated list of competitors of your brands.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: competitors
+        in: query
+      - description: A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: brand
+        in: query
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ai-responses'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ai-responses'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    post:
+      tags:
+      - AI visibility
+      summary: AI Responses
+      description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
+      operationId: ai-responses
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                brand_filter:
+                  type: object
+                  description: "A filter expression for your brand's visibility, mirroring the \"Your brand\" filter. `brand_name` matches whether a response mentions your brand: `\"mentioned\"` or `\"not_mentioned\"`. `page_status` matches how the AI used your pages: `\"cited\"` (the AI retrieved pages from your site and referenced them in the answer), `\"found_but_not_cited\"` (the AI retrieved pages from your site as potential sources but did not reference them in the final answer), or `\"not_found\"` (the AI did not retrieve any pages from your site). \nUses [filter syntax](https://docs.ahrefs.com/api/docs/filter-syntax) with the following restrictions: the only valid operator is `\"eq\"`; each field is one section: give a single value, or combine several values of the same field with `or`; join the `brand_name` and `page_status` sections with a top-level `and`/`or`. Selecting every value of a field is rejected, since it matches everything (omit the field instead)."
+                  examples:
+                  - and:
+                    - field: brand_name
+                      is:
+                      - eq
+                      - mentioned
+                    - or:
+                      - field: page_status
+                        is:
+                        - eq
+                        - cited
+                      - field: page_status
+                        is:
+                        - eq
+                        - found_but_not_cited
+                volume_range:
+                  properties:
+                    from:
+                      type: integer
+                    to:
+                      type: integer
+                  type: object
+                  description: The volume range to filter by.
+                select:
+                  items:
+                    type: string
+                  type: array
+                  description: 'A list of fields to return.
+
+
+                    - `country`
+
+                    - `data_source`
+
+                    - `last_updated`
+
+                    - `links` (10 units)
+
+                    - `question`
+
+                    - `response`
+
+                    - `search_queries`
+
+                    - `tags`
+
+                    - `volume` (10 units)'
+                  examples:
+                  - - field_a
+                    - field_b
+                where:
+                  type: object
+                  description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+                tags_filter:
+                  type: object
+                  description: 'A filter expression for prompt tags. Requires `report_id`. Uses [filter syntax](https://docs.ahrefs.com/api/docs/filter-syntax) with the following restrictions: the only valid field name is `"tag"`; the only valid operator are: `"eq"`, `"neq"`, `"substring"`, `"isubstring"`, `"phrase_match"`, `"iphrase_match"`, `"prefix"`, `"suffix"`, `"empty"`; maximum nesting depth of `and`, `or` is 2.'
+                  examples:
+                  - or:
+                    - field: tag
+                      is:
+                      - eq
+                      - branded
+                    - field: tag
+                      is:
+                      - eq
+                      - competitor
+                limit:
+                  type: integer
+                  description: The number of results to return.
+                  default: 1000
+                date:
+                  type: string
+                  format: date
+                  description: The date to search for in YYYY-MM-DD format.
+                search_volume_type:
+                  type: string
+                  enum:
+                  - ask_volume
+                  - keyword_volume
+                  description: 'AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.
+
+
+                    `ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.
+
+
+                    `keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026.'
+                  default: ask_volume
+                country:
+                  items:
+                    type: string
+                    enum:
+                    - ad
+                    - ae
+                    - af
+                    - ag
+                    - ai
+                    - al
+                    - am
+                    - ao
+                    - ar
+                    - as
+                    - at
+                    - au
+                    - aw
+                    - az
+                    - ba
+                    - bb
+                    - bd
+                    - be
+                    - bf
+                    - bg
+                    - bh
+                    - bi
+                    - bj
+                    - bn
+                    - bo
+                    - br
+                    - bs
+                    - bt
+                    - bw
+                    - by
+                    - bz
+                    - ca
+                    - cd
+                    - cf
+                    - cg
+                    - ch
+                    - ci
+                    - ck
+                    - cl
+                    - cm
+                    - cn
+                    - co
+                    - cr
+                    - cu
+                    - cv
+                    - cy
+                    - cz
+                    - de
+                    - dj
+                    - dk
+                    - dm
+                    - do
+                    - dz
+                    - ec
+                    - ee
+                    - eg
+                    - es
+                    - et
+                    - fi
+                    - fj
+                    - fm
+                    - fo
+                    - fr
+                    - ga
+                    - gb
+                    - gd
+                    - ge
+                    - gf
+                    - gg
+                    - gh
+                    - gi
+                    - gl
+                    - gm
+                    - gn
+                    - gp
+                    - gq
+                    - gr
+                    - gt
+                    - gu
+                    - gy
+                    - hk
+                    - hn
+                    - hr
+                    - ht
+                    - hu
+                    - id
+                    - ie
+                    - il
+                    - im
+                    - in
+                    - iq
+                    - is
+                    - it
+                    - je
+                    - jm
+                    - jo
+                    - jp
+                    - ke
+                    - kg
+                    - kh
+                    - ki
+                    - kn
+                    - kr
+                    - kw
+                    - ky
+                    - kz
+                    - la
+                    - lb
+                    - lc
+                    - li
+                    - lk
+                    - ls
+                    - lt
+                    - lu
+                    - lv
+                    - ly
+                    - ma
+                    - mc
+                    - md
+                    - me
+                    - mg
+                    - mk
+                    - ml
+                    - mm
+                    - mn
+                    - mq
+                    - mr
+                    - ms
+                    - mt
+                    - mu
+                    - mv
+                    - mw
+                    - mx
+                    - my
+                    - mz
+                    - na
+                    - nc
+                    - ne
+                    - ng
+                    - ni
+                    - nl
+                    - 'no'
+                    - np
+                    - nr
+                    - nu
+                    - nz
+                    - om
+                    - pa
+                    - pe
+                    - pf
+                    - pg
+                    - ph
+                    - pk
+                    - pl
+                    - pn
+                    - pr
+                    - ps
+                    - pt
+                    - py
+                    - qa
+                    - re
+                    - ro
+                    - rs
+                    - ru
+                    - rw
+                    - sa
+                    - sb
+                    - sc
+                    - se
+                    - sg
+                    - sh
+                    - si
+                    - sk
+                    - sl
+                    - sm
+                    - sn
+                    - so
+                    - sr
+                    - st
+                    - sv
+                    - td
+                    - tg
+                    - th
+                    - tj
+                    - tk
+                    - tl
+                    - tm
+                    - tn
+                    - to
+                    - tr
+                    - tt
+                    - tw
+                    - tz
+                    - ua
+                    - ug
+                    - us
+                    - uy
+                    - uz
+                    - vc
+                    - ve
+                    - vg
+                    - vi
+                    - vn
+                    - vu
+                    - ws
+                    - ye
+                    - yt
+                    - za
+                    - zm
+                    - zw
+                  type: array
+                  description: A list of two-letter country codes (ISO 3166-1 alpha-2).
+                  default: []
+                order_by:
+                  type: string
+                  enum:
+                  - relevance
+                  - volume
+                  description: A column to order the results by.
+                  default: relevance
+                report_id:
+                  type: string
+                  description: 'The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+                prompts:
+                  type: string
+                  enum:
+                  - ahrefs
+                  - custom
+                  description: The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided.
+                data_source:
+                  items:
+                    type: string
+                    enum:
+                    - chatgpt
+                    - google_ai_overviews
+                    - google_ai_mode
+                    - gemini
+                    - perplexity
+                    - copilot
+                    - claude
+                    - grok
+                    - google_ai_overviews_keywords
+                    - google_ai_mode_keywords
+                  type: array
+                  description: 'A list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.
+
+                    The `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts.'
+                market:
+                  items:
+                    type: string
+                    title: markets
+                  type: array
+                  minItems: 1
+                  description: A list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date.
+                competitors:
+                  items:
+                    $ref: '#/components/schemas/entity'
+                  type: array
+                  description: A list of competitor names and websites to search for.
+                  default: []
+                brands:
+                  items:
+                    $ref: '#/components/schemas/entity'
+                  type: array
+                  description: A list of brand names and websites to search for.
+                  default: []
+                output:
+                  type: string
+                  enum:
+                  - json
+                  - php
+                  description: The output format.
+              type: object
+              required:
+              - select
+              - data_source
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ai-responses'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ai-responses'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /cited-pages:
+    get:
+      tags:
+      - AI visibility
+      summary: Cited Pages
+      description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
+      operationId: cited-pages
+      parameters:
+      - description: 'A comma-separated list of fields to return.
+
+
+          - `responses`
+
+          - `url`'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: The date to search for in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: 'AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.
+
+
+          `ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.
+
+
+          `keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ask_volume
+          - keyword_volume
+          default: ask_volume
+        name: search_volume_type
+        in: query
+      - description: A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+          default: ''
+        name: country
+        in: query
+      - description: A comma-separated list of tracked page URLs. When provided, the response includes rows with zero citations for any tracked URLs that have no data.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: tracked_urls
+        in: query
+      - description: 'The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: report_id
+        in: query
+      - description: The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ahrefs
+          - custom
+        name: prompts
+        in: query
+      - description: 'A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.
+
+          The `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - chatgpt
+          - google_ai_overviews
+          - google_ai_mode
+          - gemini
+          - perplexity
+          - copilot
+          - claude
+          - grok
+          - google_ai_overviews_keywords
+          - google_ai_mode_keywords
+          examples:
+          - chatgpt,perplexity
+        name: data_source
+        in: query
+      - description: A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: market
+        in: query
+      - description: A comma-separated list of competitors of your brands.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: competitors
+        in: query
+      - description: A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: brand
+        in: query
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cited-pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/cited-pages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    post:
+      tags:
+      - AI visibility
+      summary: Cited Pages
+      description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
+      operationId: cited-pages
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                brand_filter:
+                  type: object
+                  description: "A filter expression for your brand's visibility, mirroring the \"Your brand\" filter. `brand_name` matches whether a response mentions your brand: `\"mentioned\"` or `\"not_mentioned\"`. `page_status` matches how the AI used your pages: `\"cited\"` (the AI retrieved pages from your site and referenced them in the answer), `\"found_but_not_cited\"` (the AI retrieved pages from your site as potential sources but did not reference them in the final answer), or `\"not_found\"` (the AI did not retrieve any pages from your site). \nUses [filter syntax](https://docs.ahrefs.com/api/docs/filter-syntax) with the following restrictions: the only valid operator is `\"eq\"`; each field is one section: give a single value, or combine several values of the same field with `or`; join the `brand_name` and `page_status` sections with a top-level `and`/`or`. Selecting every value of a field is rejected, since it matches everything (omit the field instead)."
+                  examples:
+                  - and:
+                    - field: brand_name
+                      is:
+                      - eq
+                      - mentioned
+                    - or:
+                      - field: page_status
+                        is:
+                        - eq
+                        - cited
+                      - field: page_status
+                        is:
+                        - eq
+                        - found_but_not_cited
+                volume_range:
+                  properties:
+                    from:
+                      type: integer
+                    to:
+                      type: integer
+                  type: object
+                  description: The volume range to filter by.
+                select:
+                  items:
+                    type: string
+                  type: array
+                  description: 'A list of fields to return.
+
+
+                    - `responses`
+
+                    - `url`'
+                  examples:
+                  - - field_a
+                    - field_b
+                where:
+                  type: object
+                  description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+                tags_filter:
+                  type: object
+                  description: 'A filter expression for prompt tags. Requires `report_id`. Uses [filter syntax](https://docs.ahrefs.com/api/docs/filter-syntax) with the following restrictions: the only valid field name is `"tag"`; the only valid operator are: `"eq"`, `"neq"`, `"substring"`, `"isubstring"`, `"phrase_match"`, `"iphrase_match"`, `"prefix"`, `"suffix"`, `"empty"`; maximum nesting depth of `and`, `or` is 2.'
+                  examples:
+                  - or:
+                    - field: tag
+                      is:
+                      - eq
+                      - branded
+                    - field: tag
+                      is:
+                      - eq
+                      - competitor
+                limit:
+                  type: integer
+                  description: The number of results to return.
+                  default: 1000
+                date:
+                  type: string
+                  format: date
+                  description: The date to search for in YYYY-MM-DD format.
+                search_volume_type:
+                  type: string
+                  enum:
+                  - ask_volume
+                  - keyword_volume
+                  description: 'AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.
+
+
+                    `ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.
+
+
+                    `keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026.'
+                  default: ask_volume
+                country:
+                  items:
+                    type: string
+                    enum:
+                    - ad
+                    - ae
+                    - af
+                    - ag
+                    - ai
+                    - al
+                    - am
+                    - ao
+                    - ar
+                    - as
+                    - at
+                    - au
+                    - aw
+                    - az
+                    - ba
+                    - bb
+                    - bd
+                    - be
+                    - bf
+                    - bg
+                    - bh
+                    - bi
+                    - bj
+                    - bn
+                    - bo
+                    - br
+                    - bs
+                    - bt
+                    - bw
+                    - by
+                    - bz
+                    - ca
+                    - cd
+                    - cf
+                    - cg
+                    - ch
+                    - ci
+                    - ck
+                    - cl
+                    - cm
+                    - cn
+                    - co
+                    - cr
+                    - cu
+                    - cv
+                    - cy
+                    - cz
+                    - de
+                    - dj
+                    - dk
+                    - dm
+                    - do
+                    - dz
+                    - ec
+                    - ee
+                    - eg
+                    - es
+                    - et
+                    - fi
+                    - fj
+                    - fm
+                    - fo
+                    - fr
+                    - ga
+                    - gb
+                    - gd
+                    - ge
+                    - gf
+                    - gg
+                    - gh
+                    - gi
+                    - gl
+                    - gm
+                    - gn
+                    - gp
+                    - gq
+                    - gr
+                    - gt
+                    - gu
+                    - gy
+                    - hk
+                    - hn
+                    - hr
+                    - ht
+                    - hu
+                    - id
+                    - ie
+                    - il
+                    - im
+                    - in
+                    - iq
+                    - is
+                    - it
+                    - je
+                    - jm
+                    - jo
+                    - jp
+                    - ke
+                    - kg
+                    - kh
+                    - ki
+                    - kn
+                    - kr
+                    - kw
+                    - ky
+                    - kz
+                    - la
+                    - lb
+                    - lc
+                    - li
+                    - lk
+                    - ls
+                    - lt
+                    - lu
+                    - lv
+                    - ly
+                    - ma
+                    - mc
+                    - md
+                    - me
+                    - mg
+                    - mk
+                    - ml
+                    - mm
+                    - mn
+                    - mq
+                    - mr
+                    - ms
+                    - mt
+                    - mu
+                    - mv
+                    - mw
+                    - mx
+                    - my
+                    - mz
+                    - na
+                    - nc
+                    - ne
+                    - ng
+                    - ni
+                    - nl
+                    - 'no'
+                    - np
+                    - nr
+                    - nu
+                    - nz
+                    - om
+                    - pa
+                    - pe
+                    - pf
+                    - pg
+                    - ph
+                    - pk
+                    - pl
+                    - pn
+                    - pr
+                    - ps
+                    - pt
+                    - py
+                    - qa
+                    - re
+                    - ro
+                    - rs
+                    - ru
+                    - rw
+                    - sa
+                    - sb
+                    - sc
+                    - se
+                    - sg
+                    - sh
+                    - si
+                    - sk
+                    - sl
+                    - sm
+                    - sn
+                    - so
+                    - sr
+                    - st
+                    - sv
+                    - td
+                    - tg
+                    - th
+                    - tj
+                    - tk
+                    - tl
+                    - tm
+                    - tn
+                    - to
+                    - tr
+                    - tt
+                    - tw
+                    - tz
+                    - ua
+                    - ug
+                    - us
+                    - uy
+                    - uz
+                    - vc
+                    - ve
+                    - vg
+                    - vi
+                    - vn
+                    - vu
+                    - ws
+                    - ye
+                    - yt
+                    - za
+                    - zm
+                    - zw
+                  type: array
+                  description: A list of two-letter country codes (ISO 3166-1 alpha-2).
+                  default: []
+                tracked_urls:
+                  items:
+                    type: string
+                    title: tracked_urls
+                  type: array
+                  minItems: 1
+                  description: A list of tracked page URLs. When provided, the response includes rows with zero citations for any tracked URLs that have no data.
+                report_id:
+                  type: string
+                  description: 'The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+                prompts:
+                  type: string
+                  enum:
+                  - ahrefs
+                  - custom
+                  description: The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided.
+                data_source:
+                  items:
+                    type: string
+                    enum:
+                    - chatgpt
+                    - google_ai_overviews
+                    - google_ai_mode
+                    - gemini
+                    - perplexity
+                    - copilot
+                    - claude
+                    - grok
+                    - google_ai_overviews_keywords
+                    - google_ai_mode_keywords
+                  type: array
+                  description: 'A list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.
+
+                    The `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts.'
+                market:
+                  items:
+                    type: string
+                    title: markets
+                  type: array
+                  minItems: 1
+                  description: A list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date.
+                competitors:
+                  items:
+                    $ref: '#/components/schemas/entity'
+                  type: array
+                  description: A list of competitor names and websites to search for.
+                  default: []
+                brands:
+                  items:
+                    $ref: '#/components/schemas/entity'
+                  type: array
+                  description: A list of brand names and websites to search for.
+                  default: []
+                output:
+                  type: string
+                  enum:
+                  - json
+                  - php
+                  description: The output format.
+              type: object
+              required:
+              - select
+              - data_source
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cited-pages'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/cited-pages'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /cited-domains:
+    get:
+      tags:
+      - AI visibility
+      summary: Cited Domains
+      description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
+      operationId: cited-domains
+      parameters:
+      - description: 'A comma-separated list of fields to return.
+
+
+          - `domain`
+
+          - `pages`
+
+          - `responses`'
+        required: true
+        explode: false
+        schema:
+          type: string
+        name: select
+        in: query
+      - description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: where
+        in: query
+      - description: The number of results to return.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1000
+        name: limit
+        in: query
+      - description: The date to search for in YYYY-MM-DD format.
+        required: false
+        explode: false
+        schema:
+          type: string
+          format: date
+        name: date
+        in: query
+      - description: 'AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.
+
+
+          `ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.
+
+
+          `keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026.'
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ask_volume
+          - keyword_volume
+          default: ask_volume
+        name: search_volume_type
+        in: query
+      - description: A comma-separated list of two-letter country codes (ISO 3166-1 alpha-2).
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ad
+          - ae
+          - af
+          - ag
+          - ai
+          - al
+          - am
+          - ao
+          - ar
+          - as
+          - at
+          - au
+          - aw
+          - az
+          - ba
+          - bb
+          - bd
+          - be
+          - bf
+          - bg
+          - bh
+          - bi
+          - bj
+          - bn
+          - bo
+          - br
+          - bs
+          - bt
+          - bw
+          - by
+          - bz
+          - ca
+          - cd
+          - cf
+          - cg
+          - ch
+          - ci
+          - ck
+          - cl
+          - cm
+          - cn
+          - co
+          - cr
+          - cu
+          - cv
+          - cy
+          - cz
+          - de
+          - dj
+          - dk
+          - dm
+          - do
+          - dz
+          - ec
+          - ee
+          - eg
+          - es
+          - et
+          - fi
+          - fj
+          - fm
+          - fo
+          - fr
+          - ga
+          - gb
+          - gd
+          - ge
+          - gf
+          - gg
+          - gh
+          - gi
+          - gl
+          - gm
+          - gn
+          - gp
+          - gq
+          - gr
+          - gt
+          - gu
+          - gy
+          - hk
+          - hn
+          - hr
+          - ht
+          - hu
+          - id
+          - ie
+          - il
+          - im
+          - in
+          - iq
+          - is
+          - it
+          - je
+          - jm
+          - jo
+          - jp
+          - ke
+          - kg
+          - kh
+          - ki
+          - kn
+          - kr
+          - kw
+          - ky
+          - kz
+          - la
+          - lb
+          - lc
+          - li
+          - lk
+          - ls
+          - lt
+          - lu
+          - lv
+          - ly
+          - ma
+          - mc
+          - md
+          - me
+          - mg
+          - mk
+          - ml
+          - mm
+          - mn
+          - mq
+          - mr
+          - ms
+          - mt
+          - mu
+          - mv
+          - mw
+          - mx
+          - my
+          - mz
+          - na
+          - nc
+          - ne
+          - ng
+          - ni
+          - nl
+          - 'no'
+          - np
+          - nr
+          - nu
+          - nz
+          - om
+          - pa
+          - pe
+          - pf
+          - pg
+          - ph
+          - pk
+          - pl
+          - pn
+          - pr
+          - ps
+          - pt
+          - py
+          - qa
+          - re
+          - ro
+          - rs
+          - ru
+          - rw
+          - sa
+          - sb
+          - sc
+          - se
+          - sg
+          - sh
+          - si
+          - sk
+          - sl
+          - sm
+          - sn
+          - so
+          - sr
+          - st
+          - sv
+          - td
+          - tg
+          - th
+          - tj
+          - tk
+          - tl
+          - tm
+          - tn
+          - to
+          - tr
+          - tt
+          - tw
+          - tz
+          - ua
+          - ug
+          - us
+          - uy
+          - uz
+          - vc
+          - ve
+          - vg
+          - vi
+          - vn
+          - vu
+          - ws
+          - ye
+          - yt
+          - za
+          - zm
+          - zw
+          default: ''
+        name: country
+        in: query
+      - description: 'The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+        required: false
+        explode: false
+        schema:
+          type: string
+        name: report_id
+        in: query
+      - description: The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided.
+        required: false
+        explode: false
+        schema:
+          type: string
+          enum:
+          - ahrefs
+          - custom
+        name: prompts
+        in: query
+      - description: 'A comma-separated list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.
+
+          The `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          enum:
+          - chatgpt
+          - google_ai_overviews
+          - google_ai_mode
+          - gemini
+          - perplexity
+          - copilot
+          - claude
+          - grok
+          - google_ai_overviews_keywords
+          - google_ai_mode_keywords
+          examples:
+          - chatgpt,perplexity
+        name: data_source
+        in: query
+      - description: A comma-separated list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: market
+        in: query
+      - description: A comma-separated list of competitors of your brands.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: competitors
+        in: query
+      - description: A comma-separated list of brands to search for. At least one of brand, competitors, market or where should not be empty.
+        required: false
+        explode: false
+        schema:
+          type: string
+          default: ''
+        name: brand
+        in: query
+      - $ref: '#/components/parameters/output_json_php'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cited-domains'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/cited-domains'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    post:
+      tags:
+      - AI visibility
+      summary: Cited Domains
+      description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
+      operationId: cited-domains
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                brand_filter:
+                  type: object
+                  description: "A filter expression for your brand's visibility, mirroring the \"Your brand\" filter. `brand_name` matches whether a response mentions your brand: `\"mentioned\"` or `\"not_mentioned\"`. `page_status` matches how the AI used your pages: `\"cited\"` (the AI retrieved pages from your site and referenced them in the answer), `\"found_but_not_cited\"` (the AI retrieved pages from your site as potential sources but did not reference them in the final answer), or `\"not_found\"` (the AI did not retrieve any pages from your site). \nUses [filter syntax](https://docs.ahrefs.com/api/docs/filter-syntax) with the following restrictions: the only valid operator is `\"eq\"`; each field is one section: give a single value, or combine several values of the same field with `or`; join the `brand_name` and `page_status` sections with a top-level `and`/`or`. Selecting every value of a field is rejected, since it matches everything (omit the field instead)."
+                  examples:
+                  - and:
+                    - field: brand_name
+                      is:
+                      - eq
+                      - mentioned
+                    - or:
+                      - field: page_status
+                        is:
+                        - eq
+                        - cited
+                      - field: page_status
+                        is:
+                        - eq
+                        - found_but_not_cited
+                volume_range:
+                  properties:
+                    from:
+                      type: integer
+                    to:
+                      type: integer
+                  type: object
+                  description: The volume range to filter by.
+                select:
+                  items:
+                    type: string
+                  type: array
+                  description: 'A list of fields to return.
+
+
+                    - `domain`
+
+                    - `pages`
+
+                    - `responses`'
+                  examples:
+                  - - field_a
+                    - field_b
+                where:
+                  type: object
+                  description: "The filter expression. The following column identifiers are recognized (this differs from the identifiers recognized by the `select` parameter).\n\n**cited_domain**: The domain of a page that was used to generate the response.  \ntype: domain\n\n**cited_domain_subdomains**: The domain of a page that was used to generate the response. Any subdomain of the given domain will also match.  \ntype: string\n\n**cited_url_exact**: The URL of a page that was used to generate the response.  \ntype: string\n\n**cited_url_prefix**: The URL of a page that was used to generate the response. Any URL that starts with this prefix will match.  \ntype: string\n\n**question**: The question asked by the user. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**response** (10 units): The response from the model. Note: the `substring` and `isubstring` operators are not supported on this field; use `phrase_match` or `iphrase_match` instead.  \ntype: string\n\n**search_queries**: The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.  \ntype: string\n\n**topic**: The topic of the query.  \ntype: string"
+                tags_filter:
+                  type: object
+                  description: 'A filter expression for prompt tags. Requires `report_id`. Uses [filter syntax](https://docs.ahrefs.com/api/docs/filter-syntax) with the following restrictions: the only valid field name is `"tag"`; the only valid operator are: `"eq"`, `"neq"`, `"substring"`, `"isubstring"`, `"phrase_match"`, `"iphrase_match"`, `"prefix"`, `"suffix"`, `"empty"`; maximum nesting depth of `and`, `or` is 2.'
+                  examples:
+                  - or:
+                    - field: tag
+                      is:
+                      - eq
+                      - branded
+                    - field: tag
+                      is:
+                      - eq
+                      - competitor
+                limit:
+                  type: integer
+                  description: The number of results to return.
+                  default: 1000
+                date:
+                  type: string
+                  format: date
+                  description: The date to search for in YYYY-MM-DD format.
+                search_volume_type:
+                  type: string
+                  enum:
+                  - ask_volume
+                  - keyword_volume
+                  description: 'AI visibility reports are switching to AI adjusted volume. It better estimates demand for AI responses across chatbots and AI search surfaces. It is calculated by adjusting Google search volume for each AI platform’s estimated usage compared with Google. This param will be deprecated on August 31, 2026; all requests will use new AI adjusted volume.
+
+
+                    `ask_volume` - New calculation (default). Estimates demand for AI responses by adjusting Google search volume for each AI platform.
+
+
+                    `keyword_volume` - Previous calculation. Uses Google search volume without AI platform adjustment. Available until August 31, 2026.'
+                  default: ask_volume
+                country:
+                  items:
+                    type: string
+                    enum:
+                    - ad
+                    - ae
+                    - af
+                    - ag
+                    - ai
+                    - al
+                    - am
+                    - ao
+                    - ar
+                    - as
+                    - at
+                    - au
+                    - aw
+                    - az
+                    - ba
+                    - bb
+                    - bd
+                    - be
+                    - bf
+                    - bg
+                    - bh
+                    - bi
+                    - bj
+                    - bn
+                    - bo
+                    - br
+                    - bs
+                    - bt
+                    - bw
+                    - by
+                    - bz
+                    - ca
+                    - cd
+                    - cf
+                    - cg
+                    - ch
+                    - ci
+                    - ck
+                    - cl
+                    - cm
+                    - cn
+                    - co
+                    - cr
+                    - cu
+                    - cv
+                    - cy
+                    - cz
+                    - de
+                    - dj
+                    - dk
+                    - dm
+                    - do
+                    - dz
+                    - ec
+                    - ee
+                    - eg
+                    - es
+                    - et
+                    - fi
+                    - fj
+                    - fm
+                    - fo
+                    - fr
+                    - ga
+                    - gb
+                    - gd
+                    - ge
+                    - gf
+                    - gg
+                    - gh
+                    - gi
+                    - gl
+                    - gm
+                    - gn
+                    - gp
+                    - gq
+                    - gr
+                    - gt
+                    - gu
+                    - gy
+                    - hk
+                    - hn
+                    - hr
+                    - ht
+                    - hu
+                    - id
+                    - ie
+                    - il
+                    - im
+                    - in
+                    - iq
+                    - is
+                    - it
+                    - je
+                    - jm
+                    - jo
+                    - jp
+                    - ke
+                    - kg
+                    - kh
+                    - ki
+                    - kn
+                    - kr
+                    - kw
+                    - ky
+                    - kz
+                    - la
+                    - lb
+                    - lc
+                    - li
+                    - lk
+                    - ls
+                    - lt
+                    - lu
+                    - lv
+                    - ly
+                    - ma
+                    - mc
+                    - md
+                    - me
+                    - mg
+                    - mk
+                    - ml
+                    - mm
+                    - mn
+                    - mq
+                    - mr
+                    - ms
+                    - mt
+                    - mu
+                    - mv
+                    - mw
+                    - mx
+                    - my
+                    - mz
+                    - na
+                    - nc
+                    - ne
+                    - ng
+                    - ni
+                    - nl
+                    - 'no'
+                    - np
+                    - nr
+                    - nu
+                    - nz
+                    - om
+                    - pa
+                    - pe
+                    - pf
+                    - pg
+                    - ph
+                    - pk
+                    - pl
+                    - pn
+                    - pr
+                    - ps
+                    - pt
+                    - py
+                    - qa
+                    - re
+                    - ro
+                    - rs
+                    - ru
+                    - rw
+                    - sa
+                    - sb
+                    - sc
+                    - se
+                    - sg
+                    - sh
+                    - si
+                    - sk
+                    - sl
+                    - sm
+                    - sn
+                    - so
+                    - sr
+                    - st
+                    - sv
+                    - td
+                    - tg
+                    - th
+                    - tj
+                    - tk
+                    - tl
+                    - tm
+                    - tn
+                    - to
+                    - tr
+                    - tt
+                    - tw
+                    - tz
+                    - ua
+                    - ug
+                    - us
+                    - uy
+                    - uz
+                    - vc
+                    - ve
+                    - vg
+                    - vi
+                    - vn
+                    - vu
+                    - ws
+                    - ye
+                    - yt
+                    - za
+                    - zm
+                    - zw
+                  type: array
+                  description: A list of two-letter country codes (ISO 3166-1 alpha-2).
+                  default: []
+                report_id:
+                  type: string
+                  description: 'The ID of the report to use. If one is given, other parameters are taken from the report (brand, competitors, market, country, filters). If country or filters are provided, they override the ones in the report. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
+                prompts:
+                  type: string
+                  enum:
+                  - ahrefs
+                  - custom
+                  description: The type of prompts to use. If not specified, both will be used. Custom prompts require a report_id to be provided.
+                data_source:
+                  items:
+                    type: string
+                    enum:
+                    - chatgpt
+                    - google_ai_overviews
+                    - google_ai_mode
+                    - gemini
+                    - perplexity
+                    - copilot
+                    - claude
+                    - grok
+                    - google_ai_overviews_keywords
+                    - google_ai_mode_keywords
+                  type: array
+                  description: 'A list of chatbot models. All models can be combined with each other. `claude` module supports only custom prompts.
+
+                    The `google_ai_overviews_keywords` and `google_ai_mode_keywords` models report AI Overviews / AI Mode visibility derived from Google search queries (keywords) rather than prompts.'
+                market:
+                  items:
+                    type: string
+                    title: markets
+                  type: array
+                  minItems: 1
+                  description: A list of the niche markets of your brands. Deprecated on 2026-05-18, this parameter will have no effect shortly after this date.
+                competitors:
+                  items:
+                    $ref: '#/components/schemas/entity'
+                  type: array
+                  description: A list of competitor names and websites to search for.
+                  default: []
+                brands:
+                  items:
+                    $ref: '#/components/schemas/entity'
+                  type: array
+                  description: A list of brand names and websites to search for.
+                  default: []
+                output:
+                  type: string
+                  enum:
+                  - json
+                  - php
+                  description: The output format.
+              type: object
+              required:
+              - select
+              - data_source
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cited-domains'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/cited-domains'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    ai-responses:
+      properties:
+        ai_responses:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: The country of the question.
+              data_source:
+                type: string
+                title: data_source
+                description: The chatbot model that generated the response.
+              last_updated:
+                type: string
+                format: date
+                title: last_updated
+                description: The date when the data was last updated.
+              links:
+                items:
+                  properties:
+                    url:
+                      type: string
+                    title:
+                      type:
+                      - string
+                      - 'null'
+                  type: object
+                type: array
+                title: links
+                description: (10 units) The links used for the response.
+              question:
+                type: string
+                title: question
+                description: The question asked by the user.
+              response:
+                type: string
+                title: response
+                description: (10 units) The response from the model.
+              search_queries:
+                items:
+                  type: string
+                type: array
+                title: search_queries
+                description: 'The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.'
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: Tags assigned to the query.
+              volume:
+                type: integer
+                title: volume
+                description: (10 units) Estimated monthly searches. This is based on our estimates for Google, combining the search volumes of related keywords where this question appears in People Also Ask section.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    cited-pages:
+      properties:
+        pages:
+          items:
+            properties:
+              mentions:
+                items:
+                  properties: {}
+                  type: object
+                type: array
+                title: mentions
+                description: Deprecated on 2026-02-10.
+              responses:
+                type: integer
+                title: responses
+                description: The number of responses that cited the page.
+              url:
+                type: string
+                title: url
+                description: The URL of the cited page.
+              volume:
+                type: integer
+                title: volume
+                description: Deprecated on 2026-03-24.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    entity:
+      anyOf:
+      - required:
+        - names
+      - required:
+        - url_groups
+      properties:
+        names:
+          items:
+            type: string
+          type: array
+          description: The names of the brand/competitor
+          examples:
+          - - ahrefs
+            - ahrefs seo
+        url_groups:
+          items:
+            properties:
+              target:
+                type: string
+                format: domain
+                description: The domain of the target
+                examples:
+                - ahrefs.com
+              scope:
+                type: string
+                enum:
+                - url
+                - path
+                - domain
+                - subdomains
+                description: Scope of the target.
+            type: object
+            required:
+            - target
+            - scope
+          type: array
+      type: object
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    cited-domains:
+      properties:
+        domains:
+          items:
+            properties:
+              domain:
+                type: string
+                title: domain
+                description: The cited domain name.
+              mentions:
+                items:
+                  properties: {}
+                  type: object
+                type: array
+                title: mentions
+                description: Deprecated on 2026-02-10.
+              pages:
+                type: integer
+                title: pages
+                description: The number of unique pages from the domain that were cited in the responses.
+              responses:
+                type: integer
+                title: responses
+                description: The number of responses that cited the domain.
+              volume:
+                type: integer
+                title: volume
+                description: Deprecated on 2026-03-24.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/

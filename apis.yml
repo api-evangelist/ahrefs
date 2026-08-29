@@ -633,6 +633,117 @@ apis:
     url: errors/ahrefs-problem-types.yml
   - type: DataModel
     url: data-model/ahrefs-data-model.yml
+- aid: ahrefs:ahrefs-brand-radar-api
+  name: Ahrefs Brand Radar API
+  description: Brand radar.
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Brand Radar
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-brand-radar-api-openapi.yml
+- aid: ahrefs:ahrefs-gsc-insights-api
+  name: Ahrefs GSC Insights API
+  description: Fetch data from GSC Insights reports
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - GSC Insights
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-gsc-insights-api-openapi.yml
+- aid: ahrefs:ahrefs-keywords-explorer-api
+  name: Ahrefs Keywords Explorer API
+  description: Fetch data from Keywords Explorer reports
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Keywords Explorer
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-keywords-explorer-api-openapi.yml
+- aid: ahrefs:ahrefs-management-api
+  name: Ahrefs Management API
+  description: Project management.
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Management
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-management-api-openapi.yml
+- aid: ahrefs:ahrefs-public-api
+  name: Ahrefs Public API
+  description: >-
+    Free endpoints that don't require an Ahrefs subscription, or require a free/public APIv3 key
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Public
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-public-api-openapi.yml
+- aid: ahrefs:ahrefs-rank-tracker-api
+  name: Ahrefs Rank Tracker API
+  description: Rank tracker.
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Rank Tracker
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-rank-tracker-api-openapi.yml
+- aid: ahrefs:ahrefs-site-audit-api
+  name: Ahrefs Site Audit API
+  description: Site audit.
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Site Audit
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-site-audit-api-openapi.yml
+- aid: ahrefs:ahrefs-site-explorer-api
+  name: Ahrefs Site Explorer API
+  description: Fetch data from Site Explorer reports
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Site Explorer
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-site-explorer-api-openapi.yml
+- aid: ahrefs:ahrefs-social-media-api
+  name: Ahrefs Social Media API
+  description: Social Media Management.
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Social Media
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-social-media-api-openapi.yml
+- aid: ahrefs:ahrefs-subscription-information-api
+  name: Ahrefs Subscription Information API
+  description: Subscription information.
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Subscription Information
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-subscription-information-api-openapi.yml
+- aid: ahrefs:ahrefs-web-analytics-api
+  name: Ahrefs Web Analytics API
+  description: Web_analytics.
+  humanURL: https://docs.ahrefs.com/mcp/docs/introduction
+  baseURL: https://api.ahrefs.com/mcp/mcp
+  tags:
+  - Web Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/ahrefs-web-analytics-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

@@ -1,0 +1,333 @@
+openapi: 3.2.0
+info:
+  title: Ahrefs Public API
+  description: Ahrefs API v3 gives programmatic access to Ahrefs' SEO, marketing, and AI-search data — backlinks, organic and paid traffic, keywords, SERPs, rank tracking, site audits, brand/AI-search visibility, web and social analytics, and account management. This is the full spec for every tool; each tool also has its own spec under /reference/.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3
+  description: Ahrefs API v3
+security:
+- http:
+  - read
+tags:
+- name: Public
+  description: Free endpoints that don't require an Ahrefs subscription, or require a free/public APIv3 key
+paths:
+  /public/crawler-ips:
+    get:
+      tags:
+      - Public
+      summary: Crawler IP addresses
+      description: '>Requests to this endpoint are free and do not require an API key.'
+      operationId: public.crawler-ips
+      parameters:
+      - $ref: '#/components/parameters/public.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/public.crawler-ips'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/public.crawler-ips'
+        '400':
+          $ref: '#/components/responses/public.error_400'
+        '401':
+          $ref: '#/components/responses/public.error_401'
+        '403':
+          $ref: '#/components/responses/public.error_403'
+        '429':
+          $ref: '#/components/responses/public.error_429'
+        '500':
+          $ref: '#/components/responses/public.error_500'
+      security: []
+  /public/crawler-ip-ranges:
+    get:
+      tags:
+      - Public
+      summary: Crawler IP ranges
+      description: '>Requests to this endpoint are free and do not require an API key.'
+      operationId: public.crawler-ip-ranges
+      parameters:
+      - $ref: '#/components/parameters/public.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/public.crawler-ip-ranges'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/public.crawler-ip-ranges'
+        '400':
+          $ref: '#/components/responses/public.error_400'
+        '401':
+          $ref: '#/components/responses/public.error_401'
+        '403':
+          $ref: '#/components/responses/public.error_403'
+        '429':
+          $ref: '#/components/responses/public.error_429'
+        '500':
+          $ref: '#/components/responses/public.error_500'
+      security: []
+  /public/domain-rating-free:
+    get:
+      tags:
+      - Public
+      summary: Domain rating free
+      description: '>Requests to this endpoint are free, yet require an APIv3 key.
+
+
+        >APIv3 keys are free to generate and use. If you don''t have an Ahrefs account, here''s how to get the key for free:
+
+        >1. [Sign up](https://ahrefs.com/) for a free Ahrefs account (if you don''t have one)
+
+        >2. Generate an API key in [Account settings → API keys](https://app.ahrefs.com/account/api-keys)
+
+        >3. Add it to your requests: `Authorization: Bearer <token>`
+
+
+        Use of this data is subject to the Domain Rating License at http://ahrefs.com/legal/domain-rating-license. Attribution required: "Domain Rating by Ahrefs" (https://ahrefs.com/).'
+      operationId: public.domain-rating-free
+      parameters:
+      - description: 'The target of the search: a domain or a URL.'
+        required: true
+        explode: false
+        schema:
+          type: string
+          format: url
+        name: target
+        in: query
+      - $ref: '#/components/parameters/public.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/public.domain-rating-free'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/public.domain-rating-free'
+        '400':
+          $ref: '#/components/responses/public.error_400'
+        '401':
+          $ref: '#/components/responses/public.error_401'
+        '403':
+          $ref: '#/components/responses/public.error_403'
+        '429':
+          $ref: '#/components/responses/public.error_429'
+        '500':
+          $ref: '#/components/responses/public.error_500'
+      security: []
+  /public/domain-rating-top-domains:
+    get:
+      tags:
+      - Public
+      summary: Domain rating top domains
+      description: '>Requests to this endpoint are free, yet require an APIv3 key.
+
+
+        >APIv3 keys are free to generate and use. If you don''t have an Ahrefs account, here''s how to get the key for free:
+
+        >1. [Sign up](https://ahrefs.com/) for a free Ahrefs account (if you don''t have one)
+
+        >2. Generate an API key in [Account settings → API keys](https://app.ahrefs.com/account/api-keys)
+
+        >3. Add it to your requests: `Authorization: Bearer <token>`
+
+
+        Returns the top 1M domains ranked by Ahrefs Domain Rating, together with each domain''s current Domain Rating.
+
+        Use `from` and `to` to request a range of rank positions. Each request can return up to 250k rows (e.g. `from=1&to=250000`).
+
+        '
+      operationId: public.domain-rating-top-domains
+      parameters:
+      - description: Rank position to start from.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 1
+        name: from
+        in: query
+      - description: Rank position to end at. You can request up to 250k rows at a time.
+        required: false
+        explode: false
+        schema:
+          type: integer
+          default: 100
+        name: to
+        in: query
+      - $ref: '#/components/parameters/public.output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/public.domain-rating-top-domains'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/public.domain-rating-top-domains'
+        '400':
+          $ref: '#/components/responses/public.error_400'
+        '401':
+          $ref: '#/components/responses/public.error_401'
+        '403':
+          $ref: '#/components/responses/public.error_403'
+        '429':
+          $ref: '#/components/responses/public.error_429'
+        '500':
+          $ref: '#/components/responses/public.error_500'
+      security: []
+components:
+  schemas:
+    public.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    public.crawler-ips:
+      properties:
+        ips:
+          items:
+            properties:
+              ip_address:
+                type: string
+                title: ip_address
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    public.domain-rating-free:
+      properties:
+        domain_rating:
+          properties:
+            domain_rating:
+              type: number
+              format: float
+              title: domain_rating
+              description: Current strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+            license:
+              type: string
+              format: url
+              title: license
+              description: URL of the license terms that apply to use of Domain Rating data.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    public.crawler-ip-ranges:
+      properties:
+        prefixes:
+          items:
+            properties:
+              ipv4Prefix:
+                type: string
+                title: ipv4Prefix
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    public.domain-rating-top-domains:
+      properties:
+        domains:
+          items:
+            properties:
+              domain:
+                type: string
+                format: domain
+                title: domain
+                description: Domain name.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: Current strength of the domain's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+              rank:
+                type: integer
+                title: rank
+                description: Position of the domain in the top 1M ranking by Domain Rating (1 = highest).
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    public.output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  responses:
+    public.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+    public.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+    public.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+    public.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+    public.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer

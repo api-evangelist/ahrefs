@@ -1,0 +1,260 @@
+openapi: 3.2.0
+info:
+  title: Management Keyword lists API
+  description: Project management.
+  termsOfService: https://ahrefs.com/terms
+  contact:
+    name: Ahrefs
+    url: https://ahrefs.com/
+    email: support@ahrefs.com
+  version: 3.0.0
+servers:
+- url: https://api.ahrefs.com/v3/management
+  description: Ahrefs Management
+security:
+- http:
+  - read
+tags:
+- name: Keyword lists
+paths:
+  /keyword-list-keywords:
+    get:
+      tags:
+      - Keyword lists
+      summary: Keywords list
+      description: '**Requests to this endpoint are free and do not consume any API units.**'
+      operationId: keyword-list-keywords
+      parameters:
+      - description: The id of an existing keyword list.
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: keyword_list_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/keyword-list-keywords'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/keyword-list-keywords'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+    put:
+      tags:
+      - Keyword lists
+      summary: Keywords list
+      description: '**Requests to this endpoint are free and do not consume any API units.**'
+      operationId: keyword-list-keywords
+      parameters:
+      - description: The id of an existing keyword list.
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: keyword_list_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                keywords:
+                  items:
+                    type: string
+                    title: keyword
+                  type: array
+                  minItems: 1
+                  description: A list of keywords to add.
+              type: object
+              required:
+              - keywords
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/keyword-list-keywords'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/keyword-list-keywords'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+  /keyword-list-keywords-delete:
+    put:
+      tags:
+      - Keyword lists
+      summary: Keywords list
+      description: '**Requests to this endpoint are free and do not consume any API units.**'
+      operationId: keyword-list-keywords-delete
+      parameters:
+      - description: The id of an existing keyword list.
+        required: true
+        explode: false
+        schema:
+          type: integer
+        name: keyword_list_id
+        in: query
+      - $ref: '#/components/parameters/output'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                keywords:
+                  items:
+                    type: string
+                    title: keyword
+                  type: array
+                  minItems: 1
+                  description: A list of keywords to delete.
+              type: object
+              required:
+              - keywords
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/keyword-list-keywords-delete'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/keyword-list-keywords-delete'
+        '400':
+          $ref: '#/components/responses/error_400'
+        '401':
+          $ref: '#/components/responses/error_401'
+        '403':
+          $ref: '#/components/responses/error_403'
+        '429':
+          $ref: '#/components/responses/error_429'
+        '500':
+          $ref: '#/components/responses/error_500'
+components:
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+  schemas:
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keyword-list-keywords-delete:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keyword-list-keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: ''
+  url: https://docs.ahrefs.com/docs/api/v3/
