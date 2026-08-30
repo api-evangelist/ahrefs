@@ -80,6 +80,8 @@ apis:
   humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
   baseURL: https://api.ahrefs.com/v3
   tags:
+  - AI Visibility
+  tags_raw:
   - AI visibility
   properties:
   - type: OpenAPI
@@ -531,6 +533,8 @@ apis:
   humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
   baseURL: https://api.ahrefs.com/v3
   tags:
+  - Paid Search
+  tags_raw:
   - Paid search
   properties:
   - type: OpenAPI
@@ -567,6 +571,8 @@ apis:
   humanURL: https://docs.ahrefs.com/docs/api/reference/introduction
   baseURL: https://api.ahrefs.com/v3
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -720,6 +726,8 @@ apis:
   humanURL: https://docs.ahrefs.com/mcp/docs/introduction
   baseURL: https://api.ahrefs.com/mcp/mcp
   tags:
+  - Social-Media
+  tags_raw:
   - Social Media
   properties:
   - type: OpenAPI
