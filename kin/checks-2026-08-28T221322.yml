@@ -2,23 +2,28 @@
 kin_checks:
   slug: ahrefs
   schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
+  scored_at: '2026-08-28'
+  run_ts: 2026-08-28T221322
   note: Actionable checks only (missed + partial). earned/na are every other check
     in rubric/scoring-0.15.1.yml; counts below let you verify that.
   counts:
     total: 130
-    earned: 47
-    partial: 5
+    earned: 57
+    partial: 13
     missed: 36
-    na: 42
+    na: 24
   checks:
-  - id: multiple_apis
-    status: missed
   - id: apis_json_self_hosted
     status: missed
-  - id: examples_present
+  - id: openapi_3_1
     status: missed
+    detail: 0 of 31 openapi documents pass
+  - id: openapi_3_0
+    status: missed
+    detail: 0 of 31 openapi documents pass
+  - id: webhooks_or_callbacks
+    status: missed
+    detail: 0 of 31 openapi documents pass
   - id: asyncapi_present
     status: missed
   - id: json_schema_present
@@ -71,8 +76,6 @@ kin_checks:
     status: missed
   - id: idempotency
     status: missed
-  - id: openapi_examples
-    status: missed
   - id: event_surface_described
     status: missed
   - id: well_known_catalog
@@ -85,6 +88,33 @@ kin_checks:
     status: missed
   - id: agentic_commerce
     status: missed
+  - id: info_complete
+    status: partial
+    earned: 0.77
+    detail: 6 of 31 openapi documents pass
+  - id: operations_description_coverage
+    status: partial
+    earned: 4.26
+    detail: 22 of 31 openapi documents pass
+  - id: operations_operation_ids
+    status: partial
+    earned: 2.71
+    detail: 21 of 31 openapi documents pass
+  - id: examples_present
+    status: partial
+    earned: 0.36
+  - id: components_reuse
+    status: partial
+    earned: 1.16
+    detail: 12 of 31 openapi documents pass
+  - id: security_schemes_defined
+    status: partial
+    earned: 3.74
+    detail: 29 of 31 openapi documents pass
+  - id: security_applied
+    status: partial
+    earned: 2.81
+    detail: 29 of 31 openapi documents pass
   - id: conformance_declared
     status: partial
     earned: 1.5
@@ -100,6 +130,10 @@ kin_checks:
     status: partial
     earned: 4.0
     detail: 'grade: documented'
+  - id: openapi_examples
+    status: partial
+    earned: 3.5
+    detail: 'grade: partial'
   - id: rate_limit_signal
     status: partial
     earned: 3.5
