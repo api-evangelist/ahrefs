@@ -7922,121 +7922,7 @@ paths:
     - url: https://api.ahrefs.com/v3/web-analytics
       description: Ahrefs Web Analytics
 components:
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   schemas:
-    impressions-overview:
-      properties:
-        metrics:
-          items:
-            properties:
-              brand:
-                type: string
-                title: brand
-                description: Brand name (either your brand or a competitor provided in the request).
-              no_tracked_brands:
-                type: integer
-                title: no_tracked_brands
-                description: Estimated impressions from responses related to the specified market that do not mention any provided brands (value is zero when `market` is not specified).
-              only_competitors_brands:
-                type: integer
-                title: only_competitors_brands
-                description: Estimated impressions from responses mentioning only competitor brands.
-              only_target_brand:
-                type: integer
-                title: only_target_brand
-                description: Estimated impressions from responses mentioning only your brand.
-              target_and_competitors_brands:
-                type: integer
-                title: target_and_competitors_brands
-                description: Estimated impressions from responses mentioning both your and competitor brands.
-              total:
-                type: integer
-                title: total
-                description: Total estimated impressions for your brand (includes both `only_target_brand` and `target_and_competitors_brands`).
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    citations-overview:
-      properties:
-        metrics:
-          items:
-            properties:
-              brand:
-                type: string
-                title: brand
-                description: Brand name (either your brand or a competitor provided in the request).
-              no_tracked_brands:
-                type: integer
-                title: no_tracked_brands
-                description: Estimated citations from responses related to the specified market that do not mention any provided brand URLs (value is zero when `market` is not specified).
-              only_competitors_brands:
-                type: integer
-                title: only_competitors_brands
-                description: Estimated citations from responses mentioning only competitors' brand URLs.
-              only_target_brand:
-                type: integer
-                title: only_target_brand
-                description: Estimated citations from responses mentioning only your brand URLs.
-              target_and_competitors_brands:
-                type: integer
-                title: target_and_competitors_brands
-                description: Estimated citations from responses mentioning both your and competitors' brand URLs.
-              total:
-                type: integer
-                title: total
-                description: Total estimated citations for your brand URLs (includes both `only_target_brand` and `target_and_competitors_brands`).
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     entity:
       anyOf:
       - required:
@@ -8109,6 +7995,40 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    citations-overview:
+      properties:
+        metrics:
+          items:
+            properties:
+              brand:
+                type: string
+                title: brand
+                description: Brand name (either your brand or a competitor provided in the request).
+              no_tracked_brands:
+                type: integer
+                title: no_tracked_brands
+                description: Estimated citations from responses related to the specified market that do not mention any provided brand URLs (value is zero when `market` is not specified).
+              only_competitors_brands:
+                type: integer
+                title: only_competitors_brands
+                description: Estimated citations from responses mentioning only competitors' brand URLs.
+              only_target_brand:
+                type: integer
+                title: only_target_brand
+                description: Estimated citations from responses mentioning only your brand URLs.
+              target_and_competitors_brands:
+                type: integer
+                title: target_and_competitors_brands
+                description: Estimated citations from responses mentioning both your and competitors' brand URLs.
+              total:
+                type: integer
+                title: total
+                description: Total estimated citations for your brand URLs (includes both `only_target_brand` and `target_and_competitors_brands`).
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     Error_response:
       properties:
         error:
@@ -8130,6 +8050,69 @@ components:
                 format: float
                 title: share_of_voice
                 description: Estimated share of voice for your brand.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    impressions-overview:
+      properties:
+        metrics:
+          items:
+            properties:
+              brand:
+                type: string
+                title: brand
+                description: Brand name (either your brand or a competitor provided in the request).
+              no_tracked_brands:
+                type: integer
+                title: no_tracked_brands
+                description: Estimated impressions from responses related to the specified market that do not mention any provided brands (value is zero when `market` is not specified).
+              only_competitors_brands:
+                type: integer
+                title: only_competitors_brands
+                description: Estimated impressions from responses mentioning only competitor brands.
+              only_target_brand:
+                type: integer
+                title: only_target_brand
+                description: Estimated impressions from responses mentioning only your brand.
+              target_and_competitors_brands:
+                type: integer
+                title: target_and_competitors_brands
+                description: Estimated impressions from responses mentioning both your and competitor brands.
+              total:
+                type: integer
+                title: total
+                description: Total estimated impressions for your brand (includes both `only_target_brand` and `target_and_competitors_brands`).
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    performance-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              ctr:
+                type: number
+                format: float
+                title: ctr
+              date:
+                type: string
+                format: date-time
+                title: date
+              impressions:
+                type: integer
+                title: impressions
+              position:
+                type: number
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
             type: object
           type: array
       type: object
@@ -8169,72 +8152,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    pages-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date-time
-                title: date
-              total_pages:
-                type: integer
-                title: total_pages
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    performance-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: integer
-                title: clicks
-              ctr:
-                type: number
-                format: float
-                title: ctr
-              date:
-                type: string
-                format: date-time
-                title: date
-              impressions:
-                type: integer
-                title: impressions
-              position:
-                type: number
-                format: float
-                title: position
-                description: Average position (decimal, e.g. 4.7)
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    ctr-by-position:
-      properties:
-        metrics:
-          items:
-            properties:
-              average_ctr_percent:
-                type: number
-                format: float
-                title: average_ctr_percent
-              keyword_count:
-                type: integer
-                title: keyword_count
-              position:
-                type: integer
-                title: position
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     performance-by-device:
       properties:
         metrics:
@@ -8260,6 +8177,59 @@ components:
                 format: float
                 title: position
                 description: Average position (decimal, e.g. 4.7)
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    metrics-by-country:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              country:
+                type: string
+                title: country
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    pages-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date-time
+                title: date
+              total_pages:
+                type: integer
+                title: total_pages
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    ctr-by-position:
+      properties:
+        metrics:
+          items:
+            properties:
+              average_ctr_percent:
+                type: number
+                format: float
+                title: average_ctr_percent
+              keyword_count:
+                type: integer
+                title: keyword_count
+              position:
+                type: integer
+                title: position
             type: object
           type: array
       type: object
@@ -8292,57 +8262,6 @@ components:
               total:
                 type: integer
                 title: total
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    metrics-by-country:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: integer
-                title: clicks
-              country:
-                type: string
-                title: country
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    volume-by-country:
-      properties:
-        countries:
-          items:
-            properties:
-              country:
-                type: string
-                title: country
-              volume:
-                type: integer
-                title: volume
-                description: (10 units) An estimation of the average monthly number of searches for a keyword in a given country.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    volume-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-              volume:
-                type: integer
-                title: volume
-                description: An estimation of the number of searches for a keyword over a given month.
             type: object
           type: array
       type: object
@@ -8510,6 +8429,41 @@ components:
                 type: array
                 title: volume_monthly_history
                 description: (2 units per historical month, with a minimum of 50 units) Historical monthly search volume estimates of a keyword for the period set by the `volume_monthly_date_from` and `volume_monthly_date_to` parameters.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    volume-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              volume:
+                type: integer
+                title: volume
+                description: An estimation of the number of searches for a keyword over a given month.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    volume-by-country:
+      properties:
+        countries:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+              volume:
+                type: integer
+                title: volume
+                description: (10 units) An estimation of the average monthly number of searches for a keyword in a given country.
             type: object
           type: array
       type: object
@@ -9529,6 +9483,180 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    backlinks-stats:
+      properties:
+        metrics:
+          properties:
+            all_time:
+              type: integer
+              title: all_time
+              description: The total number of links from other websites pointing to your target for all time.
+            all_time_refdomains:
+              type: integer
+              title: all_time_refdomains
+              description: (5 units) The total number of unique domains linking to your target for all time.
+            live:
+              type: integer
+              title: live
+              description: The total number of links from other websites pointing to your target.
+            live_refdomains:
+              type: integer
+              title: live_refdomains
+              description: (5 units) The total number of unique domains linking to your target.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    metrics-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              org_cost:
+                type: integer
+                title: org_cost
+                description: (10 units) The estimated cost of your target's monthly organic search traffic, in USD cents.
+              org_traffic:
+                type: integer
+                title: org_traffic
+                description: (10 units) The estimated number of monthly visitors that your target gets from organic search.
+              paid_cost:
+                type: integer
+                title: paid_cost
+                description: (10 units) The estimated cost of your target's monthly paid search traffic, in USD cents.
+              paid_traffic:
+                type: integer
+                title: paid_traffic
+                description: (10 units) The estimated number of monthly visitors that your target gets from paid search.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    metrics:
+      properties:
+        metrics:
+          properties:
+            org_cost:
+              type:
+              - integer
+              - 'null'
+              title: org_cost
+              description: (10 units) The estimated value of your target's monthly organic search traffic, in USD cents.
+            org_keywords:
+              type: integer
+              title: org_keywords
+              description: The total number of keywords that your target ranks for in the top 100 organic search results.
+            org_keywords_1_3:
+              type: integer
+              title: org_keywords_1_3
+              description: The total number of keywords that your target ranks for in the top 3 organic search results.
+            org_traffic:
+              type: integer
+              title: org_traffic
+              description: (10 units) The estimated number of monthly visitors that your target gets from organic search.
+            paid_cost:
+              type:
+              - integer
+              - 'null'
+              title: paid_cost
+              description: (10 units) The estimated cost of your target's monthly paid search traffic, in USD cents.
+            paid_keywords:
+              type: integer
+              title: paid_keywords
+              description: The total number of keywords that your target ranks for in paid search results.
+            paid_pages:
+              type: integer
+              title: paid_pages
+              description: The total number of pages from a target ranking in paid search results.
+            paid_traffic:
+              type: integer
+              title: paid_traffic
+              description: (10 units) The estimated number of monthly visitors that your target gets from paid search.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keywords-history:
+      properties:
+        keywords:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              top11_20:
+                type: integer
+                title: top11_20
+                description: The total number of keywords that your target ranks for in the top 11-20 organic search results.
+              top11_plus:
+                type: integer
+                title: top11_plus
+                description: The total number of keywords that your target ranks for in the top 11+ organic search results.
+              top21_50:
+                type: integer
+                title: top21_50
+                description: The total number of keywords that your target ranks for in the top 21-50 organic search results.
+              top3:
+                type: integer
+                title: top3
+                description: The total number of keywords that your target ranks for in the top 3 organic search results.
+              top4_10:
+                type: integer
+                title: top4_10
+                description: The total number of keywords that your target ranks for in the top 4-10 organic search results.
+              top51_plus:
+                type: integer
+                title: top51_plus
+                description: The total number of keywords that your target ranks for in the top 51+ organic search results.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    pages-history_2:
+      properties:
+        pages:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              pages:
+                type: integer
+                title: pages
+                description: The total number of pages from a target ranking in the top 100 organic search results.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    total-search-volume-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              total_search_volume:
+                type: integer
+                title: total_search_volume
+                description: (10 units) The total search volume of keywords for which your target ranks within the specified `top_positions` in the search results.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     metrics-by-country_2:
       properties:
         metrics:
@@ -9829,46 +9957,135 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    metrics:
+    pages-by-traffic:
+      properties:
+        pages:
+          properties:
+            range0_pages:
+              type: integer
+              title: range0_pages
+              description: The total number of pages with 0 traffic.
+            range100_pages:
+              type: integer
+              title: range100_pages
+              description: The total number of pages with 1-100 traffic.
+            range100_traffic:
+              type: integer
+              title: range100_traffic
+              description: (10 units) The total traffic from pages with 1-100 traffic.
+            range10k_pages:
+              type: integer
+              title: range10k_pages
+              description: The total number of pages with 5K-10K traffic.
+            range10k_plus_pages:
+              type: integer
+              title: range10k_plus_pages
+              description: The total number of pages with 10K+ traffic.
+            range10k_plus_traffic:
+              type: integer
+              title: range10k_plus_traffic
+              description: (10 units) The total traffic from pages with 10K+ traffic.
+            range10k_traffic:
+              type: integer
+              title: range10k_traffic
+              description: (10 units) The total traffic from pages with 5K-10K traffic.
+            range1k_pages:
+              type: integer
+              title: range1k_pages
+              description: The total number of pages with 101-1K traffic.
+            range1k_traffic:
+              type: integer
+              title: range1k_traffic
+              description: (10 units) The total traffic from pages with 101-1K traffic.
+            range5k_pages:
+              type: integer
+              title: range5k_pages
+              description: The total number of pages with 1K-5K traffic.
+            range5k_traffic:
+              type: integer
+              title: range5k_traffic
+              description: (10 units) The total traffic from pages with 1K-5K traffic.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    domain-rating-history:
+      properties:
+        domain_ratings:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of your target page's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    url-rating-history:
+      properties:
+        url_ratings:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              url_rating:
+                type: number
+                format: float
+                title: url_rating
+                description: The strength of your target page's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    outlinks-stats:
       properties:
         metrics:
           properties:
-            org_cost:
+            linked_domains:
+              type: integer
+              title: linked_domains
+              description: The number of unique root domains linked from the target.
+            linked_domains_dofollow:
+              type: integer
+              title: linked_domains_dofollow
+              description: The number of unique root domains linked via dofollow links from the target.
+            outgoing_links:
+              type: integer
+              title: outgoing_links
+              description: The number of external links from the target.
+            outgoing_links_dofollow:
+              type: integer
+              title: outgoing_links_dofollow
+              description: The number of external dofollow links from the target.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    domain-rating:
+      properties:
+        domain_rating:
+          properties:
+            ahrefs_rank:
               type:
               - integer
               - 'null'
-              title: org_cost
-              description: (10 units) The estimated value of your target's monthly organic search traffic, in USD cents.
-            org_keywords:
-              type: integer
-              title: org_keywords
-              description: The total number of keywords that your target ranks for in the top 100 organic search results.
-            org_keywords_1_3:
-              type: integer
-              title: org_keywords_1_3
-              description: The total number of keywords that your target ranks for in the top 3 organic search results.
-            org_traffic:
-              type: integer
-              title: org_traffic
-              description: (10 units) The estimated number of monthly visitors that your target gets from organic search.
-            paid_cost:
-              type:
-              - integer
-              - 'null'
-              title: paid_cost
-              description: (10 units) The estimated cost of your target's monthly paid search traffic, in USD cents.
-            paid_keywords:
-              type: integer
-              title: paid_keywords
-              description: The total number of keywords that your target ranks for in paid search results.
-            paid_pages:
-              type: integer
-              title: paid_pages
-              description: The total number of pages from a target ranking in paid search results.
-            paid_traffic:
-              type: integer
-              title: paid_traffic
-              description: (10 units) The estimated number of monthly visitors that your target gets from paid search.
+              title: ahrefs_rank
+              description: 'The strength of your target''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+            domain_rating:
+              type: number
+              format: float
+              title: domain_rating
+              description: The strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
           type: object
       type: object
       xml:
@@ -9969,269 +10186,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    url-rating-history:
-      properties:
-        url_ratings:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-              url_rating:
-                type: number
-                format: float
-                title: url_rating
-                description: The strength of your target page's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    metrics-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              org_cost:
-                type: integer
-                title: org_cost
-                description: (10 units) The estimated cost of your target's monthly organic search traffic, in USD cents.
-              org_traffic:
-                type: integer
-                title: org_traffic
-                description: (10 units) The estimated number of monthly visitors that your target gets from organic search.
-              paid_cost:
-                type: integer
-                title: paid_cost
-                description: (10 units) The estimated cost of your target's monthly paid search traffic, in USD cents.
-              paid_traffic:
-                type: integer
-                title: paid_traffic
-                description: (10 units) The estimated number of monthly visitors that your target gets from paid search.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    domain-rating:
-      properties:
-        domain_rating:
-          properties:
-            ahrefs_rank:
-              type:
-              - integer
-              - 'null'
-              title: ahrefs_rank
-              description: 'The strength of your target''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
-            domain_rating:
-              type: number
-              format: float
-              title: domain_rating
-              description: The strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    keywords-history:
-      properties:
-        keywords:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              top11_20:
-                type: integer
-                title: top11_20
-                description: The total number of keywords that your target ranks for in the top 11-20 organic search results.
-              top11_plus:
-                type: integer
-                title: top11_plus
-                description: The total number of keywords that your target ranks for in the top 11+ organic search results.
-              top21_50:
-                type: integer
-                title: top21_50
-                description: The total number of keywords that your target ranks for in the top 21-50 organic search results.
-              top3:
-                type: integer
-                title: top3
-                description: The total number of keywords that your target ranks for in the top 3 organic search results.
-              top4_10:
-                type: integer
-                title: top4_10
-                description: The total number of keywords that your target ranks for in the top 4-10 organic search results.
-              top51_plus:
-                type: integer
-                title: top51_plus
-                description: The total number of keywords that your target ranks for in the top 51+ organic search results.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    domain-rating-history:
-      properties:
-        domain_ratings:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-              domain_rating:
-                type: number
-                format: float
-                title: domain_rating
-                description: The strength of your target page's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    total-search-volume-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-              total_search_volume:
-                type: integer
-                title: total_search_volume
-                description: (10 units) The total search volume of keywords for which your target ranks within the specified `top_positions` in the search results.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    backlinks-stats:
-      properties:
-        metrics:
-          properties:
-            all_time:
-              type: integer
-              title: all_time
-              description: The total number of links from other websites pointing to your target for all time.
-            all_time_refdomains:
-              type: integer
-              title: all_time_refdomains
-              description: (5 units) The total number of unique domains linking to your target for all time.
-            live:
-              type: integer
-              title: live
-              description: The total number of links from other websites pointing to your target.
-            live_refdomains:
-              type: integer
-              title: live_refdomains
-              description: (5 units) The total number of unique domains linking to your target.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    outlinks-stats:
-      properties:
-        metrics:
-          properties:
-            linked_domains:
-              type: integer
-              title: linked_domains
-              description: The number of unique root domains linked from the target.
-            linked_domains_dofollow:
-              type: integer
-              title: linked_domains_dofollow
-              description: The number of unique root domains linked via dofollow links from the target.
-            outgoing_links:
-              type: integer
-              title: outgoing_links
-              description: The number of external links from the target.
-            outgoing_links_dofollow:
-              type: integer
-              title: outgoing_links_dofollow
-              description: The number of external dofollow links from the target.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    pages-history_2:
-      properties:
-        pages:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-              pages:
-                type: integer
-                title: pages
-                description: The total number of pages from a target ranking in the top 100 organic search results.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    pages-by-traffic:
-      properties:
-        pages:
-          properties:
-            range0_pages:
-              type: integer
-              title: range0_pages
-              description: The total number of pages with 0 traffic.
-            range100_pages:
-              type: integer
-              title: range100_pages
-              description: The total number of pages with 1-100 traffic.
-            range100_traffic:
-              type: integer
-              title: range100_traffic
-              description: (10 units) The total traffic from pages with 1-100 traffic.
-            range10k_pages:
-              type: integer
-              title: range10k_pages
-              description: The total number of pages with 5K-10K traffic.
-            range10k_plus_pages:
-              type: integer
-              title: range10k_plus_pages
-              description: The total number of pages with 10K+ traffic.
-            range10k_plus_traffic:
-              type: integer
-              title: range10k_plus_traffic
-              description: (10 units) The total traffic from pages with 10K+ traffic.
-            range10k_traffic:
-              type: integer
-              title: range10k_traffic
-              description: (10 units) The total traffic from pages with 5K-10K traffic.
-            range1k_pages:
-              type: integer
-              title: range1k_pages
-              description: The total number of pages with 101-1K traffic.
-            range1k_traffic:
-              type: integer
-              title: range1k_traffic
-              description: (10 units) The total traffic from pages with 101-1K traffic.
-            range5k_pages:
-              type: integer
-              title: range5k_pages
-              description: The total number of pages with 1K-5K traffic.
-            range5k_traffic:
-              type: integer
-              title: range5k_traffic
-              description: (10 units) The total traffic from pages with 1K-5K traffic.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
     refdomains-history:
       properties:
         refdomains:
@@ -10324,6 +10278,52 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   parameters:
     output:
       description: The output format.

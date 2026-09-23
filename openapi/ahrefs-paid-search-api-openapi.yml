@@ -364,8 +364,8 @@ paths:
           $ref: '#/components/responses/error_500'
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -373,8 +373,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -391,8 +391,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
+    error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -400,8 +400,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:

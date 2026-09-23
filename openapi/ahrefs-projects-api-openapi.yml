@@ -199,9 +199,7 @@ paths:
       description: '>Requests to this endpoint are free and do not consume any API units.
 
 
-        At least one of `access` or `folder` must be set.
-
-        '
+        At least one of `access` or `folder` must be set.'
       operationId: update-project
       parameters:
       - $ref: '#/components/parameters/output'
@@ -333,8 +331,8 @@ paths:
       description: Ahrefs Site Audit
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -342,8 +340,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -360,15 +358,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
     error_429:
       description: Too Many Requests
       content:
@@ -378,7 +367,69 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    update-project:
+      properties:
+        project:
+          properties:
+            access:
+              type: string
+              title: access
+              description: 'The access level of the project. Possible values: `private`, `shared`.'
+            folder:
+              properties:
+                id:
+                  type: integer
+                name:
+                  type:
+                  - string
+                  - 'null'
+              type:
+              - object
+              - 'null'
+              title: folder
+              description: Innermost folder that the project is in.
+            mode:
+              type: string
+              title: mode
+              description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+            project_id:
+              type: string
+              title: project_id
+              description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
+            project_name:
+              type: string
+              title: project_name
+              description: The project name.
+            protocol:
+              type: string
+              title: protocol
+              description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+            url:
+              type: string
+              format: url
+              title: url
+              description: The URL of the project's target.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
     projects:
       properties:
         projects:
@@ -445,56 +496,69 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    Error_response:
+    issues:
       properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    update-project:
-      properties:
-        project:
-          properties:
-            access:
-              type: string
-              title: access
-              description: 'The access level of the project. Possible values: `private`, `shared`.'
-            folder:
-              properties:
-                id:
-                  type: integer
-                name:
-                  type:
-                  - string
-                  - 'null'
-              type:
-              - object
-              - 'null'
-              title: folder
-              description: Innermost folder that the project is in.
-            mode:
-              type: string
-              title: mode
-              description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
-            project_id:
-              type: string
-              title: project_id
-              description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
-            project_name:
-              type: string
-              title: project_name
-              description: The project name.
-            protocol:
-              type: string
-              title: protocol
-              description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
-            url:
-              type: string
-              format: url
-              title: url
-              description: The URL of the project's target.
-          type: object
+        issues:
+          items:
+            properties:
+              added:
+                type:
+                - integer
+                - 'null'
+                title: added
+                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
+              category:
+                type: string
+                title: category
+                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
+              change:
+                type:
+                - integer
+                - 'null'
+                title: change
+                description: Difference in the number of affected URLs between the specified dates.
+              crawled:
+                type: integer
+                title: crawled
+                description: Number of URLs currently affected by the issue.
+              importance:
+                type: string
+                title: importance
+                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
+              is_indexable:
+                type:
+                - boolean
+                - 'null'
+                title: is_indexable
+                description: True if the issue applies only to indexable pages.
+              issue_id:
+                type: string
+                title: issue_id
+                description: The unique identifier of the issue.
+              missing:
+                type:
+                - integer
+                - 'null'
+                title: missing
+                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
+              name:
+                type: string
+                title: name
+                description: The name of the issue.
+              new:
+                type:
+                - integer
+                - 'null'
+                title: new
+                description: Number of newly discovered URLs that have the issue on the current date.
+              removed:
+                type:
+                - integer
+                - 'null'
+                title: removed
+                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
+            type: object
+          type: array
       type: object
       xml:
         name: AhrefsApiResponse
@@ -567,72 +631,6 @@ components:
                 - 'null'
                 title: urls_with_warnings
                 description: Number of internal URLs with warnings
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    issues:
-      properties:
-        issues:
-          items:
-            properties:
-              added:
-                type:
-                - integer
-                - 'null'
-                title: added
-                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
-              category:
-                type: string
-                title: category
-                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
-              change:
-                type:
-                - integer
-                - 'null'
-                title: change
-                description: Difference in the number of affected URLs between the specified dates.
-              crawled:
-                type: integer
-                title: crawled
-                description: Number of URLs currently affected by the issue.
-              importance:
-                type: string
-                title: importance
-                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
-              is_indexable:
-                type:
-                - boolean
-                - 'null'
-                title: is_indexable
-                description: True if the issue applies only to indexable pages.
-              issue_id:
-                type: string
-                title: issue_id
-                description: The unique identifier of the issue.
-              missing:
-                type:
-                - integer
-                - 'null'
-                title: missing
-                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
-              name:
-                type: string
-                title: name
-                description: The name of the issue.
-              new:
-                type:
-                - integer
-                - 'null'
-                title: new
-                description: Number of newly discovered URLs that have the issue on the current date.
-              removed:
-                type:
-                - integer
-                - 'null'
-                title: removed
-                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
             type: object
           type: array
       type: object

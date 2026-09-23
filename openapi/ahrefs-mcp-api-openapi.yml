@@ -557,8 +557,8 @@ paths:
           $ref: '#/components/responses/error_500'
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -566,8 +566,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -584,15 +584,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
     error_429:
       description: Too Many Requests
       content:
@@ -602,27 +593,165 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
-    brand-radar-prompts:
+    project-keywords:
       properties:
-        prompts:
+        keywords:
           items:
             properties:
-              country:
+              keyword:
                 type: string
-                title: country
-                description: The country of the prompt.
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keyword-list-keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    brand-radar-reports:
+      properties:
+        reports:
+          items:
+            properties:
               created_at:
                 type: string
                 format: date
                 title: created_at
-                description: The date the prompt was created.
-              prompt:
+                description: The date the report was created.
+              project_id:
+                type:
+                - integer
+                - 'null'
+                title: project_id
+                description: The ID of the project the report is linked to.
+              prompts_frequency:
+                items:
+                  properties:
+                    data_source:
+                      type: string
+                    frequency:
+                      type: string
+                  type: object
+                type: array
+                title: prompts_frequency
+                description: 'A record with fields `data_source` (possible values: `chatgpt`, `copilot`, `gemini`, `google_ai_mode`, `claude`, `google_ai_overviews`, `grok`, `perplexity`) and `frequency` (possible values: `daily`, `weekly`, `monthly`, `off`).'
+              report_id:
                 type: string
-                title: prompt
-                description: The text of the prompt.
+                title: report_id
+                description: The unique identifier of the report.
+              report_name:
+                type: string
+                title: report_name
+                description: The name of the report.
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-competitors:
+      properties:
+        competitors:
+          items:
+            properties:
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    locations:
+      properties:
+        location:
+          properties:
+            country_code:
+              type: string
+              title: country_code
+              description: The country code of the location.
+            languages:
+              items:
+                items: false
+                prefixItems:
+                - type: string
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: languages
+              description: A list of language codes and names for the specified country code.
+            locations:
+              items:
+                items: false
+                prefixItems:
+                - type: integer
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: locations
+              description: A list of location IDs and names for the specified country code.
+          type: object
       type: object
       xml:
         name: AhrefsApiResponse
@@ -692,170 +821,30 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    locations:
+    brand-radar-prompts:
       properties:
-        location:
-          properties:
-            country_code:
-              type: string
-              title: country_code
-              description: The country code of the location.
-            languages:
-              items:
-                items: false
-                prefixItems:
-                - type: string
-                - type: string
-                type: array
-                maxItems: 2
-                minItems: 2
-              type: array
-              title: languages
-              description: A list of language codes and names for the specified country code.
-            locations:
-              items:
-                items: false
-                prefixItems:
-                - type: integer
-                - type: string
-                type: array
-                maxItems: 2
-                minItems: 2
-              type: array
-              title: locations
-              description: A list of location IDs and names for the specified country code.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    project-competitors:
-      properties:
-        competitors:
+        prompts:
           items:
             properties:
-              mode:
+              country:
                 type: string
-                title: mode
-                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
-              url:
-                type: string
-                format: url
-                title: url
-                description: The URL of the project's target.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    project-keywords:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
-              language:
-                type: string
-                title: language
-                description: The name of the language assigned to a given keyword.
-              language_code:
-                type: string
-                title: language_code
-                description: The code of the language assigned to a given keyword.
-              location:
-                type: string
-                title: location
-                description: The name of the location assigned to a given keyword.
-              location_id:
-                type: integer
-                title: location_id
-                description: The ID of the location assigned to a given keyword.
-              tags:
-                items:
-                  type: string
-                type: array
-                title: tags
-                description: A list of tags assigned to a given keyword.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    brand-radar-reports:
-      properties:
-        reports:
-          items:
-            properties:
+                title: country
+                description: The country of the prompt.
               created_at:
                 type: string
                 format: date
                 title: created_at
-                description: The date the report was created.
-              project_id:
-                type:
-                - integer
-                - 'null'
-                title: project_id
-                description: The ID of the project the report is linked to.
-              prompts_frequency:
-                items:
-                  properties:
-                    data_source:
-                      type: string
-                    frequency:
-                      type: string
-                  type: object
-                type: array
-                title: prompts_frequency
-                description: 'A record with fields `data_source` (possible values: `chatgpt`, `copilot`, `gemini`, `google_ai_mode`, `claude`, `google_ai_overviews`, `grok`, `perplexity`) and `frequency` (possible values: `daily`, `weekly`, `monthly`, `off`).'
-              report_id:
+                description: The date the prompt was created.
+              prompt:
                 type: string
-                title: report_id
-                description: The unique identifier of the report.
-              report_name:
-                type: string
-                title: report_name
-                description: The name of the report.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    keyword-list-keywords:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
+                title: prompt
+                description: The text of the prompt.
             type: object
           type: array
       type: object
       xml:
         name: AhrefsApiResponse
   parameters:
-    output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
     output_json_php_xml:
       description: The output format.
       required: false
@@ -866,6 +855,17 @@ components:
         - json
         - php
         - xml
+      name: output
+      in: query
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
       name: output
       in: query
     output:

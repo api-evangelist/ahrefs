@@ -48,8 +48,8 @@ paths:
           $ref: '#/components/responses/error_500'
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -57,8 +57,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -75,15 +75,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
     error_429:
       description: Too Many Requests
       content:
@@ -93,7 +84,23 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     limits-and-usage:
       properties:
         limits_and_usage:
@@ -135,13 +142,6 @@ components:
               title: usage_reset_date
               description: Start date of the next billing period when the API units usage will be reset.
           type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
       type: object
       xml:
         name: AhrefsApiResponse

@@ -2416,52 +2416,6 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   schemas:
     entity:
       anyOf:
@@ -2501,20 +2455,20 @@ components:
             - scope
           type: array
       type: object
-    impressions-history:
+    citations-history:
       properties:
         metrics:
           items:
             properties:
+              citations:
+                type: integer
+                title: citations
+                description: Estimated citations from responses mentioning the brand URLs.
               date:
                 type: string
                 format: date
                 title: date
                 description: ''
-              impressions:
-                type: integer
-                title: impressions
-                description: Estimated impressions from responses mentioning the brand.
             type: object
           type: array
       type: object
@@ -2539,29 +2493,29 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    citations-history:
+    impressions-history:
       properties:
         metrics:
           items:
             properties:
-              citations:
-                type: integer
-                title: citations
-                description: Estimated citations from responses mentioning the brand URLs.
               date:
                 type: string
                 format: date
                 title: date
                 description: ''
+              impressions:
+                type: integer
+                title: impressions
+                description: Estimated impressions from responses mentioning the brand.
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -2592,6 +2546,52 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   parameters:
     output_json_php:
       description: The output format.

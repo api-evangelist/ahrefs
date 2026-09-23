@@ -5208,52 +5208,6 @@ paths:
         '500':
           $ref: '#/components/responses/site-explorer.error_500'
 components:
-  responses:
-    site-explorer.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-    site-explorer.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-    site-explorer.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-    site-explorer.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-    site-explorer.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-explorer.Error_response'
   schemas:
     site-explorer.total-search-volume-history:
       properties:
@@ -5268,6 +5222,1311 @@ components:
                 type: integer
                 title: total_search_volume
                 description: (10 units) The total search volume of keywords for which your target ranks within the specified `top_positions` in the search results.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.all-backlinks:
+      properties:
+        backlinks:
+          items:
+            properties:
+              ahrefs_rank_source:
+                type: integer
+                title: ahrefs_rank_source
+                description: 'The strength of the referring domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              ahrefs_rank_target:
+                type: integer
+                title: ahrefs_rank_target
+                description: 'The strength of the target domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              alt:
+                type:
+                - string
+                - 'null'
+                title: alt
+                description: The alt attribute of the link.
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              broken_redirect_new_target:
+                type:
+                - string
+                - 'null'
+                title: broken_redirect_new_target
+                description: The new destination of a modified redirect.
+              broken_redirect_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - droppedmanual
+                - droppedtooold
+                - dropped
+                - codechanged
+                - nxdomain
+                - robotsdisallowed
+                - curlerror
+                - invalidtarget
+                - nomorecanonical
+                - isnowparked
+                - targetchanged
+                title: broken_redirect_reason
+                description: The reason the redirect was considered broken during the last crawl.
+              broken_redirect_source:
+                type:
+                - string
+                - 'null'
+                title: broken_redirect_source
+                description: The redirecting URL that was modified, causing the redirect to become broken.
+              class_c:
+                type: integer
+                title: class_c
+                description: (5 units) The number of unique class_c subnets linking to the referring page.
+              discovered_status:
+                type:
+                - string
+                - 'null'
+                enum:
+                - pagefound
+                - linkfound
+                - linkrestored
+                title: discovered_status
+                description: 'The reason the link was discovered during the last crawl: the page was crawled for the first time, the link was added to the page, or the link re-appeared after being removed.'
+              domain_rating_source:
+                type: number
+                format: float
+                title: domain_rating_source
+                description: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.
+              domain_rating_target:
+                type: number
+                format: float
+                title: domain_rating_target
+                description: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.
+              drop_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - manual
+                - noratingunused
+                - notop
+                - tooold
+                - oldunavailable
+                - rescursive
+                - duplicate
+                - nxdomain
+                - malformed
+                - blockedport
+                - disallowed
+                - unlinked
+                - lowvalue
+                title: drop_reason
+                description: The reason we removed the link from our index.
+              encoding:
+                type: string
+                title: encoding
+                description: The character set encoding of the referring page HTML.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date the referring page URL was first discovered.
+              first_seen_link:
+                type: string
+                format: date-time
+                title: first_seen_link
+                description: The date we first found a backlink to your target on a given referring page.
+              http_code:
+                type: integer
+                title: http_code
+                description: The return code from HTTP protocol returned during the referring page crawl.
+              http_crawl:
+                type: boolean
+                title: http_crawl
+                description: The link was discovered without executing javascript and rendering the page.
+              ip_source:
+                type:
+                - string
+                - 'null'
+                title: ip_source
+                description: The referring domain IP address.
+              is_alternate:
+                type: boolean
+                title: is_alternate
+                description: The link with the rel=“alternate” attribute.
+              is_canonical:
+                type: boolean
+                title: is_canonical
+                description: The link with the rel=“canonical” attribute.
+              is_content:
+                type: boolean
+                title: is_content
+                description: The link was found in the biggest piece of content on the page.
+              is_dofollow:
+                type: boolean
+                title: is_dofollow
+                description: The link has no special nofollow attribute.
+              is_form:
+                type: boolean
+                title: is_form
+                description: The link was found in a form HTML tag.
+              is_frame:
+                type: boolean
+                title: is_frame
+                description: The link was found in an iframe HTML tag.
+              is_image:
+                type: boolean
+                title: is_image
+                description: The link is a regular link that has an image inside their href attribute.
+              is_lost:
+                type: boolean
+                title: is_lost
+                description: The link currently does not exist anymore.
+              is_new:
+                type: boolean
+                title: is_new
+                description: The link was discovered on the last crawl.
+              is_nofollow:
+                type: boolean
+                title: is_nofollow
+                description: The link or the referring page has the nofollow attribute set.
+              is_redirect:
+                type: boolean
+                title: is_redirect
+                description: The link pointing to your target via a redirect.
+              is_redirect_lost:
+                type: boolean
+                title: is_redirect_lost
+                description: The redirected link currently does not exist anymore.
+              is_root_source:
+                type: boolean
+                title: is_root_source
+                description: The referring domain name is a root domain name.
+              is_root_target:
+                type: boolean
+                title: is_root_target
+                description: The target domain name is a root domain name.
+              is_rss:
+                type: boolean
+                title: is_rss
+                description: The link was found in an RSS feed.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              is_sponsored:
+                type: boolean
+                title: is_sponsored
+                description: The link has the Sponsored attribute set in the referring page HTML.
+              is_text:
+                type: boolean
+                title: is_text
+                description: The link is a standard href hyperlink.
+              is_ugc:
+                type: boolean
+                title: is_ugc
+                description: The link has the User Generated Content attribute set in the referring page HTML.
+              js_crawl:
+                type: boolean
+                title: js_crawl
+                description: The link was discovered after executing javascript and rendering the page.
+              languages:
+                items:
+                  type: string
+                  title: languages
+                  description: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.
+                type: array
+                title: languages
+                description: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date we discovered that the link was lost.
+              last_visited:
+                type: string
+                format: date-time
+                title: last_visited
+                description: The date we last verified a live link to your target page.
+              link_group_count:
+                type: integer
+                title: link_group_count
+                description: The number of backlinks that were grouped together based on the aggregation parameter. This field cannot be used with aggregation 'all'.
+              link_type:
+                type: string
+                enum:
+                - redirect
+                - frame
+                - text
+                - form
+                - canonical
+                - alternate
+                - rss
+                - image
+                title: link_type
+                description: The kind of the backlink.
+              linked_domains_source_domain:
+                type: integer
+                title: linked_domains_source_domain
+                description: The number of unique root domains linked from the referring domain.
+              linked_domains_source_page:
+                type: integer
+                title: linked_domains_source_page
+                description: The number of unique root domains linked from the referring page.
+              linked_domains_target_domain:
+                type: integer
+                title: linked_domains_target_domain
+                description: The number of unique root domains linked from the target domain.
+              links_external:
+                type: integer
+                title: links_external
+                description: The number of external links from the referring page.
+              links_internal:
+                type: integer
+                title: links_internal
+                description: The number of internal links from the referring page.
+              lost_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - removedfromhtml
+                - notcanonical
+                - noindex
+                - pageredirected
+                - pageerror
+                - lostredirect
+                - notfound
+                title: lost_reason
+                description: The reason the link was lost during the last crawl.
+              name_source:
+                type: string
+                title: name_source
+                description: The complete referring domain name, including subdomains.
+              name_target:
+                type: string
+                title: name_target
+                description: The complete target domain name, including subdomains.
+              noindex:
+                type: boolean
+                title: noindex
+                description: The referring page has the noindex meta attribute.
+              page_category_source:
+                type:
+                - string
+                - 'null'
+                title: page_category_source
+                description: Comma-separated list of AI-predicted hierarchical category paths for the referring page. Each value is a slash-prefixed path (e.g. /Business_and_Industrial/Advertising_and_Marketing/Marketing).
+              page_size:
+                type: integer
+                title: page_size
+                description: The size in bytes of the referring page content.
+              page_type_source:
+                type:
+                - string
+                - 'null'
+                title: page_type_source
+                description: Comma-separated list of AI-predicted hierarchical page type paths for the referring page. Each value is a slash-prefixed path (e.g. /Article/How_to).
+              port_source:
+                type: integer
+                title: port_source
+                description: The network port of the referring page URL.
+              port_target:
+                type: integer
+                title: port_target
+                description: The network port of the target page URL.
+              positions:
+                type: integer
+                title: positions
+                description: The number of keywords that the referring page ranks for in the top 100 positions.
+              powered_by:
+                items:
+                  type: string
+                  title: powered_by
+                  description: Web technologies used to build and serve the referring page content.
+                type: array
+                title: powered_by
+                description: Web technologies used to build and serve the referring page content.
+              redirect_code:
+                type:
+                - integer
+                - 'null'
+                title: redirect_code
+                description: The HTTP status code of a referring page pointing to your target via a redirect.
+              redirect_kind:
+                items:
+                  type: integer
+                  title: redirect_kind
+                  description: The HTTP status codes returned by the target redirecting URL or redirect chain.
+                type: array
+                title: redirect_kind
+                description: The HTTP status codes returned by the target redirecting URL or redirect chain.
+              refdomains_source:
+                type: integer
+                title: refdomains_source
+                description: (5 units) The number of unique referring domains linking to the referring page.
+              refdomains_source_domain:
+                type: integer
+                title: refdomains_source_domain
+                description: (5 units) The number of unique referring domains linking to the referring domain.
+              refdomains_target_domain:
+                type: integer
+                title: refdomains_target_domain
+                description: (5 units) The number of unique referring domains linking to the target domain.
+              root_name_source:
+                type: string
+                title: root_name_source
+                description: The root domain name of the referring domain, not including subdomains.
+              root_name_target:
+                type: string
+                title: root_name_target
+                description: The root domain name of the target domain, not including subdomains.
+              snippet_left:
+                type: string
+                title: snippet_left
+                description: The snippet of text appearing just before the link.
+              snippet_right:
+                type: string
+                title: snippet_right
+                description: The snippet of text appearing just after the link.
+              source_page_author:
+                type:
+                - string
+                - 'null'
+                title: source_page_author
+                description: The author of the referring page.
+              source_page_publish_date:
+                type:
+                - string
+                - 'null'
+                format: date
+                title: source_page_publish_date
+                description: the date we identified the page was published
+              title:
+                type: string
+                title: title
+                description: The html title of the referring page.
+              tld_class_source:
+                type: string
+                enum:
+                - gov
+                - edu
+                - normal
+                title: tld_class_source
+                description: The top level domain class of the referring domain.
+              tld_class_target:
+                type: string
+                enum:
+                - gov
+                - edu
+                - normal
+                title: tld_class_target
+                description: The top level domain class of the target domain.
+              traffic:
+                type: integer
+                title: traffic
+                description: (10 units) The referring page's estimated monthly organic traffic from search.
+              traffic_domain:
+                type: integer
+                title: traffic_domain
+                description: (10 units) The referring domain's estimated monthly organic traffic from search.
+              url_from:
+                type: string
+                format: url
+                title: url_from
+                description: The URL of the page containing a link to your target.
+              url_from_plain:
+                type: string
+                title: url_from_plain
+                description: The referring page URL optimized for use as a filter.
+              url_rating_source:
+                type: number
+                format: float
+                title: url_rating_source
+                description: The strength of the referring page's backlink profile compared to the others in our database on a 100-point scale.
+              url_redirect:
+                items:
+                  type: string
+                  format: url
+                  title: url_redirect
+                  description: A redirect chain the target URL of the link points to.
+                type: array
+                title: url_redirect
+                description: A redirect chain the target URL of the link points to.
+              url_redirect_with_target:
+                items:
+                  type: string
+                  title: url_redirect_with_target
+                  description: The target URL of the link with its redirect chain.
+                type: array
+                title: url_redirect_with_target
+                description: The target URL of the link with its redirect chain.
+              url_to:
+                type: string
+                format: url
+                title: url_to
+                description: The URL the backlink points to.
+              url_to_plain:
+                type: string
+                title: url_to_plain
+                description: The target page URL optimized for use as a filter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.paid-pages:
+      properties:
+        pages:
+          items:
+            properties:
+              ads_count:
+                type:
+                - integer
+                - 'null'
+                title: ads_count
+                description: The number of unique ads with a page.
+              ads_count_diff:
+                type: integer
+                title: ads_count_diff
+                description: The change in ads between your selected dates.
+              ads_count_prev:
+                type:
+                - integer
+                - 'null'
+                title: ads_count_prev
+                description: The number of ads on the comparison date.
+              keywords:
+                type:
+                - integer
+                - 'null'
+                title: keywords
+                description: The total number of keywords that your target ranks for in paid search results.
+              keywords_diff:
+                type: integer
+                title: keywords_diff
+                description: The change in keywords between your selected dates.
+              keywords_diff_percent:
+                type: integer
+                title: keywords_diff_percent
+                description: The change in keywords between your selected dates, in percents.
+              keywords_merged:
+                type: integer
+                title: keywords_merged
+                description: The total number of keywords optimized for sorting.
+              keywords_prev:
+                type:
+                - integer
+                - 'null'
+                title: keywords_prev
+                description: The keyword your target ranks for on the comparison date.
+              raw_url:
+                type: string
+                title: raw_url
+                description: The ranking page URL in encoded format.
+              raw_url_prev:
+                type:
+                - string
+                - 'null'
+                title: raw_url_prev
+                description: The ranking page URL on the comparison date in encoded format.
+              referring_domains:
+                type:
+                - integer
+                - 'null'
+                title: referring_domains
+                description: (5 units) The number of unique domains linking to a page.
+              status:
+                type: string
+                enum:
+                - left
+                - right
+                - both
+                title: status
+                description: 'The status of a page: the new page that just started to rank in paid results ("left"), the lost page that disappeared from paid results ("right"), or no change ("both").'
+              sum_traffic:
+                type:
+                - integer
+                - 'null'
+                title: sum_traffic
+                description: (10 units) An estimation of the monthly paid search traffic that a page gets from all the keywords that it ranks for.
+              sum_traffic_merged:
+                type: integer
+                title: sum_traffic_merged
+                description: (10 units) The paid traffic field optimized for sorting.
+              sum_traffic_prev:
+                type:
+                - integer
+                - 'null'
+                title: sum_traffic_prev
+                description: (10 units) The paid traffic on the comparison date.
+              top_keyword:
+                type:
+                - string
+                - 'null'
+                title: top_keyword
+                description: The keyword that brings the most paid traffic to a page.
+              top_keyword_best_position:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position
+                description: The ranking position that a page holds for its top keyword.
+              top_keyword_best_position_diff:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position_diff
+                description: The change in the top position between your selected dates.
+              top_keyword_best_position_kind:
+                type:
+                - string
+                - 'null'
+                enum:
+                - paid_top
+                - paid_bottom
+                - paid_right
+                - paid_sitelink
+                - organic
+                - sitelink
+                - snippet
+                - image
+                - article
+                - knowledge_card
+                - knowledge_panel
+                - local_pack
+                - local_teaser
+                - news
+                - question
+                - review
+                - shopping
+                - tweet
+                - spelling
+                - video
+                - discussion
+                - ai_overview
+                - ai_overview_sitelink
+                - organic_shopping
+                title: top_keyword_best_position_kind
+                description: 'The kind of the top position: organic, paid or a SERP feature.'
+              top_keyword_best_position_kind_prev:
+                type:
+                - string
+                - 'null'
+                enum:
+                - paid_top
+                - paid_bottom
+                - paid_right
+                - paid_sitelink
+                - organic
+                - sitelink
+                - snippet
+                - image
+                - article
+                - knowledge_card
+                - knowledge_panel
+                - local_pack
+                - local_teaser
+                - news
+                - question
+                - review
+                - shopping
+                - tweet
+                - spelling
+                - video
+                - discussion
+                - ai_overview
+                - ai_overview_sitelink
+                - organic_shopping
+                title: top_keyword_best_position_kind_prev
+                description: The kind of the top position on the comparison date.
+              top_keyword_best_position_prev:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position_prev
+                description: The top position on the comparison date.
+              top_keyword_best_position_title:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_best_position_title
+                description: The title displayed for the page in its top keyword's SERP.
+              top_keyword_best_position_title_prev:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_best_position_title_prev
+                description: The title displayed for the page in its top keyword's SERP on the comparison date.
+              top_keyword_country:
+                type:
+                - string
+                - 'null'
+                enum:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: top_keyword_country
+                description: The country in which a page ranks for its top keyword.
+              top_keyword_country_prev:
+                type:
+                - string
+                - 'null'
+                enum:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: top_keyword_country_prev
+                description: The country in which a page ranks for its top keyword on the comparison date.
+              top_keyword_prev:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_prev
+                description: The keyword that brings the most paid traffic to a page on the comparison date.
+              top_keyword_volume:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_volume
+                description: (10 units) An estimation of the average monthly number of searches for the top keyword over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+              top_keyword_volume_prev:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_volume_prev
+                description: (10 units) The search volume on the comparison date.
+              traffic_diff:
+                type: integer
+                title: traffic_diff
+                description: The change in traffic between your selected dates.
+              traffic_diff_percent:
+                type: integer
+                title: traffic_diff_percent
+                description: The change in traffic between your selected dates, in percents.
+              ur:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: ur
+                description: URL Rating (UR) shows the strength of your target page’s backlink profile on a 100-point logarithmic scale.
+              url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url
+                description: The ranking page URL.
+              url_prev:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url_prev
+                description: The ranking page URL on the comparison date.
+              value:
+                type:
+                - integer
+                - 'null'
+                title: value
+                description: (10 units) The estimated cost of a page's monthly paid search traffic, in USD cents.
+              value_diff:
+                type: integer
+                title: value_diff
+                description: The change in traffic value between your selected dates.
+              value_diff_percent:
+                type: integer
+                title: value_diff_percent
+                description: The change in traffic value between your selected dates, in percents.
+              value_merged:
+                type:
+                - integer
+                - 'null'
+                title: value_merged
+                description: (10 units) The traffic value field optimized for sorting.
+              value_prev:
+                type:
+                - integer
+                - 'null'
+                title: value_prev
+                description: (10 units) The traffic value on the comparison date.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.url-rating-history:
+      properties:
+        url_ratings:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              url_rating:
+                type: number
+                format: float
+                title: url_rating
+                description: The strength of your target page's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.anchors:
+      properties:
+        anchors:
+          items:
+            properties:
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of links with a given anchor to your target that don’t have the “nofollow” attribute.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link with a given anchor to your target.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date we discovered the last backlink with a given anchor was lost.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of inbound backlinks your target has with a given anchor.
+              lost_links:
+                type: integer
+                title: lost_links
+                description: The number of backlinks with a given anchor lost during the selected time period.
+              new_links:
+                type: integer
+                title: new_links
+                description: The number of new backlinks with a given anchor found during the selected time period.
+              refdomains:
+                type: integer
+                title: refdomains
+                description: (5 units) The number of unique domains linking to your target with a given anchor.
+              refpages:
+                type: integer
+                title: refpages
+                description: The number of pages containing a link with a given anchor to your target.
+              top_domain_rating:
+                type: number
+                format: float
+                title: top_domain_rating
+                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
             type: object
           type: array
       type: object
@@ -5693,6 +6952,37 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    site-explorer.linked-anchors-internal:
+      properties:
+        linkedanchors:
+          items:
+            properties:
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link with a given anchor on your target.
+              linked_pages:
+                type: integer
+                title: linked_pages
+                description: The number of unique pages linked from your target with a given anchor.
+              links_from_target:
+                type: integer
+                title: links_from_target
+                description: The number of outbound links your target has with a given anchor.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     site-explorer.ai-responses-count:
       properties:
         ai_responses_count:
@@ -5789,153 +7079,225 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    site-explorer.pages-by-backlinks:
+    site-explorer.top-pages:
       properties:
         pages:
           items:
             properties:
-              dofollow_to_target:
-                type: integer
-                title: dofollow_to_target
-                description: The number of links to your target page that don’t have the “nofollow” attribute.
-              first_seen_link:
-                type: string
-                format: date-time
-                title: first_seen_link
-                description: The date we first found a link to your target.
-              http_code_target:
+              ai_responses_chatgpt:
                 type:
                 - integer
                 - 'null'
-                title: http_code_target
-                description: The return code from HTTP protocol returned during the target page crawl.
-              is_spam:
-                type: boolean
-                title: is_spam
-                description: Indicates whether the backlink comes from a known spammy domain.
-              languages_target:
-                items:
-                  type: string
-                  title: languages_target
-                  description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
-                type: array
-                title: languages_target
-                description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
-              last_seen:
+                title: ai_responses_chatgpt
+                description: (10 units) The number of ChatGPT responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
+              ai_responses_copilot:
+                type:
+                - integer
+                - 'null'
+                title: ai_responses_copilot
+                description: (10 units) The number of Microsoft Copilot responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
+              ai_responses_gemini:
+                type:
+                - integer
+                - 'null'
+                title: ai_responses_gemini
+                description: (10 units) The number of Gemini responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
+              ai_responses_google_ai_mode:
+                type:
+                - integer
+                - 'null'
+                title: ai_responses_google_ai_mode
+                description: (10 units) The number of Google AI Mode responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
+              ai_responses_google_ai_overviews:
+                type:
+                - integer
+                - 'null'
+                title: ai_responses_google_ai_overviews
+                description: (10 units) The number of Google AI Overviews responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
+              ai_responses_grok:
+                type:
+                - integer
+                - 'null'
+                title: ai_responses_grok
+                description: (10 units) The number of Grok responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
+              ai_responses_perplexity:
+                type:
+                - integer
+                - 'null'
+                title: ai_responses_perplexity
+                description: (10 units) The number of Perplexity responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
+              keywords:
+                type:
+                - integer
+                - 'null'
+                title: keywords
+                description: The total number of keywords that your target ranks for in the top 100 organic search results.
+              keywords_diff:
+                type: integer
+                title: keywords_diff
+                description: The change in keywords between your selected dates.
+              keywords_diff_percent:
+                type: integer
+                title: keywords_diff_percent
+                description: The change in keywords between your selected dates, in percents.
+              keywords_merged:
+                type: integer
+                title: keywords_merged
+                description: The total number of keywords optimized for sorting.
+              keywords_prev:
+                type:
+                - integer
+                - 'null'
+                title: keywords_prev
+                description: The keyword your target ranks for on the comparison date.
+              page_type:
                 type:
                 - string
                 - 'null'
-                format: date-time
-                title: last_seen
-                description: The date your target page lost its last live link.
-              last_visited_source:
+                title: page_type
+                description: Comma-separated list of AI-predicted hierarchical page type paths. Each value is a slash-prefixed path (e.g. /Article/How_to).
+              raw_url:
                 type: string
-                format: date-time
-                title: last_visited_source
-                description: The date we last verified a live link to your target page.
-              last_visited_target:
+                title: raw_url
+                description: The ranking page URL in encoded format.
+              raw_url_prev:
                 type:
                 - string
                 - 'null'
-                format: date-time
-                title: last_visited_target
-                description: The date we last crawled your target page.
-              links_to_target:
+                title: raw_url_prev
+                description: The ranking page URL on the comparison date in encoded format.
+              referring_domains:
+                type:
+                - integer
+                - 'null'
+                title: referring_domains
+                description: (5 units) The number of unique domains linking to a page.
+              status:
+                type: string
+                enum:
+                - left
+                - right
+                - both
+                title: status
+                description: 'The status of a page: the new page that just started to rank ("left"), the lost page that disappeared from search results ("right"), or no change ("both").'
+              sum_traffic:
+                type:
+                - integer
+                - 'null'
+                title: sum_traffic
+                description: (10 units) An estimation of the monthly organic search traffic that a page gets from all the keywords that it ranks for.
+              sum_traffic_merged:
                 type: integer
-                title: links_to_target
-                description: The number of inbound backlinks the target page has.
-              lost_links_to_target:
-                type: integer
-                title: lost_links_to_target
-                description: The number of backlinks lost during the selected time period.
-              new_links_to_target:
-                type: integer
-                title: new_links_to_target
-                description: The number of new backlinks found during the selected time period.
-              nofollow_to_target:
-                type: integer
-                title: nofollow_to_target
-                description: The number of links to your target page that have the “nofollow” attribute.
-              powered_by_target:
-                items:
-                  type: string
-                  title: powered_by_target
-                  description: Web technologies used to build and serve the target page content.
-                type: array
-                title: powered_by_target
-                description: Web technologies used to build and serve the target page content.
-              redirects_to_target:
-                type: integer
-                title: redirects_to_target
-                description: The number of inbound redirects to your target page.
-              refdomains_target:
-                type: integer
-                title: refdomains_target
-                description: (5 units) The number of unique referring domains linking to the target page.
-              target_redirect:
+                title: sum_traffic_merged
+                description: (10 units) The traffic field optimized for sorting.
+              sum_traffic_prev:
+                type:
+                - integer
+                - 'null'
+                title: sum_traffic_prev
+                description: (10 units) The traffic on the comparison date.
+              top_keyword:
                 type:
                 - string
                 - 'null'
-                title: target_redirect
-                description: The target's redirect if any.
-              title_target:
+                title: top_keyword
+                description: The keyword that brings the most organic traffic to a page.
+              top_keyword_best_position:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position
+                description: The ranking position that a page holds for its top keyword.
+              top_keyword_best_position_diff:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position_diff
+                description: The change in the top position between your selected dates.
+              top_keyword_best_position_kind:
                 type:
                 - string
                 - 'null'
-                title: title_target
-                description: The html title of the target page.
-              top_domain_rating_source:
-                type: number
-                format: float
-                title: top_domain_rating_source
-                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
-              url_rating_target:
+                enum:
+                - paid_top
+                - paid_bottom
+                - paid_right
+                - paid_sitelink
+                - organic
+                - sitelink
+                - snippet
+                - image
+                - article
+                - knowledge_card
+                - knowledge_panel
+                - local_pack
+                - local_teaser
+                - news
+                - question
+                - review
+                - shopping
+                - tweet
+                - spelling
+                - video
+                - discussion
+                - ai_overview
+                - ai_overview_sitelink
+                - organic_shopping
+                title: top_keyword_best_position_kind
+                description: 'The kind of the top position: organic, paid or a SERP feature.'
+              top_keyword_best_position_kind_prev:
                 type:
-                - number
+                - string
                 - 'null'
-                format: float
-                title: url_rating_target
-                description: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.
-              url_to:
-                type: string
-                format: url
-                title: url_to
-                description: The URL the backlink points to.
-              url_to_plain:
-                type: string
-                title: url_to_plain
-                description: The target page URL optimized for use as a filter.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.domain-rating-history:
-      properties:
-        domain_ratings:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-              domain_rating:
-                type: number
-                format: float
-                title: domain_rating
-                description: The strength of your target page's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.metrics-by-country:
-      properties:
-        metrics:
-          items:
-            properties:
-              country:
-                type: string
+                enum:
+                - paid_top
+                - paid_bottom
+                - paid_right
+                - paid_sitelink
+                - organic
+                - sitelink
+                - snippet
+                - image
+                - article
+                - knowledge_card
+                - knowledge_panel
+                - local_pack
+                - local_teaser
+                - news
+                - question
+                - review
+                - shopping
+                - tweet
+                - spelling
+                - video
+                - discussion
+                - ai_overview
+                - ai_overview_sitelink
+                - organic_shopping
+                title: top_keyword_best_position_kind_prev
+                description: The kind of the top position on the comparison date.
+              top_keyword_best_position_prev:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_best_position_prev
+                description: The top position on the comparison date.
+              top_keyword_best_position_title:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_best_position_title
+                description: The title displayed for the page in its top keyword's SERP.
+              top_keyword_best_position_title_prev:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_best_position_title_prev
+                description: The title displayed for the page in its top keyword's SERP on the comparison date.
+              top_keyword_country:
+                type:
+                - string
+                - 'null'
                 enum:
                 - AD
                 - AE
@@ -6187,155 +7549,312 @@ components:
                 - ZA
                 - ZM
                 - ZW
-                title: country
-              org_cost:
-                type:
-                - integer
-                - 'null'
-                title: org_cost
-                description: (10 units) The estimated value of your target's monthly organic search traffic, in USD cents.
-              org_keywords:
-                type: integer
-                title: org_keywords
-                description: The total number of keywords that your target ranks for in the top 100 organic search results.
-              org_keywords_1_3:
-                type: integer
-                title: org_keywords_1_3
-                description: The total number of keywords that your target ranks for in the top 3 organic search results.
-              org_traffic:
-                type: integer
-                title: org_traffic
-                description: (10 units) The estimated number of monthly visitors that your target gets from organic search.
-              paid_cost:
-                type:
-                - integer
-                - 'null'
-                title: paid_cost
-                description: (10 units) The estimated cost of your target's monthly paid search traffic, in USD cents.
-              paid_keywords:
-                type: integer
-                title: paid_keywords
-                description: The total number of keywords that your target ranks for in paid search results.
-              paid_pages:
-                type: integer
-                title: paid_pages
-                description: The total number of pages from a target ranking in the top 100 paid search results.
-              paid_traffic:
-                type: integer
-                title: paid_traffic
-                description: (10 units) The estimated number of monthly visitors that your target gets from paid search.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.domain-rating:
-      properties:
-        domain_rating:
-          properties:
-            ahrefs_rank:
-              type:
-              - integer
-              - 'null'
-              title: ahrefs_rank
-              description: 'The strength of your target''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
-            domain_rating:
-              type: number
-              format: float
-              title: domain_rating
-              description: The strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.organic-competitors:
-      properties:
-        competitors:
-          items:
-            properties:
-              competitor_domain:
+                title: top_keyword_country
+                description: The country in which a page ranks for its top keyword.
+              top_keyword_country_prev:
                 type:
                 - string
                 - 'null'
-                format: domain
-                title: competitor_domain
-                description: A competitor's domain of your target in “domains" group mode.
-              competitor_url:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: competitor_url
-                description: A competitor's URL of your target in pages" group mode.
-              domain_rating:
-                type: number
-                format: float
-                title: domain_rating
-                description: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.
-              group_mode:
-                type: string
                 enum:
-                - domains
-                - pages
-                title: group_mode
-                description: To see competing pages instead, use the “exact URL” target mode or “path” target mode if your target doesn't have multiple pages.
-              keywords_common:
-                type: integer
-                title: keywords_common
-                description: Organic keywords that both your target and a competitor are ranking for.
-              keywords_competitor:
-                type: integer
-                title: keywords_competitor
-                description: Organic keywords that a competitor is ranking for, but your target isn't.
-              keywords_target:
-                type: integer
-                title: keywords_target
-                description: Organic keywords that your target is ranking for, but a competitor isn't.
-              pages:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: top_keyword_country_prev
+                description: The country in which a page ranks for its top keyword on the comparison date.
+              top_keyword_prev:
+                type:
+                - string
+                - 'null'
+                title: top_keyword_prev
+                description: The keyword that brings the most organic traffic to a page on the comparison date.
+              top_keyword_volume:
                 type:
                 - integer
                 - 'null'
-                title: pages
-                description: The total number of pages from a target ranking in search results.
-              pages_diff:
-                type: integer
-                title: pages_diff
-                description: The change in pages between your selected dates.
-              pages_merged:
-                type: integer
-                title: pages_merged
-                description: The pages field optimized for sorting.
-              pages_prev:
+                title: top_keyword_volume
+                description: (10 units) An estimation of the average monthly number of searches for the top keyword over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+              top_keyword_volume_prev:
                 type:
                 - integer
                 - 'null'
-                title: pages_prev
-                description: The total number of pages from a target ranking in search results on the comparison date.
-              share:
-                type: number
-                format: float
-                title: share
-                description: The percentage of common keywords out of the total number of keywords that your target and a competitor both rank for.
-              traffic:
-                type:
-                - integer
-                - 'null'
-                title: traffic
-                description: (10 units) An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+                title: top_keyword_volume_prev
+                description: (10 units) The search volume on the comparison date.
               traffic_diff:
                 type: integer
                 title: traffic_diff
                 description: The change in traffic between your selected dates.
-              traffic_merged:
+              traffic_diff_percent:
                 type: integer
-                title: traffic_merged
-                description: (10 units) The traffic field optimized for sorting.
-              traffic_prev:
+                title: traffic_diff_percent
+                description: The change in traffic between your selected dates, in percents.
+              ur:
                 type:
-                - integer
+                - number
                 - 'null'
-                title: traffic_prev
-                description: (10 units) An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter on the comparison date.
+                format: float
+                title: ur
+                description: URL Rating (UR) shows the strength of your target page’s backlink profile on a 100-point logarithmic scale.
+              url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url
+                description: The ranking page URL.
+              url_prev:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url_prev
+                description: The ranking page URL on the comparison date.
               value:
                 type:
                 - integer
@@ -6345,21 +7864,310 @@ components:
               value_diff:
                 type: integer
                 title: value_diff
-                description: The change in value between your selected dates.
+                description: The change in traffic value between your selected dates.
+              value_diff_percent:
+                type: integer
+                title: value_diff_percent
+                description: The change in traffic value between your selected dates, in percents.
               value_merged:
                 type:
                 - integer
                 - 'null'
                 title: value_merged
-                description: (10 units) The value field optimized for sorting.
+                description: (10 units) The traffic value field optimized for sorting.
               value_prev:
                 type:
                 - integer
                 - 'null'
                 title: value_prev
-                description: (10 units) The estimated value of a page's monthly organic search traffic, in USD cents on the comparison date.
+                description: (10 units) The traffic value on the comparison date.
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.pages-by-backlinks:
+      properties:
+        pages:
+          items:
+            properties:
+              dofollow_to_target:
+                type: integer
+                title: dofollow_to_target
+                description: The number of links to your target page that don’t have the “nofollow” attribute.
+              first_seen_link:
+                type: string
+                format: date-time
+                title: first_seen_link
+                description: The date we first found a link to your target.
+              http_code_target:
+                type:
+                - integer
+                - 'null'
+                title: http_code_target
+                description: The return code from HTTP protocol returned during the target page crawl.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              languages_target:
+                items:
+                  type: string
+                  title: languages_target
+                  description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+                type: array
+                title: languages_target
+                description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date your target page lost its last live link.
+              last_visited_source:
+                type: string
+                format: date-time
+                title: last_visited_source
+                description: The date we last verified a live link to your target page.
+              last_visited_target:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_visited_target
+                description: The date we last crawled your target page.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of inbound backlinks the target page has.
+              lost_links_to_target:
+                type: integer
+                title: lost_links_to_target
+                description: The number of backlinks lost during the selected time period.
+              new_links_to_target:
+                type: integer
+                title: new_links_to_target
+                description: The number of new backlinks found during the selected time period.
+              nofollow_to_target:
+                type: integer
+                title: nofollow_to_target
+                description: The number of links to your target page that have the “nofollow” attribute.
+              powered_by_target:
+                items:
+                  type: string
+                  title: powered_by_target
+                  description: Web technologies used to build and serve the target page content.
+                type: array
+                title: powered_by_target
+                description: Web technologies used to build and serve the target page content.
+              redirects_to_target:
+                type: integer
+                title: redirects_to_target
+                description: The number of inbound redirects to your target page.
+              refdomains_target:
+                type: integer
+                title: refdomains_target
+                description: (5 units) The number of unique referring domains linking to the target page.
+              target_redirect:
+                type:
+                - string
+                - 'null'
+                title: target_redirect
+                description: The target's redirect if any.
+              title_target:
+                type:
+                - string
+                - 'null'
+                title: title_target
+                description: The html title of the target page.
+              top_domain_rating_source:
+                type: number
+                format: float
+                title: top_domain_rating_source
+                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
+              url_rating_target:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: url_rating_target
+                description: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.
+              url_to:
+                type: string
+                format: url
+                title: url_to
+                description: The URL the backlink points to.
+              url_to_plain:
+                type: string
+                title: url_to_plain
+                description: The target page URL optimized for use as a filter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.refdomains-history:
+      properties:
+        refdomains:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              refdomains:
+                type: integer
+                title: refdomains
+                description: (5 units) The total number of unique domains linking to your target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.linked-anchors-external:
+      properties:
+        linkedanchors:
+          items:
+            properties:
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link with a given anchor on your target.
+              linked_domains:
+                type: integer
+                title: linked_domains
+                description: The number of unique domains linked from your target with a given anchor.
+              linked_pages:
+                type: integer
+                title: linked_pages
+                description: The number of unique pages linked from your target with a given anchor.
+              links_from_target:
+                type: integer
+                title: links_from_target
+                description: The number of outbound links your target has with a given anchor.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.pages-by-internal-links:
+      properties:
+        pages:
+          items:
+            properties:
+              canonical_to_target:
+                type: integer
+                title: canonical_to_target
+                description: The number of inbound canonical links to your target page.
+              dofollow_to_target:
+                type: integer
+                title: dofollow_to_target
+                description: The number of links to your target page that don’t have the “nofollow” attribute.
+              first_seen_link:
+                type: string
+                format: date-time
+                title: first_seen_link
+                description: The date we first found a link to your target.
+              http_code_target:
+                type:
+                - integer
+                - 'null'
+                title: http_code_target
+                description: The return code from HTTP protocol returned during the target page crawl.
+              languages_target:
+                items:
+                  type: string
+                  title: languages_target
+                  description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+                type: array
+                title: languages_target
+                description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date your target page lost its last live link.
+              last_visited_source:
+                type: string
+                format: date-time
+                title: last_visited_source
+                description: The date we last verified a live link to your target page.
+              last_visited_target:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_visited_target
+                description: The date we last crawled your target page.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of inbound backlinks the target page has.
+              nofollow_to_target:
+                type: integer
+                title: nofollow_to_target
+                description: The number of links to your target page that have the “nofollow” attribute.
+              powered_by_target:
+                items:
+                  type: string
+                  title: powered_by_target
+                  description: Web technologies used to build and serve the target page content.
+                type: array
+                title: powered_by_target
+                description: Web technologies used to build and serve the target page content.
+              redirects_to_target:
+                type: integer
+                title: redirects_to_target
+                description: The number of inbound redirects to your target page.
+              target_redirect:
+                type:
+                - string
+                - 'null'
+                title: target_redirect
+                description: The target's redirect if any.
+              title_target:
+                type:
+                - string
+                - 'null'
+                title: title_target
+                description: The html title of the target page.
+              url_rating_target:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: url_rating_target
+                description: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.
+              url_to:
+                type: string
+                format: url
+                title: url_to
+                description: The URL the backlink points to.
+              url_to_plain:
+                type: string
+                title: url_to_plain
+                description: The target page URL optimized for use as a filter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.Error_response:
+      properties:
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -6435,59 +8243,6 @@ components:
                 type: integer
                 title: traffic_domain
                 description: (10 units) The referring domain's estimated monthly organic traffic from search.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.refdomains-history:
-      properties:
-        refdomains:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-              refdomains:
-                type: integer
-                title: refdomains
-                description: (5 units) The total number of unique domains linking to your target.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.linked-anchors-external:
-      properties:
-        linkedanchors:
-          items:
-            properties:
-              anchor:
-                type: string
-                title: anchor
-                description: The clickable words in a link that point to a URL.
-              dofollow_links:
-                type: integer
-                title: dofollow_links
-                description: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.
-              first_seen:
-                type: string
-                format: date-time
-                title: first_seen
-                description: The date we first found a link with a given anchor on your target.
-              linked_domains:
-                type: integer
-                title: linked_domains
-                description: The number of unique domains linked from your target with a given anchor.
-              linked_pages:
-                type: integer
-                title: linked_pages
-                description: The number of unique pages linked from your target with a given anchor.
-              links_from_target:
-                type: integer
-                title: links_from_target
-                description: The number of outbound links your target has with a given anchor.
             type: object
           type: array
       type: object
@@ -7311,6 +9066,349 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    site-explorer.metrics-by-country:
+      properties:
+        metrics:
+          items:
+            properties:
+              country:
+                type: string
+                enum:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - OTHER
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+                title: country
+              org_cost:
+                type:
+                - integer
+                - 'null'
+                title: org_cost
+                description: (10 units) The estimated value of your target's monthly organic search traffic, in USD cents.
+              org_keywords:
+                type: integer
+                title: org_keywords
+                description: The total number of keywords that your target ranks for in the top 100 organic search results.
+              org_keywords_1_3:
+                type: integer
+                title: org_keywords_1_3
+                description: The total number of keywords that your target ranks for in the top 3 organic search results.
+              org_traffic:
+                type: integer
+                title: org_traffic
+                description: (10 units) The estimated number of monthly visitors that your target gets from organic search.
+              paid_cost:
+                type:
+                - integer
+                - 'null'
+                title: paid_cost
+                description: (10 units) The estimated cost of your target's monthly paid search traffic, in USD cents.
+              paid_keywords:
+                type: integer
+                title: paid_keywords
+                description: The total number of keywords that your target ranks for in paid search results.
+              paid_pages:
+                type: integer
+                title: paid_pages
+                description: The total number of pages from a target ranking in the top 100 paid search results.
+              paid_traffic:
+                type: integer
+                title: paid_traffic
+                description: (10 units) The estimated number of monthly visitors that your target gets from paid search.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.domain-rating-history:
+      properties:
+        domain_ratings:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of your target page's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.backlinks-stats:
+      properties:
+        metrics:
+          properties:
+            all_time:
+              type: integer
+              title: all_time
+              description: The total number of links from other websites pointing to your target for all time.
+            all_time_refdomains:
+              type: integer
+              title: all_time_refdomains
+              description: (5 units) The total number of unique domains linking to your target for all time.
+            live:
+              type: integer
+              title: live
+              description: The total number of links from other websites pointing to your target.
+            live_refdomains:
+              type: integer
+              title: live_refdomains
+              description: (5 units) The total number of unique domains linking to your target.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
     site-explorer.linkeddomains:
       properties:
         linkeddomains:
@@ -7363,6 +9461,48 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    site-explorer.pages-history:
+      properties:
+        pages:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              pages:
+                type: integer
+                title: pages
+                description: The total number of pages from a target ranking in the top 100 organic search results.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.outlinks-stats:
+      properties:
+        metrics:
+          properties:
+            linked_domains:
+              type: integer
+              title: linked_domains
+              description: The number of unique root domains linked from the target.
+            linked_domains_dofollow:
+              type: integer
+              title: linked_domains_dofollow
+              description: The number of unique root domains linked via dofollow links from the target.
+            outgoing_links:
+              type: integer
+              title: outgoing_links
+              description: The number of external links from the target.
+            outgoing_links_dofollow:
+              type: integer
+              title: outgoing_links_dofollow
+              description: The number of external dofollow links from the target.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
     site-explorer.keywords-history:
       properties:
         keywords:
@@ -7397,2230 +9537,6 @@ components:
                 type: integer
                 title: top51_plus
                 description: The total number of keywords that your target ranks for in the top 51+ organic search results.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.backlinks-stats:
-      properties:
-        metrics:
-          properties:
-            all_time:
-              type: integer
-              title: all_time
-              description: The total number of links from other websites pointing to your target for all time.
-            all_time_refdomains:
-              type: integer
-              title: all_time_refdomains
-              description: (5 units) The total number of unique domains linking to your target for all time.
-            live:
-              type: integer
-              title: live
-              description: The total number of links from other websites pointing to your target.
-            live_refdomains:
-              type: integer
-              title: live_refdomains
-              description: (5 units) The total number of unique domains linking to your target.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.metrics-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              org_cost:
-                type: integer
-                title: org_cost
-                description: (10 units) The estimated cost of your target's monthly organic search traffic, in USD cents.
-              org_traffic:
-                type: integer
-                title: org_traffic
-                description: (10 units) The estimated number of monthly visitors that your target gets from organic search.
-              paid_cost:
-                type: integer
-                title: paid_cost
-                description: (10 units) The estimated cost of your target's monthly paid search traffic, in USD cents.
-              paid_traffic:
-                type: integer
-                title: paid_traffic
-                description: (10 units) The estimated number of monthly visitors that your target gets from paid search.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.paid-pages:
-      properties:
-        pages:
-          items:
-            properties:
-              ads_count:
-                type:
-                - integer
-                - 'null'
-                title: ads_count
-                description: The number of unique ads with a page.
-              ads_count_diff:
-                type: integer
-                title: ads_count_diff
-                description: The change in ads between your selected dates.
-              ads_count_prev:
-                type:
-                - integer
-                - 'null'
-                title: ads_count_prev
-                description: The number of ads on the comparison date.
-              keywords:
-                type:
-                - integer
-                - 'null'
-                title: keywords
-                description: The total number of keywords that your target ranks for in paid search results.
-              keywords_diff:
-                type: integer
-                title: keywords_diff
-                description: The change in keywords between your selected dates.
-              keywords_diff_percent:
-                type: integer
-                title: keywords_diff_percent
-                description: The change in keywords between your selected dates, in percents.
-              keywords_merged:
-                type: integer
-                title: keywords_merged
-                description: The total number of keywords optimized for sorting.
-              keywords_prev:
-                type:
-                - integer
-                - 'null'
-                title: keywords_prev
-                description: The keyword your target ranks for on the comparison date.
-              raw_url:
-                type: string
-                title: raw_url
-                description: The ranking page URL in encoded format.
-              raw_url_prev:
-                type:
-                - string
-                - 'null'
-                title: raw_url_prev
-                description: The ranking page URL on the comparison date in encoded format.
-              referring_domains:
-                type:
-                - integer
-                - 'null'
-                title: referring_domains
-                description: (5 units) The number of unique domains linking to a page.
-              status:
-                type: string
-                enum:
-                - left
-                - right
-                - both
-                title: status
-                description: 'The status of a page: the new page that just started to rank in paid results ("left"), the lost page that disappeared from paid results ("right"), or no change ("both").'
-              sum_traffic:
-                type:
-                - integer
-                - 'null'
-                title: sum_traffic
-                description: (10 units) An estimation of the monthly paid search traffic that a page gets from all the keywords that it ranks for.
-              sum_traffic_merged:
-                type: integer
-                title: sum_traffic_merged
-                description: (10 units) The paid traffic field optimized for sorting.
-              sum_traffic_prev:
-                type:
-                - integer
-                - 'null'
-                title: sum_traffic_prev
-                description: (10 units) The paid traffic on the comparison date.
-              top_keyword:
-                type:
-                - string
-                - 'null'
-                title: top_keyword
-                description: The keyword that brings the most paid traffic to a page.
-              top_keyword_best_position:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_best_position
-                description: The ranking position that a page holds for its top keyword.
-              top_keyword_best_position_diff:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_best_position_diff
-                description: The change in the top position between your selected dates.
-              top_keyword_best_position_kind:
-                type:
-                - string
-                - 'null'
-                enum:
-                - paid_top
-                - paid_bottom
-                - paid_right
-                - paid_sitelink
-                - organic
-                - sitelink
-                - snippet
-                - image
-                - article
-                - knowledge_card
-                - knowledge_panel
-                - local_pack
-                - local_teaser
-                - news
-                - question
-                - review
-                - shopping
-                - tweet
-                - spelling
-                - video
-                - discussion
-                - ai_overview
-                - ai_overview_sitelink
-                - organic_shopping
-                title: top_keyword_best_position_kind
-                description: 'The kind of the top position: organic, paid or a SERP feature.'
-              top_keyword_best_position_kind_prev:
-                type:
-                - string
-                - 'null'
-                enum:
-                - paid_top
-                - paid_bottom
-                - paid_right
-                - paid_sitelink
-                - organic
-                - sitelink
-                - snippet
-                - image
-                - article
-                - knowledge_card
-                - knowledge_panel
-                - local_pack
-                - local_teaser
-                - news
-                - question
-                - review
-                - shopping
-                - tweet
-                - spelling
-                - video
-                - discussion
-                - ai_overview
-                - ai_overview_sitelink
-                - organic_shopping
-                title: top_keyword_best_position_kind_prev
-                description: The kind of the top position on the comparison date.
-              top_keyword_best_position_prev:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_best_position_prev
-                description: The top position on the comparison date.
-              top_keyword_best_position_title:
-                type:
-                - string
-                - 'null'
-                title: top_keyword_best_position_title
-                description: The title displayed for the page in its top keyword's SERP.
-              top_keyword_best_position_title_prev:
-                type:
-                - string
-                - 'null'
-                title: top_keyword_best_position_title_prev
-                description: The title displayed for the page in its top keyword's SERP on the comparison date.
-              top_keyword_country:
-                type:
-                - string
-                - 'null'
-                enum:
-                - AD
-                - AE
-                - AF
-                - AG
-                - AI
-                - AL
-                - AM
-                - AO
-                - AQ
-                - AR
-                - AS
-                - AT
-                - AU
-                - AW
-                - AX
-                - AZ
-                - BA
-                - BB
-                - BD
-                - BE
-                - BF
-                - BG
-                - BH
-                - BI
-                - BJ
-                - BL
-                - BM
-                - BN
-                - BO
-                - BQ
-                - BR
-                - BS
-                - BT
-                - BV
-                - BW
-                - BY
-                - BZ
-                - CA
-                - CC
-                - CD
-                - CF
-                - CG
-                - CH
-                - CI
-                - CK
-                - CL
-                - CM
-                - CN
-                - CO
-                - CR
-                - CU
-                - CV
-                - CW
-                - CX
-                - CY
-                - CZ
-                - DE
-                - DJ
-                - DK
-                - DM
-                - DO
-                - DZ
-                - EC
-                - EE
-                - EG
-                - EH
-                - ER
-                - ES
-                - ET
-                - FI
-                - FJ
-                - FK
-                - FM
-                - FO
-                - FR
-                - GA
-                - GB
-                - GD
-                - GE
-                - GF
-                - GG
-                - GH
-                - GI
-                - GL
-                - GM
-                - GN
-                - GP
-                - GQ
-                - GR
-                - GS
-                - GT
-                - GU
-                - GW
-                - GY
-                - HK
-                - HM
-                - HN
-                - HR
-                - HT
-                - HU
-                - ID
-                - IE
-                - IL
-                - IM
-                - IN
-                - IO
-                - IQ
-                - IR
-                - IS
-                - IT
-                - JE
-                - JM
-                - JO
-                - JP
-                - KE
-                - KG
-                - KH
-                - KI
-                - KM
-                - KN
-                - KP
-                - KR
-                - KW
-                - KY
-                - KZ
-                - LA
-                - LB
-                - LC
-                - LI
-                - LK
-                - LR
-                - LS
-                - LT
-                - LU
-                - LV
-                - LY
-                - MA
-                - MC
-                - MD
-                - ME
-                - MF
-                - MG
-                - MH
-                - MK
-                - ML
-                - MM
-                - MN
-                - MO
-                - MP
-                - MQ
-                - MR
-                - MS
-                - MT
-                - MU
-                - MV
-                - MW
-                - MX
-                - MY
-                - MZ
-                - NA
-                - NC
-                - NE
-                - NF
-                - NG
-                - NI
-                - NL
-                - 'NO'
-                - NP
-                - NR
-                - NU
-                - NZ
-                - OM
-                - OTHER
-                - PA
-                - PE
-                - PF
-                - PG
-                - PH
-                - PK
-                - PL
-                - PM
-                - PN
-                - PR
-                - PS
-                - PT
-                - PW
-                - PY
-                - QA
-                - RE
-                - RO
-                - RS
-                - RU
-                - RW
-                - SA
-                - SB
-                - SC
-                - SD
-                - SE
-                - SG
-                - SH
-                - SI
-                - SJ
-                - SK
-                - SL
-                - SM
-                - SN
-                - SO
-                - SR
-                - SS
-                - ST
-                - SV
-                - SX
-                - SY
-                - SZ
-                - TC
-                - TD
-                - TF
-                - TG
-                - TH
-                - TJ
-                - TK
-                - TL
-                - TM
-                - TN
-                - TO
-                - TR
-                - TT
-                - TV
-                - TW
-                - TZ
-                - UA
-                - UG
-                - UM
-                - US
-                - UY
-                - UZ
-                - VA
-                - VC
-                - VE
-                - VG
-                - VI
-                - VN
-                - VU
-                - WF
-                - WS
-                - YE
-                - YT
-                - ZA
-                - ZM
-                - ZW
-                title: top_keyword_country
-                description: The country in which a page ranks for its top keyword.
-              top_keyword_country_prev:
-                type:
-                - string
-                - 'null'
-                enum:
-                - AD
-                - AE
-                - AF
-                - AG
-                - AI
-                - AL
-                - AM
-                - AO
-                - AQ
-                - AR
-                - AS
-                - AT
-                - AU
-                - AW
-                - AX
-                - AZ
-                - BA
-                - BB
-                - BD
-                - BE
-                - BF
-                - BG
-                - BH
-                - BI
-                - BJ
-                - BL
-                - BM
-                - BN
-                - BO
-                - BQ
-                - BR
-                - BS
-                - BT
-                - BV
-                - BW
-                - BY
-                - BZ
-                - CA
-                - CC
-                - CD
-                - CF
-                - CG
-                - CH
-                - CI
-                - CK
-                - CL
-                - CM
-                - CN
-                - CO
-                - CR
-                - CU
-                - CV
-                - CW
-                - CX
-                - CY
-                - CZ
-                - DE
-                - DJ
-                - DK
-                - DM
-                - DO
-                - DZ
-                - EC
-                - EE
-                - EG
-                - EH
-                - ER
-                - ES
-                - ET
-                - FI
-                - FJ
-                - FK
-                - FM
-                - FO
-                - FR
-                - GA
-                - GB
-                - GD
-                - GE
-                - GF
-                - GG
-                - GH
-                - GI
-                - GL
-                - GM
-                - GN
-                - GP
-                - GQ
-                - GR
-                - GS
-                - GT
-                - GU
-                - GW
-                - GY
-                - HK
-                - HM
-                - HN
-                - HR
-                - HT
-                - HU
-                - ID
-                - IE
-                - IL
-                - IM
-                - IN
-                - IO
-                - IQ
-                - IR
-                - IS
-                - IT
-                - JE
-                - JM
-                - JO
-                - JP
-                - KE
-                - KG
-                - KH
-                - KI
-                - KM
-                - KN
-                - KP
-                - KR
-                - KW
-                - KY
-                - KZ
-                - LA
-                - LB
-                - LC
-                - LI
-                - LK
-                - LR
-                - LS
-                - LT
-                - LU
-                - LV
-                - LY
-                - MA
-                - MC
-                - MD
-                - ME
-                - MF
-                - MG
-                - MH
-                - MK
-                - ML
-                - MM
-                - MN
-                - MO
-                - MP
-                - MQ
-                - MR
-                - MS
-                - MT
-                - MU
-                - MV
-                - MW
-                - MX
-                - MY
-                - MZ
-                - NA
-                - NC
-                - NE
-                - NF
-                - NG
-                - NI
-                - NL
-                - 'NO'
-                - NP
-                - NR
-                - NU
-                - NZ
-                - OM
-                - OTHER
-                - PA
-                - PE
-                - PF
-                - PG
-                - PH
-                - PK
-                - PL
-                - PM
-                - PN
-                - PR
-                - PS
-                - PT
-                - PW
-                - PY
-                - QA
-                - RE
-                - RO
-                - RS
-                - RU
-                - RW
-                - SA
-                - SB
-                - SC
-                - SD
-                - SE
-                - SG
-                - SH
-                - SI
-                - SJ
-                - SK
-                - SL
-                - SM
-                - SN
-                - SO
-                - SR
-                - SS
-                - ST
-                - SV
-                - SX
-                - SY
-                - SZ
-                - TC
-                - TD
-                - TF
-                - TG
-                - TH
-                - TJ
-                - TK
-                - TL
-                - TM
-                - TN
-                - TO
-                - TR
-                - TT
-                - TV
-                - TW
-                - TZ
-                - UA
-                - UG
-                - UM
-                - US
-                - UY
-                - UZ
-                - VA
-                - VC
-                - VE
-                - VG
-                - VI
-                - VN
-                - VU
-                - WF
-                - WS
-                - YE
-                - YT
-                - ZA
-                - ZM
-                - ZW
-                title: top_keyword_country_prev
-                description: The country in which a page ranks for its top keyword on the comparison date.
-              top_keyword_prev:
-                type:
-                - string
-                - 'null'
-                title: top_keyword_prev
-                description: The keyword that brings the most paid traffic to a page on the comparison date.
-              top_keyword_volume:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_volume
-                description: (10 units) An estimation of the average monthly number of searches for the top keyword over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
-              top_keyword_volume_prev:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_volume_prev
-                description: (10 units) The search volume on the comparison date.
-              traffic_diff:
-                type: integer
-                title: traffic_diff
-                description: The change in traffic between your selected dates.
-              traffic_diff_percent:
-                type: integer
-                title: traffic_diff_percent
-                description: The change in traffic between your selected dates, in percents.
-              ur:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: ur
-                description: URL Rating (UR) shows the strength of your target page’s backlink profile on a 100-point logarithmic scale.
-              url:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: url
-                description: The ranking page URL.
-              url_prev:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: url_prev
-                description: The ranking page URL on the comparison date.
-              value:
-                type:
-                - integer
-                - 'null'
-                title: value
-                description: (10 units) The estimated cost of a page's monthly paid search traffic, in USD cents.
-              value_diff:
-                type: integer
-                title: value_diff
-                description: The change in traffic value between your selected dates.
-              value_diff_percent:
-                type: integer
-                title: value_diff_percent
-                description: The change in traffic value between your selected dates, in percents.
-              value_merged:
-                type:
-                - integer
-                - 'null'
-                title: value_merged
-                description: (10 units) The traffic value field optimized for sorting.
-              value_prev:
-                type:
-                - integer
-                - 'null'
-                title: value_prev
-                description: (10 units) The traffic value on the comparison date.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.linked-anchors-internal:
-      properties:
-        linkedanchors:
-          items:
-            properties:
-              anchor:
-                type: string
-                title: anchor
-                description: The clickable words in a link that point to a URL.
-              dofollow_links:
-                type: integer
-                title: dofollow_links
-                description: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.
-              first_seen:
-                type: string
-                format: date-time
-                title: first_seen
-                description: The date we first found a link with a given anchor on your target.
-              linked_pages:
-                type: integer
-                title: linked_pages
-                description: The number of unique pages linked from your target with a given anchor.
-              links_from_target:
-                type: integer
-                title: links_from_target
-                description: The number of outbound links your target has with a given anchor.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.all-backlinks:
-      properties:
-        backlinks:
-          items:
-            properties:
-              ahrefs_rank_source:
-                type: integer
-                title: ahrefs_rank_source
-                description: 'The strength of the referring domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
-              ahrefs_rank_target:
-                type: integer
-                title: ahrefs_rank_target
-                description: 'The strength of the target domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
-              alt:
-                type:
-                - string
-                - 'null'
-                title: alt
-                description: The alt attribute of the link.
-              anchor:
-                type: string
-                title: anchor
-                description: The clickable words in a link that point to a URL.
-              broken_redirect_new_target:
-                type:
-                - string
-                - 'null'
-                title: broken_redirect_new_target
-                description: The new destination of a modified redirect.
-              broken_redirect_reason:
-                type:
-                - string
-                - 'null'
-                enum:
-                - droppedmanual
-                - droppedtooold
-                - dropped
-                - codechanged
-                - nxdomain
-                - robotsdisallowed
-                - curlerror
-                - invalidtarget
-                - nomorecanonical
-                - isnowparked
-                - targetchanged
-                title: broken_redirect_reason
-                description: The reason the redirect was considered broken during the last crawl.
-              broken_redirect_source:
-                type:
-                - string
-                - 'null'
-                title: broken_redirect_source
-                description: The redirecting URL that was modified, causing the redirect to become broken.
-              class_c:
-                type: integer
-                title: class_c
-                description: (5 units) The number of unique class_c subnets linking to the referring page.
-              discovered_status:
-                type:
-                - string
-                - 'null'
-                enum:
-                - pagefound
-                - linkfound
-                - linkrestored
-                title: discovered_status
-                description: 'The reason the link was discovered during the last crawl: the page was crawled for the first time, the link was added to the page, or the link re-appeared after being removed.'
-              domain_rating_source:
-                type: number
-                format: float
-                title: domain_rating_source
-                description: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.
-              domain_rating_target:
-                type: number
-                format: float
-                title: domain_rating_target
-                description: The strength of the referring domain's backlink profile compared to the others in our database on a 100-point scale.
-              drop_reason:
-                type:
-                - string
-                - 'null'
-                enum:
-                - manual
-                - noratingunused
-                - notop
-                - tooold
-                - oldunavailable
-                - rescursive
-                - duplicate
-                - nxdomain
-                - malformed
-                - blockedport
-                - disallowed
-                - unlinked
-                - lowvalue
-                title: drop_reason
-                description: The reason we removed the link from our index.
-              encoding:
-                type: string
-                title: encoding
-                description: The character set encoding of the referring page HTML.
-              first_seen:
-                type: string
-                format: date-time
-                title: first_seen
-                description: The date the referring page URL was first discovered.
-              first_seen_link:
-                type: string
-                format: date-time
-                title: first_seen_link
-                description: The date we first found a backlink to your target on a given referring page.
-              http_code:
-                type: integer
-                title: http_code
-                description: The return code from HTTP protocol returned during the referring page crawl.
-              http_crawl:
-                type: boolean
-                title: http_crawl
-                description: The link was discovered without executing javascript and rendering the page.
-              ip_source:
-                type:
-                - string
-                - 'null'
-                title: ip_source
-                description: The referring domain IP address.
-              is_alternate:
-                type: boolean
-                title: is_alternate
-                description: The link with the rel=“alternate” attribute.
-              is_canonical:
-                type: boolean
-                title: is_canonical
-                description: The link with the rel=“canonical” attribute.
-              is_content:
-                type: boolean
-                title: is_content
-                description: The link was found in the biggest piece of content on the page.
-              is_dofollow:
-                type: boolean
-                title: is_dofollow
-                description: The link has no special nofollow attribute.
-              is_form:
-                type: boolean
-                title: is_form
-                description: The link was found in a form HTML tag.
-              is_frame:
-                type: boolean
-                title: is_frame
-                description: The link was found in an iframe HTML tag.
-              is_image:
-                type: boolean
-                title: is_image
-                description: The link is a regular link that has an image inside their href attribute.
-              is_lost:
-                type: boolean
-                title: is_lost
-                description: The link currently does not exist anymore.
-              is_new:
-                type: boolean
-                title: is_new
-                description: The link was discovered on the last crawl.
-              is_nofollow:
-                type: boolean
-                title: is_nofollow
-                description: The link or the referring page has the nofollow attribute set.
-              is_redirect:
-                type: boolean
-                title: is_redirect
-                description: The link pointing to your target via a redirect.
-              is_redirect_lost:
-                type: boolean
-                title: is_redirect_lost
-                description: The redirected link currently does not exist anymore.
-              is_root_source:
-                type: boolean
-                title: is_root_source
-                description: The referring domain name is a root domain name.
-              is_root_target:
-                type: boolean
-                title: is_root_target
-                description: The target domain name is a root domain name.
-              is_rss:
-                type: boolean
-                title: is_rss
-                description: The link was found in an RSS feed.
-              is_spam:
-                type: boolean
-                title: is_spam
-                description: Indicates whether the backlink comes from a known spammy domain.
-              is_sponsored:
-                type: boolean
-                title: is_sponsored
-                description: The link has the Sponsored attribute set in the referring page HTML.
-              is_text:
-                type: boolean
-                title: is_text
-                description: The link is a standard href hyperlink.
-              is_ugc:
-                type: boolean
-                title: is_ugc
-                description: The link has the User Generated Content attribute set in the referring page HTML.
-              js_crawl:
-                type: boolean
-                title: js_crawl
-                description: The link was discovered after executing javascript and rendering the page.
-              languages:
-                items:
-                  type: string
-                  title: languages
-                  description: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.
-                type: array
-                title: languages
-                description: The languages listed in the referring page metadata or detected by the crawler to appear in the HTML.
-              last_seen:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: last_seen
-                description: The date we discovered that the link was lost.
-              last_visited:
-                type: string
-                format: date-time
-                title: last_visited
-                description: The date we last verified a live link to your target page.
-              link_group_count:
-                type: integer
-                title: link_group_count
-                description: The number of backlinks that were grouped together based on the aggregation parameter. This field cannot be used with aggregation 'all'.
-              link_type:
-                type: string
-                enum:
-                - redirect
-                - frame
-                - text
-                - form
-                - canonical
-                - alternate
-                - rss
-                - image
-                title: link_type
-                description: The kind of the backlink.
-              linked_domains_source_domain:
-                type: integer
-                title: linked_domains_source_domain
-                description: The number of unique root domains linked from the referring domain.
-              linked_domains_source_page:
-                type: integer
-                title: linked_domains_source_page
-                description: The number of unique root domains linked from the referring page.
-              linked_domains_target_domain:
-                type: integer
-                title: linked_domains_target_domain
-                description: The number of unique root domains linked from the target domain.
-              links_external:
-                type: integer
-                title: links_external
-                description: The number of external links from the referring page.
-              links_internal:
-                type: integer
-                title: links_internal
-                description: The number of internal links from the referring page.
-              lost_reason:
-                type:
-                - string
-                - 'null'
-                enum:
-                - removedfromhtml
-                - notcanonical
-                - noindex
-                - pageredirected
-                - pageerror
-                - lostredirect
-                - notfound
-                title: lost_reason
-                description: The reason the link was lost during the last crawl.
-              name_source:
-                type: string
-                title: name_source
-                description: The complete referring domain name, including subdomains.
-              name_target:
-                type: string
-                title: name_target
-                description: The complete target domain name, including subdomains.
-              noindex:
-                type: boolean
-                title: noindex
-                description: The referring page has the noindex meta attribute.
-              page_category_source:
-                type:
-                - string
-                - 'null'
-                title: page_category_source
-                description: Comma-separated list of AI-predicted hierarchical category paths for the referring page. Each value is a slash-prefixed path (e.g. /Business_and_Industrial/Advertising_and_Marketing/Marketing).
-              page_size:
-                type: integer
-                title: page_size
-                description: The size in bytes of the referring page content.
-              page_type_source:
-                type:
-                - string
-                - 'null'
-                title: page_type_source
-                description: Comma-separated list of AI-predicted hierarchical page type paths for the referring page. Each value is a slash-prefixed path (e.g. /Article/How_to).
-              port_source:
-                type: integer
-                title: port_source
-                description: The network port of the referring page URL.
-              port_target:
-                type: integer
-                title: port_target
-                description: The network port of the target page URL.
-              positions:
-                type: integer
-                title: positions
-                description: The number of keywords that the referring page ranks for in the top 100 positions.
-              powered_by:
-                items:
-                  type: string
-                  title: powered_by
-                  description: Web technologies used to build and serve the referring page content.
-                type: array
-                title: powered_by
-                description: Web technologies used to build and serve the referring page content.
-              redirect_code:
-                type:
-                - integer
-                - 'null'
-                title: redirect_code
-                description: The HTTP status code of a referring page pointing to your target via a redirect.
-              redirect_kind:
-                items:
-                  type: integer
-                  title: redirect_kind
-                  description: The HTTP status codes returned by the target redirecting URL or redirect chain.
-                type: array
-                title: redirect_kind
-                description: The HTTP status codes returned by the target redirecting URL or redirect chain.
-              refdomains_source:
-                type: integer
-                title: refdomains_source
-                description: (5 units) The number of unique referring domains linking to the referring page.
-              refdomains_source_domain:
-                type: integer
-                title: refdomains_source_domain
-                description: (5 units) The number of unique referring domains linking to the referring domain.
-              refdomains_target_domain:
-                type: integer
-                title: refdomains_target_domain
-                description: (5 units) The number of unique referring domains linking to the target domain.
-              root_name_source:
-                type: string
-                title: root_name_source
-                description: The root domain name of the referring domain, not including subdomains.
-              root_name_target:
-                type: string
-                title: root_name_target
-                description: The root domain name of the target domain, not including subdomains.
-              snippet_left:
-                type: string
-                title: snippet_left
-                description: The snippet of text appearing just before the link.
-              snippet_right:
-                type: string
-                title: snippet_right
-                description: The snippet of text appearing just after the link.
-              source_page_author:
-                type:
-                - string
-                - 'null'
-                title: source_page_author
-                description: The author of the referring page.
-              source_page_publish_date:
-                type:
-                - string
-                - 'null'
-                format: date
-                title: source_page_publish_date
-                description: the date we identified the page was published
-              title:
-                type: string
-                title: title
-                description: The html title of the referring page.
-              tld_class_source:
-                type: string
-                enum:
-                - gov
-                - edu
-                - normal
-                title: tld_class_source
-                description: The top level domain class of the referring domain.
-              tld_class_target:
-                type: string
-                enum:
-                - gov
-                - edu
-                - normal
-                title: tld_class_target
-                description: The top level domain class of the target domain.
-              traffic:
-                type: integer
-                title: traffic
-                description: (10 units) The referring page's estimated monthly organic traffic from search.
-              traffic_domain:
-                type: integer
-                title: traffic_domain
-                description: (10 units) The referring domain's estimated monthly organic traffic from search.
-              url_from:
-                type: string
-                format: url
-                title: url_from
-                description: The URL of the page containing a link to your target.
-              url_from_plain:
-                type: string
-                title: url_from_plain
-                description: The referring page URL optimized for use as a filter.
-              url_rating_source:
-                type: number
-                format: float
-                title: url_rating_source
-                description: The strength of the referring page's backlink profile compared to the others in our database on a 100-point scale.
-              url_redirect:
-                items:
-                  type: string
-                  format: url
-                  title: url_redirect
-                  description: A redirect chain the target URL of the link points to.
-                type: array
-                title: url_redirect
-                description: A redirect chain the target URL of the link points to.
-              url_redirect_with_target:
-                items:
-                  type: string
-                  title: url_redirect_with_target
-                  description: The target URL of the link with its redirect chain.
-                type: array
-                title: url_redirect_with_target
-                description: The target URL of the link with its redirect chain.
-              url_to:
-                type: string
-                format: url
-                title: url_to
-                description: The URL the backlink points to.
-              url_to_plain:
-                type: string
-                title: url_to_plain
-                description: The target page URL optimized for use as a filter.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.top-pages:
-      properties:
-        pages:
-          items:
-            properties:
-              ai_responses_chatgpt:
-                type:
-                - integer
-                - 'null'
-                title: ai_responses_chatgpt
-                description: (10 units) The number of ChatGPT responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
-              ai_responses_copilot:
-                type:
-                - integer
-                - 'null'
-                title: ai_responses_copilot
-                description: (10 units) The number of Microsoft Copilot responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
-              ai_responses_gemini:
-                type:
-                - integer
-                - 'null'
-                title: ai_responses_gemini
-                description: (10 units) The number of Gemini responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
-              ai_responses_google_ai_mode:
-                type:
-                - integer
-                - 'null'
-                title: ai_responses_google_ai_mode
-                description: (10 units) The number of Google AI Mode responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
-              ai_responses_google_ai_overviews:
-                type:
-                - integer
-                - 'null'
-                title: ai_responses_google_ai_overviews
-                description: (10 units) The number of Google AI Overviews responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
-              ai_responses_grok:
-                type:
-                - integer
-                - 'null'
-                title: ai_responses_grok
-                description: (10 units) The number of Grok responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
-              ai_responses_perplexity:
-                type:
-                - integer
-                - 'null'
-                title: ai_responses_perplexity
-                description: (10 units) The number of Perplexity responses in which the page appeared, in the selected country (or summed across all countries). This includes cases where the page was cited as a source or only retrieved in the background. Powered by Brand Radar; requires the corresponding index.
-              keywords:
-                type:
-                - integer
-                - 'null'
-                title: keywords
-                description: The total number of keywords that your target ranks for in the top 100 organic search results.
-              keywords_diff:
-                type: integer
-                title: keywords_diff
-                description: The change in keywords between your selected dates.
-              keywords_diff_percent:
-                type: integer
-                title: keywords_diff_percent
-                description: The change in keywords between your selected dates, in percents.
-              keywords_merged:
-                type: integer
-                title: keywords_merged
-                description: The total number of keywords optimized for sorting.
-              keywords_prev:
-                type:
-                - integer
-                - 'null'
-                title: keywords_prev
-                description: The keyword your target ranks for on the comparison date.
-              page_type:
-                type:
-                - string
-                - 'null'
-                title: page_type
-                description: Comma-separated list of AI-predicted hierarchical page type paths. Each value is a slash-prefixed path (e.g. /Article/How_to).
-              raw_url:
-                type: string
-                title: raw_url
-                description: The ranking page URL in encoded format.
-              raw_url_prev:
-                type:
-                - string
-                - 'null'
-                title: raw_url_prev
-                description: The ranking page URL on the comparison date in encoded format.
-              referring_domains:
-                type:
-                - integer
-                - 'null'
-                title: referring_domains
-                description: (5 units) The number of unique domains linking to a page.
-              status:
-                type: string
-                enum:
-                - left
-                - right
-                - both
-                title: status
-                description: 'The status of a page: the new page that just started to rank ("left"), the lost page that disappeared from search results ("right"), or no change ("both").'
-              sum_traffic:
-                type:
-                - integer
-                - 'null'
-                title: sum_traffic
-                description: (10 units) An estimation of the monthly organic search traffic that a page gets from all the keywords that it ranks for.
-              sum_traffic_merged:
-                type: integer
-                title: sum_traffic_merged
-                description: (10 units) The traffic field optimized for sorting.
-              sum_traffic_prev:
-                type:
-                - integer
-                - 'null'
-                title: sum_traffic_prev
-                description: (10 units) The traffic on the comparison date.
-              top_keyword:
-                type:
-                - string
-                - 'null'
-                title: top_keyword
-                description: The keyword that brings the most organic traffic to a page.
-              top_keyword_best_position:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_best_position
-                description: The ranking position that a page holds for its top keyword.
-              top_keyword_best_position_diff:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_best_position_diff
-                description: The change in the top position between your selected dates.
-              top_keyword_best_position_kind:
-                type:
-                - string
-                - 'null'
-                enum:
-                - paid_top
-                - paid_bottom
-                - paid_right
-                - paid_sitelink
-                - organic
-                - sitelink
-                - snippet
-                - image
-                - article
-                - knowledge_card
-                - knowledge_panel
-                - local_pack
-                - local_teaser
-                - news
-                - question
-                - review
-                - shopping
-                - tweet
-                - spelling
-                - video
-                - discussion
-                - ai_overview
-                - ai_overview_sitelink
-                - organic_shopping
-                title: top_keyword_best_position_kind
-                description: 'The kind of the top position: organic, paid or a SERP feature.'
-              top_keyword_best_position_kind_prev:
-                type:
-                - string
-                - 'null'
-                enum:
-                - paid_top
-                - paid_bottom
-                - paid_right
-                - paid_sitelink
-                - organic
-                - sitelink
-                - snippet
-                - image
-                - article
-                - knowledge_card
-                - knowledge_panel
-                - local_pack
-                - local_teaser
-                - news
-                - question
-                - review
-                - shopping
-                - tweet
-                - spelling
-                - video
-                - discussion
-                - ai_overview
-                - ai_overview_sitelink
-                - organic_shopping
-                title: top_keyword_best_position_kind_prev
-                description: The kind of the top position on the comparison date.
-              top_keyword_best_position_prev:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_best_position_prev
-                description: The top position on the comparison date.
-              top_keyword_best_position_title:
-                type:
-                - string
-                - 'null'
-                title: top_keyword_best_position_title
-                description: The title displayed for the page in its top keyword's SERP.
-              top_keyword_best_position_title_prev:
-                type:
-                - string
-                - 'null'
-                title: top_keyword_best_position_title_prev
-                description: The title displayed for the page in its top keyword's SERP on the comparison date.
-              top_keyword_country:
-                type:
-                - string
-                - 'null'
-                enum:
-                - AD
-                - AE
-                - AF
-                - AG
-                - AI
-                - AL
-                - AM
-                - AO
-                - AQ
-                - AR
-                - AS
-                - AT
-                - AU
-                - AW
-                - AX
-                - AZ
-                - BA
-                - BB
-                - BD
-                - BE
-                - BF
-                - BG
-                - BH
-                - BI
-                - BJ
-                - BL
-                - BM
-                - BN
-                - BO
-                - BQ
-                - BR
-                - BS
-                - BT
-                - BV
-                - BW
-                - BY
-                - BZ
-                - CA
-                - CC
-                - CD
-                - CF
-                - CG
-                - CH
-                - CI
-                - CK
-                - CL
-                - CM
-                - CN
-                - CO
-                - CR
-                - CU
-                - CV
-                - CW
-                - CX
-                - CY
-                - CZ
-                - DE
-                - DJ
-                - DK
-                - DM
-                - DO
-                - DZ
-                - EC
-                - EE
-                - EG
-                - EH
-                - ER
-                - ES
-                - ET
-                - FI
-                - FJ
-                - FK
-                - FM
-                - FO
-                - FR
-                - GA
-                - GB
-                - GD
-                - GE
-                - GF
-                - GG
-                - GH
-                - GI
-                - GL
-                - GM
-                - GN
-                - GP
-                - GQ
-                - GR
-                - GS
-                - GT
-                - GU
-                - GW
-                - GY
-                - HK
-                - HM
-                - HN
-                - HR
-                - HT
-                - HU
-                - ID
-                - IE
-                - IL
-                - IM
-                - IN
-                - IO
-                - IQ
-                - IR
-                - IS
-                - IT
-                - JE
-                - JM
-                - JO
-                - JP
-                - KE
-                - KG
-                - KH
-                - KI
-                - KM
-                - KN
-                - KP
-                - KR
-                - KW
-                - KY
-                - KZ
-                - LA
-                - LB
-                - LC
-                - LI
-                - LK
-                - LR
-                - LS
-                - LT
-                - LU
-                - LV
-                - LY
-                - MA
-                - MC
-                - MD
-                - ME
-                - MF
-                - MG
-                - MH
-                - MK
-                - ML
-                - MM
-                - MN
-                - MO
-                - MP
-                - MQ
-                - MR
-                - MS
-                - MT
-                - MU
-                - MV
-                - MW
-                - MX
-                - MY
-                - MZ
-                - NA
-                - NC
-                - NE
-                - NF
-                - NG
-                - NI
-                - NL
-                - 'NO'
-                - NP
-                - NR
-                - NU
-                - NZ
-                - OM
-                - OTHER
-                - PA
-                - PE
-                - PF
-                - PG
-                - PH
-                - PK
-                - PL
-                - PM
-                - PN
-                - PR
-                - PS
-                - PT
-                - PW
-                - PY
-                - QA
-                - RE
-                - RO
-                - RS
-                - RU
-                - RW
-                - SA
-                - SB
-                - SC
-                - SD
-                - SE
-                - SG
-                - SH
-                - SI
-                - SJ
-                - SK
-                - SL
-                - SM
-                - SN
-                - SO
-                - SR
-                - SS
-                - ST
-                - SV
-                - SX
-                - SY
-                - SZ
-                - TC
-                - TD
-                - TF
-                - TG
-                - TH
-                - TJ
-                - TK
-                - TL
-                - TM
-                - TN
-                - TO
-                - TR
-                - TT
-                - TV
-                - TW
-                - TZ
-                - UA
-                - UG
-                - UM
-                - US
-                - UY
-                - UZ
-                - VA
-                - VC
-                - VE
-                - VG
-                - VI
-                - VN
-                - VU
-                - WF
-                - WS
-                - YE
-                - YT
-                - ZA
-                - ZM
-                - ZW
-                title: top_keyword_country
-                description: The country in which a page ranks for its top keyword.
-              top_keyword_country_prev:
-                type:
-                - string
-                - 'null'
-                enum:
-                - AD
-                - AE
-                - AF
-                - AG
-                - AI
-                - AL
-                - AM
-                - AO
-                - AQ
-                - AR
-                - AS
-                - AT
-                - AU
-                - AW
-                - AX
-                - AZ
-                - BA
-                - BB
-                - BD
-                - BE
-                - BF
-                - BG
-                - BH
-                - BI
-                - BJ
-                - BL
-                - BM
-                - BN
-                - BO
-                - BQ
-                - BR
-                - BS
-                - BT
-                - BV
-                - BW
-                - BY
-                - BZ
-                - CA
-                - CC
-                - CD
-                - CF
-                - CG
-                - CH
-                - CI
-                - CK
-                - CL
-                - CM
-                - CN
-                - CO
-                - CR
-                - CU
-                - CV
-                - CW
-                - CX
-                - CY
-                - CZ
-                - DE
-                - DJ
-                - DK
-                - DM
-                - DO
-                - DZ
-                - EC
-                - EE
-                - EG
-                - EH
-                - ER
-                - ES
-                - ET
-                - FI
-                - FJ
-                - FK
-                - FM
-                - FO
-                - FR
-                - GA
-                - GB
-                - GD
-                - GE
-                - GF
-                - GG
-                - GH
-                - GI
-                - GL
-                - GM
-                - GN
-                - GP
-                - GQ
-                - GR
-                - GS
-                - GT
-                - GU
-                - GW
-                - GY
-                - HK
-                - HM
-                - HN
-                - HR
-                - HT
-                - HU
-                - ID
-                - IE
-                - IL
-                - IM
-                - IN
-                - IO
-                - IQ
-                - IR
-                - IS
-                - IT
-                - JE
-                - JM
-                - JO
-                - JP
-                - KE
-                - KG
-                - KH
-                - KI
-                - KM
-                - KN
-                - KP
-                - KR
-                - KW
-                - KY
-                - KZ
-                - LA
-                - LB
-                - LC
-                - LI
-                - LK
-                - LR
-                - LS
-                - LT
-                - LU
-                - LV
-                - LY
-                - MA
-                - MC
-                - MD
-                - ME
-                - MF
-                - MG
-                - MH
-                - MK
-                - ML
-                - MM
-                - MN
-                - MO
-                - MP
-                - MQ
-                - MR
-                - MS
-                - MT
-                - MU
-                - MV
-                - MW
-                - MX
-                - MY
-                - MZ
-                - NA
-                - NC
-                - NE
-                - NF
-                - NG
-                - NI
-                - NL
-                - 'NO'
-                - NP
-                - NR
-                - NU
-                - NZ
-                - OM
-                - OTHER
-                - PA
-                - PE
-                - PF
-                - PG
-                - PH
-                - PK
-                - PL
-                - PM
-                - PN
-                - PR
-                - PS
-                - PT
-                - PW
-                - PY
-                - QA
-                - RE
-                - RO
-                - RS
-                - RU
-                - RW
-                - SA
-                - SB
-                - SC
-                - SD
-                - SE
-                - SG
-                - SH
-                - SI
-                - SJ
-                - SK
-                - SL
-                - SM
-                - SN
-                - SO
-                - SR
-                - SS
-                - ST
-                - SV
-                - SX
-                - SY
-                - SZ
-                - TC
-                - TD
-                - TF
-                - TG
-                - TH
-                - TJ
-                - TK
-                - TL
-                - TM
-                - TN
-                - TO
-                - TR
-                - TT
-                - TV
-                - TW
-                - TZ
-                - UA
-                - UG
-                - UM
-                - US
-                - UY
-                - UZ
-                - VA
-                - VC
-                - VE
-                - VG
-                - VI
-                - VN
-                - VU
-                - WF
-                - WS
-                - YE
-                - YT
-                - ZA
-                - ZM
-                - ZW
-                title: top_keyword_country_prev
-                description: The country in which a page ranks for its top keyword on the comparison date.
-              top_keyword_prev:
-                type:
-                - string
-                - 'null'
-                title: top_keyword_prev
-                description: The keyword that brings the most organic traffic to a page on the comparison date.
-              top_keyword_volume:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_volume
-                description: (10 units) An estimation of the average monthly number of searches for the top keyword over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
-              top_keyword_volume_prev:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_volume_prev
-                description: (10 units) The search volume on the comparison date.
-              traffic_diff:
-                type: integer
-                title: traffic_diff
-                description: The change in traffic between your selected dates.
-              traffic_diff_percent:
-                type: integer
-                title: traffic_diff_percent
-                description: The change in traffic between your selected dates, in percents.
-              ur:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: ur
-                description: URL Rating (UR) shows the strength of your target page’s backlink profile on a 100-point logarithmic scale.
-              url:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: url
-                description: The ranking page URL.
-              url_prev:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: url_prev
-                description: The ranking page URL on the comparison date.
-              value:
-                type:
-                - integer
-                - 'null'
-                title: value
-                description: (10 units) The estimated value of a page's monthly organic search traffic, in USD cents.
-              value_diff:
-                type: integer
-                title: value_diff
-                description: The change in traffic value between your selected dates.
-              value_diff_percent:
-                type: integer
-                title: value_diff_percent
-                description: The change in traffic value between your selected dates, in percents.
-              value_merged:
-                type:
-                - integer
-                - 'null'
-                title: value_merged
-                description: (10 units) The traffic value field optimized for sorting.
-              value_prev:
-                type:
-                - integer
-                - 'null'
-                title: value_prev
-                description: (10 units) The traffic value on the comparison date.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.pages-by-internal-links:
-      properties:
-        pages:
-          items:
-            properties:
-              canonical_to_target:
-                type: integer
-                title: canonical_to_target
-                description: The number of inbound canonical links to your target page.
-              dofollow_to_target:
-                type: integer
-                title: dofollow_to_target
-                description: The number of links to your target page that don’t have the “nofollow” attribute.
-              first_seen_link:
-                type: string
-                format: date-time
-                title: first_seen_link
-                description: The date we first found a link to your target.
-              http_code_target:
-                type:
-                - integer
-                - 'null'
-                title: http_code_target
-                description: The return code from HTTP protocol returned during the target page crawl.
-              languages_target:
-                items:
-                  type: string
-                  title: languages_target
-                  description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
-                type: array
-                title: languages_target
-                description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
-              last_seen:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: last_seen
-                description: The date your target page lost its last live link.
-              last_visited_source:
-                type: string
-                format: date-time
-                title: last_visited_source
-                description: The date we last verified a live link to your target page.
-              last_visited_target:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: last_visited_target
-                description: The date we last crawled your target page.
-              links_to_target:
-                type: integer
-                title: links_to_target
-                description: The number of inbound backlinks the target page has.
-              nofollow_to_target:
-                type: integer
-                title: nofollow_to_target
-                description: The number of links to your target page that have the “nofollow” attribute.
-              powered_by_target:
-                items:
-                  type: string
-                  title: powered_by_target
-                  description: Web technologies used to build and serve the target page content.
-                type: array
-                title: powered_by_target
-                description: Web technologies used to build and serve the target page content.
-              redirects_to_target:
-                type: integer
-                title: redirects_to_target
-                description: The number of inbound redirects to your target page.
-              target_redirect:
-                type:
-                - string
-                - 'null'
-                title: target_redirect
-                description: The target's redirect if any.
-              title_target:
-                type:
-                - string
-                - 'null'
-                title: title_target
-                description: The html title of the target page.
-              url_rating_target:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: url_rating_target
-                description: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.
-              url_to:
-                type: string
-                format: url
-                title: url_to
-                description: The URL the backlink points to.
-              url_to_plain:
-                type: string
-                title: url_to_plain
-                description: The target page URL optimized for use as a filter.
             type: object
           type: array
       type: object
@@ -9670,62 +9586,53 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    site-explorer.anchors:
+    site-explorer.metrics-history:
       properties:
-        anchors:
+        metrics:
           items:
             properties:
-              anchor:
+              date:
                 type: string
-                title: anchor
-                description: The clickable words in a link that point to a URL.
-              dofollow_links:
+                format: date
+                title: date
+                description: ''
+              org_cost:
                 type: integer
-                title: dofollow_links
-                description: The number of links with a given anchor to your target that don’t have the “nofollow” attribute.
-              first_seen:
-                type: string
-                format: date-time
-                title: first_seen
-                description: The date we first found a link with a given anchor to your target.
-              is_spam:
-                type: boolean
-                title: is_spam
-                description: Indicates whether the backlink comes from a known spammy domain.
-              last_seen:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: last_seen
-                description: The date we discovered the last backlink with a given anchor was lost.
-              links_to_target:
+                title: org_cost
+                description: (10 units) The estimated cost of your target's monthly organic search traffic, in USD cents.
+              org_traffic:
                 type: integer
-                title: links_to_target
-                description: The number of inbound backlinks your target has with a given anchor.
-              lost_links:
+                title: org_traffic
+                description: (10 units) The estimated number of monthly visitors that your target gets from organic search.
+              paid_cost:
                 type: integer
-                title: lost_links
-                description: The number of backlinks with a given anchor lost during the selected time period.
-              new_links:
+                title: paid_cost
+                description: (10 units) The estimated cost of your target's monthly paid search traffic, in USD cents.
+              paid_traffic:
                 type: integer
-                title: new_links
-                description: The number of new backlinks with a given anchor found during the selected time period.
-              refdomains:
-                type: integer
-                title: refdomains
-                description: (5 units) The number of unique domains linking to your target with a given anchor.
-              refpages:
-                type: integer
-                title: refpages
-                description: The number of pages containing a link with a given anchor to your target.
-              top_domain_rating:
-                type: number
-                format: float
-                title: top_domain_rating
-                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
+                title: paid_traffic
+                description: (10 units) The estimated number of monthly visitors that your target gets from paid search.
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-explorer.domain-rating:
+      properties:
+        domain_rating:
+          properties:
+            ahrefs_rank:
+              type:
+              - integer
+              - 'null'
+              title: ahrefs_rank
+              description: 'The strength of your target''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+            domain_rating:
+              type: number
+              format: float
+              title: domain_rating
+              description: The strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+          type: object
       type: object
       xml:
         name: AhrefsApiResponse
@@ -9774,71 +9681,118 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    site-explorer.Error_response:
+    site-explorer.organic-competitors:
       properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.url-rating-history:
-      properties:
-        url_ratings:
+        competitors:
           items:
             properties:
-              date:
-                type: string
-                format: date
-                title: date
-              url_rating:
+              competitor_domain:
+                type:
+                - string
+                - 'null'
+                format: domain
+                title: competitor_domain
+                description: A competitor's domain of your target in “domains" group mode.
+              competitor_url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: competitor_url
+                description: A competitor's URL of your target in pages" group mode.
+              domain_rating:
                 type: number
                 format: float
-                title: url_rating
-                description: The strength of your target page's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.pages-history:
-      properties:
-        pages:
-          items:
-            properties:
-              date:
+                title: domain_rating
+                description: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.
+              group_mode:
                 type: string
-                format: date
-                title: date
-              pages:
+                enum:
+                - domains
+                - pages
+                title: group_mode
+                description: To see competing pages instead, use the “exact URL” target mode or “path” target mode if your target doesn't have multiple pages.
+              keywords_common:
                 type: integer
+                title: keywords_common
+                description: Organic keywords that both your target and a competitor are ranking for.
+              keywords_competitor:
+                type: integer
+                title: keywords_competitor
+                description: Organic keywords that a competitor is ranking for, but your target isn't.
+              keywords_target:
+                type: integer
+                title: keywords_target
+                description: Organic keywords that your target is ranking for, but a competitor isn't.
+              pages:
+                type:
+                - integer
+                - 'null'
                 title: pages
-                description: The total number of pages from a target ranking in the top 100 organic search results.
+                description: The total number of pages from a target ranking in search results.
+              pages_diff:
+                type: integer
+                title: pages_diff
+                description: The change in pages between your selected dates.
+              pages_merged:
+                type: integer
+                title: pages_merged
+                description: The pages field optimized for sorting.
+              pages_prev:
+                type:
+                - integer
+                - 'null'
+                title: pages_prev
+                description: The total number of pages from a target ranking in search results on the comparison date.
+              share:
+                type: number
+                format: float
+                title: share
+                description: The percentage of common keywords out of the total number of keywords that your target and a competitor both rank for.
+              traffic:
+                type:
+                - integer
+                - 'null'
+                title: traffic
+                description: (10 units) An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+              traffic_diff:
+                type: integer
+                title: traffic_diff
+                description: The change in traffic between your selected dates.
+              traffic_merged:
+                type: integer
+                title: traffic_merged
+                description: (10 units) The traffic field optimized for sorting.
+              traffic_prev:
+                type:
+                - integer
+                - 'null'
+                title: traffic_prev
+                description: (10 units) An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter on the comparison date.
+              value:
+                type:
+                - integer
+                - 'null'
+                title: value
+                description: (10 units) The estimated value of a page's monthly organic search traffic, in USD cents.
+              value_diff:
+                type: integer
+                title: value_diff
+                description: The change in value between your selected dates.
+              value_merged:
+                type:
+                - integer
+                - 'null'
+                title: value_merged
+                description: (10 units) The value field optimized for sorting.
+              value_prev:
+                type:
+                - integer
+                - 'null'
+                title: value_prev
+                description: (10 units) The estimated value of a page's monthly organic search traffic, in USD cents on the comparison date.
             type: object
           type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-explorer.outlinks-stats:
-      properties:
-        metrics:
-          properties:
-            linked_domains:
-              type: integer
-              title: linked_domains
-              description: The number of unique root domains linked from the target.
-            linked_domains_dofollow:
-              type: integer
-              title: linked_domains_dofollow
-              description: The number of unique root domains linked via dofollow links from the target.
-            outgoing_links:
-              type: integer
-              title: outgoing_links
-              description: The number of external links from the target.
-            outgoing_links_dofollow:
-              type: integer
-              title: outgoing_links_dofollow
-              description: The number of external dofollow links from the target.
-          type: object
       type: object
       xml:
         name: AhrefsApiResponse
@@ -9868,6 +9822,52 @@ components:
         - php
       name: output
       in: query
+  responses:
+    site-explorer.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+    site-explorer.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+    site-explorer.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+    site-explorer.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+    site-explorer.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-explorer.Error_response'
   securitySchemes:
     http:
       type: http

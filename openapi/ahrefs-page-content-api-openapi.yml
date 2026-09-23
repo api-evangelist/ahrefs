@@ -15,12 +15,12 @@ security:
 - http:
   - read
 tags:
-- name: Page content
+- name: Page Content
 paths:
   /page-content:
     get:
       tags:
-      - Page content
+      - Page Content
       summary: Page content
       description: '>This endpoint consumes a fixed cost of 50 API units per request.'
       operationId: page-content
@@ -89,8 +89,8 @@ paths:
           $ref: '#/components/responses/error_500'
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -98,8 +98,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -116,8 +116,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
+    error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -125,8 +125,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:

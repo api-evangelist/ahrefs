@@ -1864,8 +1864,8 @@ paths:
       description: Ahrefs Management
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -1873,8 +1873,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -1891,15 +1891,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
     error_429:
       description: Too Many Requests
       content:
@@ -1909,7 +1900,55 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keyword-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              ctr:
+                type: number
+                format: float
+                title: ctr
+              date:
+                type: string
+                format: date-time
+                title: date
+              impressions:
+                type: integer
+                title: impressions
+              keyword:
+                type: string
+                title: keyword
+              position:
+                type: number
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     keywords:
       properties:
         keywords:
@@ -1960,81 +1999,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    keyword-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: integer
-                title: clicks
-              ctr:
-                type: number
-                format: float
-                title: ctr
-              date:
-                type: string
-                format: date-time
-                title: date
-              impressions:
-                type: integer
-                title: impressions
-              keyword:
-                type: string
-                title: keyword
-              position:
-                type: number
-                format: float
-                title: position
-                description: Average position (decimal, e.g. 4.7)
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    project-keywords-tags:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
-              language:
-                type: string
-                title: language
-                description: The name of the language assigned to a given keyword.
-              language_code:
-                type: string
-                title: language_code
-                description: The code of the language assigned to a given keyword.
-              location:
-                type: string
-                title: location
-                description: The name of the location assigned to a given keyword.
-              location_id:
-                type: integer
-                title: location_id
-                description: The ID of the location assigned to a given keyword.
-              tags:
-                items:
-                  type: string
-                type: array
-                title: tags
-                description: A list of tags assigned to a given keyword.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     project-keywords:
       properties:
         keywords:
@@ -2072,6 +2036,42 @@ components:
       xml:
         name: AhrefsApiResponse
     project-keywords-delete:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-keywords-tags:
       properties:
         keywords:
           items:

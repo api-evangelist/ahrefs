@@ -24,11 +24,11 @@ paths:
 
         >APIv3 keys are free to generate and use. If you don''t have an Ahrefs account, here''s how to get the key for free:
 
-        >1. [Sign up](https://ahrefs.com/) for a free Ahrefs account (if you don''t have one)
+        >1. Sign up for a free Ahrefs account (if you don''t have one)
 
-        >2. Generate an API key in [Account settings → API keys](https://app.ahrefs.com/account/api-keys)
+        >2. Generate an API key in Account settings → API keys
 
-        >3. Add it to your requests: `Authorization: Bearer <token>`
+        >3. Add it to your requests: `Authorization: Bearer `
 
 
         Use of this data is subject to the Domain Rating License at http://ahrefs.com/legal/domain-rating-license. Attribution required: "Domain Rating by Ahrefs" (https://ahrefs.com/).'
@@ -73,18 +73,16 @@ paths:
 
         >APIv3 keys are free to generate and use. If you don''t have an Ahrefs account, here''s how to get the key for free:
 
-        >1. [Sign up](https://ahrefs.com/) for a free Ahrefs account (if you don''t have one)
+        >1. Sign up for a free Ahrefs account (if you don''t have one)
 
-        >2. Generate an API key in [Account settings → API keys](https://app.ahrefs.com/account/api-keys)
+        >2. Generate an API key in Account settings → API keys
 
-        >3. Add it to your requests: `Authorization: Bearer <token>`
+        >3. Add it to your requests: `Authorization: Bearer `
 
 
         Returns the top 1M domains ranked by Ahrefs Domain Rating, together with each domain''s current Domain Rating.
 
-        Use `from` and `to` to request a range of rank positions. Each request can return up to 250k rows (e.g. `from=1&to=250000`).
-
-        '
+        Use `from` and `to` to request a range of rank positions. Each request can return up to 250k rows (e.g. `from=1&to=250000`).'
       operationId: domain-rating-top-domains
       parameters:
       - description: Rank position to start from.
@@ -126,8 +124,8 @@ paths:
           $ref: '#/components/responses/error_500'
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -135,8 +133,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -153,8 +151,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
+    error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -162,8 +160,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -176,6 +174,24 @@ components:
       properties:
         error:
           type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    domain-rating-free:
+      properties:
+        domain_rating:
+          properties:
+            domain_rating:
+              type: number
+              format: float
+              title: domain_rating
+              description: Current strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+            license:
+              type: string
+              format: url
+              title: license
+              description: URL of the license terms that apply to use of Domain Rating data.
+          type: object
       type: object
       xml:
         name: AhrefsApiResponse
@@ -200,24 +216,6 @@ components:
                 description: Position of the domain in the top 1M ranking by Domain Rating (1 = highest).
             type: object
           type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    domain-rating-free:
-      properties:
-        domain_rating:
-          properties:
-            domain_rating:
-              type: number
-              format: float
-              title: domain_rating
-              description: Current strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-            license:
-              type: string
-              format: url
-              title: license
-              description: URL of the license terms that apply to use of Domain Rating data.
-          type: object
       type: object
       xml:
         name: AhrefsApiResponse

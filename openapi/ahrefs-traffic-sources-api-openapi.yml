@@ -711,6 +711,119 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    source-channels:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              source_channel:
+                type: string
+                enum:
+                - search
+                - llm
+                - email
+                - paid
+                - search/paid
+                - social
+                - unknown
+                - direct
+                - newsletter
+                - shopping/organic
+                - shopping/paid
+                - audio
+                - social/paid
+                - cross-network
+                - mobile-push-notification
+                - sms
+                - affiliate
+                - referral
+                - display
+                - internal
+                title: source_channel
+                description: Source Channel
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    utm-params-chart:
+      properties:
+        points:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              utm_param:
+                type: string
+                title: utm_param
+                description: UTM parameter value
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    referrers:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              source_referer:
+                type: string
+                title: source_referer
+                description: Referer source
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     source-channels-chart:
       properties:
         points:
@@ -763,7 +876,7 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    source-channels:
+    utm-params:
       properties:
         stats:
           items:
@@ -777,71 +890,16 @@ components:
                 format: float
                 title: session_bounce_rate
                 description: Session bounce rate (percentage of sessions that triggered only one request)
-              source_channel:
+              utm_param:
                 type: string
-                enum:
-                - search
-                - llm
-                - email
-                - paid
-                - search/paid
-                - social
-                - unknown
-                - direct
-                - newsletter
-                - shopping/organic
-                - shopping/paid
-                - audio
-                - social/paid
-                - cross-network
-                - mobile-push-notification
-                - sms
-                - affiliate
-                - referral
-                - display
-                - internal
-                title: source_channel
-                description: Source Channel
+                title: utm_param
+                description: UTM parameter value
               visitors:
                 type: integer
                 title: visitors
                 description: Number of visitors
             type: object
           type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    referrers:
-      properties:
-        stats:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              source_referer:
-                type: string
-                title: source_referer
-                description: Referer source
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -872,67 +930,9 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    utm-params-chart:
-      properties:
-        points:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              timestamp:
-                type: string
-                title: timestamp
-                description: Timestamp of the data point
-              utm_param:
-                type: string
-                title: utm_param
-                description: UTM parameter value
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    utm-params:
-      properties:
-        stats:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              utm_param:
-                type: string
-                title: utm_param
-                description: UTM parameter value
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -958,8 +958,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:

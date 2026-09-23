@@ -1615,6 +1615,215 @@ paths:
           $ref: '#/components/responses/keywords-explorer.error_500'
 components:
   schemas:
+    keywords-explorer.overview:
+      properties:
+        keywords:
+          items:
+            properties:
+              clicks:
+                type:
+                - integer
+                - 'null'
+                title: clicks
+                description: The average monthly number of clicks on the search results that people make while searching for the target keyword.
+              cpc:
+                type:
+                - integer
+                - 'null'
+                title: cpc
+                description: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword, in USD cents.
+              cps:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: cps
+                description: Clicks Per Search (or CPS) is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.
+              difficulty:
+                type:
+                - integer
+                - 'null'
+                title: difficulty
+                description: (10 units) An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.
+              first_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: first_seen
+                description: The date when we first checked search engine results for a keyword.
+              global_volume:
+                type:
+                - integer
+                - 'null'
+                title: global_volume
+                description: (10 units) How many times per month, on average, people search for the target keyword across all countries in our database.
+              intents:
+                type:
+                - object
+                - 'null'
+                title: intents
+                description: '(10 units) Indicates the purpose behind the user''s search query. Object fields: `informational`, `navigational`, `commercial`, `transactional`, `branded` or `local`. All the fields are of type `bool`, with possible values `true` or `false`.'
+              keyword:
+                type: string
+                title: keyword
+                description: ''
+              parent_topic:
+                type:
+                - string
+                - 'null'
+                title: parent_topic
+                description: 'Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead. To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.'
+              parent_volume:
+                type:
+                - integer
+                - 'null'
+                title: parent_volume
+                description: (10 units) The search volume of the parent topic.
+              searches_pct_clicks_organic_and_paid:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: searches_pct_clicks_organic_and_paid
+                description: The average monthly percentage of people who clicked on both organic and paid results while searching for the target keyword.
+              searches_pct_clicks_organic_only:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: searches_pct_clicks_organic_only
+                description: The average monthly percentage of people who clicked only on organic results while searching for the target keyword.
+              searches_pct_clicks_paid_only:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: searches_pct_clicks_paid_only
+                description: The average monthly percentage of people who clicked only on paid results while searching for the target keyword.
+              serp_features:
+                items:
+                  type: string
+                  enum:
+                  - ai_overview_sitelink
+                  - snippet
+                  - ai_overview
+                  - local_pack
+                  - sitelink
+                  - news
+                  - image
+                  - video
+                  - discussion
+                  - tweet
+                  - paid_top
+                  - paid_bottom
+                  - paid_sitelink
+                  - shopping
+                  - knowledge_card
+                  - knowledge_panel
+                  - question
+                  - image_th
+                  - video_th
+                  - organic_shopping
+                  title: serp_features
+                  description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
+                type: array
+                title: serp_features
+                description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
+              serp_last_update:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: serp_last_update
+                description: The date when we last checked search engine results for a keyword.
+              traffic_potential:
+                type:
+                - integer
+                - 'null'
+                title: traffic_potential
+                description: '(10 units) The sum of organic traffic that the #1 ranking page for your target keyword receives from all the keywords that it ranks for.'
+              volume:
+                type:
+                - integer
+                - 'null'
+                title: volume
+                description: (10 units) An estimation of the average monthly number of searches for a keyword over the latest known 12 months of data.
+              volume_desktop_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_desktop_pct
+                description: The percentage of searches for a keyword performed on desktop devices.
+              volume_mobile_pct:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: volume_mobile_pct
+                description: The percentage of searches for a keyword performed on mobile devices.
+              volume_monthly:
+                type:
+                - integer
+                - 'null'
+                title: volume_monthly
+                description: (10 units) An estimation of the number of searches for a keyword over the latest month. This field may not be included in the `order_by` parameter
+              volume_monthly_history:
+                items:
+                  type: object
+                  title: volume_monthly_history
+                  description: (2 units per historical month, with a minimum of 50 units) Historical monthly search volume estimates of a keyword for the period set by the `volume_monthly_date_from` and `volume_monthly_date_to` parameters.
+                type: array
+                title: volume_monthly_history
+                description: (2 units per historical month, with a minimum of 50 units) Historical monthly search volume estimates of a keyword for the period set by the `volume_monthly_date_from` and `volume_monthly_date_to` parameters.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keywords-explorer.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keywords-explorer.volume-by-country:
+      properties:
+        countries:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+              volume:
+                type: integer
+                title: volume
+                description: (10 units) An estimation of the average monthly number of searches for a keyword in a given country.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keywords-explorer.volume-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+              volume:
+                type: integer
+                title: volume
+                description: An estimation of the number of searches for a keyword over a given month.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     keywords-explorer.related-terms:
       properties:
         keywords:
@@ -1867,24 +2076,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    keywords-explorer.volume-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-              volume:
-                type: integer
-                title: volume
-                description: An estimation of the number of searches for a keyword over a given month.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     keywords-explorer.search-suggestions:
       properties:
         keywords:
@@ -2011,197 +2202,52 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    keywords-explorer.overview:
-      properties:
-        keywords:
-          items:
-            properties:
-              clicks:
-                type:
-                - integer
-                - 'null'
-                title: clicks
-                description: The average monthly number of clicks on the search results that people make while searching for the target keyword.
-              cpc:
-                type:
-                - integer
-                - 'null'
-                title: cpc
-                description: Cost Per Click shows the average price that advertisers pay for each ad click in paid search results for a keyword, in USD cents.
-              cps:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: cps
-                description: Clicks Per Search (or CPS) is the ratio of Clicks to Keyword Search volume. It shows how many different search results get clicked, on average, when people search for the target keyword in a given country.
-              difficulty:
-                type:
-                - integer
-                - 'null'
-                title: difficulty
-                description: (10 units) An estimation of how hard it is to rank in the top 10 organic search results for a keyword on a 100-point scale.
-              first_seen:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: first_seen
-                description: The date when we first checked search engine results for a keyword.
-              global_volume:
-                type:
-                - integer
-                - 'null'
-                title: global_volume
-                description: (10 units) How many times per month, on average, people search for the target keyword across all countries in our database.
-              intents:
-                type:
-                - object
-                - 'null'
-                title: intents
-                description: '(10 units) Indicates the purpose behind the user''s search query. Object fields: `informational`, `navigational`, `commercial`, `transactional`, `branded` or `local`. All the fields are of type `bool`, with possible values `true` or `false`.'
-              keyword:
-                type: string
-                title: keyword
-                description: ''
-              parent_topic:
-                type:
-                - string
-                - 'null'
-                title: parent_topic
-                description: 'Parent Topic determines if you can rank for your target keyword while targeting a more general topic on your page instead. To identify the Parent Topic, we take the #1 ranking page for your keyword and find the keyword responsible for sending the most traffic to that page.'
-              parent_volume:
-                type:
-                - integer
-                - 'null'
-                title: parent_volume
-                description: (10 units) The search volume of the parent topic.
-              searches_pct_clicks_organic_and_paid:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: searches_pct_clicks_organic_and_paid
-                description: The average monthly percentage of people who clicked on both organic and paid results while searching for the target keyword.
-              searches_pct_clicks_organic_only:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: searches_pct_clicks_organic_only
-                description: The average monthly percentage of people who clicked only on organic results while searching for the target keyword.
-              searches_pct_clicks_paid_only:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: searches_pct_clicks_paid_only
-                description: The average monthly percentage of people who clicked only on paid results while searching for the target keyword.
-              serp_features:
-                items:
-                  type: string
-                  enum:
-                  - ai_overview_sitelink
-                  - snippet
-                  - ai_overview
-                  - local_pack
-                  - sitelink
-                  - news
-                  - image
-                  - video
-                  - discussion
-                  - tweet
-                  - paid_top
-                  - paid_bottom
-                  - paid_sitelink
-                  - shopping
-                  - knowledge_card
-                  - knowledge_panel
-                  - question
-                  - image_th
-                  - video_th
-                  - organic_shopping
-                  title: serp_features
-                  description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
-                type: array
-                title: serp_features
-                description: The enriched results on a search engine results page (SERP) that are not traditional organic results.
-              serp_last_update:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: serp_last_update
-                description: The date when we last checked search engine results for a keyword.
-              traffic_potential:
-                type:
-                - integer
-                - 'null'
-                title: traffic_potential
-                description: '(10 units) The sum of organic traffic that the #1 ranking page for your target keyword receives from all the keywords that it ranks for.'
-              volume:
-                type:
-                - integer
-                - 'null'
-                title: volume
-                description: (10 units) An estimation of the average monthly number of searches for a keyword over the latest known 12 months of data.
-              volume_desktop_pct:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: volume_desktop_pct
-                description: The percentage of searches for a keyword performed on desktop devices.
-              volume_mobile_pct:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: volume_mobile_pct
-                description: The percentage of searches for a keyword performed on mobile devices.
-              volume_monthly:
-                type:
-                - integer
-                - 'null'
-                title: volume_monthly
-                description: (10 units) An estimation of the number of searches for a keyword over the latest month. This field may not be included in the `order_by` parameter
-              volume_monthly_history:
-                items:
-                  type: object
-                  title: volume_monthly_history
-                  description: (2 units per historical month, with a minimum of 50 units) Historical monthly search volume estimates of a keyword for the period set by the `volume_monthly_date_from` and `volume_monthly_date_to` parameters.
-                type: array
-                title: volume_monthly_history
-                description: (2 units per historical month, with a minimum of 50 units) Historical monthly search volume estimates of a keyword for the period set by the `volume_monthly_date_from` and `volume_monthly_date_to` parameters.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    keywords-explorer.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    keywords-explorer.volume-by-country:
-      properties:
-        countries:
-          items:
-            properties:
-              country:
-                type: string
-                title: country
-              volume:
-                type: integer
-                title: volume
-                description: (10 units) An estimation of the average monthly number of searches for a keyword in a given country.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
+  responses:
+    keywords-explorer.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+    keywords-explorer.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+    keywords-explorer.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+    keywords-explorer.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+    keywords-explorer.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/keywords-explorer.Error_response'
   parameters:
     keywords-explorer.output:
       description: The output format.
@@ -2228,52 +2274,6 @@ components:
         - xml
       name: output
       in: query
-  responses:
-    keywords-explorer.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-    keywords-explorer.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-    keywords-explorer.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-    keywords-explorer.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-    keywords-explorer.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/keywords-explorer.Error_response'
   securitySchemes:
     http:
       type: http

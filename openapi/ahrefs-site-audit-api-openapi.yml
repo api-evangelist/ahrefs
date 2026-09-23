@@ -2784,44 +2784,53 @@ paths:
         '500':
           $ref: '#/components/responses/site-audit.error_500'
 components:
+  responses:
+    site-audit.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
   schemas:
-    site-audit.page-content:
-      properties:
-        page-content:
-          properties:
-            crawl_datetime:
-              type: string
-              format: date-time
-              title: crawl_datetime
-              description: The timestamp when the page was crawled.
-            page_text:
-              type:
-              - string
-              - 'null'
-              title: page_text
-              description: The text extracted from the page content.
-            page_text_md:
-              type:
-              - string
-              - 'null'
-              title: page_text_md
-              description: 'The page content converted to markdown text. The value is a JSON-encoded string: decode JSON escapes (e.g. with `jq -r`) before passing it to a markdown renderer.'
-            raw_html:
-              type:
-              - string
-              - 'null'
-              title: raw_html
-              description: The raw HTML of the page.
-            rendered_html:
-              type:
-              - string
-              - 'null'
-              title: rendered_html
-              description: The rendered HTML of the page.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
     site-audit.page-explorer:
       properties:
         pages:
@@ -6844,6 +6853,109 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    site-audit.page-content:
+      properties:
+        page-content:
+          properties:
+            crawl_datetime:
+              type: string
+              format: date-time
+              title: crawl_datetime
+              description: The timestamp when the page was crawled.
+            page_text:
+              type:
+              - string
+              - 'null'
+              title: page_text
+              description: The text extracted from the page content.
+            page_text_md:
+              type:
+              - string
+              - 'null'
+              title: page_text_md
+              description: 'The page content converted to markdown text. The value is a JSON-encoded string: decode JSON escapes (e.g. with `jq -r`) before passing it to a markdown renderer.'
+            raw_html:
+              type:
+              - string
+              - 'null'
+              title: raw_html
+              description: The raw HTML of the page.
+            rendered_html:
+              type:
+              - string
+              - 'null'
+              title: rendered_html
+              description: The rendered HTML of the page.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-audit.issues:
+      properties:
+        issues:
+          items:
+            properties:
+              added:
+                type:
+                - integer
+                - 'null'
+                title: added
+                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
+              category:
+                type: string
+                title: category
+                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
+              change:
+                type:
+                - integer
+                - 'null'
+                title: change
+                description: Difference in the number of affected URLs between the specified dates.
+              crawled:
+                type: integer
+                title: crawled
+                description: Number of URLs currently affected by the issue.
+              importance:
+                type: string
+                title: importance
+                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
+              is_indexable:
+                type:
+                - boolean
+                - 'null'
+                title: is_indexable
+                description: True if the issue applies only to indexable pages.
+              issue_id:
+                type: string
+                title: issue_id
+                description: The unique identifier of the issue.
+              missing:
+                type:
+                - integer
+                - 'null'
+                title: missing
+                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
+              name:
+                type: string
+                title: name
+                description: The name of the issue.
+              new:
+                type:
+                - integer
+                - 'null'
+                title: new
+                description: Number of newly discovered URLs that have the issue on the current date.
+              removed:
+                type:
+                - integer
+                - 'null'
+                title: removed
+                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     site-audit.projects:
       properties:
         healthscores:
@@ -6925,73 +7037,18 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    site-audit.issues:
-      properties:
-        issues:
-          items:
-            properties:
-              added:
-                type:
-                - integer
-                - 'null'
-                title: added
-                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
-              category:
-                type: string
-                title: category
-                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
-              change:
-                type:
-                - integer
-                - 'null'
-                title: change
-                description: Difference in the number of affected URLs between the specified dates.
-              crawled:
-                type: integer
-                title: crawled
-                description: Number of URLs currently affected by the issue.
-              importance:
-                type: string
-                title: importance
-                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
-              is_indexable:
-                type:
-                - boolean
-                - 'null'
-                title: is_indexable
-                description: True if the issue applies only to indexable pages.
-              issue_id:
-                type: string
-                title: issue_id
-                description: The unique identifier of the issue.
-              missing:
-                type:
-                - integer
-                - 'null'
-                title: missing
-                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
-              name:
-                type: string
-                title: name
-                description: The name of the issue.
-              new:
-                type:
-                - integer
-                - 'null'
-                title: new
-                description: Number of newly discovered URLs that have the issue on the current date.
-              removed:
-                type:
-                - integer
-                - 'null'
-                title: removed
-                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
   parameters:
+    site-audit.output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
     site-audit.output:
       description: The output format.
       required: false
@@ -7005,63 +7062,6 @@ components:
         - php
       name: output
       in: query
-    site-audit.output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
-  responses:
-    site-audit.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
   securitySchemes:
     http:
       type: http

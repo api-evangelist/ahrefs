@@ -1,0 +1,35 @@
+# Front Door AI Index — ahrefs — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: ahrefs
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: ahrefs.com
+  final_host: ahrefs.com
+  ownership: own
+  owner: ahrefs
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 57
+  host_score: 57
+  density: 35.29
+  words: 1615
+  tiers:
+    agentic: 8
+    core: 47
+    model: 2
+  ambiguous: 3
+  top_terms:
+    AI: 44
+    LLMs: 3
+    agent: 3
+    AI agent: 2
+    prompts: 2
+    AI assistant: 1
+    ChatGPT: 1
+    Claude: 1
+    RAG: 1
+    chatbot: 1
+    copilot: 1

@@ -1461,86 +1461,7 @@ paths:
     - url: https://api.ahrefs.com/v3/web-analytics
       description: Ahrefs Web Analytics
 components:
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   schemas:
-    page-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: integer
-                title: clicks
-              ctr:
-                type: number
-                format: float
-                title: ctr
-              date:
-                type: string
-                format: date-time
-                title: date
-              impressions:
-                type: integer
-                title: impressions
-              page:
-                type: string
-                format: url
-                title: page
-              position:
-                type: number
-                format: float
-                title: position
-                description: Average position (decimal, e.g. 4.7)
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     pages:
       properties:
         pages:
@@ -1600,46 +1521,34 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    crawled-pages:
+    page-history:
       properties:
-        pages:
+        metrics:
           items:
             properties:
-              first_seen:
-                type: string
-                format: date-time
-                title: first_seen
-                description: The timestamp when the URL was first seen by Ahrefs.
-              http_code:
+              clicks:
                 type: integer
-                title: http_code
-                description: The HTTP status code returned when the page was last crawled.
-              last_attempt:
-                type: string
-                format: date-time
-                title: last_attempt
-                description: The timestamp of the last crawl attempt.
-              last_crawled:
-                type: string
-                format: date-time
-                title: last_crawled
-                description: The timestamp of the last successful crawl.
-              title:
-                type:
-                - string
-                - 'null'
-                title: title
-                description: The page's meta title.
-              url:
-                type: string
-                format: url
-                title: url
-                description: The URL of the crawled page.
-              url_rating:
+                title: clicks
+              ctr:
                 type: number
                 format: float
-                title: url_rating
-                description: URL Rating of the page at the time of the last crawl, on a 100-point scale.
+                title: ctr
+              date:
+                type: string
+                format: date-time
+                title: date
+              impressions:
+                type: integer
+                title: impressions
+              page:
+                type: string
+                format: url
+                title: page
+              position:
+                type: number
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
             type: object
           type: array
       type: object
@@ -1766,6 +1675,51 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    crawled-pages:
+      properties:
+        pages:
+          items:
+            properties:
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The timestamp when the URL was first seen by Ahrefs.
+              http_code:
+                type: integer
+                title: http_code
+                description: The HTTP status code returned when the page was last crawled.
+              last_attempt:
+                type: string
+                format: date-time
+                title: last_attempt
+                description: The timestamp of the last crawl attempt.
+              last_crawled:
+                type: string
+                format: date-time
+                title: last_crawled
+                description: The timestamp of the last successful crawl.
+              title:
+                type:
+                - string
+                - 'null'
+                title: title
+                description: The page's meta title.
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the crawled page.
+              url_rating:
+                type: number
+                format: float
+                title: url_rating
+                description: URL Rating of the page at the time of the last crawl, on a 100-point scale.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     pages-by-internal-links:
       properties:
         pages:
@@ -1870,9 +1824,9 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    top-pages:
+    top-pages-chart:
       properties:
-        stats:
+        points:
           items:
             properties:
               avg_page_visit_duration_sec:
@@ -1893,6 +1847,10 @@ components:
                 format: float
                 title: session_bounce_rate
                 description: Session bounce rate (percentage of sessions that triggered only one request)
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
               visitors:
                 type: integer
                 title: visitors
@@ -1934,42 +1892,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    top-pages-chart:
-      properties:
-        points:
-          items:
-            properties:
-              avg_page_visit_duration_sec:
-                type: integer
-                title: avg_page_visit_duration_sec
-                description: Average page visit duration (in seconds)
-              page:
-                type: string
-                format: url
-                title: page
-                description: Page URL
-              pageviews:
-                type: integer
-                title: pageviews
-                description: Number of pageview events
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              timestamp:
-                type: string
-                title: timestamp
-                description: Timestamp of the data point
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     exit-pages:
       properties:
         stats:
@@ -1989,33 +1911,6 @@ components:
                 type: integer
                 title: exits
                 description: Number of exits
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    entry-pages:
-      properties:
-        stats:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              entries:
-                type: integer
-                title: entries
-                description: Number of entries
-              entry_page:
-                type: string
-                format: url
-                title: entry_page
-                description: Entry page URL
               visitors:
                 type: integer
                 title: visitors
@@ -2056,6 +1951,111 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    entry-pages:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              entries:
+                type: integer
+                title: entries
+                description: Number of entries
+              entry_page:
+                type: string
+                format: url
+                title: entry_page
+                description: Entry page URL
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    top-pages:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_page_visit_duration_sec:
+                type: integer
+                title: avg_page_visit_duration_sec
+                description: Average page visit duration (in seconds)
+              page:
+                type: string
+                format: url
+                title: page
+                description: Page URL
+              pageviews:
+                type: integer
+                title: pageviews
+                description: Number of pageview events
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   parameters:
     output:
       description: The output format.

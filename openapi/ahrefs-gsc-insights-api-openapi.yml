@@ -3543,24 +3543,6 @@ paths:
           $ref: '#/components/responses/gsc.error_500'
 components:
   responses:
-    gsc.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/gsc.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/gsc.Error_response'
-    gsc.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/gsc.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/gsc.Error_response'
     gsc.error_500:
       description: Internal Error
       content:
@@ -3570,8 +3552,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/gsc.Error_response'
-    gsc.error_400:
-      description: Bad Request
+    gsc.error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -3588,90 +3570,25 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/gsc.Error_response'
+    gsc.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gsc.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/gsc.Error_response'
+    gsc.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gsc.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/gsc.Error_response'
   schemas:
-    gsc.pages-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date-time
-                title: date
-              total_pages:
-                type: integer
-                title: total_pages
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    gsc.performance-by-position:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: integer
-                title: clicks
-              clicks_percent:
-                type: number
-                format: float
-                title: clicks_percent
-              impressions:
-                type: integer
-                title: impressions
-              impressions_percent:
-                type: number
-                format: float
-                title: impressions_percent
-              keyword_count:
-                type: integer
-                title: keyword_count
-              keyword_count_percent:
-                type: number
-                format: float
-                title: keyword_count_percent
-              position_range:
-                type: string
-                title: position_range
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    gsc.keyword-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: integer
-                title: clicks
-              ctr:
-                type: number
-                format: float
-                title: ctr
-              date:
-                type: string
-                format: date-time
-                title: date
-              impressions:
-                type: integer
-                title: impressions
-              keyword:
-                type: string
-                title: keyword
-              position:
-                type: number
-                format: float
-                title: position
-                description: Average position (decimal, e.g. 4.7)
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     gsc.ctr-by-position:
       properties:
         metrics:
@@ -3692,33 +3609,81 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    gsc.positions-history:
+    gsc.keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              clicks:
+                type:
+                - integer
+                - 'null'
+                title: clicks
+              ctr:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: ctr
+              impressions:
+                type:
+                - integer
+                - 'null'
+                title: impressions
+              keyword:
+                type: string
+                title: keyword
+              keyword_list_labels:
+                items:
+                  type: string
+                type: array
+                title: keyword_list_labels
+              position:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+              top_url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: top_url
+              urls_count:
+                type: integer
+                title: urls_count
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    gsc.performance-by-device:
       properties:
         metrics:
           items:
             properties:
-              date:
+              clicks:
+                type: number
+                format: float
+                title: clicks
+              ctr:
+                type: number
+                format: float
+                title: ctr
+              device:
                 type: string
-                format: date-time
-                title: date
-              position_11_to_20:
-                type: integer
-                title: position_11_to_20
-              position_1_to_3:
-                type: integer
-                title: position_1_to_3
-              position_21_to_50:
-                type: integer
-                title: position_21_to_50
-              position_4_to_10:
-                type: integer
-                title: position_4_to_10
-              position_51_plus:
-                type: integer
-                title: position_51_plus
-              total:
-                type: integer
-                title: total
+                title: device
+              impressions:
+                type: number
+                format: float
+                title: impressions
+              position:
+                type: number
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
             type: object
           type: array
       type: object
@@ -3750,65 +3715,6 @@ components:
                 description: Average position (decimal, e.g. 4.7)
             type: object
           type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    gsc.pages:
-      properties:
-        pages:
-          items:
-            properties:
-              clicks:
-                type:
-                - integer
-                - 'null'
-                title: clicks
-              ctr:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: ctr
-              impressions:
-                type:
-                - integer
-                - 'null'
-                title: impressions
-              keywords_count:
-                type: integer
-                title: keywords_count
-              page:
-                type: string
-                format: url
-                title: page
-              position:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: position
-                description: Average position (decimal, e.g. 4.7)
-              top_keyword:
-                type:
-                - string
-                - 'null'
-                title: top_keyword
-              traffic_value:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: traffic_value
-                description: Estimated traffic value in USD
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    gsc.Error_response:
-      properties:
-        error:
-          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -4135,6 +4041,196 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    gsc.pages-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date-time
+                title: date
+              total_pages:
+                type: integer
+                title: total_pages
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    gsc.metrics-by-country:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              country:
+                type: string
+                title: country
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    gsc.performance-by-position:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              clicks_percent:
+                type: number
+                format: float
+                title: clicks_percent
+              impressions:
+                type: integer
+                title: impressions
+              impressions_percent:
+                type: number
+                format: float
+                title: impressions_percent
+              keyword_count:
+                type: integer
+                title: keyword_count
+              keyword_count_percent:
+                type: number
+                format: float
+                title: keyword_count_percent
+              position_range:
+                type: string
+                title: position_range
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    gsc.positions-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date-time
+                title: date
+              position_11_to_20:
+                type: integer
+                title: position_11_to_20
+              position_1_to_3:
+                type: integer
+                title: position_1_to_3
+              position_21_to_50:
+                type: integer
+                title: position_21_to_50
+              position_4_to_10:
+                type: integer
+                title: position_4_to_10
+              position_51_plus:
+                type: integer
+                title: position_51_plus
+              total:
+                type: integer
+                title: total
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    gsc.keyword-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              ctr:
+                type: number
+                format: float
+                title: ctr
+              date:
+                type: string
+                format: date-time
+                title: date
+              impressions:
+                type: integer
+                title: impressions
+              keyword:
+                type: string
+                title: keyword
+              position:
+                type: number
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    gsc.pages:
+      properties:
+        pages:
+          items:
+            properties:
+              clicks:
+                type:
+                - integer
+                - 'null'
+                title: clicks
+              ctr:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: ctr
+              impressions:
+                type:
+                - integer
+                - 'null'
+                title: impressions
+              keywords_count:
+                type: integer
+                title: keywords_count
+              page:
+                type: string
+                format: url
+                title: page
+              position:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+              top_keyword:
+                type:
+                - string
+                - 'null'
+                title: top_keyword
+              traffic_value:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: traffic_value
+                description: Estimated traffic value in USD
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    gsc.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     gsc.page-history:
       properties:
         metrics:
@@ -4163,102 +4259,6 @@ components:
                 format: float
                 title: position
                 description: Average position (decimal, e.g. 4.7)
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    gsc.performance-by-device:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: number
-                format: float
-                title: clicks
-              ctr:
-                type: number
-                format: float
-                title: ctr
-              device:
-                type: string
-                title: device
-              impressions:
-                type: number
-                format: float
-                title: impressions
-              position:
-                type: number
-                format: float
-                title: position
-                description: Average position (decimal, e.g. 4.7)
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    gsc.keywords:
-      properties:
-        keywords:
-          items:
-            properties:
-              clicks:
-                type:
-                - integer
-                - 'null'
-                title: clicks
-              ctr:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: ctr
-              impressions:
-                type:
-                - integer
-                - 'null'
-                title: impressions
-              keyword:
-                type: string
-                title: keyword
-              keyword_list_labels:
-                items:
-                  type: string
-                type: array
-                title: keyword_list_labels
-              position:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: position
-                description: Average position (decimal, e.g. 4.7)
-              top_url:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: top_url
-              urls_count:
-                type: integer
-                title: urls_count
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    gsc.metrics-by-country:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: integer
-                title: clicks
-              country:
-                type: string
-                title: country
             type: object
           type: array
       type: object

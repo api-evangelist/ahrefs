@@ -883,97 +883,6 @@ paths:
     - url: https://api.ahrefs.com/v3
       description: Ahrefs API v3
 components:
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    batch-analysis.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
   schemas:
     target:
       properties:
@@ -1172,6 +1081,13 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    batch-analysis.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     batch-analysis.target:
       properties:
         url:
@@ -1362,13 +1278,97 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    batch-analysis.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    batch-analysis.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
   securitySchemes:
     http:
       type: http

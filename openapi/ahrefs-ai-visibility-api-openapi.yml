@@ -2315,53 +2315,45 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   schemas:
+    entity:
+      anyOf:
+      - required:
+        - names
+      - required:
+        - url_groups
+      properties:
+        names:
+          items:
+            type: string
+          type: array
+          description: The names of the brand/competitor
+          examples:
+          - - ahrefs
+            - ahrefs seo
+        url_groups:
+          items:
+            properties:
+              target:
+                type: string
+                format: domain
+                description: The domain of the target
+                examples:
+                - ahrefs.com
+              scope:
+                type: string
+                enum:
+                - url
+                - path
+                - domain
+                - subdomains
+                description: Scope of the target.
+            type: object
+            required:
+            - target
+            - scope
+          type: array
+      type: object
     ai-responses:
       properties:
         ai_responses:
@@ -2422,6 +2414,13 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     cited-pages:
       properties:
         pages:
@@ -2448,51 +2447,6 @@ components:
                 description: Deprecated on 2026-03-24.
             type: object
           type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    entity:
-      anyOf:
-      - required:
-        - names
-      - required:
-        - url_groups
-      properties:
-        names:
-          items:
-            type: string
-          type: array
-          description: The names of the brand/competitor
-          examples:
-          - - ahrefs
-            - ahrefs seo
-        url_groups:
-          items:
-            properties:
-              target:
-                type: string
-                format: domain
-                description: The domain of the target
-                examples:
-                - ahrefs.com
-              scope:
-                type: string
-                enum:
-                - url
-                - path
-                - domain
-                - subdomains
-                description: Scope of the target.
-            type: object
-            required:
-            - target
-            - scope
-          type: array
-      type: object
-    Error_response:
-      properties:
-        error:
-          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -2529,6 +2483,52 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   parameters:
     output_json_php:
       description: The output format.

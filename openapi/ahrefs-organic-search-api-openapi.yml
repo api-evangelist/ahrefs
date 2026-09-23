@@ -1085,8 +1085,8 @@ paths:
           $ref: '#/components/responses/error_500'
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -1112,8 +1112,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -1131,6 +1131,13 @@ components:
           schema:
             $ref: '#/components/schemas/Error_response'
   schemas:
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     top-pages:
       properties:
         pages:
@@ -1933,6 +1940,121 @@ components:
                 - 'null'
                 title: value_prev
                 description: (10 units) The traffic value on the comparison date.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    organic-competitors:
+      properties:
+        competitors:
+          items:
+            properties:
+              competitor_domain:
+                type:
+                - string
+                - 'null'
+                format: domain
+                title: competitor_domain
+                description: A competitor's domain of your target in “domains" group mode.
+              competitor_url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: competitor_url
+                description: A competitor's URL of your target in pages" group mode.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.
+              group_mode:
+                type: string
+                enum:
+                - domains
+                - pages
+                title: group_mode
+                description: To see competing pages instead, use the “exact URL” target mode or “path” target mode if your target doesn't have multiple pages.
+              keywords_common:
+                type: integer
+                title: keywords_common
+                description: Organic keywords that both your target and a competitor are ranking for.
+              keywords_competitor:
+                type: integer
+                title: keywords_competitor
+                description: Organic keywords that a competitor is ranking for, but your target isn't.
+              keywords_target:
+                type: integer
+                title: keywords_target
+                description: Organic keywords that your target is ranking for, but a competitor isn't.
+              pages:
+                type:
+                - integer
+                - 'null'
+                title: pages
+                description: The total number of pages from a target ranking in search results.
+              pages_diff:
+                type: integer
+                title: pages_diff
+                description: The change in pages between your selected dates.
+              pages_merged:
+                type: integer
+                title: pages_merged
+                description: The pages field optimized for sorting.
+              pages_prev:
+                type:
+                - integer
+                - 'null'
+                title: pages_prev
+                description: The total number of pages from a target ranking in search results on the comparison date.
+              share:
+                type: number
+                format: float
+                title: share
+                description: The percentage of common keywords out of the total number of keywords that your target and a competitor both rank for.
+              traffic:
+                type:
+                - integer
+                - 'null'
+                title: traffic
+                description: (10 units) An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
+              traffic_diff:
+                type: integer
+                title: traffic_diff
+                description: The change in traffic between your selected dates.
+              traffic_merged:
+                type: integer
+                title: traffic_merged
+                description: (10 units) The traffic field optimized for sorting.
+              traffic_prev:
+                type:
+                - integer
+                - 'null'
+                title: traffic_prev
+                description: (10 units) An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter on the comparison date.
+              value:
+                type:
+                - integer
+                - 'null'
+                title: value
+                description: (10 units) The estimated value of a page's monthly organic search traffic, in USD cents.
+              value_diff:
+                type: integer
+                title: value_diff
+                description: The change in value between your selected dates.
+              value_merged:
+                type:
+                - integer
+                - 'null'
+                title: value_merged
+                description: (10 units) The value field optimized for sorting.
+              value_prev:
+                type:
+                - integer
+                - 'null'
+                title: value_prev
+                description: (10 units) The estimated value of a page's monthly organic search traffic, in USD cents on the comparison date.
             type: object
           type: array
       type: object
@@ -2751,128 +2873,6 @@ components:
                 - 'null'
                 title: words_prev
                 description: The number of words in a keyword on the comparison date.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    organic-competitors:
-      properties:
-        competitors:
-          items:
-            properties:
-              competitor_domain:
-                type:
-                - string
-                - 'null'
-                format: domain
-                title: competitor_domain
-                description: A competitor's domain of your target in “domains" group mode.
-              competitor_url:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: competitor_url
-                description: A competitor's URL of your target in pages" group mode.
-              domain_rating:
-                type: number
-                format: float
-                title: domain_rating
-                description: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.
-              group_mode:
-                type: string
-                enum:
-                - domains
-                - pages
-                title: group_mode
-                description: To see competing pages instead, use the “exact URL” target mode or “path” target mode if your target doesn't have multiple pages.
-              keywords_common:
-                type: integer
-                title: keywords_common
-                description: Organic keywords that both your target and a competitor are ranking for.
-              keywords_competitor:
-                type: integer
-                title: keywords_competitor
-                description: Organic keywords that a competitor is ranking for, but your target isn't.
-              keywords_target:
-                type: integer
-                title: keywords_target
-                description: Organic keywords that your target is ranking for, but a competitor isn't.
-              pages:
-                type:
-                - integer
-                - 'null'
-                title: pages
-                description: The total number of pages from a target ranking in search results.
-              pages_diff:
-                type: integer
-                title: pages_diff
-                description: The change in pages between your selected dates.
-              pages_merged:
-                type: integer
-                title: pages_merged
-                description: The pages field optimized for sorting.
-              pages_prev:
-                type:
-                - integer
-                - 'null'
-                title: pages_prev
-                description: The total number of pages from a target ranking in search results on the comparison date.
-              share:
-                type: number
-                format: float
-                title: share
-                description: The percentage of common keywords out of the total number of keywords that your target and a competitor both rank for.
-              traffic:
-                type:
-                - integer
-                - 'null'
-                title: traffic
-                description: (10 units) An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter.
-              traffic_diff:
-                type: integer
-                title: traffic_diff
-                description: The change in traffic between your selected dates.
-              traffic_merged:
-                type: integer
-                title: traffic_merged
-                description: (10 units) The traffic field optimized for sorting.
-              traffic_prev:
-                type:
-                - integer
-                - 'null'
-                title: traffic_prev
-                description: (10 units) An estimation of the number of monthly visits that a page gets from organic search over the latest month or over the latest known 12 months of data depending on the "volume_mode" parameter on the comparison date.
-              value:
-                type:
-                - integer
-                - 'null'
-                title: value
-                description: (10 units) The estimated value of a page's monthly organic search traffic, in USD cents.
-              value_diff:
-                type: integer
-                title: value_diff
-                description: The change in value between your selected dates.
-              value_merged:
-                type:
-                - integer
-                - 'null'
-                title: value_merged
-                description: (10 units) The value field optimized for sorting.
-              value_prev:
-                type:
-                - integer
-                - 'null'
-                title: value_prev
-                description: (10 units) The estimated value of a page's monthly organic search traffic, in USD cents on the comparison date.
             type: object
           type: array
       type: object
