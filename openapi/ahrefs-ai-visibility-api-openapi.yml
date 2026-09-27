@@ -410,7 +410,7 @@ paths:
       - AI visibility
       summary: AI Responses
       description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
-      operationId: ai-responses
+      operationId: postAiResponses
       parameters: []
       requestBody:
         content:
@@ -807,6 +807,8 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: ai-responses
   /cited-pages:
     get:
       tags:
@@ -1183,7 +1185,7 @@ paths:
       - AI visibility
       summary: Cited Pages
       description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
-      operationId: cited-pages
+      operationId: postCitedPages
       parameters: []
       requestBody:
         content:
@@ -1566,6 +1568,8 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: cited-pages
   /cited-domains:
     get:
       tags:
@@ -1936,7 +1940,7 @@ paths:
       - AI visibility
       summary: Cited Domains
       description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
-      operationId: cited-domains
+      operationId: postCitedDomains
       parameters: []
       requestBody:
         content:
@@ -2314,46 +2318,68 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: cited-domains
 components:
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
-    entity:
-      anyOf:
-      - required:
-        - names
-      - required:
-        - url_groups
-      properties:
-        names:
-          items:
-            type: string
-          type: array
-          description: The names of the brand/competitor
-          examples:
-          - - ahrefs
-            - ahrefs seo
-        url_groups:
-          items:
-            properties:
-              target:
-                type: string
-                format: domain
-                description: The domain of the target
-                examples:
-                - ahrefs.com
-              scope:
-                type: string
-                enum:
-                - url
-                - path
-                - domain
-                - subdomains
-                description: Scope of the target.
-            type: object
-            required:
-            - target
-            - scope
-          type: array
-      type: object
     ai-responses:
       properties:
         ai_responses:
@@ -2414,13 +2440,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
     cited-pages:
       properties:
         pages:
@@ -2447,6 +2466,51 @@ components:
                 description: Deprecated on 2026-03-24.
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    entity:
+      anyOf:
+      - required:
+        - names
+      - required:
+        - url_groups
+      properties:
+        names:
+          items:
+            type: string
+          type: array
+          description: The names of the brand/competitor
+          examples:
+          - - ahrefs
+            - ahrefs seo
+        url_groups:
+          items:
+            properties:
+              target:
+                type: string
+                format: domain
+                description: The domain of the target
+                examples:
+                - ahrefs.com
+              scope:
+                type: string
+                enum:
+                - url
+                - path
+                - domain
+                - subdomains
+                description: Scope of the target.
+            type: object
+            required:
+            - target
+            - scope
+          type: array
+      type: object
+    Error_response:
+      properties:
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -2483,64 +2547,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  responses:
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-  parameters:
-    output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
   securitySchemes:
     http:
       type: http

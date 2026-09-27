@@ -364,7 +364,7 @@ paths:
       - Overview history
       summary: Overview history - Impressions
       description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
-      operationId: impressions-history
+      operationId: postImpressionsHistory
       parameters: []
       requestBody:
         content:
@@ -697,6 +697,8 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: impressions-history
   /citations-history:
     post:
       tags:
@@ -1389,7 +1391,7 @@ paths:
 
 
         Every entity provided in `brands` (and `competitors`, when applicable) must include at least one value in `names`. Entities consisting only of `url_groups` are not supported here because mentions are matched against brand names.'
-      operationId: mentions-history
+      operationId: postMentionsHistory
       parameters: []
       requestBody:
         content:
@@ -1722,6 +1724,8 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: mentions-history
   /sov-history:
     get:
       tags:
@@ -2078,7 +2082,7 @@ paths:
       - Overview history
       summary: Overview history - Share of Voice
       description: '>Requests to this endpoint consume API units based on the `prompts` parameter: requests returning only custom prompt data are free, while requests including Ahrefs prompt data follow standard API unit pricing.'
-      operationId: sov-history
+      operationId: postSovHistory
       parameters: []
       requestBody:
         content:
@@ -2415,8 +2419,165 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: sov-history
 components:
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
+    mentions-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              mentions:
+                type: integer
+                title: mentions
+                description: Estimated mentions from responses mentioning the brand.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    sov-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              share_of_voice:
+                items:
+                  properties:
+                    brand:
+                      type: string
+                    share_of_voice:
+                      type: number
+                      format: float
+                  type: object
+                type: array
+                title: share_of_voice
+                description: (1 unit per brand) Estimated share of voice for the brand.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    citations-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              citations:
+                type: integer
+                title: citations
+                description: Estimated citations from responses mentioning the brand URLs.
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    impressions-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              impressions:
+                type: integer
+                title: impressions
+                description: Estimated impressions from responses mentioning the brand.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     entity:
       anyOf:
       - required:
@@ -2455,63 +2616,6 @@ components:
             - scope
           type: array
       type: object
-    citations-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              citations:
-                type: integer
-                title: citations
-                description: Estimated citations from responses mentioning the brand URLs.
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    mentions-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              mentions:
-                type: integer
-                title: mentions
-                description: Estimated mentions from responses mentioning the brand.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    impressions-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              impressions:
-                type: integer
-                title: impressions
-                description: Estimated impressions from responses mentioning the brand.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     Error_response:
       properties:
         error:
@@ -2519,104 +2623,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    sov-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              share_of_voice:
-                items:
-                  properties:
-                    brand:
-                      type: string
-                    share_of_voice:
-                      type: number
-                      format: float
-                  type: object
-                type: array
-                title: share_of_voice
-                description: (1 unit per brand) Estimated share of voice for the brand.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-  responses:
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-  parameters:
-    output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
   securitySchemes:
     http:
       type: http

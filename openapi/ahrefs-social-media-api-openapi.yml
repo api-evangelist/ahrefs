@@ -512,6 +512,24 @@ paths:
           $ref: '#/components/responses/social-media.error_500'
 components:
   responses:
+    social-media.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+    social-media.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
     social-media.error_429:
       description: Too Many Requests
       content:
@@ -539,25 +557,14 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/social-media.Error_response'
-    social-media.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-    social-media.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
   schemas:
+    social-media.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     social-media.channels:
       properties:
         channels:
@@ -598,72 +605,6 @@ components:
                 type: string
                 title: token_validity
                 description: Validity of the channel's authentication token (valid, expired, lost_access).
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    social-media.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    social-media.authors:
-      properties:
-        authors:
-          items:
-            properties:
-              author_id:
-                type: string
-                title: author_id
-                description: Unique identifier of the author.
-              author_name:
-                type: string
-                title: author_name
-                description: Name of the author.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    social-media.activity-history:
-      properties:
-        activities:
-          items:
-            properties:
-              action_type:
-                type: string
-                title: action_type
-                description: The action that was performed on the post.
-              activity_id:
-                type: integer
-                title: activity_id
-                description: Unique identifier for the activity history record.
-              channel_id:
-                type:
-                - string
-                - 'null'
-                title: channel_id
-                description: Unique identifier for the social media channel.
-              channel_kind:
-                type:
-                - string
-                - 'null'
-                title: channel_kind
-                description: Social media platform and account type.
-              created_at:
-                type: string
-                format: date-time
-                title: created_at
-                description: Timestamp when the activity was recorded.
-              user_name:
-                type:
-                - string
-                - 'null'
-                title: user_name
-                description: Name of the user who performed the action.
             type: object
           type: array
       type: object
@@ -840,6 +781,24 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    social-media.authors:
+      properties:
+        authors:
+          items:
+            properties:
+              author_id:
+                type: string
+                title: author_id
+                description: Unique identifier of the author.
+              author_name:
+                type: string
+                title: author_name
+                description: Name of the author.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     social-media.post-metrics:
       properties:
         metrics:
@@ -950,7 +909,59 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    social-media.activity-history:
+      properties:
+        activities:
+          items:
+            properties:
+              action_type:
+                type: string
+                title: action_type
+                description: The action that was performed on the post.
+              activity_id:
+                type: integer
+                title: activity_id
+                description: Unique identifier for the activity history record.
+              channel_id:
+                type:
+                - string
+                - 'null'
+                title: channel_id
+                description: Unique identifier for the social media channel.
+              channel_kind:
+                type:
+                - string
+                - 'null'
+                title: channel_kind
+                description: Social media platform and account type.
+              created_at:
+                type: string
+                format: date-time
+                title: created_at
+                description: Timestamp when the activity was recorded.
+              user_name:
+                type:
+                - string
+                - 'null'
+                title: user_name
+                description: Name of the user who performed the action.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
   parameters:
+    social-media.output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
     social-media.output:
       description: The output format.
       required: false
@@ -961,17 +972,6 @@ components:
         - json
         - csv
         - xml
-        - php
-      name: output
-      in: query
-    social-media.output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
         - php
       name: output
       in: query

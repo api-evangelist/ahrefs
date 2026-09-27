@@ -712,7 +712,7 @@ paths:
       - Keywords
       summary: Keywords
       description: '>Requests to this endpoint are free and do not consume any API units.'
-      operationId: project-keywords
+      operationId: putProjectKeywords
       parameters:
       - description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`'
         required: true
@@ -997,6 +997,8 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: project-keywords
     servers:
     - url: https://api.ahrefs.com/v3/management
       description: Ahrefs Management
@@ -1863,27 +1865,35 @@ paths:
     - url: https://api.ahrefs.com/v3/management
       description: Ahrefs Management
 components:
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+    output_json_php_xml:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+        - xml
+      name: output
+      in: query
   responses:
     error_401:
       description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
       content:
         application/json:
           schema:
@@ -1909,46 +1919,25 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    keyword-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              clicks:
-                type: integer
-                title: clicks
-              ctr:
-                type: number
-                format: float
-                title: ctr
-              date:
-                type: string
-                format: date-time
-                title: date
-              impressions:
-                type: integer
-                title: impressions
-              keyword:
-                type: string
-                title: keyword
-              position:
-                type: number
-                format: float
-                title: position
-                description: Average position (decimal, e.g. 4.7)
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     keywords:
       properties:
         keywords:
@@ -1999,7 +1988,46 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    project-keywords:
+    keyword-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              clicks:
+                type: integer
+                title: clicks
+              ctr:
+                type: number
+                format: float
+                title: ctr
+              date:
+                type: string
+                format: date-time
+                title: date
+              impressions:
+                type: integer
+                title: impressions
+              keyword:
+                type: string
+                title: keyword
+              position:
+                type: number
+                format: float
+                title: position
+                description: Average position (decimal, e.g. 4.7)
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-keywords-tags-delete:
       properties:
         keywords:
           items:
@@ -2107,7 +2135,7 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    project-keywords-tags-delete:
+    project-keywords:
       properties:
         keywords:
           items:
@@ -2143,32 +2171,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  parameters:
-    output_json_php_xml:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-        - xml
-      name: output
-      in: query
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
   securitySchemes:
     http:
       type: http

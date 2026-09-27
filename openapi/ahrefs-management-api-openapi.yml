@@ -2897,6 +2897,42 @@ paths:
           $ref: '#/components/responses/management.error_500'
 components:
   schemas:
+    management.project-keywords-tags-delete:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     management.project-keywords-delete:
       properties:
         keywords:
@@ -2933,43 +2969,7 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    management.project-keywords:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
-              language:
-                type: string
-                title: language
-                description: The name of the language assigned to a given keyword.
-              language_code:
-                type: string
-                title: language_code
-                description: The code of the language assigned to a given keyword.
-              location:
-                type: string
-                title: location
-                description: The name of the location assigned to a given keyword.
-              location_id:
-                type: integer
-                title: location_id
-                description: The ID of the location assigned to a given keyword.
-              tags:
-                items:
-                  type: string
-                type: array
-                title: tags
-                description: A list of tags assigned to a given keyword.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    management.brand-radar-prompts-delete:
+    management.brand-radar-prompts:
       properties:
         prompts:
           items:
@@ -2992,7 +2992,53 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    management.project-keywords-tags:
+    management.update-project:
+      properties:
+        project:
+          properties:
+            access:
+              type: string
+              title: access
+              description: 'The access level of the project. Possible values: `private`, `shared`.'
+            folder:
+              properties:
+                id:
+                  type: integer
+                name:
+                  type:
+                  - string
+                  - 'null'
+              type:
+              - object
+              - 'null'
+              title: folder
+              description: Innermost folder that the project is in.
+            mode:
+              type: string
+              title: mode
+              description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+            project_id:
+              type: string
+              title: project_id
+              description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
+            project_name:
+              type: string
+              title: project_name
+              description: The project name.
+            protocol:
+              type: string
+              title: protocol
+              description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+            url:
+              type: string
+              format: url
+              title: url
+              description: The URL of the project's target.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    management.keyword-list-keywords:
       properties:
         keywords:
           items:
@@ -3001,30 +3047,103 @@ components:
                 type: string
                 title: keyword
                 description: The keyword added to the project.
-              language:
-                type: string
-                title: language
-                description: The name of the language assigned to a given keyword.
-              language_code:
-                type: string
-                title: language_code
-                description: The code of the language assigned to a given keyword.
-              location:
-                type: string
-                title: location
-                description: The name of the location assigned to a given keyword.
-              location_id:
-                type: integer
-                title: location_id
-                description: The ID of the location assigned to a given keyword.
-              tags:
-                items:
-                  type: string
-                type: array
-                title: tags
-                description: A list of tags assigned to a given keyword.
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    management.project-competitors:
+      properties:
+        competitors:
+          items:
+            properties:
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    management.project-competitors-delete:
+      properties:
+        competitors:
+          items:
+            properties:
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    management.locations:
+      properties:
+        location:
+          properties:
+            country_code:
+              type: string
+              title: country_code
+              description: The country code of the location.
+            languages:
+              items:
+                items: false
+                prefixItems:
+                - type: string
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: languages
+              description: A list of language codes and names for the specified country code.
+            locations:
+              items:
+                items: false
+                prefixItems:
+                - type: integer
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: locations
+              description: A list of location IDs and names for the specified country code.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    management.keyword-list-keywords-delete:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    management.Error_response:
+      properties:
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -3063,6 +3182,42 @@ components:
                 type: string
                 title: report_name
                 description: The name of the report.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    management.project-keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
             type: object
           type: array
       type: object
@@ -3134,7 +3289,30 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    management.project-keywords-tags-delete:
+    management.brand-radar-prompts-delete:
+      properties:
+        prompts:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: The country of the prompt.
+              created_at:
+                type: string
+                format: date
+                title: created_at
+                description: The date the prompt was created.
+              prompt:
+                type: string
+                title: prompt
+                description: The text of the prompt.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    management.project-keywords-tags:
       properties:
         keywords:
           items:
@@ -3170,214 +3348,9 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    management.keyword-list-keywords:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    management.project-competitors:
-      properties:
-        competitors:
-          items:
-            properties:
-              mode:
-                type: string
-                title: mode
-                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
-              url:
-                type: string
-                format: url
-                title: url
-                description: The URL of the project's target.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    management.update-project:
-      properties:
-        project:
-          properties:
-            access:
-              type: string
-              title: access
-              description: 'The access level of the project. Possible values: `private`, `shared`.'
-            folder:
-              properties:
-                id:
-                  type: integer
-                name:
-                  type:
-                  - string
-                  - 'null'
-              type:
-              - object
-              - 'null'
-              title: folder
-              description: Innermost folder that the project is in.
-            mode:
-              type: string
-              title: mode
-              description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
-            project_id:
-              type: string
-              title: project_id
-              description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
-            project_name:
-              type: string
-              title: project_name
-              description: The project name.
-            protocol:
-              type: string
-              title: protocol
-              description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
-            url:
-              type: string
-              format: url
-              title: url
-              description: The URL of the project's target.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    management.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    management.locations:
-      properties:
-        location:
-          properties:
-            country_code:
-              type: string
-              title: country_code
-              description: The country code of the location.
-            languages:
-              items:
-                items: false
-                prefixItems:
-                - type: string
-                - type: string
-                type: array
-                maxItems: 2
-                minItems: 2
-              type: array
-              title: languages
-              description: A list of language codes and names for the specified country code.
-            locations:
-              items:
-                items: false
-                prefixItems:
-                - type: integer
-                - type: string
-                type: array
-                maxItems: 2
-                minItems: 2
-              type: array
-              title: locations
-              description: A list of location IDs and names for the specified country code.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    management.keyword-list-keywords-delete:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    management.brand-radar-prompts:
-      properties:
-        prompts:
-          items:
-            properties:
-              country:
-                type: string
-                title: country
-                description: The country of the prompt.
-              created_at:
-                type: string
-                format: date
-                title: created_at
-                description: The date the prompt was created.
-              prompt:
-                type: string
-                title: prompt
-                description: The text of the prompt.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    management.project-competitors-delete:
-      properties:
-        competitors:
-          items:
-            properties:
-              mode:
-                type: string
-                title: mode
-                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
-              url:
-                type: string
-                format: url
-                title: url
-                description: The URL of the project's target.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
   responses:
     management.error_401:
       description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/management.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/management.Error_response'
-    management.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/management.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/management.Error_response'
-    management.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/management.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/management.Error_response'
-    management.error_500:
-      description: Internal Error
       content:
         application/json:
           schema:
@@ -3394,18 +3367,34 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/management.Error_response'
+    management.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/management.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/management.Error_response'
+    management.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/management.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/management.Error_response'
+    management.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/management.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/management.Error_response'
   parameters:
-    management.output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
     management.output_json_php_xml:
       description: The output format.
       required: false
@@ -3428,6 +3417,17 @@ components:
         - json
         - csv
         - xml
+        - php
+      name: output
+      in: query
+    management.output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
         - php
       name: output
       in: query

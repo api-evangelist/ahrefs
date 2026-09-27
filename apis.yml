@@ -57,7 +57,7 @@ tags:
 - Rank Tracking
 - Site Audit
 - Brand Monitoring
-- Social-Media
+- Social Media
 tags_raw:
 - Company
 - SEO
@@ -71,6 +71,7 @@ tags_raw:
 - Site Audit
 - Brand Monitoring
 - Social Media
+- Social-Media
 apis:
 - aid: ahrefs:mcp
   name: Ahrefs MCP Server
@@ -743,9 +744,10 @@ apis:
   humanURL: https://docs.ahrefs.com/mcp/docs/introduction
   baseURL: https://api.ahrefs.com/mcp/mcp
   tags:
-  - Social-Media
+  - Social Media
   tags_raw:
   - Social Media
+  - Social-Media
   properties:
   - type: OpenAPI
     url: openapi/ahrefs-social-media-api-openapi.yml

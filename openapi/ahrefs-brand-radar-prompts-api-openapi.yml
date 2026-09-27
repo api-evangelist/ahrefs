@@ -58,7 +58,7 @@ paths:
       - Brand Radar prompts
       summary: Brand Radar prompts
       description: '>Requests to this endpoint are free and do not consume any API units.'
-      operationId: brand-radar-prompts
+      operationId: postBrandRadarPrompts
       parameters:
       - description: 'The ID of the report to use. You can find it in the URL of your Brand Radar report in Ahrefs: `https://app.ahrefs.com/brand-radar/reports/#report_id#/...`'
         required: true
@@ -320,6 +320,8 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: brand-radar-prompts
   /brand-radar-prompts-delete:
     put:
       tags:
@@ -588,53 +590,30 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
-  responses:
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   schemas:
+    brand-radar-prompts:
+      properties:
+        prompts:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: The country of the prompt.
+              created_at:
+                type: string
+                format: date
+                title: created_at
+                description: The date the prompt was created.
+              prompt:
+                type: string
+                title: prompt
+                description: The text of the prompt.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     brand-radar-prompts-delete:
       properties:
         prompts:
@@ -665,29 +644,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    brand-radar-prompts:
-      properties:
-        prompts:
-          items:
-            properties:
-              country:
-                type: string
-                title: country
-                description: The country of the prompt.
-              created_at:
-                type: string
-                format: date
-                title: created_at
-                description: The date the prompt was created.
-              prompt:
-                type: string
-                title: prompt
-                description: The text of the prompt.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
   parameters:
     output:
       description: The output format.
@@ -702,6 +658,52 @@ components:
         - php
       name: output
       in: query
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   securitySchemes:
     http:
       type: http

@@ -51,7 +51,7 @@ paths:
       - Brand radar reports
       summary: Brand Radar Reports
       description: '>Requests to this endpoint are free and do not consume any API units.'
-      operationId: brand-radar-reports
+      operationId: postBrandRadarReports
       parameters:
       - $ref: '#/components/parameters/output_json_php'
       requestBody:
@@ -217,12 +217,14 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: brand-radar-reports
     patch:
       tags:
       - Brand radar reports
       summary: Brand Radar Reports
       description: '>Requests to this endpoint are free and do not consume any API units.'
-      operationId: brand-radar-reports
+      operationId: patchBrandRadarReports
       parameters:
       - $ref: '#/components/parameters/output_json_php'
       requestBody:
@@ -287,28 +289,24 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: brand-radar-reports
 components:
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
   responses:
     error_401:
       description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
       content:
         application/json:
           schema:
@@ -327,6 +325,24 @@ components:
             $ref: '#/components/schemas/Error_response'
     error_403:
       description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
       content:
         application/json:
           schema:
@@ -382,18 +398,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  parameters:
-    output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
   securitySchemes:
     http:
       type: http

@@ -1461,6 +1461,66 @@ paths:
     - url: https://api.ahrefs.com/v3/web-analytics
       description: Ahrefs Web Analytics
 components:
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  responses:
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
     pages:
       properties:
@@ -1514,13 +1574,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
     page-history:
       properties:
         metrics:
@@ -1554,124 +1607,10 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    pages-by-backlinks:
+    Error_response:
       properties:
-        pages:
-          items:
-            properties:
-              dofollow_to_target:
-                type: integer
-                title: dofollow_to_target
-                description: The number of links to your target page that don’t have the “nofollow” attribute.
-              first_seen_link:
-                type: string
-                format: date-time
-                title: first_seen_link
-                description: The date we first found a link to your target.
-              http_code_target:
-                type:
-                - integer
-                - 'null'
-                title: http_code_target
-                description: The return code from HTTP protocol returned during the target page crawl.
-              is_spam:
-                type: boolean
-                title: is_spam
-                description: Indicates whether the backlink comes from a known spammy domain.
-              languages_target:
-                items:
-                  type: string
-                  title: languages_target
-                  description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
-                type: array
-                title: languages_target
-                description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
-              last_seen:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: last_seen
-                description: The date your target page lost its last live link.
-              last_visited_source:
-                type: string
-                format: date-time
-                title: last_visited_source
-                description: The date we last verified a live link to your target page.
-              last_visited_target:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: last_visited_target
-                description: The date we last crawled your target page.
-              links_to_target:
-                type: integer
-                title: links_to_target
-                description: The number of inbound backlinks the target page has.
-              lost_links_to_target:
-                type: integer
-                title: lost_links_to_target
-                description: The number of backlinks lost during the selected time period.
-              new_links_to_target:
-                type: integer
-                title: new_links_to_target
-                description: The number of new backlinks found during the selected time period.
-              nofollow_to_target:
-                type: integer
-                title: nofollow_to_target
-                description: The number of links to your target page that have the “nofollow” attribute.
-              powered_by_target:
-                items:
-                  type: string
-                  title: powered_by_target
-                  description: Web technologies used to build and serve the target page content.
-                type: array
-                title: powered_by_target
-                description: Web technologies used to build and serve the target page content.
-              redirects_to_target:
-                type: integer
-                title: redirects_to_target
-                description: The number of inbound redirects to your target page.
-              refdomains_target:
-                type: integer
-                title: refdomains_target
-                description: (5 units) The number of unique referring domains linking to the target page.
-              target_redirect:
-                type:
-                - string
-                - 'null'
-                title: target_redirect
-                description: The target's redirect if any.
-              title_target:
-                type:
-                - string
-                - 'null'
-                title: title_target
-                description: The html title of the target page.
-              top_domain_rating_source:
-                type: number
-                format: float
-                title: top_domain_rating_source
-                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
-              url_rating_target:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: url_rating_target
-                description: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.
-              url_to:
-                type: string
-                format: url
-                title: url_to
-                description: The URL the backlink points to.
-              url_to_plain:
-                type: string
-                title: url_to_plain
-                description: The target page URL optimized for use as a filter.
-            type: object
-          type: array
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -1824,9 +1763,130 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    top-pages-chart:
+    pages-by-backlinks:
       properties:
-        points:
+        pages:
+          items:
+            properties:
+              dofollow_to_target:
+                type: integer
+                title: dofollow_to_target
+                description: The number of links to your target page that don’t have the “nofollow” attribute.
+              first_seen_link:
+                type: string
+                format: date-time
+                title: first_seen_link
+                description: The date we first found a link to your target.
+              http_code_target:
+                type:
+                - integer
+                - 'null'
+                title: http_code_target
+                description: The return code from HTTP protocol returned during the target page crawl.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              languages_target:
+                items:
+                  type: string
+                  title: languages_target
+                  description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+                type: array
+                title: languages_target
+                description: The languages listed in the target page metadata or detected by the crawler to appear in the HTML.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date your target page lost its last live link.
+              last_visited_source:
+                type: string
+                format: date-time
+                title: last_visited_source
+                description: The date we last verified a live link to your target page.
+              last_visited_target:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_visited_target
+                description: The date we last crawled your target page.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of inbound backlinks the target page has.
+              lost_links_to_target:
+                type: integer
+                title: lost_links_to_target
+                description: The number of backlinks lost during the selected time period.
+              new_links_to_target:
+                type: integer
+                title: new_links_to_target
+                description: The number of new backlinks found during the selected time period.
+              nofollow_to_target:
+                type: integer
+                title: nofollow_to_target
+                description: The number of links to your target page that have the “nofollow” attribute.
+              powered_by_target:
+                items:
+                  type: string
+                  title: powered_by_target
+                  description: Web technologies used to build and serve the target page content.
+                type: array
+                title: powered_by_target
+                description: Web technologies used to build and serve the target page content.
+              redirects_to_target:
+                type: integer
+                title: redirects_to_target
+                description: The number of inbound redirects to your target page.
+              refdomains_target:
+                type: integer
+                title: refdomains_target
+                description: (5 units) The number of unique referring domains linking to the target page.
+              target_redirect:
+                type:
+                - string
+                - 'null'
+                title: target_redirect
+                description: The target's redirect if any.
+              title_target:
+                type:
+                - string
+                - 'null'
+                title: title_target
+                description: The html title of the target page.
+              top_domain_rating_source:
+                type: number
+                format: float
+                title: top_domain_rating_source
+                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
+              url_rating_target:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: url_rating_target
+                description: The strength of the target page's backlink profile compared to the others in our database on a 100-point scale.
+              url_to:
+                type: string
+                format: url
+                title: url_to
+                description: The URL the backlink points to.
+              url_to_plain:
+                type: string
+                title: url_to_plain
+                description: The target page URL optimized for use as a filter.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    top-pages:
+      properties:
+        stats:
           items:
             properties:
               avg_page_visit_duration_sec:
@@ -1847,10 +1907,6 @@ components:
                 format: float
                 title: session_bounce_rate
                 description: Session bounce rate (percentage of sessions that triggered only one request)
-              timestamp:
-                type: string
-                title: timestamp
-                description: Timestamp of the data point
               visitors:
                 type: integer
                 title: visitors
@@ -1883,6 +1939,33 @@ components:
                 type: string
                 title: timestamp
                 description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    entry-pages:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              entries:
+                type: integer
+                title: entries
+                description: Number of entries
+              entry_page:
+                type: string
+                format: url
+                title: entry_page
+                description: Entry page URL
               visitors:
                 type: integer
                 title: visitors
@@ -1951,36 +2034,9 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    entry-pages:
+    top-pages-chart:
       properties:
-        stats:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              entries:
-                type: integer
-                title: entries
-                description: Number of entries
-              entry_page:
-                type: string
-                format: url
-                title: entry_page
-                description: Entry page URL
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    top-pages:
-      properties:
-        stats:
+        points:
           items:
             properties:
               avg_page_visit_duration_sec:
@@ -2001,6 +2057,10 @@ components:
                 format: float
                 title: session_bounce_rate
                 description: Session bounce rate (percentage of sessions that triggered only one request)
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
               visitors:
                 type: integer
                 title: visitors
@@ -2010,66 +2070,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  responses:
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-  parameters:
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
   securitySchemes:
     http:
       type: http

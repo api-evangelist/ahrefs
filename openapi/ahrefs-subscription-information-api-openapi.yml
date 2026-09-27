@@ -48,20 +48,6 @@ paths:
         '500':
           $ref: '#/components/responses/subscription-info.error_500'
 components:
-  parameters:
-    subscription-info.output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
   responses:
     subscription-info.error_500:
       description: Internal Error
@@ -72,8 +58,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/subscription-info.Error_response'
-    subscription-info.error_403:
-      description: Forbidden
+    subscription-info.error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -90,8 +76,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/subscription-info.Error_response'
-    subscription-info.error_401:
-      description: Unauthorized
+    subscription-info.error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -99,8 +85,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/subscription-info.Error_response'
-    subscription-info.error_400:
-      description: Bad Request
+    subscription-info.error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -160,6 +146,20 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+  parameters:
+    subscription-info.output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
   securitySchemes:
     http:
       type: http

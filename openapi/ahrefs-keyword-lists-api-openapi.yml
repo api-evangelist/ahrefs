@@ -58,7 +58,7 @@ paths:
       - Keyword lists
       summary: Keywords list
       description: '**Requests to this endpoint are free and do not consume any API units.**'
-      operationId: keyword-list-keywords
+      operationId: putKeywordListKeywords
       parameters:
       - description: The id of an existing keyword list.
         required: true
@@ -103,6 +103,8 @@ paths:
           $ref: '#/components/responses/error_429'
         '500':
           $ref: '#/components/responses/error_500'
+      x-operation-id-source: normalized
+      x-operation-id-original: keyword-list-keywords
   /keyword-list-keywords-delete:
     put:
       tags:
@@ -155,27 +157,23 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
   responses:
     error_401:
       description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
       content:
         application/json:
           schema:
@@ -201,21 +199,25 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
-    keyword-list-keywords:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     Error_response:
       properties:
         error:
@@ -237,20 +239,20 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  parameters:
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
+    keyword-list-keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
   securitySchemes:
     http:
       type: http

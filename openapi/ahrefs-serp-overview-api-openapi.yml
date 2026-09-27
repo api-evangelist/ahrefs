@@ -475,8 +475,8 @@ components:
       xml:
         name: AhrefsApiResponse
   responses:
-    serp-overview.error_500:
-      description: Internal Error
+    serp-overview.error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -484,8 +484,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/serp-overview.Error_response'
-    serp-overview.error_400:
-      description: Bad Request
+    serp-overview.error_500:
+      description: Internal Error
       content:
         application/json:
           schema:
