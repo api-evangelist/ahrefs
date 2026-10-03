@@ -7172,91 +7172,23 @@ paths:
         '500':
           $ref: '#/components/responses/brand-radar.error_500'
 components:
-  responses:
-    brand-radar.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-    brand-radar.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-    brand-radar.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-    brand-radar.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-    brand-radar.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/brand-radar.Error_response'
   schemas:
-    brand-radar.mentions-overview:
+    brand-radar.mentions-history:
       properties:
         metrics:
           items:
             properties:
-              brand:
+              date:
                 type: string
-                title: brand
-                description: Brand name (either your brand or a competitor provided in the request).
-              no_tracked_brands:
+                format: date
+                title: date
+                description: ''
+              mentions:
                 type: integer
-                title: no_tracked_brands
-                description: Estimated mentions from responses related to the specified market that do not mention any provided brands (value is zero when `market` is not specified).
-              only_competitors_brands:
-                type: integer
-                title: only_competitors_brands
-                description: Estimated mentions from responses mentioning only competitor brands.
-              only_target_brand:
-                type: integer
-                title: only_target_brand
-                description: Estimated mentions from responses mentioning only your brand.
-              target_and_competitors_brands:
-                type: integer
-                title: target_and_competitors_brands
-                description: Estimated mentions from responses mentioning both your and competitor brands.
-              total:
-                type: integer
-                title: total
-                description: Total estimated mentions for your brand (includes both `only_target_brand` and `target_and_competitors_brands`).
+                title: mentions
+                description: Estimated mentions from responses mentioning the brand.
             type: object
           type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    brand-radar.Error_response:
-      properties:
-        error:
-          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -7279,90 +7211,54 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    brand-radar.cited-pages:
+    brand-radar.sov-overview:
       properties:
-        pages:
+        metrics:
           items:
             properties:
-              mentions:
-                items:
-                  properties: {}
-                  type: object
-                type: array
-                title: mentions
-                description: Deprecated on 2026-02-10.
-              responses:
-                type: integer
-                title: responses
-                description: The number of responses that cited the page.
-              url:
+              brand:
                 type: string
-                title: url
-                description: The URL of the cited page.
-              volume:
-                type: integer
-                title: volume
-                description: Deprecated on 2026-03-24.
+                title: brand
+                description: Brand name (either your brand or a competitor provided in the request).
+              share_of_voice:
+                type: number
+                format: float
+                title: share_of_voice
+                description: Estimated share of voice for your brand.
             type: object
           type: array
       type: object
       xml:
         name: AhrefsApiResponse
-    brand-radar.ai-responses:
+    brand-radar.citations-overview:
       properties:
-        ai_responses:
+        metrics:
           items:
             properties:
-              country:
+              brand:
                 type: string
-                title: country
-                description: The country of the question.
-              data_source:
-                type: string
-                title: data_source
-                description: The chatbot model that generated the response.
-              last_updated:
-                type: string
-                format: date
-                title: last_updated
-                description: The date when the data was last updated.
-              links:
-                items:
-                  properties:
-                    url:
-                      type: string
-                    title:
-                      type:
-                      - string
-                      - 'null'
-                  type: object
-                type: array
-                title: links
-                description: (10 units) The links used for the response.
-              question:
-                type: string
-                title: question
-                description: The question asked by the user.
-              response:
-                type: string
-                title: response
-                description: (10 units) The response from the model.
-              search_queries:
-                items:
-                  type: string
-                type: array
-                title: search_queries
-                description: 'The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.'
-              tags:
-                items:
-                  type: string
-                type: array
-                title: tags
-                description: Tags assigned to the query.
-              volume:
+                title: brand
+                description: Brand name (either your brand or a competitor provided in the request).
+              no_tracked_brands:
                 type: integer
-                title: volume
-                description: (10 units) Estimated monthly searches. This is based on our estimates for Google, combining the search volumes of related keywords where this question appears in People Also Ask section.
+                title: no_tracked_brands
+                description: Estimated citations from responses related to the specified market that do not mention any provided brand URLs (value is zero when `market` is not specified).
+              only_competitors_brands:
+                type: integer
+                title: only_competitors_brands
+                description: Estimated citations from responses mentioning only competitors' brand URLs.
+              only_target_brand:
+                type: integer
+                title: only_target_brand
+                description: Estimated citations from responses mentioning only your brand URLs.
+              target_and_competitors_brands:
+                type: integer
+                title: target_and_competitors_brands
+                description: Estimated citations from responses mentioning both your and competitors' brand URLs.
+              total:
+                type: integer
+                title: total
+                description: Total estimated citations for your brand URLs (includes both `only_target_brand` and `target_and_competitors_brands`).
             type: object
           type: array
       type: object
@@ -7429,92 +7325,123 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    brand-radar.mentions-history:
+    brand-radar.ai-responses:
       properties:
-        metrics:
+        ai_responses:
           items:
             properties:
-              date:
+              country:
+                type: string
+                title: country
+                description: The country of the question.
+              data_source:
+                type: string
+                title: data_source
+                description: The chatbot model that generated the response.
+              last_updated:
                 type: string
                 format: date
-                title: date
-                description: ''
+                title: last_updated
+                description: The date when the data was last updated.
+              links:
+                items:
+                  properties:
+                    url:
+                      type: string
+                    title:
+                      type:
+                      - string
+                      - 'null'
+                  type: object
+                type: array
+                title: links
+                description: (10 units) The links used for the response.
+              question:
+                type: string
+                title: question
+                description: The question asked by the user.
+              response:
+                type: string
+                title: response
+                description: (10 units) The response from the model.
+              search_queries:
+                items:
+                  type: string
+                type: array
+                title: search_queries
+                description: 'The search query used by the chatbot to find information for the response. Note: if `data_source` does not include `chatgpt` or `perplexity`, this field will always be empty.'
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: Tags assigned to the query.
+              volume:
+                type: integer
+                title: volume
+                description: (10 units) Estimated monthly searches. This is based on our estimates for Google, combining the search volumes of related keywords where this question appears in People Also Ask section.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    brand-radar.cited-pages:
+      properties:
+        pages:
+          items:
+            properties:
               mentions:
-                type: integer
+                items:
+                  properties: {}
+                  type: object
+                type: array
                 title: mentions
-                description: Estimated mentions from responses mentioning the brand.
+                description: Deprecated on 2026-02-10.
+              responses:
+                type: integer
+                title: responses
+                description: The number of responses that cited the page.
+              url:
+                type: string
+                title: url
+                description: The URL of the cited page.
+              volume:
+                type: integer
+                title: volume
+                description: Deprecated on 2026-03-24.
             type: object
           type: array
       type: object
       xml:
         name: AhrefsApiResponse
-    brand-radar.sov-overview:
+    brand-radar.cited-domains:
       properties:
-        metrics:
+        domains:
           items:
             properties:
-              brand:
+              domain:
                 type: string
-                title: brand
-                description: Brand name (either your brand or a competitor provided in the request).
-              share_of_voice:
-                type: number
-                format: float
-                title: share_of_voice
-                description: Estimated share of voice for your brand.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    brand-radar.citations-overview:
-      properties:
-        metrics:
-          items:
-            properties:
-              brand:
-                type: string
-                title: brand
-                description: Brand name (either your brand or a competitor provided in the request).
-              no_tracked_brands:
+                title: domain
+                description: The cited domain name.
+              mentions:
+                items:
+                  properties: {}
+                  type: object
+                type: array
+                title: mentions
+                description: Deprecated on 2026-02-10.
+              pages:
                 type: integer
-                title: no_tracked_brands
-                description: Estimated citations from responses related to the specified market that do not mention any provided brand URLs (value is zero when `market` is not specified).
-              only_competitors_brands:
+                title: pages
+                description: The number of unique pages from the domain that were cited in the responses.
+              responses:
                 type: integer
-                title: only_competitors_brands
-                description: Estimated citations from responses mentioning only competitors' brand URLs.
-              only_target_brand:
+                title: responses
+                description: The number of responses that cited the domain.
+              volume:
                 type: integer
-                title: only_target_brand
-                description: Estimated citations from responses mentioning only your brand URLs.
-              target_and_competitors_brands:
-                type: integer
-                title: target_and_competitors_brands
-                description: Estimated citations from responses mentioning both your and competitors' brand URLs.
-              total:
-                type: integer
-                title: total
-                description: Total estimated citations for your brand URLs (includes both `only_target_brand` and `target_and_competitors_brands`).
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    brand-radar.impressions-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              impressions:
-                type: integer
-                title: impressions
-                description: Estimated impressions from responses mentioning the brand.
+                title: volume
+                description: Deprecated on 2026-03-24.
             type: object
           type: array
       type: object
@@ -7558,36 +7485,63 @@ components:
             - scope
           type: array
       type: object
-    brand-radar.cited-domains:
+    brand-radar.mentions-overview:
       properties:
-        domains:
+        metrics:
           items:
             properties:
-              domain:
+              brand:
                 type: string
-                title: domain
-                description: The cited domain name.
-              mentions:
-                items:
-                  properties: {}
-                  type: object
-                type: array
-                title: mentions
-                description: Deprecated on 2026-02-10.
-              pages:
+                title: brand
+                description: Brand name (either your brand or a competitor provided in the request).
+              no_tracked_brands:
                 type: integer
-                title: pages
-                description: The number of unique pages from the domain that were cited in the responses.
-              responses:
+                title: no_tracked_brands
+                description: Estimated mentions from responses related to the specified market that do not mention any provided brands (value is zero when `market` is not specified).
+              only_competitors_brands:
                 type: integer
-                title: responses
-                description: The number of responses that cited the domain.
-              volume:
+                title: only_competitors_brands
+                description: Estimated mentions from responses mentioning only competitor brands.
+              only_target_brand:
                 type: integer
-                title: volume
-                description: Deprecated on 2026-03-24.
+                title: only_target_brand
+                description: Estimated mentions from responses mentioning only your brand.
+              target_and_competitors_brands:
+                type: integer
+                title: target_and_competitors_brands
+                description: Estimated mentions from responses mentioning both your and competitor brands.
+              total:
+                type: integer
+                title: total
+                description: Total estimated mentions for your brand (includes both `only_target_brand` and `target_and_competitors_brands`).
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    brand-radar.impressions-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              impressions:
+                type: integer
+                title: impressions
+                description: Estimated impressions from responses mentioning the brand.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    brand-radar.Error_response:
+      properties:
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -7616,6 +7570,52 @@ components:
         - php
       name: output
       in: query
+  responses:
+    brand-radar.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+    brand-radar.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+    brand-radar.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+    brand-radar.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+    brand-radar.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/brand-radar.Error_response'
   securitySchemes:
     http:
       type: http

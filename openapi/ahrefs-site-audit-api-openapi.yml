@@ -2785,8 +2785,8 @@ paths:
           $ref: '#/components/responses/site-audit.error_500'
 components:
   responses:
-    site-audit.error_400:
-      description: Bad Request
+    site-audit.error_401:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -2803,15 +2803,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
     site-audit.error_500:
       description: Internal Error
       content:
@@ -2821,8 +2812,17 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_401:
-      description: Unauthorized
+    site-audit.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -2831,6 +2831,190 @@ components:
           schema:
             $ref: '#/components/schemas/site-audit.Error_response'
   schemas:
+    site-audit.issues:
+      properties:
+        issues:
+          items:
+            properties:
+              added:
+                type:
+                - integer
+                - 'null'
+                title: added
+                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
+              category:
+                type: string
+                title: category
+                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
+              change:
+                type:
+                - integer
+                - 'null'
+                title: change
+                description: Difference in the number of affected URLs between the specified dates.
+              crawled:
+                type: integer
+                title: crawled
+                description: Number of URLs currently affected by the issue.
+              importance:
+                type: string
+                title: importance
+                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
+              is_indexable:
+                type:
+                - boolean
+                - 'null'
+                title: is_indexable
+                description: True if the issue applies only to indexable pages.
+              issue_id:
+                type: string
+                title: issue_id
+                description: The unique identifier of the issue.
+              missing:
+                type:
+                - integer
+                - 'null'
+                title: missing
+                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
+              name:
+                type: string
+                title: name
+                description: The name of the issue.
+              new:
+                type:
+                - integer
+                - 'null'
+                title: new
+                description: Number of newly discovered URLs that have the issue on the current date.
+              removed:
+                type:
+                - integer
+                - 'null'
+                title: removed
+                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-audit.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-audit.page-content:
+      properties:
+        page-content:
+          properties:
+            crawl_datetime:
+              type: string
+              format: date-time
+              title: crawl_datetime
+              description: The timestamp when the page was crawled.
+            page_text:
+              type:
+              - string
+              - 'null'
+              title: page_text
+              description: The text extracted from the page content.
+            page_text_md:
+              type:
+              - string
+              - 'null'
+              title: page_text_md
+              description: 'The page content converted to markdown text. The value is a JSON-encoded string: decode JSON escapes (e.g. with `jq -r`) before passing it to a markdown renderer.'
+            raw_html:
+              type:
+              - string
+              - 'null'
+              title: raw_html
+              description: The raw HTML of the page.
+            rendered_html:
+              type:
+              - string
+              - 'null'
+              title: rendered_html
+              description: The rendered HTML of the page.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-audit.projects:
+      properties:
+        healthscores:
+          items:
+            properties:
+              date:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: date
+                description: The finish date and time of the last finished crawl, in GMT time zone.
+              health_score:
+                type:
+                - integer
+                - 'null'
+                title: health_score
+                description: Reflects the proportion of internal URLs on your site that do not have errors, based on the last finished crawl. Excludes crawls that are starting, in progress, finalizing, or were skipped.
+              project_id:
+                type: string
+                title: project_id
+                description: The unique identifier of the project.
+              project_name:
+                type: string
+                title: project_name
+                description: The project name.
+              status:
+                type:
+                - string
+                - 'null'
+                title: status
+                description: 'The status of the most recent finished crawl. Possible values: `Completed`, `Stopped`, `Error`, `In_progress`.'
+              target_mode:
+                type: string
+                title: target_mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              target_protocol:
+                type: string
+                title: target_protocol
+                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+              target_url:
+                type: string
+                format: url
+                title: target_url
+                description: The URL of the project's target.
+              total:
+                type:
+                - integer
+                - 'null'
+                title: total
+                description: Number of total crawled internal URLs
+              urls_with_errors:
+                type:
+                - integer
+                - 'null'
+                title: urls_with_errors
+                description: Number of internal URLs with errors
+              urls_with_notices:
+                type:
+                - integer
+                - 'null'
+                title: urls_with_notices
+                description: Number of internal URLs with notices
+              urls_with_warnings:
+                type:
+                - integer
+                - 'null'
+                title: urls_with_warnings
+                description: Number of internal URLs with warnings
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     site-audit.page-explorer:
       properties:
         pages:
@@ -6853,202 +7037,7 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    site-audit.projects:
-      properties:
-        healthscores:
-          items:
-            properties:
-              date:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: date
-                description: The finish date and time of the last finished crawl, in GMT time zone.
-              health_score:
-                type:
-                - integer
-                - 'null'
-                title: health_score
-                description: Reflects the proportion of internal URLs on your site that do not have errors, based on the last finished crawl. Excludes crawls that are starting, in progress, finalizing, or were skipped.
-              project_id:
-                type: string
-                title: project_id
-                description: The unique identifier of the project.
-              project_name:
-                type: string
-                title: project_name
-                description: The project name.
-              status:
-                type:
-                - string
-                - 'null'
-                title: status
-                description: 'The status of the most recent finished crawl. Possible values: `Completed`, `Stopped`, `Error`, `In_progress`.'
-              target_mode:
-                type: string
-                title: target_mode
-                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
-              target_protocol:
-                type: string
-                title: target_protocol
-                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
-              target_url:
-                type: string
-                format: url
-                title: target_url
-                description: The URL of the project's target.
-              total:
-                type:
-                - integer
-                - 'null'
-                title: total
-                description: Number of total crawled internal URLs
-              urls_with_errors:
-                type:
-                - integer
-                - 'null'
-                title: urls_with_errors
-                description: Number of internal URLs with errors
-              urls_with_notices:
-                type:
-                - integer
-                - 'null'
-                title: urls_with_notices
-                description: Number of internal URLs with notices
-              urls_with_warnings:
-                type:
-                - integer
-                - 'null'
-                title: urls_with_warnings
-                description: Number of internal URLs with warnings
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-audit.issues:
-      properties:
-        issues:
-          items:
-            properties:
-              added:
-                type:
-                - integer
-                - 'null'
-                title: added
-                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
-              category:
-                type: string
-                title: category
-                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
-              change:
-                type:
-                - integer
-                - 'null'
-                title: change
-                description: Difference in the number of affected URLs between the specified dates.
-              crawled:
-                type: integer
-                title: crawled
-                description: Number of URLs currently affected by the issue.
-              importance:
-                type: string
-                title: importance
-                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
-              is_indexable:
-                type:
-                - boolean
-                - 'null'
-                title: is_indexable
-                description: True if the issue applies only to indexable pages.
-              issue_id:
-                type: string
-                title: issue_id
-                description: The unique identifier of the issue.
-              missing:
-                type:
-                - integer
-                - 'null'
-                title: missing
-                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
-              name:
-                type: string
-                title: name
-                description: The name of the issue.
-              new:
-                type:
-                - integer
-                - 'null'
-                title: new
-                description: Number of newly discovered URLs that have the issue on the current date.
-              removed:
-                type:
-                - integer
-                - 'null'
-                title: removed
-                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-audit.page-content:
-      properties:
-        page-content:
-          properties:
-            crawl_datetime:
-              type: string
-              format: date-time
-              title: crawl_datetime
-              description: The timestamp when the page was crawled.
-            page_text:
-              type:
-              - string
-              - 'null'
-              title: page_text
-              description: The text extracted from the page content.
-            page_text_md:
-              type:
-              - string
-              - 'null'
-              title: page_text_md
-              description: 'The page content converted to markdown text. The value is a JSON-encoded string: decode JSON escapes (e.g. with `jq -r`) before passing it to a markdown renderer.'
-            raw_html:
-              type:
-              - string
-              - 'null'
-              title: raw_html
-              description: The raw HTML of the page.
-            rendered_html:
-              type:
-              - string
-              - 'null'
-              title: rendered_html
-              description: The rendered HTML of the page.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-audit.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
   parameters:
-    site-audit.output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
     site-audit.output:
       description: The output format.
       required: false
@@ -7059,6 +7048,17 @@ components:
         - json
         - csv
         - xml
+        - php
+      name: output
+      in: query
+    site-audit.output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
         - php
       name: output
       in: query

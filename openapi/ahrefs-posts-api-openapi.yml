@@ -433,77 +433,6 @@ paths:
       x-operation-id-source: normalized
       x-operation-id-original: post
 components:
-  parameters:
-    output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
-  responses:
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   schemas:
     post:
       properties:
@@ -577,131 +506,6 @@ components:
               title: text_content
               description: Text content of the post.
           type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    activity-history:
-      properties:
-        activities:
-          items:
-            properties:
-              action_type:
-                type: string
-                title: action_type
-                description: The action that was performed on the post.
-              activity_id:
-                type: integer
-                title: activity_id
-                description: Unique identifier for the activity history record.
-              channel_id:
-                type:
-                - string
-                - 'null'
-                title: channel_id
-                description: Unique identifier for the social media channel.
-              channel_kind:
-                type:
-                - string
-                - 'null'
-                title: channel_kind
-                description: Social media platform and account type.
-              created_at:
-                type: string
-                format: date-time
-                title: created_at
-                description: Timestamp when the activity was recorded.
-              user_name:
-                type:
-                - string
-                - 'null'
-                title: user_name
-                description: Name of the user who performed the action.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    posts:
-      properties:
-        posts:
-          items:
-            properties:
-              author_id:
-                type:
-                - string
-                - 'null'
-                title: author_id
-                description: Unique identifier of the author.
-              author_name:
-                type:
-                - string
-                - 'null'
-                title: author_name
-                description: Name of the author.
-              auto_comment:
-                type:
-                - string
-                - 'null'
-                title: auto_comment
-                description: Auto-comment text posted after publishing.
-              channels:
-                items:
-                  properties:
-                    channel_id:
-                      type: string
-                    channel_kind:
-                      type: string
-                    channel_username:
-                      type: string
-                    channel_display_name:
-                      type: string
-                    channel_profile_image_url:
-                      type:
-                      - string
-                      - 'null'
-                      format: url
-                  type: object
-                type: array
-                title: channels
-                description: Social media channels associated with the post.
-              created_at:
-                type: string
-                format: date-time
-                title: created_at
-                description: Timestamp when the author created the post.
-              external_post_id:
-                type:
-                - string
-                - 'null'
-                title: external_post_id
-                description: Platform-specific post identifier.
-              permalink:
-                type:
-                - string
-                - 'null'
-                title: permalink
-                description: URL of the published post on the platform.
-              post_id:
-                type: integer
-                title: post_id
-                description: Unique identifier for the post.
-              status_timestamp:
-                type: string
-                title: status_timestamp
-                description: Timestamp associated with the current status.
-              text_content:
-                type: string
-                title: text_content
-                description: Text content of the post.
-            type: object
-          type: array
       type: object
       xml:
         name: AhrefsApiResponse
@@ -833,6 +637,202 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    posts:
+      properties:
+        posts:
+          items:
+            properties:
+              author_id:
+                type:
+                - string
+                - 'null'
+                title: author_id
+                description: Unique identifier of the author.
+              author_name:
+                type:
+                - string
+                - 'null'
+                title: author_name
+                description: Name of the author.
+              auto_comment:
+                type:
+                - string
+                - 'null'
+                title: auto_comment
+                description: Auto-comment text posted after publishing.
+              channels:
+                items:
+                  properties:
+                    channel_id:
+                      type: string
+                    channel_kind:
+                      type: string
+                    channel_username:
+                      type: string
+                    channel_display_name:
+                      type: string
+                    channel_profile_image_url:
+                      type:
+                      - string
+                      - 'null'
+                      format: url
+                  type: object
+                type: array
+                title: channels
+                description: Social media channels associated with the post.
+              created_at:
+                type: string
+                format: date-time
+                title: created_at
+                description: Timestamp when the author created the post.
+              external_post_id:
+                type:
+                - string
+                - 'null'
+                title: external_post_id
+                description: Platform-specific post identifier.
+              permalink:
+                type:
+                - string
+                - 'null'
+                title: permalink
+                description: URL of the published post on the platform.
+              post_id:
+                type: integer
+                title: post_id
+                description: Unique identifier for the post.
+              status_timestamp:
+                type: string
+                title: status_timestamp
+                description: Timestamp associated with the current status.
+              text_content:
+                type: string
+                title: text_content
+                description: Text content of the post.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    activity-history:
+      properties:
+        activities:
+          items:
+            properties:
+              action_type:
+                type: string
+                title: action_type
+                description: The action that was performed on the post.
+              activity_id:
+                type: integer
+                title: activity_id
+                description: Unique identifier for the activity history record.
+              channel_id:
+                type:
+                - string
+                - 'null'
+                title: channel_id
+                description: Unique identifier for the social media channel.
+              channel_kind:
+                type:
+                - string
+                - 'null'
+                title: channel_kind
+                description: Social media platform and account type.
+              created_at:
+                type: string
+                format: date-time
+                title: created_at
+                description: Timestamp when the activity was recorded.
+              user_name:
+                type:
+                - string
+                - 'null'
+                title: user_name
+                description: Name of the user who performed the action.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   securitySchemes:
     http:
       type: http

@@ -331,6 +331,52 @@ paths:
         '500':
           $ref: '#/components/responses/serp-overview.error_500'
 components:
+  responses:
+    serp-overview.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+    serp-overview.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+    serp-overview.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+    serp-overview.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+    serp-overview.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
   schemas:
     serp-overview.Error_response:
       properties:
@@ -474,52 +520,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  responses:
-    serp-overview.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-    serp-overview.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-    serp-overview.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-    serp-overview.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-    serp-overview.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
   parameters:
     serp-overview.output_json_php_xml:
       description: The output format.

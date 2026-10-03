@@ -852,184 +852,116 @@ paths:
           $ref: '#/components/responses/rank-tracker.error_500'
 components:
   schemas:
-    rank-tracker.competitors-domains:
+    rank-tracker.competitors-stats:
       properties:
-        competitors-domains:
+        competitors-metrics:
           items:
             properties:
-              domain:
+              ai_overview_count:
+                type: integer
+                title: ai_overview_count
+                description: The total number of tracked keywords for which your target ranks in an AI Overview.
+              average_position:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: average_position
+                description: The average of your target's top organic positions across all tracked keywords.
+              competitor:
                 type: string
-                format: domain
-                title: domain
-                description: The page domain.
-              keywords:
+                title: competitor
+                description: Competitor's URL.
+              discussions_count:
                 type: integer
-                title: keywords
-                description: The total number of keywords that your target ranks for in the top 100 organic search results.
-              pages:
+                title: discussions_count
+                description: The total number of tracked keywords for which your target ranks in Discussions and forums.
+              featured_snippet_count:
                 type: integer
-                title: pages
-                description: The total number of pages from this domain ranking for the project's tracked keywords.
+                title: featured_snippet_count
+                description: The total number of tracked keywords for which your target ranks in a Featured snippet.
+              image_pack_count:
+                type: integer
+                title: image_pack_count
+                description: The total number of tracked keywords for which your target ranks in an Image pack.
+              knowledge_card_count:
+                type: integer
+                title: knowledge_card_count
+                description: The total number of tracked keywords for which your target ranks in a Knowledge card.
+              knowledge_panel_count:
+                type: integer
+                title: knowledge_panel_count
+                description: The total number of tracked keywords for which your target ranks in a Knowledge panel.
+              pos_11_20:
+                type: integer
+                title: pos_11_20
+                description: The total number of tracked keywords for which your target's top organic position is within the 11th to 20th results.
+              pos_1_3:
+                type: integer
+                title: pos_1_3
+                description: The total number of tracked keywords for which your target's top organic position is within the top 3 results.
+              pos_21_50:
+                type: integer
+                title: pos_21_50
+                description: The total number of tracked keywords for which your target's top organic position is within the 21st to 50th results.
+              pos_4_10:
+                type: integer
+                title: pos_4_10
+                description: The total number of tracked keywords for which your target's top organic position is within the 4th to 10th results.
+              pos_51_plus:
+                type: integer
+                title: pos_51_plus
+                description: The total number of tracked keywords for which your target's top organic position is the 51st or higher.
+              pos_no_rank:
+                type: integer
+                title: pos_no_rank
+                description: The total number of tracked keywords where your target doesn't rank.
               share_of_traffic_value:
                 type: number
                 format: float
                 title: share_of_traffic_value
                 description: The share of your target's organic search traffic value compared to the total organic search traffic value for all tracked keywords.
-              share_of_traffic_value_prev:
-                type: number
-                format: float
-                title: share_of_traffic_value_prev
-                description: The share of traffic value on the comparison date.
               share_of_voice:
                 type: number
                 format: float
                 title: share_of_voice
                 description: The share of your target's organic search traffic compared to the total organic search traffic for all tracked keywords.
-              share_of_voice_prev:
-                type: number
-                format: float
-                title: share_of_voice_prev
-                description: The share of voice on the comparison date.
-              status:
-                type: string
-                enum:
-                - left
-                - right
-                - both
-                title: status
-                description: 'The status of a page: the new page that just started to rank ("left"), the lost page that disappeared from search results ("right"), or no change ("both").'
+              sitelinks_count:
+                type: integer
+                title: sitelinks_count
+                description: The total number of tracked keywords for which your target ranks in Sitelinks.
+              thumbnail_count:
+                type: integer
+                title: thumbnail_count
+                description: The total number of tracked keywords for which your target ranks in a Thumbnail.
+              top_stories_count:
+                type: integer
+                title: top_stories_count
+                description: The total number of tracked keywords for which your target ranks in Top stories.
               traffic:
-                type: integer
+                type:
+                - integer
+                - 'null'
                 title: traffic
-                description: An estimation of the number of monthly visits that a page gets from organic search.
-              traffic_prev:
-                type: integer
-                title: traffic_prev
-                description: The traffic on the comparison date.
+                description: The estimated number of monthly visits that your target gets from organic search for all tracked keywords.
               traffic_value:
                 type:
                 - integer
                 - 'null'
                 title: traffic_value
-                description: The estimated value of a page’s monthly organic search traffic, in USD cents.
-              traffic_value_prev:
-                type:
-                - integer
-                - 'null'
-                title: traffic_value_prev
-                description: The traffic value on the comparison date.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    rank-tracker.serp-overview:
-      properties:
-        positions:
-          items:
-            properties:
-              ahrefs_rank:
-                type:
-                - integer
-                - 'null'
-                title: ahrefs_rank
-                description: 'The strength of a domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
-              backlinks:
-                type:
-                - integer
-                - 'null'
-                title: backlinks
-                description: The total number of links from other websites pointing to a search result.
-              domain_rating:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: domain_rating
-                description: The strength of a domain’s backlink profile compared to the others in our database on a 100-point scale.
-              keywords:
-                type:
-                - integer
-                - 'null'
-                title: keywords
-                description: The total number of keywords that a search result ranks for in the top 100 organic positions.
-              nr_words:
-                type:
-                - integer
-                - 'null'
-                title: nr_words
-                description: The total number of words present in the HTML of a web page.
-              page_type:
-                type:
-                - string
-                - 'null'
-                title: page_type
-                description: Comma-separated list of AI-predicted hierarchical page type paths for the ranking page. Each value is a slash-prefixed path (e.g. /Article/How_to).
-              position:
+                description: The estimated value of your target's monthly organic search traffic for all tracked keywords.
+              video_preview_count:
                 type: integer
-                title: position
-                description: The position of the search result in SERP.
-              refdomains:
-                type:
-                - integer
-                - 'null'
-                title: refdomains
-                description: The total number of unique domains linking to a search result.
-              title:
-                type:
-                - string
-                - 'null'
-                title: title
-                description: The title of a ranking page.
-              top_keyword:
-                type:
-                - string
-                - 'null'
-                title: top_keyword
-                description: The keyword that brings the most organic traffic to a search result.
-              top_keyword_volume:
-                type:
-                - integer
-                - 'null'
-                title: top_keyword_volume
-                description: An estimation of the average monthly number of searches for the top keyword over the latest known 12 months of data.
-              traffic:
-                type:
-                - integer
-                - 'null'
-                title: traffic
-                description: An estimation of the monthly organic search traffic that a result gets from all the keywords that it ranks for.
-              type:
-                items:
-                  type: string
-                type: array
-                title: type
-                description: 'The kind of the position: organic, paid, or a SERP feature. Allowed values: `ai_overview`, `ai_overview_sitelink`, `discussion`, `image`, `image_th`, `knowledge_card`, `knowledge_panel`, `local_pack`, `organic`, `organic_shopping`, `paid_top`, `paid_bottom`, `paid_right`, `question`, `sitelink`, `snippet`, `top_story`, `tweet`, `video`, `video_th`. '
-              update_date:
-                type: string
-                format: date
-                title: update_date
-                description: The date when we checked search engine results for a keyword.
-              url:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: url
-                description: The URL of a ranking page.
-              url_rating:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: url_rating
-                description: The strength of a page's backlink profile on a 100-point logarithmic scale.
-              value:
-                type:
-                - integer
-                - 'null'
-                title: value
-                description: The estimated value of a page’s monthly organic search traffic, in USD cents.
+                title: video_preview_count
+                description: The total number of tracked keywords for which your target ranks in a Video preview.
+              videos_count:
+                type: integer
+                title: videos_count
+                description: The total number of tracked keywords for which your target ranks in Videos.
+              x_count:
+                type: integer
+                title: x_count
+                description: The total number of tracked keywords for which your target ranks in an X (Twitter) widget.
             type: object
           type: array
       type: object
@@ -2016,128 +1948,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    rank-tracker.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    rank-tracker.competitors-stats:
-      properties:
-        competitors-metrics:
-          items:
-            properties:
-              ai_overview_count:
-                type: integer
-                title: ai_overview_count
-                description: The total number of tracked keywords for which your target ranks in an AI Overview.
-              average_position:
-                type:
-                - number
-                - 'null'
-                format: float
-                title: average_position
-                description: The average of your target's top organic positions across all tracked keywords.
-              competitor:
-                type: string
-                title: competitor
-                description: Competitor's URL.
-              discussions_count:
-                type: integer
-                title: discussions_count
-                description: The total number of tracked keywords for which your target ranks in Discussions and forums.
-              featured_snippet_count:
-                type: integer
-                title: featured_snippet_count
-                description: The total number of tracked keywords for which your target ranks in a Featured snippet.
-              image_pack_count:
-                type: integer
-                title: image_pack_count
-                description: The total number of tracked keywords for which your target ranks in an Image pack.
-              knowledge_card_count:
-                type: integer
-                title: knowledge_card_count
-                description: The total number of tracked keywords for which your target ranks in a Knowledge card.
-              knowledge_panel_count:
-                type: integer
-                title: knowledge_panel_count
-                description: The total number of tracked keywords for which your target ranks in a Knowledge panel.
-              pos_11_20:
-                type: integer
-                title: pos_11_20
-                description: The total number of tracked keywords for which your target's top organic position is within the 11th to 20th results.
-              pos_1_3:
-                type: integer
-                title: pos_1_3
-                description: The total number of tracked keywords for which your target's top organic position is within the top 3 results.
-              pos_21_50:
-                type: integer
-                title: pos_21_50
-                description: The total number of tracked keywords for which your target's top organic position is within the 21st to 50th results.
-              pos_4_10:
-                type: integer
-                title: pos_4_10
-                description: The total number of tracked keywords for which your target's top organic position is within the 4th to 10th results.
-              pos_51_plus:
-                type: integer
-                title: pos_51_plus
-                description: The total number of tracked keywords for which your target's top organic position is the 51st or higher.
-              pos_no_rank:
-                type: integer
-                title: pos_no_rank
-                description: The total number of tracked keywords where your target doesn't rank.
-              share_of_traffic_value:
-                type: number
-                format: float
-                title: share_of_traffic_value
-                description: The share of your target's organic search traffic value compared to the total organic search traffic value for all tracked keywords.
-              share_of_voice:
-                type: number
-                format: float
-                title: share_of_voice
-                description: The share of your target's organic search traffic compared to the total organic search traffic for all tracked keywords.
-              sitelinks_count:
-                type: integer
-                title: sitelinks_count
-                description: The total number of tracked keywords for which your target ranks in Sitelinks.
-              thumbnail_count:
-                type: integer
-                title: thumbnail_count
-                description: The total number of tracked keywords for which your target ranks in a Thumbnail.
-              top_stories_count:
-                type: integer
-                title: top_stories_count
-                description: The total number of tracked keywords for which your target ranks in Top stories.
-              traffic:
-                type:
-                - integer
-                - 'null'
-                title: traffic
-                description: The estimated number of monthly visits that your target gets from organic search for all tracked keywords.
-              traffic_value:
-                type:
-                - integer
-                - 'null'
-                title: traffic_value
-                description: The estimated value of your target's monthly organic search traffic for all tracked keywords.
-              video_preview_count:
-                type: integer
-                title: video_preview_count
-                description: The total number of tracked keywords for which your target ranks in a Video preview.
-              videos_count:
-                type: integer
-                title: videos_count
-                description: The total number of tracked keywords for which your target ranks in Videos.
-              x_count:
-                type: integer
-                title: x_count
-                description: The total number of tracked keywords for which your target ranks in an X (Twitter) widget.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     rank-tracker.competitors-overview:
       properties:
         keywords:
@@ -2501,18 +2311,199 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    rank-tracker.competitors-domains:
+      properties:
+        competitors-domains:
+          items:
+            properties:
+              domain:
+                type: string
+                format: domain
+                title: domain
+                description: The page domain.
+              keywords:
+                type: integer
+                title: keywords
+                description: The total number of keywords that your target ranks for in the top 100 organic search results.
+              pages:
+                type: integer
+                title: pages
+                description: The total number of pages from this domain ranking for the project's tracked keywords.
+              share_of_traffic_value:
+                type: number
+                format: float
+                title: share_of_traffic_value
+                description: The share of your target's organic search traffic value compared to the total organic search traffic value for all tracked keywords.
+              share_of_traffic_value_prev:
+                type: number
+                format: float
+                title: share_of_traffic_value_prev
+                description: The share of traffic value on the comparison date.
+              share_of_voice:
+                type: number
+                format: float
+                title: share_of_voice
+                description: The share of your target's organic search traffic compared to the total organic search traffic for all tracked keywords.
+              share_of_voice_prev:
+                type: number
+                format: float
+                title: share_of_voice_prev
+                description: The share of voice on the comparison date.
+              status:
+                type: string
+                enum:
+                - left
+                - right
+                - both
+                title: status
+                description: 'The status of a page: the new page that just started to rank ("left"), the lost page that disappeared from search results ("right"), or no change ("both").'
+              traffic:
+                type: integer
+                title: traffic
+                description: An estimation of the number of monthly visits that a page gets from organic search.
+              traffic_prev:
+                type: integer
+                title: traffic_prev
+                description: The traffic on the comparison date.
+              traffic_value:
+                type:
+                - integer
+                - 'null'
+                title: traffic_value
+                description: The estimated value of a page’s monthly organic search traffic, in USD cents.
+              traffic_value_prev:
+                type:
+                - integer
+                - 'null'
+                title: traffic_value_prev
+                description: The traffic value on the comparison date.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    rank-tracker.serp-overview:
+      properties:
+        positions:
+          items:
+            properties:
+              ahrefs_rank:
+                type:
+                - integer
+                - 'null'
+                title: ahrefs_rank
+                description: 'The strength of a domain''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              backlinks:
+                type:
+                - integer
+                - 'null'
+                title: backlinks
+                description: The total number of links from other websites pointing to a search result.
+              domain_rating:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: domain_rating
+                description: The strength of a domain’s backlink profile compared to the others in our database on a 100-point scale.
+              keywords:
+                type:
+                - integer
+                - 'null'
+                title: keywords
+                description: The total number of keywords that a search result ranks for in the top 100 organic positions.
+              nr_words:
+                type:
+                - integer
+                - 'null'
+                title: nr_words
+                description: The total number of words present in the HTML of a web page.
+              page_type:
+                type:
+                - string
+                - 'null'
+                title: page_type
+                description: Comma-separated list of AI-predicted hierarchical page type paths for the ranking page. Each value is a slash-prefixed path (e.g. /Article/How_to).
+              position:
+                type: integer
+                title: position
+                description: The position of the search result in SERP.
+              refdomains:
+                type:
+                - integer
+                - 'null'
+                title: refdomains
+                description: The total number of unique domains linking to a search result.
+              title:
+                type:
+                - string
+                - 'null'
+                title: title
+                description: The title of a ranking page.
+              top_keyword:
+                type:
+                - string
+                - 'null'
+                title: top_keyword
+                description: The keyword that brings the most organic traffic to a search result.
+              top_keyword_volume:
+                type:
+                - integer
+                - 'null'
+                title: top_keyword_volume
+                description: An estimation of the average monthly number of searches for the top keyword over the latest known 12 months of data.
+              traffic:
+                type:
+                - integer
+                - 'null'
+                title: traffic
+                description: An estimation of the monthly organic search traffic that a result gets from all the keywords that it ranks for.
+              type:
+                items:
+                  type: string
+                type: array
+                title: type
+                description: 'The kind of the position: organic, paid, or a SERP feature. Allowed values: `ai_overview`, `ai_overview_sitelink`, `discussion`, `image`, `image_th`, `knowledge_card`, `knowledge_panel`, `local_pack`, `organic`, `organic_shopping`, `paid_top`, `paid_bottom`, `paid_right`, `question`, `sitelink`, `snippet`, `top_story`, `tweet`, `video`, `video_th`. '
+              update_date:
+                type: string
+                format: date
+                title: update_date
+                description: The date when we checked search engine results for a keyword.
+              url:
+                type:
+                - string
+                - 'null'
+                format: url
+                title: url
+                description: The URL of a ranking page.
+              url_rating:
+                type:
+                - number
+                - 'null'
+                format: float
+                title: url_rating
+                description: The strength of a page's backlink profile on a 100-point logarithmic scale.
+              value:
+                type:
+                - integer
+                - 'null'
+                title: value
+                description: The estimated value of a page’s monthly organic search traffic, in USD cents.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    rank-tracker.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
   responses:
     rank-tracker.error_400:
       description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/rank-tracker.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/rank-tracker.Error_response'
-    rank-tracker.error_401:
-      description: Unauthorized
       content:
         application/json:
           schema:
@@ -2529,8 +2520,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/rank-tracker.Error_response'
-    rank-tracker.error_429:
-      description: Too Many Requests
+    rank-tracker.error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -2538,8 +2529,17 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/rank-tracker.Error_response'
-    rank-tracker.error_403:
-      description: Forbidden
+    rank-tracker.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/rank-tracker.Error_response'
+    rank-tracker.error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:

@@ -190,8 +190,8 @@ paths:
       security: []
 components:
   responses:
-    public.error_429:
-      description: Too Many Requests
+    public.error_500:
+      description: Internal Error
       content:
         application/json:
           schema:
@@ -199,8 +199,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/public.Error_response'
-    public.error_500:
-      description: Internal Error
+    public.error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -226,8 +226,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/public.Error_response'
-    public.error_400:
-      description: Bad Request
+    public.error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -236,30 +236,6 @@ components:
           schema:
             $ref: '#/components/schemas/public.Error_response'
   schemas:
-    public.domain-rating-top-domains:
-      properties:
-        domains:
-          items:
-            properties:
-              domain:
-                type: string
-                format: domain
-                title: domain
-                description: Domain name.
-              domain_rating:
-                type: number
-                format: float
-                title: domain_rating
-                description: Current strength of the domain's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-              rank:
-                type: integer
-                title: rank
-                description: Position of the domain in the top 1M ranking by Domain Rating (1 = highest).
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     public.crawler-ips:
       properties:
         ips:
@@ -288,6 +264,30 @@ components:
               title: license
               description: URL of the license terms that apply to use of Domain Rating data.
           type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    public.domain-rating-top-domains:
+      properties:
+        domains:
+          items:
+            properties:
+              domain:
+                type: string
+                format: domain
+                title: domain
+                description: Domain name.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: Current strength of the domain's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+              rank:
+                type: integer
+                title: rank
+                description: Position of the domain in the top 1M ranking by Domain Rating (1 = highest).
+            type: object
+          type: array
       type: object
       xml:
         name: AhrefsApiResponse

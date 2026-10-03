@@ -76,15 +76,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/subscription-info.Error_response'
-    subscription-info.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/subscription-info.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/subscription-info.Error_response'
     subscription-info.error_401:
       description: Unauthorized
       content:
@@ -94,7 +85,23 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/subscription-info.Error_response'
+    subscription-info.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/subscription-info.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/subscription-info.Error_response'
   schemas:
+    subscription-info.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     subscription-info.limits-and-usage:
       properties:
         limits_and_usage:
@@ -136,13 +143,6 @@ components:
               title: usage_reset_date
               description: Start date of the next billing period when the API units usage will be reset.
           type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    subscription-info.Error_response:
-      properties:
-        error:
-          type: string
       type: object
       xml:
         name: AhrefsApiResponse

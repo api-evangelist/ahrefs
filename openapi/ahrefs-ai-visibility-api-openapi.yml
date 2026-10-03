@@ -2321,65 +2321,36 @@ paths:
       x-operation-id-source: normalized
       x-operation-id-original: cited-domains
 components:
-  parameters:
-    output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
-  responses:
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   schemas:
+    cited-pages:
+      properties:
+        pages:
+          items:
+            properties:
+              mentions:
+                items:
+                  properties: {}
+                  type: object
+                type: array
+                title: mentions
+                description: Deprecated on 2026-02-10.
+              responses:
+                type: integer
+                title: responses
+                description: The number of responses that cited the page.
+              url:
+                type: string
+                title: url
+                description: The URL of the cited page.
+              volume:
+                type: integer
+                title: volume
+                description: Deprecated on 2026-03-24.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     ai-responses:
       properties:
         ai_responses:
@@ -2440,32 +2411,10 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    cited-pages:
+    Error_response:
       properties:
-        pages:
-          items:
-            properties:
-              mentions:
-                items:
-                  properties: {}
-                  type: object
-                type: array
-                title: mentions
-                description: Deprecated on 2026-02-10.
-              responses:
-                type: integer
-                title: responses
-                description: The number of responses that cited the page.
-              url:
-                type: string
-                title: url
-                description: The URL of the cited page.
-              volume:
-                type: integer
-                title: volume
-                description: Deprecated on 2026-03-24.
-            type: object
-          type: array
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -2507,13 +2456,6 @@ components:
             - scope
           type: array
       type: object
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
     cited-domains:
       properties:
         domains:
@@ -2547,6 +2489,64 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+  parameters:
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+  responses:
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   securitySchemes:
     http:
       type: http
