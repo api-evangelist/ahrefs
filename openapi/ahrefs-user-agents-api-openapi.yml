@@ -773,7 +773,111 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
+  responses:
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
+    browser-versions:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              browser_version:
+                type: string
+                title: browser_version
+                description: Browser version
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    browsers-chart:
+      properties:
+        points:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              browser:
+                type: string
+                title: browser
+                description: Browser
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     operating-systems-versions-chart:
       properties:
         points:
@@ -805,34 +909,10 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    browser-versions-chart:
+    Error_response:
       properties:
-        points:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              browser_version:
-                type: string
-                title: browser_version
-                description: Browser version
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              timestamp:
-                type: string
-                title: timestamp
-                description: Timestamp of the data point
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -849,129 +929,6 @@ components:
                 type: string
                 title: device
                 description: Device type
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              timestamp:
-                type: string
-                title: timestamp
-                description: Timestamp of the data point
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    devices:
-      properties:
-        stats:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              device:
-                type: string
-                title: device
-                description: Device type
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    operating-systems-chart:
-      properties:
-        points:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              os:
-                type: string
-                title: os
-                description: Operating system
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              timestamp:
-                type: string
-                title: timestamp
-                description: Timestamp of the data point
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    browsers:
-      properties:
-        stats:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              browser:
-                type: string
-                title: browser
-                description: Browser
-              session_bounce_rate:
-                type: number
-                format: float
-                title: session_bounce_rate
-                description: Session bounce rate (percentage of sessions that triggered only one request)
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    browsers-chart:
-      properties:
-        points:
-          items:
-            properties:
-              avg_session_duration_sec:
-                type: integer
-                title: avg_session_duration_sec
-                description: Average session duration (in seconds)
-              browser:
-                type: string
-                title: browser
-                description: Browser
               session_bounce_rate:
                 type: number
                 format: float
@@ -1017,6 +974,64 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    operating-systems-chart:
+      properties:
+        points:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              os:
+                type: string
+                title: os
+                description: Operating system
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    devices:
+      properties:
+        stats:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              device:
+                type: string
+                title: device
+                description: Device type
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     operating-systems:
       properties:
         stats:
@@ -1044,9 +1059,36 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    browser-versions:
+    browsers:
       properties:
         stats:
+          items:
+            properties:
+              avg_session_duration_sec:
+                type: integer
+                title: avg_session_duration_sec
+                description: Average session duration (in seconds)
+              browser:
+                type: string
+                title: browser
+                description: Browser
+              session_bounce_rate:
+                type: number
+                format: float
+                title: session_bounce_rate
+                description: Session bounce rate (percentage of sessions that triggered only one request)
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    browser-versions-chart:
+      properties:
+        points:
           items:
             properties:
               avg_session_duration_sec:
@@ -1062,6 +1104,10 @@ components:
                 format: float
                 title: session_bounce_rate
                 description: Session bounce rate (percentage of sessions that triggered only one request)
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
               visitors:
                 type: integer
                 title: visitors
@@ -1071,52 +1117,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   parameters:
     output:
       description: The output format.

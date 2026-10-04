@@ -334,7 +334,106 @@ paths:
     - url: https://api.ahrefs.com/v3/site-audit
       description: Ahrefs Site Audit
 components:
+  responses:
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
+    update-project:
+      properties:
+        project:
+          properties:
+            access:
+              type: string
+              title: access
+              description: 'The access level of the project. Possible values: `private`, `shared`.'
+            folder:
+              properties:
+                id:
+                  type: integer
+                name:
+                  type:
+                  - string
+                  - 'null'
+              type:
+              - object
+              - 'null'
+              title: folder
+              description: Innermost folder that the project is in.
+            mode:
+              type: string
+              title: mode
+              description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+            project_id:
+              type: string
+              title: project_id
+              description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
+            project_name:
+              type: string
+              title: project_name
+              description: The project name.
+            protocol:
+              type: string
+              title: protocol
+              description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+            url:
+              type: string
+              format: url
+              title: url
+              description: The URL of the project's target.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     projects:
       properties:
         projects:
@@ -398,59 +497,6 @@ components:
                 description: Web Analytics Data Key.
             type: object
           type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    update-project:
-      properties:
-        project:
-          properties:
-            access:
-              type: string
-              title: access
-              description: 'The access level of the project. Possible values: `private`, `shared`.'
-            folder:
-              properties:
-                id:
-                  type: integer
-                name:
-                  type:
-                  - string
-                  - 'null'
-              type:
-              - object
-              - 'null'
-              title: folder
-              description: Innermost folder that the project is in.
-            mode:
-              type: string
-              title: mode
-              description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
-            project_id:
-              type: string
-              title: project_id
-              description: 'The unique identifier of the project. You can find it in the URL of your Rank Tracker project in Ahrefs: `https://app.ahrefs.com/rank-tracker/overview/#project_id#`.'
-            project_name:
-              type: string
-              title: project_name
-              description: The project name.
-            protocol:
-              type: string
-              title: protocol
-              description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
-            url:
-              type: string
-              format: url
-              title: url
-              description: The URL of the project's target.
-          type: object
       type: object
       xml:
         name: AhrefsApiResponse
@@ -594,52 +640,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   parameters:
     output:
       description: The output format.

@@ -316,6 +316,52 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
+  responses:
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
     linked-anchors-internal:
       properties:
@@ -335,48 +381,6 @@ components:
                 format: date-time
                 title: first_seen
                 description: The date we first found a link with a given anchor on your target.
-              linked_pages:
-                type: integer
-                title: linked_pages
-                description: The number of unique pages linked from your target with a given anchor.
-              links_from_target:
-                type: integer
-                title: links_from_target
-                description: The number of outbound links your target has with a given anchor.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    linked-anchors-external:
-      properties:
-        linkedanchors:
-          items:
-            properties:
-              anchor:
-                type: string
-                title: anchor
-                description: The clickable words in a link that point to a URL.
-              dofollow_links:
-                type: integer
-                title: dofollow_links
-                description: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.
-              first_seen:
-                type: string
-                format: date-time
-                title: first_seen
-                description: The date we first found a link with a given anchor on your target.
-              linked_domains:
-                type: integer
-                title: linked_domains
-                description: The number of unique domains linked from your target with a given anchor.
               linked_pages:
                 type: integer
                 title: linked_pages
@@ -442,52 +446,48 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    linked-anchors-external:
+      properties:
+        linkedanchors:
+          items:
+            properties:
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of outbound links with a given anchor from your target that don’t have the “nofollow” attribute.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link with a given anchor on your target.
+              linked_domains:
+                type: integer
+                title: linked_domains
+                description: The number of unique domains linked from your target with a given anchor.
+              linked_pages:
+                type: integer
+                title: linked_pages
+                description: The number of unique pages linked from your target with a given anchor.
+              links_from_target:
+                type: integer
+                title: links_from_target
+                description: The number of outbound links your target has with a given anchor.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
   parameters:
     output:
       description: The output format.

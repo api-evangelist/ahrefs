@@ -190,26 +190,8 @@ paths:
       security: []
 components:
   responses:
-    public.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
     public.error_400:
       description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-    public.error_403:
-      description: Forbidden
       content:
         application/json:
           schema:
@@ -226,6 +208,15 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/public.Error_response'
+    public.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
     public.error_429:
       description: Too Many Requests
       content:
@@ -235,38 +226,16 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/public.Error_response'
+    public.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
   schemas:
-    public.crawler-ips:
-      properties:
-        ips:
-          items:
-            properties:
-              ip_address:
-                type: string
-                title: ip_address
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    public.domain-rating-free:
-      properties:
-        domain_rating:
-          properties:
-            domain_rating:
-              type: number
-              format: float
-              title: domain_rating
-              description: Current strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-            license:
-              type: string
-              format: url
-              title: license
-              description: URL of the license terms that apply to use of Domain Rating data.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
     public.domain-rating-top-domains:
       properties:
         domains:
@@ -291,6 +260,31 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    public.domain-rating-free:
+      properties:
+        domain_rating:
+          properties:
+            domain_rating:
+              type: number
+              format: float
+              title: domain_rating
+              description: Current strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+            license:
+              type: string
+              format: url
+              title: license
+              description: URL of the license terms that apply to use of Domain Rating data.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    public.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     public.crawler-ip-ranges:
       properties:
         prefixes:
@@ -304,10 +298,16 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    public.Error_response:
+    public.crawler-ips:
       properties:
-        error:
-          type: string
+        ips:
+          items:
+            properties:
+              ip_address:
+                type: string
+                title: ip_address
+            type: object
+          type: array
       type: object
       xml:
         name: AhrefsApiResponse

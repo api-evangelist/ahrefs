@@ -2422,91 +2422,53 @@ paths:
       x-operation-id-source: normalized
       x-operation-id-original: sov-history
 components:
+  responses:
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   schemas:
-    mentions-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              mentions:
-                type: integer
-                title: mentions
-                description: Estimated mentions from responses mentioning the brand.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    sov-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              share_of_voice:
-                items:
-                  properties:
-                    brand:
-                      type: string
-                    share_of_voice:
-                      type: number
-                      format: float
-                  type: object
-                type: array
-                title: share_of_voice
-                description: (1 unit per brand) Estimated share of voice for the brand.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    impressions-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-              impressions:
-                type: integer
-                title: impressions
-                description: Estimated impressions from responses mentioning the brand.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    citations-history:
-      properties:
-        metrics:
-          items:
-            properties:
-              citations:
-                type: integer
-                title: citations
-                description: Estimated citations from responses mentioning the brand URLs.
-              date:
-                type: string
-                format: date
-                title: date
-                description: ''
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     Error_response:
       properties:
         error:
@@ -2552,6 +2514,90 @@ components:
             - scope
           type: array
       type: object
+    citations-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              citations:
+                type: integer
+                title: citations
+                description: Estimated citations from responses mentioning the brand URLs.
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    sov-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              share_of_voice:
+                items:
+                  properties:
+                    brand:
+                      type: string
+                    share_of_voice:
+                      type: number
+                      format: float
+                  type: object
+                type: array
+                title: share_of_voice
+                description: (1 unit per brand) Estimated share of voice for the brand.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    mentions-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              mentions:
+                type: integer
+                title: mentions
+                description: Estimated mentions from responses mentioning the brand.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    impressions-history:
+      properties:
+        metrics:
+          items:
+            properties:
+              date:
+                type: string
+                format: date
+                title: date
+                description: ''
+              impressions:
+                type: integer
+                title: impressions
+                description: Estimated impressions from responses mentioning the brand.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
   parameters:
     output_json_php:
       description: The output format.
@@ -2577,52 +2623,6 @@ components:
         - php
       name: output
       in: query
-  responses:
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   securitySchemes:
     http:
       type: http

@@ -2785,35 +2785,8 @@ paths:
           $ref: '#/components/responses/site-audit.error_500'
 components:
   responses:
-    site-audit.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
     site-audit.error_429:
       description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_400:
-      description: Bad Request
       content:
         application/json:
           schema:
@@ -2830,80 +2803,34 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
   schemas:
-    site-audit.issues:
-      properties:
-        issues:
-          items:
-            properties:
-              added:
-                type:
-                - integer
-                - 'null'
-                title: added
-                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
-              category:
-                type: string
-                title: category
-                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
-              change:
-                type:
-                - integer
-                - 'null'
-                title: change
-                description: Difference in the number of affected URLs between the specified dates.
-              crawled:
-                type: integer
-                title: crawled
-                description: Number of URLs currently affected by the issue.
-              importance:
-                type: string
-                title: importance
-                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
-              is_indexable:
-                type:
-                - boolean
-                - 'null'
-                title: is_indexable
-                description: True if the issue applies only to indexable pages.
-              issue_id:
-                type: string
-                title: issue_id
-                description: The unique identifier of the issue.
-              missing:
-                type:
-                - integer
-                - 'null'
-                title: missing
-                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
-              name:
-                type: string
-                title: name
-                description: The name of the issue.
-              new:
-                type:
-                - integer
-                - 'null'
-                title: new
-                description: Number of newly discovered URLs that have the issue on the current date.
-              removed:
-                type:
-                - integer
-                - 'null'
-                title: removed
-                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    site-audit.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
     site-audit.page-content:
       properties:
         page-content:
@@ -3010,6 +2937,72 @@ components:
                 - 'null'
                 title: urls_with_warnings
                 description: Number of internal URLs with warnings
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-audit.issues:
+      properties:
+        issues:
+          items:
+            properties:
+              added:
+                type:
+                - integer
+                - 'null'
+                title: added
+                description: Number of URLs that have the issue on the current date but did not have it on the previous date.
+              category:
+                type: string
+                title: category
+                description: 'The category of the issue. Possible values: `Internal pages`, `Indexability`, `Links`, `Redirects`, `Content`, `Social tags`, `Duplicates`, `Localization`, `Usability and performance`, `Images`, `JavaScript`, `CSS`, `Sitemaps`, `External pages`, `Other`.'
+              change:
+                type:
+                - integer
+                - 'null'
+                title: change
+                description: Difference in the number of affected URLs between the specified dates.
+              crawled:
+                type: integer
+                title: crawled
+                description: Number of URLs currently affected by the issue.
+              importance:
+                type: string
+                title: importance
+                description: 'The importance of the issue. Possible values: `Error`, `Warning`, `Notice`.'
+              is_indexable:
+                type:
+                - boolean
+                - 'null'
+                title: is_indexable
+                description: True if the issue applies only to indexable pages.
+              issue_id:
+                type: string
+                title: issue_id
+                description: The unique identifier of the issue.
+              missing:
+                type:
+                - integer
+                - 'null'
+                title: missing
+                description: Number of URLs that had the issue on the previous date but cannot be found on the current date.
+              name:
+                type: string
+                title: name
+                description: The name of the issue.
+              new:
+                type:
+                - integer
+                - 'null'
+                title: new
+                description: Number of newly discovered URLs that have the issue on the current date.
+              removed:
+                type:
+                - integer
+                - 'null'
+                title: removed
+                description: Number of URLs that had the issue on the previous date but no longer have it on the current date.
             type: object
           type: array
       type: object
@@ -7034,6 +7027,13 @@ components:
                 description: The web address of the page or resource
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    site-audit.Error_response:
+      properties:
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse

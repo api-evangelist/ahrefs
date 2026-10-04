@@ -331,9 +331,22 @@ paths:
         '500':
           $ref: '#/components/responses/serp-overview.error_500'
 components:
+  parameters:
+    serp-overview.output_json_php_xml:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+        - xml
+      name: output
+      in: query
   responses:
-    serp-overview.error_429:
-      description: Too Many Requests
+    serp-overview.error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -359,15 +372,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/serp-overview.Error_response'
-    serp-overview.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/serp-overview.Error_response'
     serp-overview.error_401:
       description: Unauthorized
       content:
@@ -377,14 +381,16 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/serp-overview.Error_response'
+    serp-overview.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/serp-overview.Error_response'
   schemas:
-    serp-overview.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
     serp-overview.serp-overview:
       properties:
         positions:
@@ -520,19 +526,13 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  parameters:
-    serp-overview.output_json_php_xml:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-        - xml
-      name: output
-      in: query
+    serp-overview.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
   securitySchemes:
     http:
       type: http

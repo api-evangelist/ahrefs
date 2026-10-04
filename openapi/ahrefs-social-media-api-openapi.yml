@@ -511,175 +511,7 @@ paths:
         '500':
           $ref: '#/components/responses/social-media.error_500'
 components:
-  responses:
-    social-media.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-    social-media.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-    social-media.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-    social-media.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-    social-media.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/social-media.Error_response'
   schemas:
-    social-media.posts:
-      properties:
-        posts:
-          items:
-            properties:
-              author_id:
-                type:
-                - string
-                - 'null'
-                title: author_id
-                description: Unique identifier of the author.
-              author_name:
-                type:
-                - string
-                - 'null'
-                title: author_name
-                description: Name of the author.
-              auto_comment:
-                type:
-                - string
-                - 'null'
-                title: auto_comment
-                description: Auto-comment text posted after publishing.
-              channels:
-                items:
-                  properties:
-                    channel_id:
-                      type: string
-                    channel_kind:
-                      type: string
-                    channel_username:
-                      type: string
-                    channel_display_name:
-                      type: string
-                    channel_profile_image_url:
-                      type:
-                      - string
-                      - 'null'
-                      format: url
-                  type: object
-                type: array
-                title: channels
-                description: Social media channels associated with the post.
-              created_at:
-                type: string
-                format: date-time
-                title: created_at
-                description: Timestamp when the author created the post.
-              external_post_id:
-                type:
-                - string
-                - 'null'
-                title: external_post_id
-                description: Platform-specific post identifier.
-              permalink:
-                type:
-                - string
-                - 'null'
-                title: permalink
-                description: URL of the published post on the platform.
-              post_id:
-                type: integer
-                title: post_id
-                description: Unique identifier for the post.
-              status_timestamp:
-                type: string
-                title: status_timestamp
-                description: Timestamp associated with the current status.
-              text_content:
-                type: string
-                title: text_content
-                description: Text content of the post.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    social-media.channels:
-      properties:
-        channels:
-          items:
-            properties:
-              channel_display_name:
-                type: string
-                title: channel_display_name
-                description: Channel display name.
-              channel_id:
-                type: string
-                title: channel_id
-                description: Unique identifier for the social media channel.
-              channel_kind:
-                type: string
-                title: channel_kind
-                description: Social media platform and account type.
-              channel_profile_image_url:
-                type:
-                - string
-                - 'null'
-                format: url
-                title: channel_profile_image_url
-                description: URL of the channel's profile image.
-              channel_status:
-                type: string
-                title: channel_status
-                description: Channel status (connected, paused).
-              channel_username:
-                type: string
-                title: channel_username
-                description: Channel username on the platform.
-              external_channel_id:
-                type: string
-                title: external_channel_id
-                description: Provider-specific identifier for the channel on the external platform.
-              token_validity:
-                type: string
-                title: token_validity
-                description: Validity of the channel's authentication token (valid, expired, lost_access).
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     social-media.post:
       properties:
         post:
@@ -755,67 +587,46 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    social-media.activity-history:
+    social-media.channels:
       properties:
-        activities:
+        channels:
           items:
             properties:
-              action_type:
+              channel_display_name:
                 type: string
-                title: action_type
-                description: The action that was performed on the post.
-              activity_id:
-                type: integer
-                title: activity_id
-                description: Unique identifier for the activity history record.
+                title: channel_display_name
+                description: Channel display name.
               channel_id:
-                type:
-                - string
-                - 'null'
+                type: string
                 title: channel_id
                 description: Unique identifier for the social media channel.
               channel_kind:
-                type:
-                - string
-                - 'null'
+                type: string
                 title: channel_kind
                 description: Social media platform and account type.
-              created_at:
-                type: string
-                format: date-time
-                title: created_at
-                description: Timestamp when the activity was recorded.
-              user_name:
+              channel_profile_image_url:
                 type:
                 - string
                 - 'null'
-                title: user_name
-                description: Name of the user who performed the action.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    social-media.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    social-media.authors:
-      properties:
-        authors:
-          items:
-            properties:
-              author_id:
+                format: url
+                title: channel_profile_image_url
+                description: URL of the channel's profile image.
+              channel_status:
                 type: string
-                title: author_id
-                description: Unique identifier of the author.
-              author_name:
+                title: channel_status
+                description: Channel status (connected, paused).
+              channel_username:
                 type: string
-                title: author_name
-                description: Name of the author.
+                title: channel_username
+                description: Channel username on the platform.
+              external_channel_id:
+                type: string
+                title: external_channel_id
+                description: Provider-specific identifier for the channel on the external platform.
+              token_validity:
+                type: string
+                title: token_validity
+                description: Validity of the channel's authentication token (valid, expired, lost_access).
             type: object
           type: array
       type: object
@@ -950,6 +761,195 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    social-media.activity-history:
+      properties:
+        activities:
+          items:
+            properties:
+              action_type:
+                type: string
+                title: action_type
+                description: The action that was performed on the post.
+              activity_id:
+                type: integer
+                title: activity_id
+                description: Unique identifier for the activity history record.
+              channel_id:
+                type:
+                - string
+                - 'null'
+                title: channel_id
+                description: Unique identifier for the social media channel.
+              channel_kind:
+                type:
+                - string
+                - 'null'
+                title: channel_kind
+                description: Social media platform and account type.
+              created_at:
+                type: string
+                format: date-time
+                title: created_at
+                description: Timestamp when the activity was recorded.
+              user_name:
+                type:
+                - string
+                - 'null'
+                title: user_name
+                description: Name of the user who performed the action.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    social-media.authors:
+      properties:
+        authors:
+          items:
+            properties:
+              author_id:
+                type: string
+                title: author_id
+                description: Unique identifier of the author.
+              author_name:
+                type: string
+                title: author_name
+                description: Name of the author.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    social-media.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    social-media.posts:
+      properties:
+        posts:
+          items:
+            properties:
+              author_id:
+                type:
+                - string
+                - 'null'
+                title: author_id
+                description: Unique identifier of the author.
+              author_name:
+                type:
+                - string
+                - 'null'
+                title: author_name
+                description: Name of the author.
+              auto_comment:
+                type:
+                - string
+                - 'null'
+                title: auto_comment
+                description: Auto-comment text posted after publishing.
+              channels:
+                items:
+                  properties:
+                    channel_id:
+                      type: string
+                    channel_kind:
+                      type: string
+                    channel_username:
+                      type: string
+                    channel_display_name:
+                      type: string
+                    channel_profile_image_url:
+                      type:
+                      - string
+                      - 'null'
+                      format: url
+                  type: object
+                type: array
+                title: channels
+                description: Social media channels associated with the post.
+              created_at:
+                type: string
+                format: date-time
+                title: created_at
+                description: Timestamp when the author created the post.
+              external_post_id:
+                type:
+                - string
+                - 'null'
+                title: external_post_id
+                description: Platform-specific post identifier.
+              permalink:
+                type:
+                - string
+                - 'null'
+                title: permalink
+                description: URL of the published post on the platform.
+              post_id:
+                type: integer
+                title: post_id
+                description: Unique identifier for the post.
+              status_timestamp:
+                type: string
+                title: status_timestamp
+                description: Timestamp associated with the current status.
+              text_content:
+                type: string
+                title: text_content
+                description: Text content of the post.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+  responses:
+    social-media.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+    social-media.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+    social-media.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+    social-media.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+    social-media.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/social-media.Error_response'
   parameters:
     social-media.output:
       description: The output format.

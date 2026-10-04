@@ -556,94 +556,7 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
-  parameters:
-    output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
-    output_json_php_xml:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-        - xml
-      name: output
-      in: query
   schemas:
-    project-keywords:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
-              language:
-                type: string
-                title: language
-                description: The name of the language assigned to a given keyword.
-              language_code:
-                type: string
-                title: language_code
-                description: The code of the language assigned to a given keyword.
-              location:
-                type: string
-                title: location
-                description: The name of the location assigned to a given keyword.
-              location_id:
-                type: integer
-                title: location_id
-                description: The ID of the location assigned to a given keyword.
-              tags:
-                items:
-                  type: string
-                type: array
-                title: tags
-                description: A list of tags assigned to a given keyword.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    keyword-list-keywords:
-      properties:
-        keywords:
-          items:
-            properties:
-              keyword:
-                type: string
-                title: keyword
-                description: The keyword added to the project.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     locations:
       properties:
         location:
@@ -677,6 +590,46 @@ components:
               title: locations
               description: A list of location IDs and names for the specified country code.
           type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-competitors:
+      properties:
+        competitors:
+          items:
+            properties:
+              mode:
+                type: string
+                title: mode
+                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the project's target.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    keyword-list-keywords:
+      properties:
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -746,10 +699,39 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    Error_response:
+    project-keywords:
       properties:
-        error:
-          type: string
+        keywords:
+          items:
+            properties:
+              keyword:
+                type: string
+                title: keyword
+                description: The keyword added to the project.
+              language:
+                type: string
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
+                type: string
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
+            type: object
+          type: array
       type: object
       xml:
         name: AhrefsApiResponse
@@ -816,28 +798,46 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    project-competitors:
-      properties:
-        competitors:
-          items:
-            properties:
-              mode:
-                type: string
-                title: mode
-                description: 'The scope of the target. Possible values: `exact`, `prefix`, `domain`, `subdomains`.'
-              url:
-                type: string
-                format: url
-                title: url
-                description: The URL of the project's target.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
+  parameters:
+    output_json_php_xml:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+        - xml
+      name: output
+      in: query
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
   responses:
-    error_400:
-      description: Bad Request
+    error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -854,17 +854,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -874,6 +865,15 @@ components:
             $ref: '#/components/schemas/Error_response'
     error_401:
       description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:

@@ -884,8 +884,8 @@ paths:
       description: Ahrefs API v3
 components:
   responses:
-    error_400:
-      description: Bad Request
+    error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -902,8 +902,17 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_429:
-      description: Too Many Requests
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -920,35 +929,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    batch-analysis.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
     batch-analysis.error_500:
       description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_401:
-      description: Unauthorized
       content:
         application/json:
           schema:
@@ -974,14 +956,25 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
   schemas:
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
     target:
       properties:
         url:
@@ -1009,7 +1002,184 @@ components:
       - url
       - mode
       - protocol
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     batch-analysis:
+      properties:
+        targets:
+          items:
+            properties:
+              ahrefs_rank:
+                type: integer
+                title: ahrefs_rank
+                description: 'The strength of your target''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
+              backlinks:
+                type: integer
+                title: backlinks
+                description: The total number of links from other websites pointing to your target.
+              backlinks_dofollow:
+                type: integer
+                title: backlinks_dofollow
+                description: Links to your target that do not contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute. These links are also called “dofollow”.
+              backlinks_internal:
+                type: integer
+                title: backlinks_internal
+                description: The total number of internal links pointing to the target's pages.
+              backlinks_nofollow:
+                type: integer
+                title: backlinks_nofollow
+                description: Links to your target that contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute.
+              backlinks_redirect:
+                type: integer
+                title: backlinks_redirect
+                description: Links pointing to your target via a redirect.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
+              index:
+                type: integer
+                title: index
+                description: Target index number.
+              ip:
+                type:
+                - string
+                - 'null'
+                title: ip
+                description: The IP address of the target.
+              linked_domains:
+                type: integer
+                title: linked_domains
+                description: The number of unique domains linked from your target.
+              linked_domains_dofollow:
+                type: integer
+                title: linked_domains_dofollow
+                description: The number of unique domains linked from your target with followed links.
+              mode:
+                type: string
+                title: mode
+                description: The target mode used for the analysis. Depending on the selected mode (Exact URL, Path, Domain, Subdomains), different parts of the website will be analyzed.
+              org_cost:
+                type: integer
+                title: org_cost
+                description: (10 units) The estimated value of your target’s monthly organic search traffic.
+              org_keywords:
+                type: integer
+                title: org_keywords
+                description: The total number of keywords that your target ranks for in the top 100 organic search results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_11_20:
+                type: integer
+                title: org_keywords_11_20
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 11th to 20th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_1_3:
+                type: integer
+                title: org_keywords_1_3
+                description: The total number of unique keywords for which your target's top organic ranking position is within the top 3 results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_21_50:
+                type: integer
+                title: org_keywords_21_50
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 21st to 50th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_4_10:
+                type: integer
+                title: org_keywords_4_10
+                description: The total number of unique keywords for which your target's top organic ranking position is within the 4th to 10th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_keywords_51_plus:
+                type: integer
+                title: org_keywords_51_plus
+                description: The total number of unique keywords for which your target's top organic ranking position is the 51st result or higher. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              org_traffic:
+                type: integer
+                title: org_traffic
+                description: (10 units) The estimated number of monthly visits that your target gets from organic search.
+              org_traffic_top_by_country:
+                items:
+                  items: false
+                  prefixItems:
+                  - type: string
+                  - type: integer
+                  type: array
+                  maxItems: 2
+                  minItems: 2
+                type: array
+                title: org_traffic_top_by_country
+                description: (10 units) Top countries by traffic with corresponding traffic values. (Currently only a single element is being returned with the country with the most traffic.)
+              outgoing_links:
+                type: integer
+                title: outgoing_links
+                description: The total number of links from your target to other domains.
+              outgoing_links_dofollow:
+                type: integer
+                title: outgoing_links_dofollow
+                description: The total number of followed links from your target to other domains.
+              paid_ads:
+                type: integer
+                title: paid_ads
+                description: The total number of unique ads of a target website or URL in paid search results.
+              paid_cost:
+                type: integer
+                title: paid_cost
+                description: (10 units) The estimated cost of your target’s monthly paid search traffic.
+              paid_keywords:
+                type: integer
+                title: paid_keywords
+                description: The total number of keywords that your target ranks for in paid search results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
+              paid_traffic:
+                type: integer
+                title: paid_traffic
+                description: (10 units) The estimated number of monthly visits that your target gets from paid search.
+              protocol:
+                type: string
+                title: protocol
+                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
+              refdomains:
+                type: integer
+                title: refdomains
+                description: (5 units) The total number of unique domains linking to your target.
+              refdomains_dofollow:
+                type: integer
+                title: refdomains_dofollow
+                description: (5 units) The number of unique domains with links to your target that do not contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute. These links are also called “dofollow”.
+              refdomains_nofollow:
+                type: integer
+                title: refdomains_nofollow
+                description: (5 units) The number of unique domains that only have links to your target containing a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute.
+              refips:
+                type: integer
+                title: refips
+                description: The number of unique IP addresses with at least one domain pointing to your target. Several domains can share one IP address.
+              refips_subnets:
+                type: integer
+                title: refips_subnets
+                description: 'The number of c-class IP networks (AAA.BBB.CCC.DDD) with at least one link to your target. Example: 151.80.39.61 is the website IP address where 151.80.39.XXX is the subnet.'
+              url:
+                type: string
+                format: url
+                title: url
+                description: The URL of the analyzed target.
+              url_rating:
+                type: number
+                format: float
+                title: url_rating
+                description: 'URL Rating (UR) shows the strength of your target page''s backlink profile on a 100-point logarithmic scale. If you analyze a domain, the homepage''s UR is shown. '
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    batch-analysis.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    batch-analysis.batch-analysis:
       properties:
         targets:
           items:
@@ -1199,176 +1369,6 @@ components:
       - url
       - mode
       - protocol
-    batch-analysis.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    batch-analysis.batch-analysis:
-      properties:
-        targets:
-          items:
-            properties:
-              ahrefs_rank:
-                type: integer
-                title: ahrefs_rank
-                description: 'The strength of your target''s backlink profile compared to the other websites in our database, with rank #1 being the strongest.'
-              backlinks:
-                type: integer
-                title: backlinks
-                description: The total number of links from other websites pointing to your target.
-              backlinks_dofollow:
-                type: integer
-                title: backlinks_dofollow
-                description: Links to your target that do not contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute. These links are also called “dofollow”.
-              backlinks_internal:
-                type: integer
-                title: backlinks_internal
-                description: The total number of internal links pointing to the target's pages.
-              backlinks_nofollow:
-                type: integer
-                title: backlinks_nofollow
-                description: Links to your target that contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute.
-              backlinks_redirect:
-                type: integer
-                title: backlinks_redirect
-                description: Links pointing to your target via a redirect.
-              domain_rating:
-                type: number
-                format: float
-                title: domain_rating
-                description: The strength of your target's backlink profile compared to the other websites in our database on a 100-point logarithmic scale.
-              index:
-                type: integer
-                title: index
-                description: Target index number.
-              ip:
-                type:
-                - string
-                - 'null'
-                title: ip
-                description: The IP address of the target.
-              linked_domains:
-                type: integer
-                title: linked_domains
-                description: The number of unique domains linked from your target.
-              linked_domains_dofollow:
-                type: integer
-                title: linked_domains_dofollow
-                description: The number of unique domains linked from your target with followed links.
-              mode:
-                type: string
-                title: mode
-                description: The target mode used for the analysis. Depending on the selected mode (Exact URL, Path, Domain, Subdomains), different parts of the website will be analyzed.
-              org_cost:
-                type: integer
-                title: org_cost
-                description: (10 units) The estimated value of your target’s monthly organic search traffic.
-              org_keywords:
-                type: integer
-                title: org_keywords
-                description: The total number of keywords that your target ranks for in the top 100 organic search results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
-              org_keywords_11_20:
-                type: integer
-                title: org_keywords_11_20
-                description: The total number of unique keywords for which your target's top organic ranking position is within the 11th to 20th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
-              org_keywords_1_3:
-                type: integer
-                title: org_keywords_1_3
-                description: The total number of unique keywords for which your target's top organic ranking position is within the top 3 results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
-              org_keywords_21_50:
-                type: integer
-                title: org_keywords_21_50
-                description: The total number of unique keywords for which your target's top organic ranking position is within the 21st to 50th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
-              org_keywords_4_10:
-                type: integer
-                title: org_keywords_4_10
-                description: The total number of unique keywords for which your target's top organic ranking position is within the 4th to 10th results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
-              org_keywords_51_plus:
-                type: integer
-                title: org_keywords_51_plus
-                description: The total number of unique keywords for which your target's top organic ranking position is the 51st result or higher. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
-              org_traffic:
-                type: integer
-                title: org_traffic
-                description: (10 units) The estimated number of monthly visits that your target gets from organic search.
-              org_traffic_top_by_country:
-                items:
-                  items: false
-                  prefixItems:
-                  - type: string
-                  - type: integer
-                  type: array
-                  maxItems: 2
-                  minItems: 2
-                type: array
-                title: org_traffic_top_by_country
-                description: (10 units) Top countries by traffic with corresponding traffic values. (Currently only a single element is being returned with the country with the most traffic.)
-              outgoing_links:
-                type: integer
-                title: outgoing_links
-                description: The total number of links from your target to other domains.
-              outgoing_links_dofollow:
-                type: integer
-                title: outgoing_links_dofollow
-                description: The total number of followed links from your target to other domains.
-              paid_ads:
-                type: integer
-                title: paid_ads
-                description: The total number of unique ads of a target website or URL in paid search results.
-              paid_cost:
-                type: integer
-                title: paid_cost
-                description: (10 units) The estimated cost of your target’s monthly paid search traffic.
-              paid_keywords:
-                type: integer
-                title: paid_keywords
-                description: The total number of keywords that your target ranks for in paid search results. When ranking for the same keyword across different locations in “All locations” mode, it's still counted as one keyword.
-              paid_traffic:
-                type: integer
-                title: paid_traffic
-                description: (10 units) The estimated number of monthly visits that your target gets from paid search.
-              protocol:
-                type: string
-                title: protocol
-                description: 'The protocol of the target. Possible values: `both`, `http`, `https`.'
-              refdomains:
-                type: integer
-                title: refdomains
-                description: (5 units) The total number of unique domains linking to your target.
-              refdomains_dofollow:
-                type: integer
-                title: refdomains_dofollow
-                description: (5 units) The number of unique domains with links to your target that do not contain a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute. These links are also called “dofollow”.
-              refdomains_nofollow:
-                type: integer
-                title: refdomains_nofollow
-                description: (5 units) The number of unique domains that only have links to your target containing a “nofollow”, “ugc”, or “sponsored” value in their “rel” attribute.
-              refips:
-                type: integer
-                title: refips
-                description: The number of unique IP addresses with at least one domain pointing to your target. Several domains can share one IP address.
-              refips_subnets:
-                type: integer
-                title: refips_subnets
-                description: 'The number of c-class IP networks (AAA.BBB.CCC.DDD) with at least one link to your target. Example: 151.80.39.61 is the website IP address where 151.80.39.XXX is the subnet.'
-              url:
-                type: string
-                format: url
-                title: url
-                description: The URL of the analyzed target.
-              url_rating:
-                type: number
-                format: float
-                title: url_rating
-                description: 'URL Rating (UR) shows the strength of your target page''s backlink profile on a 100-point logarithmic scale. If you analyze a domain, the homepage''s UR is shown. '
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
   securitySchemes:
     http:
       type: http
