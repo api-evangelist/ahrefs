@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.ahrefs.com/openapi.json",
+ "requested_url": "https://docs.ahrefs.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 2271139,
+ "sha256": "ac067edcbb5b3c0ccdb18ba9019fb772e1fea8ca0c60d5f3bdc6c4a618653b32",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.967), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
