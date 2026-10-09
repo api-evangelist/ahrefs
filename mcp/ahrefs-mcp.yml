@@ -113,3 +113,14 @@ deployment:
   probe: gated
   checked: '2026-08-12'
   source: catalog MCP census
+rfc9728:
+  endpoint: https://api.ahrefs.com/mcp/mcp
+  metadata_url: https://api.ahrefs.com/.well-known/oauth-protected-resource
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://api.ahrefs.com/
+    authorization_servers:
+    - https://api.ahrefs.com/
