@@ -556,43 +556,44 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
+    output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
+    output_json_php_xml:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+        - xml
+      name: output
+      in: query
   schemas:
-    locations:
-      properties:
-        location:
-          properties:
-            country_code:
-              type: string
-              title: country_code
-              description: The country code of the location.
-            languages:
-              items:
-                items: false
-                prefixItems:
-                - type: string
-                - type: string
-                type: array
-                maxItems: 2
-                minItems: 2
-              type: array
-              title: languages
-              description: A list of language codes and names for the specified country code.
-            locations:
-              items:
-                items: false
-                prefixItems:
-                - type: integer
-                - type: string
-                type: array
-                maxItems: 2
-                minItems: 2
-              type: array
-              title: locations
-              description: A list of location IDs and names for the specified country code.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
     project-competitors:
       properties:
         competitors:
@@ -612,24 +613,26 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    keyword-list-keywords:
+    brand-radar-prompts:
       properties:
-        keywords:
+        prompts:
           items:
             properties:
-              keyword:
+              country:
                 type: string
-                title: keyword
-                description: The keyword added to the project.
+                title: country
+                description: The country of the prompt.
+              created_at:
+                type: string
+                format: date
+                title: created_at
+                description: The date the prompt was created.
+              prompt:
+                type: string
+                title: prompt
+                description: The text of the prompt.
             type: object
           type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
       type: object
       xml:
         name: AhrefsApiResponse
@@ -699,7 +702,7 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    project-keywords:
+    keyword-list-keywords:
       properties:
         keywords:
           items:
@@ -708,30 +711,44 @@ components:
                 type: string
                 title: keyword
                 description: The keyword added to the project.
-              language:
-                type: string
-                title: language
-                description: The name of the language assigned to a given keyword.
-              language_code:
-                type: string
-                title: language_code
-                description: The code of the language assigned to a given keyword.
-              location:
-                type: string
-                title: location
-                description: The name of the location assigned to a given keyword.
-              location_id:
-                type: integer
-                title: location_id
-                description: The ID of the location assigned to a given keyword.
-              tags:
-                items:
-                  type: string
-                type: array
-                title: tags
-                description: A list of tags assigned to a given keyword.
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    locations:
+      properties:
+        location:
+          properties:
+            country_code:
+              type: string
+              title: country_code
+              description: The country code of the location.
+            languages:
+              items:
+                items: false
+                prefixItems:
+                - type: string
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: languages
+              description: A list of language codes and names for the specified country code.
+            locations:
+              items:
+                items: false
+                prefixItems:
+                - type: integer
+                - type: string
+                type: array
+                maxItems: 2
+                minItems: 2
+              type: array
+              title: locations
+              description: A list of location IDs and names for the specified country code.
+          type: object
       type: object
       xml:
         name: AhrefsApiResponse
@@ -775,69 +792,52 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    brand-radar-prompts:
+    Error_response:
       properties:
-        prompts:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    project-keywords:
+      properties:
+        keywords:
           items:
             properties:
-              country:
+              keyword:
                 type: string
-                title: country
-                description: The country of the prompt.
-              created_at:
+                title: keyword
+                description: The keyword added to the project.
+              language:
                 type: string
-                format: date
-                title: created_at
-                description: The date the prompt was created.
-              prompt:
+                title: language
+                description: The name of the language assigned to a given keyword.
+              language_code:
                 type: string
-                title: prompt
-                description: The text of the prompt.
+                title: language_code
+                description: The code of the language assigned to a given keyword.
+              location:
+                type: string
+                title: location
+                description: The name of the location assigned to a given keyword.
+              location_id:
+                type: integer
+                title: location_id
+                description: The ID of the location assigned to a given keyword.
+              tags:
+                items:
+                  type: string
+                type: array
+                title: tags
+                description: A list of tags assigned to a given keyword.
             type: object
           type: array
       type: object
       xml:
         name: AhrefsApiResponse
-  parameters:
-    output_json_php_xml:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-        - xml
-      name: output
-      in: query
-    output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - php
-      name: output
-      in: query
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
   responses:
-    error_429:
-      description: Too Many Requests
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -845,8 +845,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
+    error_429:
+      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -872,8 +872,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_500:
+      description: Internal Error
       content:
         application/json:
           schema:

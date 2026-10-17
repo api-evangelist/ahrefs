@@ -2785,35 +2785,8 @@ paths:
           $ref: '#/components/responses/site-audit.error_500'
 components:
   responses:
-    site-audit.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
     site-audit.error_400:
       description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/site-audit.Error_response'
-    site-audit.error_401:
-      description: Unauthorized
       content:
         application/json:
           schema:
@@ -2830,44 +2803,34 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+    site-audit.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/site-audit.Error_response'
   schemas:
-    site-audit.page-content:
-      properties:
-        page-content:
-          properties:
-            crawl_datetime:
-              type: string
-              format: date-time
-              title: crawl_datetime
-              description: The timestamp when the page was crawled.
-            page_text:
-              type:
-              - string
-              - 'null'
-              title: page_text
-              description: The text extracted from the page content.
-            page_text_md:
-              type:
-              - string
-              - 'null'
-              title: page_text_md
-              description: 'The page content converted to markdown text. The value is a JSON-encoded string: decode JSON escapes (e.g. with `jq -r`) before passing it to a markdown renderer.'
-            raw_html:
-              type:
-              - string
-              - 'null'
-              title: raw_html
-              description: The raw HTML of the page.
-            rendered_html:
-              type:
-              - string
-              - 'null'
-              title: rendered_html
-              description: The rendered HTML of the page.
-          type: object
-      type: object
-      xml:
-        name: AhrefsApiResponse
     site-audit.projects:
       properties:
         healthscores:
@@ -7037,7 +7000,55 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    site-audit.page-content:
+      properties:
+        page-content:
+          properties:
+            crawl_datetime:
+              type: string
+              format: date-time
+              title: crawl_datetime
+              description: The timestamp when the page was crawled.
+            page_text:
+              type:
+              - string
+              - 'null'
+              title: page_text
+              description: The text extracted from the page content.
+            page_text_md:
+              type:
+              - string
+              - 'null'
+              title: page_text_md
+              description: 'The page content converted to markdown text. The value is a JSON-encoded string: decode JSON escapes (e.g. with `jq -r`) before passing it to a markdown renderer.'
+            raw_html:
+              type:
+              - string
+              - 'null'
+              title: raw_html
+              description: The raw HTML of the page.
+            rendered_html:
+              type:
+              - string
+              - 'null'
+              title: rendered_html
+              description: The rendered HTML of the page.
+          type: object
+      type: object
+      xml:
+        name: AhrefsApiResponse
   parameters:
+    site-audit.output_json_php:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - php
+      name: output
+      in: query
     site-audit.output:
       description: The output format.
       required: false
@@ -7048,17 +7059,6 @@ components:
         - json
         - csv
         - xml
-        - php
-      name: output
-      in: query
-    site-audit.output_json_php:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
         - php
       name: output
       in: query

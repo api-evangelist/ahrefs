@@ -622,149 +622,7 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
-  responses:
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
   schemas:
-    continents:
-      properties:
-        stats:
-          items:
-            properties:
-              continent:
-                type: string
-                enum:
-                - AF
-                - AS
-                - EU
-                - NA
-                - OC
-                - SA
-                - AN
-                - ''
-                title: continent
-                description: Continent
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    countries:
-      properties:
-        stats:
-          items:
-            properties:
-              country:
-                type: string
-                title: country
-                description: Country
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    countries-chart:
-      properties:
-        points:
-          items:
-            properties:
-              country:
-                type: string
-                title: country
-                description: Country
-              timestamp:
-                type: string
-                title: timestamp
-                description: Timestamp of the data point
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    cities-chart:
-      properties:
-        points:
-          items:
-            properties:
-              city:
-                type: string
-                title: city
-                description: City
-              timestamp:
-                type: string
-                title: timestamp
-                description: Timestamp of the data point
-              visitors:
-                type: integer
-                title: visitors
-                description: Number of visitors
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     cities:
       properties:
         stats:
@@ -805,15 +663,24 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    languages:
+    continents:
       properties:
         stats:
           items:
             properties:
-              browser_language:
+              continent:
                 type: string
-                title: browser_language
-                description: Browser language
+                enum:
+                - AF
+                - AS
+                - EU
+                - NA
+                - OC
+                - SA
+                - AN
+                - ''
+                title: continent
+                description: Continent
               visitors:
                 type: integer
                 title: visitors
@@ -854,6 +721,93 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    languages:
+      properties:
+        stats:
+          items:
+            properties:
+              browser_language:
+                type: string
+                title: browser_language
+                description: Browser language
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    countries-chart:
+      properties:
+        points:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: Country
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    countries:
+      properties:
+        stats:
+          items:
+            properties:
+              country:
+                type: string
+                title: country
+                description: Country
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    cities-chart:
+      properties:
+        points:
+          items:
+            properties:
+              city:
+                type: string
+                title: city
+                description: City
+              timestamp:
+                type: string
+                title: timestamp
+                description: Timestamp of the data point
+              visitors:
+                type: integer
+                title: visitors
+                description: Number of visitors
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
   parameters:
     output:
       description: The output format.
@@ -868,6 +822,52 @@ components:
         - php
       name: output
       in: query
+  responses:
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
   securitySchemes:
     http:
       type: http

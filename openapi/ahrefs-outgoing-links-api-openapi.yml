@@ -316,6 +316,20 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
   responses:
     error_429:
       description: Too Many Requests
@@ -326,8 +340,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -353,8 +367,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_500:
+      description: Internal Error
       content:
         application/json:
           schema:
@@ -363,7 +377,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error_response'
   schemas:
-    linked-anchors-internal:
+    linked-anchors-external:
       properties:
         linkedanchors:
           items:
@@ -381,6 +395,10 @@ components:
                 format: date-time
                 title: first_seen
                 description: The date we first found a link with a given anchor on your target.
+              linked_domains:
+                type: integer
+                title: linked_domains
+                description: The number of unique domains linked from your target with a given anchor.
               linked_pages:
                 type: integer
                 title: linked_pages
@@ -446,14 +464,7 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    linked-anchors-external:
+    linked-anchors-internal:
       properties:
         linkedanchors:
           items:
@@ -471,10 +482,6 @@ components:
                 format: date-time
                 title: first_seen
                 description: The date we first found a link with a given anchor on your target.
-              linked_domains:
-                type: integer
-                title: linked_domains
-                description: The number of unique domains linked from your target with a given anchor.
               linked_pages:
                 type: integer
                 title: linked_pages
@@ -488,20 +495,13 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  parameters:
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
   securitySchemes:
     http:
       type: http

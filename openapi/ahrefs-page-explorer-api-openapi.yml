@@ -2613,8 +2613,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -2640,8 +2640,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_500:
+      description: Internal Error
       content:
         application/json:
           schema:
@@ -2650,13 +2650,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error_response'
   schemas:
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
     page-explorer:
       properties:
         pages:
@@ -6676,6 +6669,13 @@ components:
                 description: The web address of the page or resource
             type: object
           type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
       type: object
       xml:
         name: AhrefsApiResponse

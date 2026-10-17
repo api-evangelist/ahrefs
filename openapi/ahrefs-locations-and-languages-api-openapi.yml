@@ -333,8 +333,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -360,8 +360,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_500:
+      description: Internal Error
       content:
         application/json:
           schema:

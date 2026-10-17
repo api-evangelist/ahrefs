@@ -883,97 +883,6 @@ paths:
     - url: https://api.ahrefs.com/v3
       description: Ahrefs API v3
 components:
-  responses:
-    error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error_response'
-    batch-analysis.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-    batch-analysis.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/batch-analysis.Error_response'
   schemas:
     target:
       properties:
@@ -1002,13 +911,6 @@ components:
       - url
       - mode
       - protocol
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
     batch-analysis:
       properties:
         targets:
@@ -1172,6 +1074,13 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     batch-analysis.Error_response:
       properties:
         error:
@@ -1179,6 +1088,33 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    batch-analysis.target:
+      properties:
+        url:
+          type: string
+          description: The URL of the analyzed target.
+          examples:
+          - https://www.ahrefs.com
+        mode:
+          type: string
+          enum:
+          - exact
+          - prefix
+          - domain
+          - subdomains
+          description: The target mode used for the analysis.
+        protocol:
+          type: string
+          enum:
+          - both
+          - http
+          - https
+          description: The protocol of the target.
+      type: object
+      required:
+      - url
+      - mode
+      - protocol
     batch-analysis.batch-analysis:
       properties:
         targets:
@@ -1342,33 +1278,97 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    batch-analysis.target:
-      properties:
-        url:
-          type: string
-          description: The URL of the analyzed target.
-          examples:
-          - https://www.ahrefs.com
-        mode:
-          type: string
-          enum:
-          - exact
-          - prefix
-          - domain
-          - subdomains
-          description: The target mode used for the analysis.
-        protocol:
-          type: string
-          enum:
-          - both
-          - http
-          - https
-          description: The protocol of the target.
-      type: object
-      required:
-      - url
-      - mode
-      - protocol
+  responses:
+    error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error_response'
+    batch-analysis.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+    batch-analysis.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/batch-analysis.Error_response'
   securitySchemes:
     http:
       type: http

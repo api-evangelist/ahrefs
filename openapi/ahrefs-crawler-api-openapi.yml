@@ -75,6 +75,20 @@ paths:
           $ref: '#/components/responses/error_500'
       security: []
 components:
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
   responses:
     error_429:
       description: Too Many Requests
@@ -85,8 +99,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -112,8 +126,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_500:
+      description: Internal Error
       content:
         application/json:
           schema:
@@ -122,19 +136,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error_response'
   schemas:
-    crawler-ips:
-      properties:
-        ips:
-          items:
-            properties:
-              ip_address:
-                type: string
-                title: ip_address
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     crawler-ip-ranges:
       properties:
         prefixes:
@@ -155,20 +156,19 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-  parameters:
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
+    crawler-ips:
+      properties:
+        ips:
+          items:
+            properties:
+              ip_address:
+                type: string
+                title: ip_address
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
 externalDocs:
   description: ''
   url: https://docs.ahrefs.com/docs/api/v3/

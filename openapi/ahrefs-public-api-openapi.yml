@@ -189,53 +189,40 @@ paths:
           $ref: '#/components/responses/public.error_500'
       security: []
 components:
-  responses:
-    public.error_400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-    public.error_401:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-    public.error_500:
-      description: Internal Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-    public.error_429:
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-    public.error_403:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/public.Error_response'
   schemas:
+    public.Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    public.crawler-ips:
+      properties:
+        ips:
+          items:
+            properties:
+              ip_address:
+                type: string
+                title: ip_address
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    public.crawler-ip-ranges:
+      properties:
+        prefixes:
+          items:
+            properties:
+              ipv4Prefix:
+                type: string
+                title: ipv4Prefix
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
     public.domain-rating-top-domains:
       properties:
         domains:
@@ -278,39 +265,52 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    public.Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    public.crawler-ip-ranges:
-      properties:
-        prefixes:
-          items:
-            properties:
-              ipv4Prefix:
-                type: string
-                title: ipv4Prefix
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    public.crawler-ips:
-      properties:
-        ips:
-          items:
-            properties:
-              ip_address:
-                type: string
-                title: ip_address
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
+  responses:
+    public.error_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+    public.error_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+    public.error_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+    public.error_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+    public.error_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/public.Error_response'
   parameters:
     public.output:
       description: The output format.

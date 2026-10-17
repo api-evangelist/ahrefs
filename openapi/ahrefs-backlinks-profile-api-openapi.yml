@@ -463,6 +463,20 @@ paths:
         '500':
           $ref: '#/components/responses/error_500'
 components:
+  parameters:
+    output:
+      description: The output format.
+      required: false
+      explode: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        - php
+      name: output
+      in: query
   responses:
     error_429:
       description: Too Many Requests
@@ -473,8 +487,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_500:
-      description: Internal Error
+    error_403:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -500,8 +514,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error_response'
-    error_403:
-      description: Forbidden
+    error_500:
+      description: Internal Error
       content:
         application/json:
           schema:
@@ -510,90 +524,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error_response'
   schemas:
-    Error_response:
-      properties:
-        error:
-          type: string
-      type: object
-      xml:
-        name: AhrefsApiResponse
-    refdomains:
-      properties:
-        refdomains:
-          items:
-            properties:
-              dofollow_linked_domains:
-                type: integer
-                title: dofollow_linked_domains
-                description: The number of unique root domains with dofollow links linked from the referring domain.
-              dofollow_links:
-                type: integer
-                title: dofollow_links
-                description: The number of links from the referring domain to your target that don't have the “nofollow” attribute.
-              dofollow_refdomains:
-                type: integer
-                title: dofollow_refdomains
-                description: (5 units) The number of unique domains with dofollow links to the referring domain.
-              domain:
-                type: string
-                title: domain
-                description: A referring domain that has at least one link to your target.
-              domain_rating:
-                type: number
-                format: float
-                title: domain_rating
-                description: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.
-              first_seen:
-                type: string
-                format: date-time
-                title: first_seen
-                description: The date we first found a backlink to your target from the referring domain.
-              ip_source:
-                type:
-                - string
-                - 'null'
-                title: ip_source
-                description: The referring domain IP address.
-              is_root_domain:
-                type: boolean
-                title: is_root_domain
-                description: The domain name is a root domain name.
-              is_spam:
-                type: boolean
-                title: is_spam
-                description: Indicates whether the backlink comes from a known spammy domain.
-              last_seen:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: last_seen
-                description: The date your target lost its last live backlink for the referring domain.
-              links_to_target:
-                type: integer
-                title: links_to_target
-                description: The number of backlinks from the referring domain to your target.
-              lost_links:
-                type: integer
-                title: lost_links
-                description: The number of backlinks lost from the referring domain for the selected time period.
-              new_links:
-                type: integer
-                title: new_links
-                description: The number of new backlinks found from the referring domain for the selected time period.
-              positions_source_domain:
-                type: integer
-                title: positions_source_domain
-                description: The number of keywords that the referring domain ranks for in the top 100 positions.
-              traffic_domain:
-                type: integer
-                title: traffic_domain
-                description: (10 units) The referring domain's estimated monthly organic traffic from search.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
     all-backlinks:
       properties:
         backlinks:
@@ -1046,6 +976,149 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
+    refdomains:
+      properties:
+        refdomains:
+          items:
+            properties:
+              dofollow_linked_domains:
+                type: integer
+                title: dofollow_linked_domains
+                description: The number of unique root domains with dofollow links linked from the referring domain.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of links from the referring domain to your target that don't have the “nofollow” attribute.
+              dofollow_refdomains:
+                type: integer
+                title: dofollow_refdomains
+                description: (5 units) The number of unique domains with dofollow links to the referring domain.
+              domain:
+                type: string
+                title: domain
+                description: A referring domain that has at least one link to your target.
+              domain_rating:
+                type: number
+                format: float
+                title: domain_rating
+                description: The strength of a domain's backlink profile compared to the others in our database on a 100-point scale.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a backlink to your target from the referring domain.
+              ip_source:
+                type:
+                - string
+                - 'null'
+                title: ip_source
+                description: The referring domain IP address.
+              is_root_domain:
+                type: boolean
+                title: is_root_domain
+                description: The domain name is a root domain name.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date your target lost its last live backlink for the referring domain.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of backlinks from the referring domain to your target.
+              lost_links:
+                type: integer
+                title: lost_links
+                description: The number of backlinks lost from the referring domain for the selected time period.
+              new_links:
+                type: integer
+                title: new_links
+                description: The number of new backlinks found from the referring domain for the selected time period.
+              positions_source_domain:
+                type: integer
+                title: positions_source_domain
+                description: The number of keywords that the referring domain ranks for in the top 100 positions.
+              traffic_domain:
+                type: integer
+                title: traffic_domain
+                description: (10 units) The referring domain's estimated monthly organic traffic from search.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    anchors:
+      properties:
+        anchors:
+          items:
+            properties:
+              anchor:
+                type: string
+                title: anchor
+                description: The clickable words in a link that point to a URL.
+              dofollow_links:
+                type: integer
+                title: dofollow_links
+                description: The number of links with a given anchor to your target that don’t have the “nofollow” attribute.
+              first_seen:
+                type: string
+                format: date-time
+                title: first_seen
+                description: The date we first found a link with a given anchor to your target.
+              is_spam:
+                type: boolean
+                title: is_spam
+                description: Indicates whether the backlink comes from a known spammy domain.
+              last_seen:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                title: last_seen
+                description: The date we discovered the last backlink with a given anchor was lost.
+              links_to_target:
+                type: integer
+                title: links_to_target
+                description: The number of inbound backlinks your target has with a given anchor.
+              lost_links:
+                type: integer
+                title: lost_links
+                description: The number of backlinks with a given anchor lost during the selected time period.
+              new_links:
+                type: integer
+                title: new_links
+                description: The number of new backlinks with a given anchor found during the selected time period.
+              refdomains:
+                type: integer
+                title: refdomains
+                description: (5 units) The number of unique domains linking to your target with a given anchor.
+              refpages:
+                type: integer
+                title: refpages
+                description: The number of pages containing a link with a given anchor to your target.
+              top_domain_rating:
+                type: number
+                format: float
+                title: top_domain_rating
+                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
+            type: object
+          type: array
+      type: object
+      xml:
+        name: AhrefsApiResponse
+    Error_response:
+      properties:
+        error:
+          type: string
+      type: object
+      xml:
+        name: AhrefsApiResponse
     broken-backlinks:
       properties:
         backlinks:
@@ -1414,79 +1487,6 @@ components:
       type: object
       xml:
         name: AhrefsApiResponse
-    anchors:
-      properties:
-        anchors:
-          items:
-            properties:
-              anchor:
-                type: string
-                title: anchor
-                description: The clickable words in a link that point to a URL.
-              dofollow_links:
-                type: integer
-                title: dofollow_links
-                description: The number of links with a given anchor to your target that don’t have the “nofollow” attribute.
-              first_seen:
-                type: string
-                format: date-time
-                title: first_seen
-                description: The date we first found a link with a given anchor to your target.
-              is_spam:
-                type: boolean
-                title: is_spam
-                description: Indicates whether the backlink comes from a known spammy domain.
-              last_seen:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                title: last_seen
-                description: The date we discovered the last backlink with a given anchor was lost.
-              links_to_target:
-                type: integer
-                title: links_to_target
-                description: The number of inbound backlinks your target has with a given anchor.
-              lost_links:
-                type: integer
-                title: lost_links
-                description: The number of backlinks with a given anchor lost during the selected time period.
-              new_links:
-                type: integer
-                title: new_links
-                description: The number of new backlinks with a given anchor found during the selected time period.
-              refdomains:
-                type: integer
-                title: refdomains
-                description: (5 units) The number of unique domains linking to your target with a given anchor.
-              refpages:
-                type: integer
-                title: refpages
-                description: The number of pages containing a link with a given anchor to your target.
-              top_domain_rating:
-                type: number
-                format: float
-                title: top_domain_rating
-                description: The highest Domain Rating (DR) counted out of all referring domains. DR shows the strength of a website’s backlink profile compared to the others in our database on a 100-point scale.
-            type: object
-          type: array
-      type: object
-      xml:
-        name: AhrefsApiResponse
-  parameters:
-    output:
-      description: The output format.
-      required: false
-      explode: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        - php
-      name: output
-      in: query
   securitySchemes:
     http:
       type: http
