@@ -146,11 +146,19 @@ Postman and Open Collection request collections.
 - [Subscription Information](https://apis.io/collections/ahrefs/open-ahrefs-subscription-info/)
 - [Web Analytics](https://apis.io/collections/ahrefs/open-ahrefs-web-analytics/)
 
-#### Overlays (1)
+#### Overlays (3)
 
 OpenAPI overlays, including conversational phrasing for each operation.
 
 - [Ahrefs Api V3 Overlay](https://apis.io/overlays/ahrefs/ahrefs-api-v3-overlay/)
+- [Ahrefs Domain Rating Api Certification Overlay](https://apis.io/overlays/ahrefs/ahrefs-domain-rating-api-certification-overlay/)
+- [Ahrefs Public Api Certification Overlay](https://apis.io/overlays/ahrefs/ahrefs-public-api-certification-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Ahrefs API Rules](https://apis.io/rules/ahrefs/ahrefs-rules/)
 
 #### Security (3)
 
@@ -166,17 +174,24 @@ The permissions the API asks for.
 
 - [Ahrefs Scopes](https://apis.io/scopes/ahrefs/ahrefs-scopes/)
 
-#### Plans and pricing (1)
+#### Plans and pricing (2)
 
 Published plans, tiers and prices.
 
 - [Ahrefs Plans Pricing](https://apis.io/plans/ahrefs/ahrefs-plans-pricing/)
+- [Ahrefs Price Estimates](https://apis.io/plans/ahrefs/ahrefs-price-estimates/)
 
 #### Rate limits (1)
 
 Published request limits.
 
 - [Ahrefs Rate Limits](https://apis.io/rate-limits/ahrefs/ahrefs-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Ahrefs Finops](https://apis.io/finops/ahrefs/ahrefs-finops/)
 
 ## Where to find this API
 
@@ -197,18 +212,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 64.3** — strong · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 66.8** — exemplar · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 80.0 |
-| Contract quality | 50.2 |
-| Contract governance | 4.5 |
-| Operational transparency | 47.4 |
+| Contract quality | 51.8 |
+| Contract governance | 18.2 |
+| Operational transparency | 45.2 |
 | Developer ergonomics | 78.6 |
-| Access clarity | 92.1 |
+| Access clarity | 100.0 |
 
-**Agent readiness 48.6** — agent-ready (gated down from agent-native)
+**Agent readiness 54.5** — agent-ready (gated down from agent-native)
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -218,13 +233,13 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | MCP Server | verified |
 | Auth Clarity | served (partial credit) |
 | Idempotency | — |
-| Error Semantics | derived (partial credit) |
+| Error Semantics | verified |
 | OpenAPI Examples | partial |
 | Rate Limit Signal | documented (partial credit) |
 | Event Surface Described | — |
 | Agent Skills | yes |
 | Well Known Catalog | — |
-| Consent Identity | — |
+| Consent Identity | deployed |
 | Agent Card | — |
 | Dry Run Mode | — |
 | Delegated Identity | served (partial credit) |
@@ -233,8 +248,12 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | na |
 | Operation Distinctiveness | — |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
-**Regulatory alignment 39.2** — Horizontal (data, software, accessibility, platform)
+**Regulatory alignment 33.3** — Horizontal (data, software, accessibility, platform)
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ahrefs/](https://apis.io/providers/ahrefs/).
 
